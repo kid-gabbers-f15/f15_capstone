@@ -1,108 +1,94 @@
-
 //Game Code
+
+//global game variable
 var game = {};
 
-var gameState = {};
-
 //Runs at start of game
-var Boot = function(game){
+var Boot = {
     //preload, create, update
-    var preload = function(){
-        
-    }
+    preload : function (){
+        console.log("Boot");
+    },
     
-    var create = function(){
+    create : function(){
         game.state.start("Menu");        
     }
     
-}
+};
 
 //Menu
-var Menu = function(game){
-    var block = {};
-    
+var Menu = {
     //preload, create, update
-    var preload = function(){
-            
-    }
-    
-    var create = function(){
-        
-    }
-    
-    var update = function(){
+    preload : function (){
         console.log("Menu");
+        game.load.image('logo', 'Assets/phaser.png');
+
+    },
+    
+    create : function(){
+        var logo = game.add.sprite(game.world.centerX, game.world.centerY, 'logo');
+        logo.anchor.setTo(0.5, 0.5);
+
     }
-}
+    
+};
 
 
 //Loads all assets
-var Preload = function (game){
+var Preload = {
     //preload, create, update
-    var preload = function(){
+    preload : function (){
         
+    },
+    
+    create : function(){
+                
     }
     
-    var create = function(){
-        
-    }
-    
-    var update = function(){
-        
-    }
-    
-}
+};
 
 
 //Main gameplay
-var Defense = function(game){
-    var preload = function(){
+var Defense = {
+    //preload, create, update
+    preload : function (){
         
+    },
+    
+    create : function(){
+               
     }
     
-    var create = function(){
-        
-    }
-    
-    var update = function(){
-        
-    }    
-}
+};
 
 //customization of area
-var Customize = function(game){
-    var preload = function(){
-        
-    }
-    
-    var create = function(){
-        
-    }
-    
-    var update = function(){
-        
-    }
-}
-
-var Shop = function(game){
+var Customize = {
     //preload, create, update
-    var preload = function(){
-        
+    preload : function (){
+        console.log("Boot");
+    },
+    
+    create : function(){
+        //game.state.start("Menu");        
     }
     
-    var create = function(){
-        
+};
+
+var Shop = {
+    //preload, create, update
+    preload : function (){
+
+    },
+    
+    create : function(){
+
     }
     
-    var update = function(){
-        
-    }
-}
+};
 
 //runs at start of game, begins game loop
 function startGame() {
-    console.log("adding load event");
-    var game = new Phaser.Game(1920, 1080, Phaser.AUTO, 'gameContainer')
+    game = new Phaser.Game(1920, 1080, Phaser.AUTO, 'gameContainer')
     
     game.state.add('Boot', Boot);
     game.state.add('Menu', Menu);
@@ -114,4 +100,3 @@ function startGame() {
     game.state.start('Boot');
 }
 
-startGame();

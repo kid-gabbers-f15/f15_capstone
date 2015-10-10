@@ -3,6 +3,8 @@
 //global game variable
 var game = {};
 
+var defEngine;
+
 //Runs at start of game
 var Boot = {
     //preload, create, update
@@ -28,6 +30,8 @@ var Menu = {
     create : function(){
         var logo = game.add.sprite(game.world.centerX, game.world.centerY, 'logo');
         logo.anchor.setTo(0.5, 0.5);
+        
+        game.state.start("Preload");
 
     }
     
@@ -38,11 +42,13 @@ var Menu = {
 var Preload = {
     //preload, create, update
     preload : function (){
-        
+
     },
     
     create : function(){
-                
+        defEngine = DefenseEngine();
+
+        game.state.start("Defense");
     }
     
 };
@@ -52,11 +58,15 @@ var Preload = {
 var Defense = {
     //preload, create, update
     preload : function (){
-        
+        defEngine.Preload();
     },
     
     create : function(){
-               
+        defEngine.OnCreate();
+    },
+    
+    update : function (){
+        defEngine.Update();
     }
     
 };

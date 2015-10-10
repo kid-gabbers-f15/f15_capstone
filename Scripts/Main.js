@@ -42,11 +42,11 @@ var Menu = {
 var Preload = {
     //preload, create, update
     preload : function (){
-
+        console.log("Preload");
     },
     
     create : function(){
-        defEngine = DefenseEngine();
+        defEngine = DefenseEngine(game);
 
         game.state.start("Defense");
     }
@@ -58,6 +58,8 @@ var Preload = {
 var Defense = {
     //preload, create, update
     preload : function (){
+        console.log("Defense");
+        game.physics.startSystem(Phaser.Physics.ARCADE);
         defEngine.Preload();
     },
     

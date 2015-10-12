@@ -2,6 +2,8 @@ var Unit = function (parent, game){
     var that = {};
     var position = {};
     var unitSprite;
+    var max_size = 10;
+    var curr_children = 0;
 
     function Preload(){
         game.load.image('unit', "Assets/Placeholder1.png");
@@ -20,14 +22,22 @@ var Unit = function (parent, game){
         unitSprite.inputEnabled = true;
         unitSprite.input.useHandCursor = true;
         unitSprite.events.onInputDown.add(function(){
-            
+            add_unit(1);
         });
         
     }
     
     function Update(){
-        
+       
     }
+    
+     function add_unit(num_unit){
+            if(curr_children != max_size){
+               curr_children = curr_children + num_unit;
+                console.log("added " + num_unit + " unit(s)"); 
+            }
+        }
+        
     
     that.Preload = Preload;
     that.Update = Update;

@@ -18,6 +18,7 @@ var Unit = function (parent, game){
         game.physics.enable(unitSprite, Phaser.Physics.ARCADE);
         unitSprite.body.collideWorldBounds = true;
 
+        unitSprite.body.immovable = true;
         
         unitSprite.inputEnabled = true;
         unitSprite.input.useHandCursor = true;

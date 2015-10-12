@@ -6,9 +6,6 @@ var DefenseEngine = function (game){
     var enemyManager;
     var player;
     
-    //collisionGroups
-    var enemyCollisionGroup;
-    var unitCollisionGroup;
     
     function Preload(){
         //loading background image
@@ -27,25 +24,10 @@ var DefenseEngine = function (game){
     
     
     function OnCreate(){
-        
-        enemyCollisionGroup = game.add.group();
-        unitCollisionGroup =  game.add.group();
-        
+      
         //drawing background
         background = game.add.sprite(game.world.centerX, game.world.centerY, 'background');
         background.anchor.setTo(0.5, 0.5);
-        
-        var unit1 = game.add.sprite(200, 850, 'unit');
-        var unit2 = game.add.sprite(200, 950, 'unit');
-        var unit3 = game.add.sprite(200, 1050, 'unit');
-
-        game.physics.enable(unit1, Phaser.Physics.ARCADE);
-        game.physics.enable(unit2, Phaser.Physics.ARCADE);
-        game.physics.enable(unit3, Phaser.Physics.ARCADE);
-        
-        unitCollisionGroup.add(unit1);
-        unitCollisionGroup.add(unit2);
-        unitCollisionGroup.add(unit3);
         
         enemyManager.OnCreate();
         player.OnCreate();
@@ -59,9 +41,6 @@ var DefenseEngine = function (game){
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;
-    
-    that.unitCollisionGroup = unitCollisionGroup;
-    that.enemyCollisionGroup = enemyCollisionGroup;
     
     return that;
 }

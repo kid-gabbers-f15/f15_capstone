@@ -26,9 +26,6 @@ var Enemy = function (parent, game){
         enemySprite.body.friction = 10;
         enemySprite.body.drag = 100;
 
-        //defEngine.enemyCollisionGroup.add(enemySprite);        
-        game.physics.arcade.collide(enemySprite, defEngine.unitCollisionGroup);
-        
         health = maxHealth;
         
         enemySprite.inputEnabled = true;

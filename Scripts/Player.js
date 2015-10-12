@@ -5,12 +5,14 @@ var Player = function (game){
     function Preload(){
         unit = Unit(that, game);
         unit.Preload();
+        
     }
-    
+    var bmpText;
     
     function OnCreate(){
      // unit.OnCreate(game.input.mousePointer.x, game.input.mousePointer.y);
      unit.OnCreate(1000, 500)
+
     }
     
     function Update(){

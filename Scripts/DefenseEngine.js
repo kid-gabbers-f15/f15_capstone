@@ -10,8 +10,9 @@ var DefenseEngine = function (game){
     function Preload(){
         //loading background image
         console.log("Preload for defense engine");
-        game.load.image('background', 'Assets/BackgroundKidGabTemplate.png');
-        
+       // game.load.image('background', 'Assets/BackgroundKidGabTemplate.png');
+        game.load.bitmapFont('carrier_command', 'Assets/fonts/bitmapFonts/carrier_command.png', 'assets/fonts/bitmapFonts/carrier_command.xml');
+
         enemyManager = EnemyManager(game);
         enemyManager.Preload();
         
@@ -21,13 +22,17 @@ var DefenseEngine = function (game){
         
         game.load.image('unit', "Assets/Placeholder1.png");
     }
-    
+    var bmpText;
     
     function OnCreate(){
       
         //drawing background
         background = game.add.sprite(game.world.centerX, game.world.centerY, 'background');
         background.anchor.setTo(0.5, 0.5);
+        
+        bmpText = game.add.bitmapText(10, 100, 'carrier_command','Drag me around !',34);
+        bmpText.inputEnabled = true;
+        bmpText.input.enableDrag();
         
         enemyManager.OnCreate();
         player.OnCreate();

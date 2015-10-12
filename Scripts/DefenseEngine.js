@@ -17,10 +17,14 @@ var DefenseEngine = function (game){
         
         player = Player(game);
         player.Preload();
+        
+        
+        game.load.image('unit', "Assets/Placeholder1.png");
     }
     
     
     function OnCreate(){
+      
         //drawing background
         background = game.add.sprite(game.world.centerX, game.world.centerY, 'background');
         background.anchor.setTo(0.5, 0.5);

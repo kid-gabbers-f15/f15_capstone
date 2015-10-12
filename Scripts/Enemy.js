@@ -23,6 +23,12 @@ var Enemy = function (parent, game){
         enemySprite = game.add.sprite(position.x, position.y, 'enemy' );
         game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
         enemySprite.body.collideWorldBounds = true;
+        enemySprite.body.friction = 10;
+        enemySprite.body.drag = 100;
+
+        //defEngine.enemyCollisionGroup.add(enemySprite);        
+        game.physics.arcade.collide(enemySprite, defEngine.unitCollisionGroup);
+        
         health = maxHealth;
         
         enemySprite.inputEnabled = true;
@@ -51,9 +57,9 @@ var Enemy = function (parent, game){
         //WE HAVE A WINNER
         game.physics.arcade.accelerateToXY(
             enemySprite,
-            200,
+            400,
             900,
-            100);
+            50);
         
         if(health <= 0){
             enemySprite.visible = false;

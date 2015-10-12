@@ -2,19 +2,22 @@ var EnemyManager = function (game){
     var that = {};
 
     var enemyGroup = [];    
-    var enemy;
-    
-    function Preload(){
 
-        enemy = Enemy(that, game);
-        enemy.Preload();
+    function Preload(){
+        for(var i = 0; i < 5; ++i){
+            var enemy = Enemy(that, game);
+            enemy.Preload();
+            
+            enemyGroup.push(enemy);
+        }
     }
     
     
     function OnCreate(){
-        enemy.OnCreate(2000, 850);
-
-        enemyGroup.push(enemy);
+        for(var i = 0; i < enemyGroup.length; ++i){
+            enemyGroup[i].OnCreate(2000, 850);
+        }
+        
         console.log(enemyGroup);
     }
     

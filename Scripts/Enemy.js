@@ -10,12 +10,14 @@ var Enemy = function (parent, game){
     
     var isActive;
     
+    var uGroup;
+    
     function Preload(){
         game.load.image('enemy', "Assets/EnemyPlaceholder.png");
     }
     
     
-    function OnCreate(x, y){
+    function OnCreate(x, y, unitGroup){
         isActive = true;
         position.x = x;
         position.y = y;
@@ -32,7 +34,10 @@ var Enemy = function (parent, game){
         enemySprite.input.useHandCursor = true;
         enemySprite.events.onInputDown.add(function(){
             damage(10);
+            
         });
+        
+        uGroup = unitGroup;
         
     }
     
@@ -63,6 +68,8 @@ var Enemy = function (parent, game){
             enemySprite.inputEnabled = false;
             isActive = false;
         }
+        
+        game.physics.arcade.collide(enemySprite, uGroup);
     }
     
     function damage(dmg){

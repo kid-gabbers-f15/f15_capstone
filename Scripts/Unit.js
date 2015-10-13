@@ -30,7 +30,7 @@ var Unit = function (parent, game){
     }
     
     function Update(){
-       
+        
     }
     
      function add_unit(num_unit){

@@ -3,7 +3,7 @@ var DefenseEngine = function (game){
     
     var background;
     
-    var enemyManager;
+    var enemyManager = {};
     var player;
     
     var unitGroup;
@@ -43,6 +43,8 @@ var DefenseEngine = function (game){
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;
+    //that.enemyManager = enemyManager;
+    that.enemyManager = function(){return enemyManager};
     
     
     return that;

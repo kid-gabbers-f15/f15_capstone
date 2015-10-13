@@ -1,16 +1,26 @@
 var Player = function (game){
     var that = {};
-    var unit;
-
+    var unit1;
+    var unit2;
+    var unit3;
+    
     function Preload(){
-        unit = Unit(that, game);
-        unit.Preload();
+        unit1 = Unit(that, game);
+        unit2 = Unit(that, game);
+        unit3 = Unit(that, game);
+
+        unit1.Preload();
+        unit2.Preload();
+        unit3.Preload();
+        
     }
     
     
     function OnCreate(unitGroup){
         // unit.OnCreate(game.input.mousePointer.x, game.input.mousePointer.y);
-        unit.OnCreate(300, 900, unitGroup)
+        unit1.OnCreate(300, 900, unitGroup);
+        unit2.OnCreate(300, 1001, unitGroup);
+        unit3.OnCreate(300, 799, unitGroup);
     }
     
     function Update(){

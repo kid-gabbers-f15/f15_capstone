@@ -12,13 +12,15 @@ var Enemy = function (parent, game){
     
     var uGroup;
     
+    var target;
+    
     function Preload(){
         game.load.image('enemy', "Assets/EnemyPlaceholder.png");
     }
     
     
     function OnCreate(x, y, unitGroup){
-        isActive = true;
+        isActive = false;
         position.x = x;
         position.y = y;
         
@@ -41,11 +43,12 @@ var Enemy = function (parent, game){
         
     }
     
-    function ResetEnemy(x, y){
+    function ResetEnemy(x, y, target){
         enemySprite.visible = true;
         enemySprite.inputEnabled = true;
         enemySprite.isActive = true;
         enemySprite.position = {x, y};
+        this.target = target;
     }
     
     function Update(){
@@ -55,12 +58,12 @@ var Enemy = function (parent, game){
             900, 
             75
         );*/
-        
+
         //WE HAVE A WINNER
         game.physics.arcade.accelerateToXY(
             enemySprite,
-            400,
-            900,
+            this.target.position.x,
+            this.target.position.y,
             50);
         
         if(health <= 0){
@@ -71,6 +74,8 @@ var Enemy = function (parent, game){
         
         //collisions with units
         game.physics.arcade.collide(enemySprite, uGroup);
+        
+        position = enemySprite.position;
     }
     
     function damage(dmg){
@@ -84,11 +89,22 @@ var Enemy = function (parent, game){
         }
     }
     
+    function getPos(){
+        return position;
+    }
+    
+    function getIsActive(){
+        return isActive;
+    }
+    
     that.ResetEnemy = ResetEnemy;
     that.isActive = function(){return isActive};
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;
+    that.damage = damage;
+    that.getPos = getPos;
+    that.getIsActive = getIsActive;
     
     return that;
 }

@@ -30,21 +30,23 @@ var DefenseEngine = function (game){
         
         unitGroup = game.add.group();
 
-        enemyManager.OnCreate(unitGroup);
         player.OnCreate(unitGroup);
-        
-       
+        enemyManager.OnCreate(unitGroup);
     }
     
     function Update(){
             enemyManager.Update();
             player.Update();
     }
-        
-        
+    
+    function getEnemyManager(){
+        return enemyManager;
+    }
+
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;
+    that.getEnemyManager = getEnemyManager;
     
     
     return that;

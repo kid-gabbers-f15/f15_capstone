@@ -12,13 +12,15 @@ var Enemy = function (parent, game){
     
     var uGroup;
     
+    var target;
+    
     function Preload(){
         game.load.image('enemy', "Assets/EnemyPlaceholder.png");
     }
     
     
     function OnCreate(x, y, unitGroup){
-        isActive = true;
+        isActive = false;
         position.x = x;
         position.y = y;
         
@@ -41,11 +43,12 @@ var Enemy = function (parent, game){
         
     }
     
-    function ResetEnemy(x, y){
+    function ResetEnemy(x, y, target){
         enemySprite.visible = true;
         enemySprite.inputEnabled = true;
         enemySprite.isActive = true;
         enemySprite.position = {x, y};
+        this.target = target;
     }
     
     function Update(){
@@ -55,12 +58,12 @@ var Enemy = function (parent, game){
             900, 
             75
         );*/
-        
+
         //WE HAVE A WINNER
         game.physics.arcade.accelerateToXY(
             enemySprite,
-            400,
-            900,
+            this.target.position.x,
+            this.target.position.y,
             50);
         
         if(health <= 0){

@@ -31,8 +31,8 @@ var DefenseEngine = function (game){
         
         unitGroup = game.add.group();
 
-        enemyManager.OnCreate(unitGroup);
         player.OnCreate(unitGroup);
+        enemyManager.OnCreate(unitGroup);
     }
     
     function Update(){

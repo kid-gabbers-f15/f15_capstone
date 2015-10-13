@@ -30,7 +30,17 @@ var Unit = function (parent, game){
     }
     
     function Update(){
+<<<<<<< HEAD
         
+=======
+<<<<<<< HEAD
+        //Damage enemies
+        console.log("Enemies: ");
+        console.log(defEngine.enemyManager);
+=======
+       
+>>>>>>> abe520b245822d895f55d13ce2fd1e280f42935a
+>>>>>>> 8f8446543f726818a2ccc5ccab67d7b27090922d
     }
     
      function add_unit(num_unit){

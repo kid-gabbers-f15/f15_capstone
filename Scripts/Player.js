@@ -7,7 +7,7 @@ var Player = function (game){
         unit.Preload();
     }
     
-    function OnCreate(unitGroup){
+    function OnCreate(){
         // unit.OnCreate(game.input.mousePointer.x, game.input.mousePointer.y);
         unit.OnCreate(300, 900, unitGroup)
     }

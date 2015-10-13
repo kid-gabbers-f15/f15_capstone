@@ -55,14 +55,14 @@ var Unit = function (parent, game){
                 var xd = enemyPos.x - position.x;
                 var yd = enemyPos.y - position.y;
                 var distance = Math.sqrt((xd*xd)+(yd*yd));
-                if(distance<=300 && enemyGroup[i].getIsActive()==true)
+                if(distance<=300 && enemyGroup[i].getIsActive()==true && curr_children>0)
                 {
                     enemyGroup[i].damage(10);
                     break;
                 }
             }
             shoot=false;
-            setTimeout(resetShoot, 1000);
+            setTimeout(resetShoot, 1000-(curr_children*50));
         }
     }
     

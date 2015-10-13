@@ -40,9 +40,14 @@ var DefenseEngine = function (game){
         player.Update();
     }
     
+    function getEnemyManager(){
+        return enemyManager;
+    }
+    
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;
+    that.getEnemyManager = getEnemyManager;
     
     
     return that;

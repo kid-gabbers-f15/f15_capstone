@@ -47,6 +47,7 @@ var Enemy = function (parent, game){
         enemySprite.visible = true;
         enemySprite.inputEnabled = true;
         enemySprite.isActive = true;
+        isActive = true;
         enemySprite.position = {x, y};
         this.target = target;
     }

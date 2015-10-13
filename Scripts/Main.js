@@ -9,6 +9,11 @@ var defEngine;
 var Boot = {
     //preload, create, update
     preload : function (){
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; //resize your window to see the stage resize too
+        game.scale.setMinMax(800, 450, 1920, 1080);
+        game.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignVertically = true;
+        
         console.log("Boot");
     },
     
@@ -22,6 +27,11 @@ var Boot = {
 var Menu = {
     //preload, create, update
     preload : function (){
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; //resize your window to see the stage resize too
+        game.scale.setMinMax(800, 450, 1920, 1080);
+        game.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignVertically = true;        
+        
         console.log("Menu");
         game.load.image('logo', 'Assets/phaser.png');
 
@@ -42,6 +52,11 @@ var Menu = {
 var Preload = {
     //preload, create, update
     preload : function (){
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; //resize your window to see the stage resize too
+        game.scale.setMinMax(800, 450, 1920, 1080);
+        game.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignVertically = true;
+        
         console.log("Preload");
     },
     
@@ -58,6 +73,11 @@ var Preload = {
 var Defense = {
     //preload, create, update
     preload : function (){
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; //resize your window to see the stage resize too
+        game.scale.setMinMax(800, 450, 1920, 1080);
+        game.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignVertically = true;
+        
         console.log("Defense");
         game.physics.startSystem(Phaser.Physics.ARCADE);
         defEngine.Preload();
@@ -77,6 +97,11 @@ var Defense = {
 var Customize = {
     //preload, create, update
     preload : function (){
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; //resize your window to see the stage resize too
+        game.scale.setMinMax(800, 450, 1920, 1080);
+        game.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignVertically = true;
+        
         console.log("Boot");
     },
     
@@ -89,7 +114,11 @@ var Customize = {
 var Shop = {
     //preload, create, update
     preload : function (){
-
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; //resize your window to see the stage resize too
+        game.scale.setMinMax(800, 450, 1920, 1080);
+        game.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignVertically = true;
+        
     },
     
     create : function(){

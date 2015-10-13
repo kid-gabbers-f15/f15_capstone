@@ -25,6 +25,8 @@ var Player = function (game){
     
     function Update(){
         unit1.Update();
+        unit2.Update();
+        unit3.Update();
     }
     
     that.Preload = Preload;

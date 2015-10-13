@@ -33,10 +33,7 @@ var DefenseEngine = function (game){
 
         enemyManager.OnCreate(unitGroup);
         player.OnCreate(unitGroup);
-<<<<<<< HEAD
 
-=======
->>>>>>> master
     }
     
     function Update(){

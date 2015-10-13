@@ -12,7 +12,7 @@ var DefenseEngine = function (game){
         //loading background image
         console.log("Preload for defense engine");
         game.load.image('background', 'Assets/BackgroundKidGabTemplate.png');
-        
+
         enemyManager = EnemyManager(game);
         enemyManager.Preload();
         
@@ -21,7 +21,6 @@ var DefenseEngine = function (game){
         
         game.load.image('unit', "Assets/Placeholder1.png");
     }
-    
     
     function OnCreate(){
       
@@ -36,14 +35,14 @@ var DefenseEngine = function (game){
     }
     
     function Update(){
-        enemyManager.Update();
-        player.Update();
+            enemyManager.Update();
+            player.Update();
     }
     
     function getEnemyManager(){
         return enemyManager;
     }
-    
+
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;

@@ -15,7 +15,6 @@ var Player = function (game){
         
     }
     
-    
     function OnCreate(unitGroup){
         // unit.OnCreate(game.input.mousePointer.x, game.input.mousePointer.y);
         unit1.OnCreate(300, 900, unitGroup);

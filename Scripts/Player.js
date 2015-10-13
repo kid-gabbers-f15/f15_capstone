@@ -9,12 +9,12 @@ var Player = function (game){
     
     
     function OnCreate(){
-     // unit.OnCreate(game.input.mousePointer.x, game.input.mousePointer.y);
+        unit.OnCreate(game.input.mousePointer.x, game.input.mousePointer.y);
      
     }
     
     function Update(){
-        
+        unit.Update();
     }
     
     that.Preload = Preload;

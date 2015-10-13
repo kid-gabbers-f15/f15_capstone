@@ -78,6 +78,7 @@ var Enemy = function (parent, game){
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;
+    that.damage = damage;
     
     return that;
 }

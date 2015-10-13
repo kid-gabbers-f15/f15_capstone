@@ -24,11 +24,14 @@ var EnemyManager = function (game){
                 enemyGroup[i].Update();
             }
         }
+        //console.log("EnemyManager enemyGroup");
+        //console.log(enemyGroup);
     }
     
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;
+    that.enemyGroup = function(){return enemyGroup};
 
     return that;
 }

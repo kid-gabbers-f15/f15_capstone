@@ -26,7 +26,9 @@ var Unit = function (parent, game){
     }
     
     function Update(){
-        
+        //Damage enemies
+        console.log("Enemies: ");
+        console.log(defEngine.enemyManager);
     }
     
     that.Preload = Preload;

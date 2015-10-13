@@ -69,10 +69,7 @@ var Enemy = function (parent, game){
             isActive = false;
         }
         
-<<<<<<< HEAD
-=======
         //collisions with units
->>>>>>> master
         game.physics.arcade.collide(enemySprite, uGroup);
     }
     

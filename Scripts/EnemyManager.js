@@ -15,11 +15,8 @@ var EnemyManager = function (game){
     
     function OnCreate(unitGroup){
         for(var i = 0; i < enemyGroup.length; ++i){
-<<<<<<< HEAD
-            enemyGroup[i].OnCreate(2000, 850, unitGroup);
-=======
             enemyGroup[i].OnCreate(1500 - (Math.floor(Math.random() * 100)), 800 + (Math.floor(Math.random() * 200)), unitGroup);
->>>>>>> master
+
         }
         
         console.log(enemyGroup);

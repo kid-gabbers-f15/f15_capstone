@@ -9,9 +9,10 @@ var Player = function (game){
     }
     var bmpText;
     
-    function OnCreate(){
-     // unit.OnCreate(game.input.mousePointer.x, game.input.mousePointer.y);
-     unit.OnCreate(1000, 500)
+
+    function OnCreate(unitGroup){
+        // unit.OnCreate(game.input.mousePointer.x, game.input.mousePointer.y);
+        unit.OnCreate(300, 900, unitGroup)
 
     }
     

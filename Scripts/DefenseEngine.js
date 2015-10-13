@@ -6,6 +6,7 @@ var DefenseEngine = function (game){
     var enemyManager;
     var player;
     
+    var unitGroup;
     
     function Preload(){
         //loading background image
@@ -18,7 +19,6 @@ var DefenseEngine = function (game){
         
         player = Player(game);
         player.Preload();
-        
         
         game.load.image('unit', "Assets/Placeholder1.png");
     }
@@ -34,8 +34,11 @@ var DefenseEngine = function (game){
         bmpText.inputEnabled = true;
         bmpText.input.enableDrag();
         
-        enemyManager.OnCreate();
-        player.OnCreate();
+        unitGroup = game.add.group();
+
+        enemyManager.OnCreate(unitGroup);
+        player.OnCreate(unitGroup);
+
     }
     
     function Update(){
@@ -46,6 +49,7 @@ var DefenseEngine = function (game){
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;
+    
     
     return that;
 }

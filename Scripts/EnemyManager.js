@@ -13,9 +13,9 @@ var EnemyManager = function (game){
     }
     
     
-    function OnCreate(){
+    function OnCreate(unitGroup){
         for(var i = 0; i < enemyGroup.length; ++i){
-            enemyGroup[i].OnCreate(2000, 850);
+            enemyGroup[i].OnCreate(2000, 850, unitGroup);
         }
         
         console.log(enemyGroup);

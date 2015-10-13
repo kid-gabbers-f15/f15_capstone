@@ -28,55 +28,16 @@ var Unit = function (parent, game){
         
         var text = game.add.text(position.x, position.y, curr_children, { font: "65px Arial", fill: "#ff0044", align: "center" });
         text.anchor.set(0.25);
-        //text.inputEnabled = true;
     
         unitSprite.events.onInputDown.add(function(){
             add_unit(1);
             text_update(text);
-        
-           // var text = game.add.text(game.world.centerX, game.world.centerY, "click and drag me", { font: "65px Arial", fill: "#ff0044", align: "center" });
-           
-           // text.input.enableDrag();
-        
-        //    text.events.onInputOver.add(over, this);
-          //  text.events.onInputOut.add(out, this);
-        
-        //    text.events.onInputDown.add(down, this);
-          //  text.events.onInputUp.add(up, this);
         
         });
 
         
         unitGroup.add(unitSprite);
     }
-    
-    /*function over(item) {
-    
-        //item.fill = "#ffff44";
-        item.text = "clicked " + curr_children + " times";
-    
-    }
-    */
-    //function out(item) {
-    
-        //item.fill = "#ff0044";
-      //  item.text = "click and drag me";
-    
-    //}
-    
-    //function down(item) {
-    
-       // clicks++;
-        //item.text = "clicked " + clicks + " times";
-    
-    //}
-    
-    //function up(item) {
-    
-       // item.text = "thanks for clicking!";
-    
-  //  }
-
     
     function Update(){
        

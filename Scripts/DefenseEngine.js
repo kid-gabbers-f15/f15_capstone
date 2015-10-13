@@ -6,6 +6,7 @@ var DefenseEngine = function (game){
     var enemyManager = {};
     var player;
     
+    var unitGroup;
     
     function Preload(){
         //loading background image
@@ -17,16 +18,21 @@ var DefenseEngine = function (game){
         
         player = Player(game);
         player.Preload();
+        
+        game.load.image('unit', "Assets/Placeholder1.png");
     }
     
     
     function OnCreate(){
+      
         //drawing background
         background = game.add.sprite(game.world.centerX, game.world.centerY, 'background');
         background.anchor.setTo(0.5, 0.5);
         
-        enemyManager.OnCreate();
-        player.OnCreate();
+        unitGroup = game.add.group();
+
+        enemyManager.OnCreate(unitGroup);
+        player.OnCreate(unitGroup);
     }
     
     function Update(){
@@ -39,6 +45,7 @@ var DefenseEngine = function (game){
     that.OnCreate = OnCreate;
     //that.enemyManager = enemyManager;
     that.enemyManager = function(){return enemyManager};
+    
     
     return that;
 }

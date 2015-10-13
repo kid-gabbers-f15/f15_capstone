@@ -10,12 +10,14 @@ var Enemy = function (parent, game){
     
     var isActive;
     
+    var uGroup;
+    
     function Preload(){
         game.load.image('enemy', "Assets/EnemyPlaceholder.png");
     }
     
     
-    function OnCreate(x, y){
+    function OnCreate(x, y, unitGroup){
         isActive = true;
         position.x = x;
         position.y = y;
@@ -23,13 +25,19 @@ var Enemy = function (parent, game){
         enemySprite = game.add.sprite(position.x, position.y, 'enemy' );
         game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
         enemySprite.body.collideWorldBounds = true;
+        enemySprite.body.friction = 10;
+        enemySprite.body.drag = 100;
+
         health = maxHealth;
         
         enemySprite.inputEnabled = true;
         enemySprite.input.useHandCursor = true;
         enemySprite.events.onInputDown.add(function(){
             damage(10);
+            
         });
+        
+        uGroup = unitGroup;
         
     }
     
@@ -51,15 +59,17 @@ var Enemy = function (parent, game){
         //WE HAVE A WINNER
         game.physics.arcade.accelerateToXY(
             enemySprite,
-            200,
+            400,
             900,
-            100);
+            50);
         
         if(health <= 0){
             enemySprite.visible = false;
             enemySprite.inputEnabled = false;
             isActive = false;
         }
+        
+        game.physics.arcade.collide(enemySprite, uGroup);
     }
     
     function damage(dmg){

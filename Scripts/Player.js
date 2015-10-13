@@ -24,7 +24,7 @@ var Player = function (game){
     }
     
     function Update(){
-        
+        unit1.Update();
     }
     
     that.Preload = Preload;

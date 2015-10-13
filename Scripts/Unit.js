@@ -29,8 +29,26 @@ var Unit = function (parent, game){
         unitGroup.add(unitSprite);
     }
     
+    var first = true;
     function Update(){
-       
+        if(first==true)
+        {
+            //first=false;
+            var enemyGroup = defEngine.getEnemyManager().getEnemyGroup();
+            for(var i=0;i<enemyGroup.length;i++)
+            {
+                //console.log(enemyGroup[0].getPos());
+                var enemyPos = enemyGroup[i].getPos();
+                var xd = enemyPos.x - position.x;
+                var yd = enemyPos.y - position.y;
+                var distance = Math.sqrt((xd*xd)+(yd*yd));
+                //console.log(enemyGroup[i].getIsActive());
+                if(distance<=300 && enemyGroup[i].getIsActive()==true)
+                {
+                    enemyGroup[i].damage(10);
+                }
+            }
+        }
     }
     
      function add_unit(num_unit){

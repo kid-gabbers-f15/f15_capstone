@@ -71,6 +71,8 @@ var Enemy = function (parent, game){
         
         //collisions with units
         game.physics.arcade.collide(enemySprite, uGroup);
+        
+        position = enemySprite.position;
     }
     
     function damage(dmg){
@@ -84,11 +86,22 @@ var Enemy = function (parent, game){
         }
     }
     
+    function getPos(){
+        return position;
+    }
+    
+    function getIsActive(){
+        return isActive;
+    }
+    
     that.ResetEnemy = ResetEnemy;
     that.isActive = function(){return isActive};
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;
+    that.damage = damage;
+    that.getPos = getPos;
+    that.getIsActive = getIsActive;
     
     return that;
 }

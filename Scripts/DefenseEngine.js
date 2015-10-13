@@ -21,7 +21,6 @@ var DefenseEngine = function (game){
         
         game.load.image('unit', "Assets/Placeholder1.png");
     }
-    var bmpText;
     
     function OnCreate(){
       
@@ -33,14 +32,16 @@ var DefenseEngine = function (game){
 
         enemyManager.OnCreate(unitGroup);
         player.OnCreate(unitGroup);
-
+        
+       
     }
     
     function Update(){
-        enemyManager.Update();
-        player.Update();
+            enemyManager.Update();
+            player.Update();
     }
-    
+        
+        
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;

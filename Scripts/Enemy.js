@@ -2,6 +2,7 @@ var Enemy = function (parent, game){
     var that = {};
     
     var enemySprite;
+    var healthBar;
     
     var position = {};
     var health = 100;
@@ -16,8 +17,8 @@ var Enemy = function (parent, game){
     
     function Preload(){
         game.load.image('enemy', "Assets/EnemyPlaceholder.png");
+        game.load.image('healthBar', 'Assets/Placeholder4.png');
     }
-    
     
     function OnCreate(x, y, unitGroup){
         isActive = false;
@@ -31,6 +32,8 @@ var Enemy = function (parent, game){
         enemySprite.body.drag = 100;
 
         health = maxHealth;
+        healthBar = game.add.sprite(position.x, position.y - 20, 'healthBar');
+        healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
         
         enemySprite.inputEnabled = true;
         enemySprite.input.useHandCursor = true;
@@ -44,6 +47,13 @@ var Enemy = function (parent, game){
     }
     
     function ResetEnemy(x, y, target){
+        console.log("resetting");
+        
+        health = maxHealth;
+        
+        healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
+        healthBar.updateCrop();
+        
         enemySprite.visible = true;
         enemySprite.inputEnabled = true;
         enemySprite.isActive = true;
@@ -59,7 +69,10 @@ var Enemy = function (parent, game){
             900, 
             75
         );*/
-
+        healthBar.position.x = enemySprite.position.x;
+        healthBar.position.y = enemySprite.position.y - 20;
+        
+        
         //WE HAVE A WINNER
         game.physics.arcade.accelerateToXY(
             enemySprite,
@@ -82,6 +95,9 @@ var Enemy = function (parent, game){
     function damage(dmg){
         health = health - dmg;
         console.log(health);
+        
+        healthBar.crop(new Phaser.Rectangle(0,0,100*(health/maxHealth), 20))
+        healthBar.updateCrop();
         
         if(health <= 0){
             enemySprite.visible = false;

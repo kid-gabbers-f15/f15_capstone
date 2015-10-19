@@ -4,6 +4,7 @@ var Unit = function (parent, game){
     var unitSprite;
     var max_size = 10;
     var curr_children = 0;
+    var old_curr_children = 0;
     var clicks = 0;
     var bulletSprite;
     var focusedEnemy;
@@ -13,9 +14,18 @@ var Unit = function (parent, game){
     var bulletSpriteGroup;
 
     function Preload(){
-        game.load.image('unit', "Assets/Placeholder1.png");
-        game.load.image('unit2', "Assets/Placeholder2.png");
         game.load.image('bullet', "Assets/bullet.png");
+        game.load.image('unit0', "Assets/Unit_Pictures/unit0.png");
+        game.load.image('unit1', "Assets/Unit_Pictures/unit1.png");
+        game.load.image('unit2', "Assets/Unit_Pictures/unit2.png");
+        game.load.image('unit3', "Assets/Unit_Pictures/unit3.png");
+        game.load.image('unit4', "Assets/Unit_Pictures/unit4.png");
+        game.load.image('unit5', "Assets/Unit_Pictures/unit5.png");
+        game.load.image('unit6', "Assets/Unit_Pictures/unit6.png");
+        game.load.image('unit7', "Assets/Unit_Pictures/unit7.png");
+        game.load.image('unit8', "Assets/Unit_Pictures/unit8.png");
+        game.load.image('unit9', "Assets/Unit_Pictures/unit9.png");
+        game.load.image('unit10', "Assets/Unit_Pictures/unit10.png");
     }
     
     
@@ -25,7 +35,7 @@ var Unit = function (parent, game){
         
         bulletSpriteGroup = game.add.group();
         
-        unitSprite = game.add.sprite(position.x, position.y, 'unit' );
+        unitSprite = game.add.sprite(position.x, position.y, 'unit0' );
         game.physics.enable(unitSprite, Phaser.Physics.ARCADE);
         unitSprite.body.collideWorldBounds = true;
 
@@ -56,9 +66,54 @@ var Unit = function (parent, game){
     }
     
     function Update(){
-        if(curr_children>0)
+        if(old_curr_children != curr_children)
         {
-            unitSprite.loadTexture('unit2');
+            if(curr_children == 1)
+            {
+                unitSprite.loadTexture('unit1');
+            }
+            else if(curr_children == 2)
+            {
+                unitSprite.loadTexture('unit2');
+            }
+            else if(curr_children == 3)
+            {
+                unitSprite.loadTexture('unit3');
+            }
+            else if(curr_children == 4)
+            {
+                unitSprite.loadTexture('unit4');
+            }
+            else if(curr_children == 5)
+            {
+                unitSprite.loadTexture('unit5');
+            }
+            else if(curr_children == 6)
+            {
+                unitSprite.loadTexture('unit6');
+            }
+            else if(curr_children == 6)
+            {
+                unitSprite.loadTexture('unit6');
+            }
+            else if(curr_children == 7)
+            {
+                unitSprite.loadTexture('unit7');
+            }
+            else if(curr_children == 8)
+            {
+                unitSprite.loadTexture('unit8');
+            }
+            else if(curr_children == 9)
+            {
+                unitSprite.loadTexture('unit9');
+            }
+            else if(curr_children == 10)
+            {
+                unitSprite.loadTexture('unit10');
+            }
+            
+            old_curr_children = curr_children;
         }
         
         var enemyGroup = defEngine.getEnemyManager().getEnemyGroup();

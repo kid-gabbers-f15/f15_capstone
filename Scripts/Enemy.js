@@ -114,6 +114,10 @@ var Enemy = function (parent, game){
         return isActive;
     }
     
+    function getEnemySprite(){
+        return enemySprite;
+    }
+    
     that.ResetEnemy = ResetEnemy;
     that.isActive = function(){return isActive};
     that.Preload = Preload;
@@ -122,6 +126,7 @@ var Enemy = function (parent, game){
     that.damage = damage;
     that.getPos = getPos;
     that.getIsActive = getIsActive;
+    that.getEnemySprite = getEnemySprite;
     
     return that;
 }

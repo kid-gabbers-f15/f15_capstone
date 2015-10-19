@@ -14,6 +14,7 @@ var Unit = function (parent, game){
 
     function Preload(){
         game.load.image('unit', "Assets/Placeholder1.png");
+        game.load.image('unit2', "Assets/Placeholder2.png");
         game.load.image('bullet', "Assets/bullet.png");
     }
     
@@ -55,6 +56,11 @@ var Unit = function (parent, game){
     }
     
     function Update(){
+        if(curr_children>0)
+        {
+            unitSprite.loadTexture('unit2');
+        }
+        
         var enemyGroup = defEngine.getEnemyManager().getEnemyGroup();
         
         if(shoot==true)

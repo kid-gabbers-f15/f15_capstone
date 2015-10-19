@@ -7,7 +7,9 @@ var BaseManager = function(game){
     
     var currentImage;
     
-    var stickers = [];
+    var stickers;
+    
+    var maxStickers = 20;
     
     function Preload(){
         game.load.image('background', 'Assets/BackgroundKidGabTemplate.png');
@@ -21,10 +23,20 @@ var BaseManager = function(game){
         background = game.add.sprite(game.world.centerX, game.world.centerY, 'background');
         background.anchor.setTo(0.5, 0.5);
         background.inputEnabled = true;
+        
+        stickers = game.add.group();
+        
         background.events.onInputDown.add(function(){
             if(currentImage !== undefined && currentImage !== null){
-                var temp = game.add.sprite(game.input.mousePointer.x, game.input.mousePointer.y, currentImage);
-                stickers.push(temp);
+                if(stickers.length < maxStickers){
+                    var temp = game.add.sprite(game.input.mousePointer.x, game.input.mousePointer.y, currentImage);
+                    temp.anchor.setTo(0.5, 0.5);
+                    temp.inputEnabled = true;
+                    temp.events.onInputDown.add(function(){
+                        temp.destroy();
+                    })
+                    stickers.add(temp);
+                }
             }
         });
         

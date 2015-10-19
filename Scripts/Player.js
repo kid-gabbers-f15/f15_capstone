@@ -17,7 +17,7 @@ var Player = function (game){
     function OnCreate(unitGroup, enemypGroup){
         // unit.OnCreate(game.input.mousePointer.x, game.input.mousePointer.y);
         upGroup = unitGroup;
-        var y_pos = 799;
+        var y_pos = 699;
         for(var i = 0; i < unitpGroup.length; i++)
         {
             unitpGroup[i].OnCreate(300, y_pos, unitGroup);

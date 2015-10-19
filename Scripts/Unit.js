@@ -10,6 +10,7 @@ var Unit = function (parent, game){
     var focusedEnemyDistance = 1000;
     var focusedEnemyX;
     var focusedEnemyY;
+    var bulletSpriteGroup;
 
     function Preload(){
         game.load.image('unit', "Assets/Placeholder1.png");
@@ -20,6 +21,8 @@ var Unit = function (parent, game){
     function OnCreate(x, y, unitGroup){
         position.x = x;
         position.y = y;
+        
+        bulletSpriteGroup = game.add.group();
         
         unitSprite = game.add.sprite(position.x, position.y, 'unit' );
         game.physics.enable(unitSprite, Phaser.Physics.ARCADE);
@@ -74,11 +77,8 @@ var Unit = function (parent, game){
             
             if(focusedEnemy!=undefined)
             {
-                //focusedEnemy.damage(10);
-                        
                 bulletSprite = game.add.sprite(position.x, position.y, 'bullet' );
                 game.physics.enable(bulletSprite, Phaser.Physics.ARCADE);
-                //bulletSprite.body.collideWorldBounds = true;
                 bulletSprite.checkWorldBounds = true;
                 bulletSprite.outOfBoundsKill = true;
                 game.physics.arcade.accelerateToXY(
@@ -88,20 +88,24 @@ var Unit = function (parent, game){
                     5000);
                 shoot=false;
                 setTimeout(resetShoot, 1000-(curr_children*50));
+                bulletSpriteGroup.add(bulletSprite);
             }
         }
         
         if(focusedEnemy!=undefined)
         {
-            var derp = game.physics.arcade.overlap(bulletSprite, focusedEnemy.getEnemySprite());
+            var currentBullet;
+            var derp = game.physics.arcade.overlap(focusedEnemy.getEnemySprite(), bulletSpriteGroup, function(obj1, obj2){
+                currentBullet = obj2;
+            }, null, null, this);
             if(derp == true)
             {
-                removeBullet(bulletSprite, focusedEnemy);
+                removeBullet(currentBullet, focusedEnemy);
             }
-        }            
+        }      
     }
     
-     function add_unit(num_unit){
+    function add_unit(num_unit){
             if(curr_children != max_size){
                curr_children = curr_children + num_unit;
                text = "clicked " + curr_children + " times";
@@ -109,7 +113,7 @@ var Unit = function (parent, game){
             }
         }
         
-     function text_update(item) {
+    function text_update(item) {
     
         //item.fill = "#ffff44";
         item.text = curr_children;

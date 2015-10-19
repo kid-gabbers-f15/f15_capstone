@@ -3,7 +3,7 @@ var Enemy = function (parent, game){
     
     var enemySprite;
     var healthBar;
-    
+            var ha = 1;
     var position = {};
     var health = 100;
     var maxHealth = 100;
@@ -12,6 +12,7 @@ var Enemy = function (parent, game){
     var isActive;
     
     var uGroup;
+    var eGroup;
     
     var target;
     
@@ -20,7 +21,7 @@ var Enemy = function (parent, game){
         game.load.image('healthBar', 'Assets/Placeholder4.png');
     }
     
-    function OnCreate(x, y, unitGroup){
+    function OnCreate(x, y, unitGroup, enemypGroup){
         isActive = false;
         position.x = x;
         position.y = y;
@@ -43,7 +44,8 @@ var Enemy = function (parent, game){
         });
         
         uGroup = unitGroup;
-        
+        enemypGroup.add(enemySprite);
+        eGroup = enemypGroup;
     }
     
     function ResetEnemy(x, y, target){
@@ -88,10 +90,23 @@ var Enemy = function (parent, game){
         
         //collisions with units
         game.physics.arcade.collide(enemySprite, uGroup);
-        
+        //game.physics.arcade.collide(enemySprite, uGroup, print, null, null, this);
         position = enemySprite.position;
+        
+        
+        var unitpGroup = defEngine.getPlayer().getUnitPGroup();
+
+        for(var i = 0; i < unitpGroup.length; i++){
+            game.physics.arcade.collide(unitpGroup[i].getUnitSprite(), eGroup, 
+            function(){
+                if(unitpGroup[i].get_children() > 0){
+                     unitpGroup[i].dec_children();
+                     } 
+                } 
+            , null, null, this);
+        }
     }
-    
+        
     function damage(dmg){
         health = health - dmg;
         console.log(health);

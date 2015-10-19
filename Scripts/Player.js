@@ -3,34 +3,40 @@ var Player = function (game){
     var unit1;
     var unit2;
     var unit3;
+    var unitpGroup = [];
+    var upGroup;
     
     function Preload(){
-        unit1 = Unit(that, game);
-        unit2 = Unit(that, game);
-        unit3 = Unit(that, game);
-
-        unit1.Preload();
-        unit2.Preload();
-        unit3.Preload();
-        
+        for(var i = 0; i < 3; i++){
+            var unit = Unit(that, game);
+            unit.Preload();
+            unitpGroup.push(unit);
+        }
     }
     
-    function OnCreate(unitGroup){
+    function OnCreate(unitGroup, enemypGroup){
         // unit.OnCreate(game.input.mousePointer.x, game.input.mousePointer.y);
-        unit1.OnCreate(300, 900, unitGroup);
-        unit2.OnCreate(300, 1001, unitGroup);
-        unit3.OnCreate(300, 799, unitGroup);
+        upGroup = unitGroup;
+        var y_pos = 799;
+        for(var i = 0; i < unitpGroup.length; i++)
+        {
+            unitpGroup[i].OnCreate(300, y_pos, unitGroup);
+            y_pos = y_pos + 101;
+        }
     }
     
     function Update(){
-        unit1.Update();
-        unit2.Update();
-        unit3.Update();
+        for(var i = 0; i < unitpGroup.length; i++){
+            unitpGroup[i].Update();
+        }
     }
-    
+    function getUnitPGroup(){
+        return unitpGroup;
+    }
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;
+    that.getUnitPGroup = getUnitPGroup;
     
     return that;
 }

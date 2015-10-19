@@ -5,13 +5,15 @@ var Unit = function (parent, game){
     var max_size = 10;
     var curr_children = 0;
     var clicks = 0;
+    var collision_group;
+    var text;
 
     function Preload(){
         game.load.image('unit', "Assets/Placeholder1.png");
     }
     
     
-    function OnCreate(x, y, unitGroup){
+    function OnCreate(x, y, unitGroup, enemypGroup){
         position.x = x;
         position.y = y;
         
@@ -26,17 +28,17 @@ var Unit = function (parent, game){
         
         
         
-        var text = game.add.text(position.x, position.y, curr_children, { font: "65px Arial", fill: "#ff0044", align: "center" });
+        text = game.add.text(position.x, position.y, curr_children, { font: "65px Arial", fill: "#ff0044", align: "center" });
         text.anchor.set(0.25);
     
         unitSprite.events.onInputDown.add(function(){
             add_unit(1);
-            text_update(text);
+            update_text();
         
         });
-
         
         unitGroup.add(unitSprite);
+        collision_group = unitGroup;
     }
     
     var shoot = true;
@@ -46,6 +48,7 @@ var Unit = function (parent, game){
     }
     
     function Update(){
+        update_text();
         if(shoot==true)
         {
             var enemyGroup = defEngine.getEnemyManager().getEnemyGroup();
@@ -69,21 +72,31 @@ var Unit = function (parent, game){
      function add_unit(num_unit){
             if(curr_children != max_size){
                curr_children = curr_children + num_unit;
-               text = "clicked " + curr_children + " times";
-                console.log("added " + num_unit + " unit(s)"); 
+                console.log("added " + num_unit + " unit"); 
             }
         }
         
-     function text_update(item) {
-    
-        //item.fill = "#ffff44";
-        item.text = curr_children;
-    
+    function getUnitSprite(){
+        return unitSprite;
     }
-        
+    
+    function get_children(){
+        return curr_children;
+    }
+    
+    function dec_children(){
+        curr_children = curr_children - 1;
+        console.log(curr_children);
+    }
+    function update_text(){
+        text.setText(curr_children);
+    }
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;
+    that.getUnitSprite = getUnitSprite;
+    that.get_children = get_children;
+    that.dec_children = dec_children;
     
     return that;
 }

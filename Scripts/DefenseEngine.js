@@ -7,6 +7,7 @@ var DefenseEngine = function (game){
     var player;
     
     var unitGroup;
+    var enemypGroup;
     
     function Preload(){
         //loading background image
@@ -29,9 +30,10 @@ var DefenseEngine = function (game){
         background.anchor.setTo(0.5, 0.5);
         
         unitGroup = game.add.group();
+        enemypGroup = game.add.group();
 
-        player.OnCreate(unitGroup);
-        enemyManager.OnCreate(unitGroup);
+        player.OnCreate(unitGroup, enemypGroup);
+        enemyManager.OnCreate(unitGroup, enemypGroup);
     }
     
     function Update(){
@@ -42,11 +44,15 @@ var DefenseEngine = function (game){
     function getEnemyManager(){
         return enemyManager;
     }
-
+    
+    function getPlayer(){
+        return player;
+    }
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;
     that.getEnemyManager = getEnemyManager;
+    that.getPlayer = getPlayer;
     
     
     return that;

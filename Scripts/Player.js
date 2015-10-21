@@ -21,7 +21,7 @@ var Player = function (game){
         for(var i = 0; i < unitpGroup.length; i++)
         {
             unitpGroup[i].OnCreate(300, y_pos, unitGroup);
-            y_pos = y_pos + 101;
+            y_pos = y_pos + 111;
         }
     }
     

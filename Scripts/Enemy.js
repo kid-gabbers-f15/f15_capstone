@@ -7,7 +7,11 @@ var Enemy = function (parent, game){
     var position = {};
     var health = 100;
     var maxHealth = 100;
+    var const_maxHealth = 100; //will be the definite health for units
+    
     var velocityX = 10;
+    
+    
     
     var isActive;
     
@@ -50,8 +54,34 @@ var Enemy = function (parent, game){
         eGroup = enemypGroup;
     }
     
+    function make_Boss(x, y, target){ //this will be resetting the enemy to a boss Unit
+        console.log("BOSS TIME")
+        
+        maxHealth = const_maxHealth*10; //multiply by 10 the health to make it stronger
+        
+        health = maxHealth //times 10
+        
+        healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
+        healthBar.updateCrop();
+        
+        enemySprite.visible = true;
+        healthBar.visible = true;
+        enemySprite.inputEnabled = true;
+        enemySprite.isActive = true;
+        isActive = true;
+        enemySprite.position = {x, y};
+        this.target = target;
+        this.attack_delay = 0;
+        this.can_attack = true;
+        this.set_tisAttack();
+        this.zero_attack_delay();
+        
+    }
+    
     function ResetEnemy(x, y, target){
-        console.log("resetting");
+       // console.log("resetting");
+        
+        maxHealth = const_maxHealth;
         
         health = maxHealth;
         
@@ -65,6 +95,10 @@ var Enemy = function (parent, game){
         isActive = true;
         enemySprite.position = {x, y};
         this.target = target;
+        this.can_attack = true;
+        this.attack_delay = 0;
+        this.zero_attack_delay();
+        this.set_tisAttack();
     }
     
     function Update(){
@@ -96,24 +130,18 @@ var Enemy = function (parent, game){
         game.physics.arcade.collide(enemySprite, uGroup);
         //game.physics.arcade.collide(enemySprite, uGroup, print, null, null, this);
         position = enemySprite.position;
-        /*
-        if(attack_delay > 0) attack_delay--;
-        if(attack_delay == 0){
-            can_attack = true;
-        }
-        */
+
+
         var enemyGroup = defEngine.getEnemyManager().getEnemyGroup();
         var unitpGroup = defEngine.getPlayer().getUnitPGroup();
         for(var k = 0; k < enemyGroup.length; k++){
             for(var i = 0; i < unitpGroup.length; i++){
                 game.physics.arcade.collide(unitpGroup[i].getUnitSprite(), enemyGroup[k].getEnemySprite(), 
                 function(){
-                    console.log("attack " + enemyGroup[k].isAttack());
-                    console.log("active " + enemyGroup[k].isActive());
                     if(unitpGroup[i].get_children() > 0 && enemyGroup[k].isAttack() == true && enemyGroup[k].isActive() == true){
                          unitpGroup[i].dec_children();
                          enemyGroup[k].set_fisAttack();
-                         enemyGroup[k].set_attack_delay();
+                         enemyGroup[k].reset_attack_delay();
                          } 
                     } 
                 , null, null, this);
@@ -124,7 +152,7 @@ var Enemy = function (parent, game){
         
     function damage(dmg){
         health = health - dmg;
-        console.log(health);
+        //console.log(health);
         
         healthBar.crop(new Phaser.Rectangle(0,0,100*(health/maxHealth), 20))
         healthBar.updateCrop();
@@ -157,7 +185,7 @@ var Enemy = function (parent, game){
     function set_tisAttack(){
         can_attack = true;
     }
-    function set_attack_delay(){
+    function reset_attack_delay(){
         attack_delay = 100;
     }
     function dec_attack_delay(){
@@ -166,7 +194,9 @@ var Enemy = function (parent, game){
     function get_attack_delay(){
         return attack_delay;
     }
-    
+    function zero_attack_delay(){
+        attack_delay = 0;
+    }
     function getHealth(){
         return health;
     }
@@ -180,13 +210,21 @@ var Enemy = function (parent, game){
     that.getPos = getPos;
     that.getIsActive = getIsActive;
     that.getEnemySprite = getEnemySprite;
+    that.make_Boss = make_Boss;
     that.getHealth = getHealth;
     that.isAttack = isAttack;
     that.set_fisAttack = set_fisAttack;
     that.set_tisAttack = set_tisAttack;
     that.dec_attack_delay = dec_attack_delay;
-    that.set_attack_delay = set_attack_delay;
+    that.reset_attack_delay = reset_attack_delay;
     that.get_attack_delay = get_attack_delay;
-    
+    that.zero_attack_delay = zero_attack_delay;
+
     return that;
 }
+
+
+
+
+
+

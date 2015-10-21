@@ -74,7 +74,11 @@ var Unit = function (parent, game){
         update_text();
         if(old_curr_children != curr_children)
         {
-            if(curr_children == 1)
+            if(curr_children == 0)
+            {
+                unitSprite.loadTexture('unit0');
+            }
+            else if(curr_children == 1)
             {
                 unitSprite.loadTexture('unit1');
             }

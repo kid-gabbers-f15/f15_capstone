@@ -96,6 +96,15 @@ var EnemyManager = function (game){
             }
         }
         
+        for(var k = 0; k < enemyGroup.length; k++){
+            if(enemyGroup[k].get_attack_delay() == 0){
+                enemyGroup[k].set_tisAttack();
+            }
+            if(enemyGroup[k].get_attack_delay() > 0){
+                enemyGroup[k].dec_attack_delay();
+            }
+        }
+        
 
     }
     

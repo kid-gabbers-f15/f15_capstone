@@ -3,7 +3,7 @@ var Enemy = function (parent, game){
     
     var enemySprite;
     var healthBar;
-            var ha = 1;
+    
     var position = {};
     var health = 100;
     var maxHealth = 100;
@@ -16,7 +16,7 @@ var Enemy = function (parent, game){
     
     var target;
     var can_attack = true;
-    var attack_delay = 1000;
+    var attack_delay = 0;
     
     function Preload(){
         game.load.image('enemy', "Assets/EnemyPlaceholder.png");
@@ -96,25 +96,30 @@ var Enemy = function (parent, game){
         game.physics.arcade.collide(enemySprite, uGroup);
         //game.physics.arcade.collide(enemySprite, uGroup, print, null, null, this);
         position = enemySprite.position;
-        
-        
-        var unitpGroup = defEngine.getPlayer().getUnitPGroup();
-
-        for(var i = 0; i < unitpGroup.length; i++){
-            game.physics.arcade.collide(unitpGroup[i].getUnitSprite(), eGroup, 
-            function(){
-                if(unitpGroup[i].get_children() > 0 && can_attack == true){
-                     unitpGroup[i].dec_children();
-                     can_attack = false;
-                     attack_delay = 100;
-                     } 
-                } 
-            , null, null, this);
-        }
-        if(attack_delay != 0) attack_delay--;
+        /*
+        if(attack_delay > 0) attack_delay--;
         if(attack_delay == 0){
             can_attack = true;
         }
+        */
+        var enemyGroup = defEngine.getEnemyManager().getEnemyGroup();
+        var unitpGroup = defEngine.getPlayer().getUnitPGroup();
+        for(var k = 0; k < enemyGroup.length; k++){
+            for(var i = 0; i < unitpGroup.length; i++){
+                game.physics.arcade.collide(unitpGroup[i].getUnitSprite(), enemyGroup[k].getEnemySprite(), 
+                function(){
+                    console.log("attack " + enemyGroup[k].isAttack());
+                    console.log("active " + enemyGroup[k].isActive());
+                    if(unitpGroup[i].get_children() > 0 && enemyGroup[k].isAttack() == true && enemyGroup[k].isActive() == true){
+                         unitpGroup[i].dec_children();
+                         enemyGroup[k].set_fisAttack();
+                         enemyGroup[k].set_attack_delay();
+                         } 
+                    } 
+                , null, null, this);
+            }   
+        }
+        
     }
         
     function damage(dmg){
@@ -143,6 +148,24 @@ var Enemy = function (parent, game){
     function getEnemySprite(){
         return enemySprite;
     }
+    function isAttack(){
+        return can_attack;
+    }
+    function set_fisAttack(){
+        can_attack = false;
+    }
+    function set_tisAttack(){
+        can_attack = true;
+    }
+    function set_attack_delay(){
+        attack_delay = 100;
+    }
+    function dec_attack_delay(){
+        attack_delay = attack_delay - 1;
+    }
+    function get_attack_delay(){
+        return attack_delay;
+    }
     
     function getHealth(){
         return health;
@@ -158,6 +181,12 @@ var Enemy = function (parent, game){
     that.getIsActive = getIsActive;
     that.getEnemySprite = getEnemySprite;
     that.getHealth = getHealth;
+    that.isAttack = isAttack;
+    that.set_fisAttack = set_fisAttack;
+    that.set_tisAttack = set_tisAttack;
+    that.dec_attack_delay = dec_attack_delay;
+    that.set_attack_delay = set_attack_delay;
+    that.get_attack_delay = get_attack_delay;
     
     return that;
 }

@@ -6,6 +6,7 @@ var Unit = function (parent, game){
     var curr_children = 0;
     var old_curr_children = 0;
     var clicks = 0;
+    var shoot = true;
 
     var bulletSprite;
     var focusedEnemy;
@@ -64,7 +65,6 @@ var Unit = function (parent, game){
         collision_group = unitGroup;
     }
     
-    var shoot = true;
     function resetShoot()
     {
         shoot = true;
@@ -128,7 +128,7 @@ var Unit = function (parent, game){
         
         var enemyGroup = defEngine.getEnemyManager().getEnemyGroup();
         
-        if(shoot==true)
+        if(shoot==true && curr_children>0)
         {
             focusedEnemyDistance = 1000;
             for(var i=0;i<enemyGroup.length;i++)

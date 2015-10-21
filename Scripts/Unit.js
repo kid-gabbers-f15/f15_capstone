@@ -204,6 +204,9 @@ var Unit = function (parent, game){
         enemy.damage(10);
         //console.log("collide");
     }
+    function isAttack(){
+        return can_attack;
+    }
 
     that.Preload = Preload;
     that.Update = Update;
@@ -211,6 +214,7 @@ var Unit = function (parent, game){
     that.getUnitSprite = getUnitSprite;
     that.get_children = get_children;
     that.dec_children = dec_children;
+    that.isAttack = isAttack;
     
     return that;
 }

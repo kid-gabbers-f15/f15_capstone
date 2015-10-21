@@ -131,13 +131,14 @@ var Unit = function (parent, game){
         if(shoot==true && curr_children>0)
         {
             focusedEnemyDistance = 1000;
+            focusedEnemy = undefined;
             for(var i=0;i<enemyGroup.length;i++)
             {
                 var enemyPos = enemyGroup[i].getPos();
                 var xd = enemyPos.x - position.x;
                 var yd = enemyPos.y - position.y;
                 var distance = Math.sqrt((xd*xd)+(yd*yd));
-                if(distance<=1000 && enemyGroup[i].getIsActive()==true && curr_children>0 && distance<focusedEnemyDistance)
+                if(distance<=1000 && enemyGroup[i].getIsActive()==true && curr_children>0 && distance<focusedEnemyDistance && enemyGroup[i].getHealth()>0)
                 {
                     focusedEnemy = enemyGroup[i];
                     focusedEnemyDistance = distance;

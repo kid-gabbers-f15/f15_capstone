@@ -144,6 +144,10 @@ var Enemy = function (parent, game){
         return enemySprite;
     }
     
+    function getHealth(){
+        return health;
+    }
+    
     that.ResetEnemy = ResetEnemy;
     that.isActive = function(){return isActive};
     that.Preload = Preload;
@@ -153,6 +157,7 @@ var Enemy = function (parent, game){
     that.getPos = getPos;
     that.getIsActive = getIsActive;
     that.getEnemySprite = getEnemySprite;
+    that.getHealth = getHealth;
     
     return that;
 }

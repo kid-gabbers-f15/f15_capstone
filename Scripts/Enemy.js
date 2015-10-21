@@ -7,7 +7,11 @@ var Enemy = function (parent, game){
     var position = {};
     var health = 100;
     var maxHealth = 100;
+    var const_maxHealth = 100; //will be the definite health for units
+    
     var velocityX = 10;
+    
+    
     
     var isActive;
     
@@ -50,8 +54,31 @@ var Enemy = function (parent, game){
         eGroup = enemypGroup;
     }
     
+    function make_Boss(x, y, target){ //this will be resetting the enemy to a boss Unit
+        console.log("BOSS TIME")
+        
+        maxHealth = const_maxHealth*10; //multiply by 10 the health to make it stronger
+        
+        health = maxHealth //times 10
+        
+        healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
+        healthBar.updateCrop();
+        
+        enemySprite.visible = true;
+        healthBar.visible = true;
+        enemySprite.inputEnabled = true;
+        enemySprite.isActive = true;
+        isActive = true;
+        enemySprite.position = {x, y};
+        this.target = target;
+                
+        
+    }
+    
     function ResetEnemy(x, y, target){
         console.log("resetting");
+        
+        maxHealth = const_maxHealth;
         
         health = maxHealth;
         
@@ -153,6 +180,6 @@ var Enemy = function (parent, game){
     that.getPos = getPos;
     that.getIsActive = getIsActive;
     that.getEnemySprite = getEnemySprite;
-    
+    that.make_Boss = make_Boss;
     return that;
 }

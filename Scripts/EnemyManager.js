@@ -75,9 +75,8 @@ var EnemyManager = function (game){
                 killCnter = 0; //they should all be dead by now, reset the kill counter
                 ++waveNumber;
                 
-                if(waveNumber == 2){ //every three waves, a big one comes out
-                    enemyGroup[0].ResetEnemy(1500 - (Math.floor(Math.random() * 100)), 800 + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
-                    enemyGroup[0].health = enemyGroup[0].health*10; //first enemy is gonna act like the boss
+                if(waveNumber == 3){ //every three waves, a big one comes out
+                    enemyGroup[0].make_Boss(1500 - (Math.floor(Math.random() * 100)), 800 + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
                     ifBoss = 1; //active boss level
                     waveNumber = 0;
                 }

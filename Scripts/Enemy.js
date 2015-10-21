@@ -59,6 +59,7 @@ var Enemy = function (parent, game){
         healthBar.updateCrop();
         
         enemySprite.visible = true;
+        healthBar.visible = true;
         enemySprite.inputEnabled = true;
         enemySprite.isActive = true;
         isActive = true;
@@ -86,6 +87,7 @@ var Enemy = function (parent, game){
         
         if(health <= 0){
             enemySprite.visible = false;
+            healthBar.visible = false;
             enemySprite.inputEnabled = false;
             isActive = false;
         }
@@ -124,6 +126,7 @@ var Enemy = function (parent, game){
         
         if(health <= 0){
             enemySprite.visible = false;
+            healthBar.visible = false;
             enemySprite.inputEnabled = false;
             isActive = false;
         }

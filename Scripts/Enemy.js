@@ -207,9 +207,7 @@ var Enemy = function (parent, game){
     that.getPos = getPos;
     that.getIsActive = getIsActive;
     that.getEnemySprite = getEnemySprite;
-<<<<<<< HEAD
     that.make_Boss = make_Boss;
-=======
     that.getHealth = getHealth;
     that.isAttack = isAttack;
     that.set_fisAttack = set_fisAttack;
@@ -217,7 +215,5 @@ var Enemy = function (parent, game){
     that.dec_attack_delay = dec_attack_delay;
     that.set_attack_delay = set_attack_delay;
     that.get_attack_delay = get_attack_delay;
-    
->>>>>>> 4725d339043f7b590a949bb47b484901b8d143cb
     return that;
 }

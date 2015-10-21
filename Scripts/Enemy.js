@@ -15,6 +15,8 @@ var Enemy = function (parent, game){
     var eGroup;
     
     var target;
+    var can_attack = true;
+    var attack_delay = 1000;
     
     function Preload(){
         game.load.image('enemy', "Assets/EnemyPlaceholder.png");
@@ -99,11 +101,17 @@ var Enemy = function (parent, game){
         for(var i = 0; i < unitpGroup.length; i++){
             game.physics.arcade.collide(unitpGroup[i].getUnitSprite(), eGroup, 
             function(){
-                if(unitpGroup[i].get_children() > 0){
+                if(unitpGroup[i].get_children() > 0 && can_attack == true){
                      unitpGroup[i].dec_children();
+                     can_attack = false;
+                     attack_delay = 100;
                      } 
                 } 
             , null, null, this);
+        }
+        if(attack_delay != 0) attack_delay--;
+        if(attack_delay == 0){
+            can_attack = true;
         }
     }
         

@@ -220,11 +220,7 @@ var Enemy = function (parent, game){
     that.dec_attack_delay = dec_attack_delay;
     that.reset_attack_delay = reset_attack_delay;
     that.get_attack_delay = get_attack_delay;
-<<<<<<< HEAD
-=======
     that.zero_attack_delay = zero_attack_delay;
-
->>>>>>> garrett-dev
     return that;
 }
 

@@ -215,13 +215,21 @@ var Unit = function (parent, game){
         
         if(focusedEnemy!=undefined)
         {
-            var currentBullet;
-            var derp = game.physics.arcade.overlap(focusedEnemy.getEnemySprite(), bulletSpriteGroup, function(obj1, obj2){
-                currentBullet = obj2;
-            }, null, null, this);
-            if(derp == true)
+            for(var i = 0; i<enemyGroup.length; i++)
             {
-                removeBullet(currentBullet, focusedEnemy);
+                if(enemyGroup[i]!=undefined && enemyGroup[i].getIsActive()==true)
+                {
+                    var currentBullet;
+                    var hitEnemy;
+                    var derp = game.physics.arcade.overlap(enemyGroup[i].getEnemySprite(), bulletSpriteGroup, function(obj1, obj2){
+                        hitEnemy = obj1
+                        currentBullet = obj2;
+                    }, null, null, this);
+                    if(derp == true)
+                    {
+                        removeBullet(currentBullet, enemyGroup[i]);
+                    }
+                }
             }
         }      
     }

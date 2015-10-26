@@ -9,6 +9,8 @@ var Unit = function (parent, game){
     var shoot = true;
 
     var bulletSprite;
+    var bulletSprite2;
+    var bulletSprite3;
     var focusedEnemy;
     var focusedEnemyDistance = 1000;
     var focusedEnemyX;
@@ -17,6 +19,8 @@ var Unit = function (parent, game){
 
     var collision_group;
     var text;
+    
+    var bulletType = 'shotgun';
 
 
     function Preload(){
@@ -45,6 +49,8 @@ var Unit = function (parent, game){
         game.physics.enable(unitSprite, Phaser.Physics.ARCADE);
         unitSprite.body.collideWorldBounds = true;
 
+        unitSprite.anchor.setTo(0.5, 0.5);
+
         unitSprite.body.immovable = true;
         
         unitSprite.inputEnabled = true;
@@ -52,8 +58,8 @@ var Unit = function (parent, game){
         
         
         
-        text = game.add.text(position.x, position.y, curr_children, { font: "65px Arial", fill: "#ff0044", align: "center" });
-        text.anchor.set(0.25);
+        //text = game.add.text(position.x, position.y, curr_children, { font: "65px Arial", fill: "#ff0044", align: "center" });
+        //text.anchor.set(0.25);
     
         unitSprite.events.onInputDown.add(function(){
             add_unit(1);
@@ -71,7 +77,7 @@ var Unit = function (parent, game){
     }
     
     function Update(){
-        update_text();
+        //update_text();
         if(old_curr_children != curr_children)
         {
             if(curr_children == 0)
@@ -149,18 +155,61 @@ var Unit = function (parent, game){
             
             if(focusedEnemy!=undefined)
             {
-                bulletSprite = game.add.sprite(position.x, position.y, 'bullet' );
-                game.physics.enable(bulletSprite, Phaser.Physics.ARCADE);
-                bulletSprite.checkWorldBounds = true;
-                bulletSprite.outOfBoundsKill = true;
-                game.physics.arcade.accelerateToXY(
-                    bulletSprite,
-                    focusedEnemyX,
-                    focusedEnemyY,
-                    5000);
-                shoot=false;
-                setTimeout(resetShoot, 1000-(curr_children*50));
-                bulletSpriteGroup.add(bulletSprite);
+                if(bulletType=='pistol')
+                {
+                    bulletSprite = game.add.sprite(position.x, position.y, 'bullet' );
+                    game.physics.enable(bulletSprite, Phaser.Physics.ARCADE);
+                    bulletSprite.checkWorldBounds = true;
+                    bulletSprite.outOfBoundsKill = true;
+                    game.physics.arcade.moveToXY(
+                        bulletSprite,
+                        focusedEnemyX,
+                        focusedEnemyY,
+                        1000);
+                    shoot=false;
+                    setTimeout(resetShoot, 1000-(curr_children*50));
+                    bulletSpriteGroup.add(bulletSprite);
+                }
+                else if(bulletType=='shotgun')
+                {
+                    bulletSprite = game.add.sprite(position.x, position.y, 'bullet' );
+                    bulletSprite2 = game.add.sprite(position.x, position.y, 'bullet' );
+                    bulletSprite3 = game.add.sprite(position.x, position.y, 'bullet' );
+                    
+                    game.physics.enable(bulletSprite, Phaser.Physics.ARCADE);
+                    game.physics.enable(bulletSprite2, Phaser.Physics.ARCADE);
+                    game.physics.enable(bulletSprite3, Phaser.Physics.ARCADE);
+                    
+                    bulletSprite.checkWorldBounds = true;
+                    bulletSprite2.checkWorldBounds = true;
+                    bulletSprite3.checkWorldBounds = true;
+                    
+                    bulletSprite.outOfBoundsKill = true;
+                    bulletSprite2.outOfBoundsKill = true;
+                    bulletSprite3.outOfBoundsKill = true;
+                    
+                    game.physics.arcade.moveToXY(
+                        bulletSprite,
+                        focusedEnemyX + 20,
+                        focusedEnemyY + 20,
+                        500);
+                    game.physics.arcade.moveToXY(
+                        bulletSprite2,
+                        focusedEnemyX - 50,
+                        focusedEnemyY - 50,
+                        500);
+                    game.physics.arcade.moveToXY(
+                        bulletSprite3,
+                        focusedEnemyX - 20,
+                        focusedEnemyY - 20,
+                        500);
+                        
+                    shoot=false;
+                    setTimeout(resetShoot, 1000-(curr_children*50));
+                    bulletSpriteGroup.add(bulletSprite);
+                    bulletSpriteGroup.add(bulletSprite2);
+                    bulletSpriteGroup.add(bulletSprite3);
+                }
             }
         }
         
@@ -197,7 +246,7 @@ var Unit = function (parent, game){
        // console.log(curr_children);
     }
     function update_text(){
-        text.setText(curr_children);
+        //text.setText(curr_children);
     }
 
     function removeBullet(bSprite, enemy){

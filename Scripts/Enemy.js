@@ -38,8 +38,10 @@ var Enemy = function (parent, game){
         enemySprite.body.friction = 10;
         enemySprite.body.drag = 100;
 
+        enemySprite.anchor.setTo(0.5, 0.5);
+
         health = maxHealth;
-        healthBar = game.add.sprite(position.x, position.y - 20, 'healthBar');
+        healthBar = game.add.sprite(position.x - 50, position.y - 70, 'healthBar');
         healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
         
         enemySprite.inputEnabled = true;
@@ -110,16 +112,22 @@ var Enemy = function (parent, game){
             900, 
             75
         );*/
-        healthBar.position.x = enemySprite.position.x;
-        healthBar.position.y = enemySprite.position.y - 20;
+        healthBar.position.x = enemySprite.position.x - 50;
+        healthBar.position.y = enemySprite.position.y - 70;
         
         
         //WE HAVE A WINNER
-        game.physics.arcade.accelerateToXY(
+        /*game.physics.arcade.accelerateToXY(
             enemySprite,
             this.target.position.x,
             this.target.position.y,
-            50);
+            50);*/
+            
+        game.physics.arcade.moveToXY(
+            enemySprite,
+            this.target.position.x,
+            this.target.position.y,
+            100);
         
         if(health <= 0){
             enemySprite.visible = false;

@@ -5,6 +5,8 @@ var game = {};
 
 var defEngine;
 var baseManager;
+//
+var _baseJSONstring = "";
 
 //Runs at start of game
 var Boot = {
@@ -65,7 +67,7 @@ var Preload = {
         defEngine = DefenseEngine(game);
         baseManager = BaseManager(game);
         
-        game.state.start("Customize");
+        game.state.start("Defense");
     }
     
 };

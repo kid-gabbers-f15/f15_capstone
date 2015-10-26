@@ -47,14 +47,26 @@ var BaseManager = function(game){
         
     }
     
+    function SaveBase(){
+        for(var i = 0; i < stickers.length; ++i){
+            var object = {};
+            object.image = stickers.getChildAt(i).key;
+            object.position = { x: stickers.getChildAt(i).position.x , y: stickers.getChildAt(i).y};
+
+            _baseJSONstring += JSON.stringify(object);
+            console.log(_baseJSONstring);
+        }
+    }
     
     that.setCurrentImage = function(newImage){
         currentImage = newImage;
         console.log("Current image is " + newImage);
     }
+    
     that.Preload = Preload;
     that.OnCreate = OnCreate;
     that.Update = Update;
+    that.SaveBase = SaveBase;
     
     return that;    
 }

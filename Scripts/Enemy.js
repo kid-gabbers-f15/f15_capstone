@@ -71,10 +71,10 @@ var Enemy = function (parent, game){
         isActive = true;
         enemySprite.position = {x, y};
         this.target = target;
-        this.attack_delay = 0;
-        this.can_attack = true;
-        this.set_tisAttack();
-        this.zero_attack_delay();
+        attack_delay = 0;
+        can_attack = true;
+        set_tisAttack();
+        zero_attack_delay();
         
     }
     

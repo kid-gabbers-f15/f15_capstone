@@ -180,7 +180,7 @@ var Unit = function (parent, game){
     function add_unit(num_unit){
             if(curr_children != max_size){
                curr_children = curr_children + num_unit;
-                console.log("added " + num_unit + " unit"); 
+               // console.log("added " + num_unit + " unit"); 
             }
         }
         
@@ -194,7 +194,7 @@ var Unit = function (parent, game){
     
     function dec_children(){
         curr_children = curr_children - 1;
-        console.log(curr_children);
+       // console.log(curr_children);
     }
     function update_text(){
         text.setText(curr_children);

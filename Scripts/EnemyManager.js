@@ -114,8 +114,6 @@ var EnemyManager = function (game){
     }
     function getEgroup(){
         return eGroup;
-    }function getEgroup(){
-        return eGroup;
     }
     that.Preload = Preload;
     that.Update = Update;

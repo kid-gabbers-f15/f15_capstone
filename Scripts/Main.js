@@ -4,6 +4,9 @@
 var game = {};
 
 var defEngine;
+var baseManager;
+//
+var _baseJSONstring = "";
 
 //Runs at start of game
 var Boot = {
@@ -62,7 +65,8 @@ var Preload = {
     
     create : function(){
         defEngine = DefenseEngine(game);
-
+        baseManager = BaseManager(game);
+        
         game.state.start("Defense");
     }
     
@@ -78,7 +82,7 @@ var Defense = {
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
         
-        console.log("Defense");
+        console.log("Defense started");
         game.physics.startSystem(Phaser.Physics.ARCADE);
         defEngine.Preload();
     },
@@ -102,11 +106,16 @@ var Customize = {
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
         
-        console.log("Boot");
+        console.log("Customize started");
+        baseManager.Preload();
     },
     
     create : function(){
-        //game.state.start("Menu");        
+        baseManager.OnCreate();
+    },
+    
+    update : function(){
+        baseManager.Update();
     }
     
 };

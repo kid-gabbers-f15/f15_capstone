@@ -4,6 +4,9 @@
 var game = {};
 
 var defEngine;
+var baseManager;
+//
+var _baseJSONstring = "";
 
 //Runs at start of game
 var Boot = {
@@ -34,22 +37,39 @@ var Menu = {
         
         console.log("Menu");
         game.load.image('logo', 'Assets/phaser.png');
+        game.load.image('background', 'Assets/BackgroundKidGabTemplate.png');
+        game.load.image('image1', 'Assets/Placeholder1.png');
+        game.load.image('image2', 'Assets/Placeholder2.png');
 
     },
     
     create : function(){
-        var logo = game.add.sprite(game.world.centerX, game.world.centerY, 'logo');
-        logo.anchor.setTo(0.5, 0.5);
+        var bg = game.add.sprite(game.world.centerX, game.world.centerY, 'background');
+        bg.anchor.setTo(0.5, 0.5);
+        
+        var button1 = game.add.sprite(game.world.centerX, game.world.centerY + 100, 'image1');
+        game.add.text(game.world.centerX + 50, game.world.centerY + 100, "Start Defense");
+        button1.inputEnabled = true;
+        button1.events.onInputDown.add(function(){
+            game.state.start('PreloadDefense');
+        });
+        
+        var button2 = game.add.sprite(game.world.centerX, game.world.centerY - 100, 'image1');
+        game.add.text(game.world.centerX + 50, game.world.centerY - 100, "Start Customize");
+        button2.inputEnabled = true;
+        button2.events.onInputDown.add(function(){
+            game.state.start('PreloadCustomize');
+        });
         
         game.state.start("Preload");
-
+        
     }
     
 };
 
 
 //Loads all assets
-var Preload = {
+var PreloadDefense = {
     //preload, create, update
     preload : function (){
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; //resize your window to see the stage resize too
@@ -62,8 +82,29 @@ var Preload = {
     
     create : function(){
         defEngine = DefenseEngine(game);
-
+        baseManager = BaseManager(game);
+        
         game.state.start("Defense");
+    }
+    
+};
+
+var PreloadCustomize = {
+    //preload, create, update
+    preload : function (){
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; //resize your window to see the stage resize too
+        game.scale.setMinMax(800, 450, 1920, 1080);
+        game.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignVertically = true;
+        
+        console.log("Preload");
+    },
+    
+    create : function(){
+        defEngine = DefenseEngine(game);
+        baseManager = BaseManager(game);
+        
+        game.state.start("Customize");
     }
     
 };
@@ -78,7 +119,7 @@ var Defense = {
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
         
-        console.log("Defense");
+        console.log("Defense started");
         game.physics.startSystem(Phaser.Physics.ARCADE);
         defEngine.Preload();
     },
@@ -102,11 +143,16 @@ var Customize = {
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
         
-        console.log("Boot");
+        console.log("Customize started");
+        baseManager.Preload();
     },
     
     create : function(){
-        //game.state.start("Menu");        
+        baseManager.OnCreate();
+    },
+    
+    update : function(){
+        baseManager.Update();
     }
     
 };
@@ -133,7 +179,8 @@ function startGame() {
     
     game.state.add('Boot', Boot);
     game.state.add('Menu', Menu);
-    game.state.add('Preload', Preload);
+    game.state.add('PreloadDefense', PreloadDefense);
+    game.state.add('PreloadCustomize', PreloadCustomize);
     game.state.add('Defense', Defense);
     game.state.add('Customize', Customize);
     game.state.add('Shop', Shop);

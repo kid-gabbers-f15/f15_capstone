@@ -11,9 +11,10 @@ var DefenseEngine = function (game){
     
     var baseData;
     
-    function loadBase(){
-        game.load.text('JSONBaseData', 'Scripts/json.txt');
-        
+    function loadBase(base){
+        for(var i = 0; i < base.list.length; ++i){
+            game.add.sprite(base.list[i].position.x, base.list[i].position.y, base.list[i].image);
+        }
     }
     
     function Preload(){
@@ -29,7 +30,11 @@ var DefenseEngine = function (game){
         
         game.load.image('unit', "Assets/Placeholder1.png");
 
-        loadBase();
+        game.load.text('JSONBaseData', 'Scripts/json.txt');
+        game.load.image('image1', 'Assets/Placeholder1.png');
+        game.load.image('image2', 'Assets/Placeholder2.png');
+        game.load.image('image3', 'Assets/Placeholder3.png');
+        game.load.image('image4', 'Assets/Placeholder4.png');
 
     }
     
@@ -42,6 +47,7 @@ var DefenseEngine = function (game){
         //base building
         baseData = JSON.parse(game.cache.getText('JSONBaseData'));
         console.log(baseData);
+        loadBase(baseData);
         
         unitGroup = game.add.group();
         enemypGroup = game.add.group();

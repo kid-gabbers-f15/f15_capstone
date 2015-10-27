@@ -44,15 +44,6 @@ var EnemyManager = function (game){
     
     function Update(){
         
-        for(var k = 0; k < enemyGroup.length; k++){
-            if(enemyGroup[k].get_attack_delay() == 0){
-                enemyGroup[k].set_tisAttack();
-            }
-            if(enemyGroup[k].get_attack_delay() > 0){
-                enemyGroup[k].dec_attack_delay();
-            }
-        }
-        
         if(ifBoss){
             if(enemyGroup[0].getIsActive() == true){
                 enemyGroup[0].Update();

@@ -19,8 +19,8 @@ var Enemy = function (parent, game){
     var eGroup;
     
     var target;
-    var can_attack = true;
-    var attack_delay = 0;
+    var can_attack;
+    var attack_delay;
     
     function Preload(){
         game.load.image('enemy', "Assets/EnemyPlaceholder.png");
@@ -31,6 +31,8 @@ var Enemy = function (parent, game){
         isActive = false;
         position.x = x;
         position.y = y;
+        can_attack = true;
+        attack_delay = 0;
         
         enemySprite = game.add.sprite(position.x, position.y, 'enemy' );
         game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
@@ -75,8 +77,6 @@ var Enemy = function (parent, game){
         this.target = target;
         attack_delay = 0;
         can_attack = true;
-        set_tisAttack();
-        zero_attack_delay();
         
     }
     
@@ -99,10 +99,8 @@ var Enemy = function (parent, game){
         isActive = true;
         enemySprite.position = {x, y};
         this.target = target;
-        this.can_attack = true;
-        this.attack_delay = 0;
-        this.zero_attack_delay();
-        this.set_tisAttack();
+        can_attack = true;
+        attack_delay = 0;
     }
     
     function Update(){
@@ -112,6 +110,13 @@ var Enemy = function (parent, game){
             900, 
             75
         );*/
+        if(attack_delay == 0){
+                can_attack = true;
+            }
+        if(attack_delay > 0){
+                attack_delay = attack_delay - 1;
+            }
+        
         healthBar.position.x = enemySprite.position.x - 50;
         healthBar.position.y = enemySprite.position.y - 70;
         
@@ -137,7 +142,7 @@ var Enemy = function (parent, game){
         }
         
         //collisions with units
-        game.physics.arcade.collide(enemySprite, uGroup);
+        //game.physics.arcade.collide(enemySprite, uGroup);
         //game.physics.arcade.collide(enemySprite, uGroup, print, null, null, this);
         position = enemySprite.position;
 

@@ -112,11 +112,14 @@ var EnemyManager = function (game){
     function getEnemyGroup(){
         return enemyGroup;
     }
-    
+    function getEgroup(){
+        return eGroup;
+    }
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;
     that.getEnemyGroup = getEnemyGroup;
+    that.getEgroup = getEgroup;
 
     return that;
 }

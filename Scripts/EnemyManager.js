@@ -14,6 +14,10 @@ var EnemyManager = function (game){
     var uGroup;
     var eGroup;
     
+    var eSpawn = {};
+    eSpawn.x = 1850;
+    eSpawn.y = 800;
+    
     function Preload(){
         for(var i = 0; i < WAVECOUNT; ++i){
             var enemy = Enemy(that, game);
@@ -31,8 +35,8 @@ var EnemyManager = function (game){
         uGroup = unitGroup;
         eGroup = enemypGroup;
         for(var i = 0; i < enemyGroup.length; ++i){
-            enemyGroup[i].OnCreate(1500 - (Math.floor(Math.random() * 100)), 800 + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup);
-            enemyGroup[i].ResetEnemy(1500 - (Math.floor(Math.random() * 100)), 800 + (Math.floor(Math.random() * 200)), unitGroup.getChildAt(Math.floor(Math.random() * unitGroup.length)));
+            enemyGroup[i].OnCreate(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup);
+            enemyGroup[i].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup.getChildAt(Math.floor(Math.random() * unitGroup.length)));
             enemyGroup[i].set_tisAttack();
             enemyGroup[i].zero_attack_delay();
         }
@@ -88,14 +92,14 @@ var EnemyManager = function (game){
                 ++waveNumber;
                 
                 if(waveNumber == 3){ //every three waves, a big one comes out
-                    enemyGroup[0].make_Boss(1500 - (Math.floor(Math.random() * 100)), 800 + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
+                    enemyGroup[0].make_Boss(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
                     ifBoss = 1; //active boss level
                     waveNumber = 0;
                 }
                 else{    
                     for(var j = 0; j < enemyGroup.length; ++j){
                         //console.log('Else');
-                        enemyGroup[j].ResetEnemy(1500 - (Math.floor(Math.random() * 100)), 800 + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
+                        enemyGroup[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
                         enemyChecked[j] = 1; //mark as unchecked for death since were resetting
                         
                     }

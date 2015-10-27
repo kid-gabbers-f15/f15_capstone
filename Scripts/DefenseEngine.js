@@ -10,11 +10,20 @@ var DefenseEngine = function (game){
     var unitGroup;
     var enemypGroup;
     
-    var baseData;
+    var friendBaseData;
     
-    function loadBase(base){
+    function loadPlayerBase(base){
         for(var i = 0; i < base.list.length; ++i){
-            game.add.sprite(base.list[i].position.x, base.list[i].position.y, base.list[i].image);
+            var temp = game.add.sprite(base.list[i].position.x/2 + game.world.centerX/2, base.list[i].position.y/2, base.list[i].image);
+            temp.anchor.setTo(0.5, 0.5);
+            temp.scale.setTo(0.5, 0.5);
+        }
+    }
+    function loadFriendBase(base){
+        for(var i = 0; i < base.list.length; ++i){
+            var temp = game.add.sprite(base.list[i].position.x/2, base.list[i].position.y/2 + game.world.centerY, base.list[i].image);
+            temp.anchor.setTo(0.5, 0.5);
+            temp.scale.setTo(0.5, 0.5);
         }
     }
     
@@ -32,7 +41,9 @@ var DefenseEngine = function (game){
         
         game.load.image('unit', "Assets/Placeholder1.png");
 
-        game.load.text('JSONBaseData', 'Scripts/json.txt');
+        game.load.text('JSONfriendBaseData', 'Scripts/json.txt');
+        game.load.text('JSONplayerBaseData', 'Scripts/json.txt');
+        
         game.load.image('image1', 'Assets/Placeholder1.png');
         game.load.image('image2', 'Assets/Placeholder2.png');
         game.load.image('image3', 'Assets/Placeholder3.png');
@@ -46,17 +57,21 @@ var DefenseEngine = function (game){
         background = game.add.sprite(game.world.centerX, game.world.centerY, 'background');
         background.anchor.setTo(0.5, 0.5);
         
-        topBase = game.add.sprite(game.world.centerX/2, 10, 'topBase');
+        topBase = game.add.sprite(game.world.centerX, game.world.centerY/2, 'topBase');
+        topBase.anchor.setTo(0.5, 0.5);
+        topBase.scale.setTo(2, 1);
         topBase.isActive = true;
         game.physics.enable(topBase, Phaser.Physics.ARCADE);
         topBase.body.immovable = true;
         //topBase.anchor.setTo(0.25,0.25);
         
-        //base building
-        baseData = JSON.parse(game.cache.getText('JSONBaseData'));
-        console.log(baseData);
-        loadBase(baseData);
-
+        //friend base building
+        friendBaseData = JSON.parse(game.cache.getText('JSONfriendBaseData'));
+        console.log(friendBaseData);
+        loadFriendBase(friendBaseData);
+        playerBaseData = JSON.parse(game.cache.getText('JSONplayerBaseData'));
+        console.log(playerBaseData);
+        loadPlayerBase(playerBaseData);
         
         unitGroup = game.add.group();
         enemypGroup = game.add.group();

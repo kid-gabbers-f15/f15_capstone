@@ -6,7 +6,8 @@ var game = {};
 var defEngine;
 var baseManager;
 //
-var _baseJSONstring = "";
+var _friendBaseJSONstring = "";
+var _playerBaseJSONstring = "";
 
 //Runs at start of game
 var Boot = {

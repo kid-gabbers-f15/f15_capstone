@@ -28,24 +28,49 @@ var Enemy = function (parent, game){
         game.load.image('Boss_1_Health', 'Assets/Enemy_Pictures/Boss_1Health.png');
     }
     
-    function OnCreate(x, y, unitGroup, enemypGroup){
+    function OnCreate(x, y, unitGroup, enemypGroup, isBoss){
         isActive = false;
         position.x = x;
         position.y = y;
         can_attack = true;
         attack_delay = 0;
+
+        if(isBoss===true){
+            
+            enemySprite = game.add.sprite(position.x, position.y, 'EnemyBoss_1' );
+            game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
+            enemySprite.body.collideWorldBounds = true;
+            enemySprite.body.friction = 10;
+            enemySprite.body.drag = 100;
+    
+            enemySprite.anchor.setTo(0.5, 0.5);
+    
+            health = maxHealth*10;
+            healthBar = game.add.sprite(position.x - 50, position.y - 70, 'Boss_1_Health');
+            healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
+            
+            enemySprite.visible = false;
+            healthBar.visible = false;
+            enemySprite.inputEnabled = false;
+            enemySprite.isActive = false;
+            isActive = false;
         
-        enemySprite = game.add.sprite(position.x, position.y, 'enemy' );
-        game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
-        enemySprite.body.collideWorldBounds = true;
-        enemySprite.body.friction = 10;
-        enemySprite.body.drag = 100;
-
-        enemySprite.anchor.setTo(0.5, 0.5);
-
-        health = maxHealth;
-        healthBar = game.add.sprite(position.x - 50, position.y - 70, 'healthBar');
-        healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
+            
+        }else{
+            
+            enemySprite = game.add.sprite(position.x, position.y, 'enemy' );
+            game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
+            enemySprite.body.collideWorldBounds = true;
+            enemySprite.body.friction = 10;
+            enemySprite.body.drag = 100;
+    
+            enemySprite.anchor.setTo(0.5, 0.5);
+    
+            health = maxHealth;
+            healthBar = game.add.sprite(position.x - 50, position.y - 70, 'healthBar');
+            healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
+            
+        }
         
         enemySprite.inputEnabled = true;
         enemySprite.input.useHandCursor = true;
@@ -57,17 +82,15 @@ var Enemy = function (parent, game){
         uGroup = unitGroup;
         enemypGroup.add(enemySprite);
         eGroup = enemypGroup;
+        
     }
     
     function make_Boss(x, y, target){ //this will be resetting the enemy to a boss Unit
         console.log("BOSS TIME")
         
-        enemySprite.loadTexture('EnemyBoss_1');
-        healthBar.loadTexture('Boss_1_Health');
         maxHealth = const_maxHealth*10; //multiply by 10 the health to make it stronger
         
-        
-        health = maxHealth //times 10
+        health = maxHealth;
         
         healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
         healthBar.updateCrop();
@@ -92,11 +115,6 @@ var Enemy = function (parent, game){
     function ResetEnemy(x, y, target){
        // console.log("resetting");
         
-        enemySprite.loadTexture('enemy');
-        healthBar.loadTexture('healthBar');
-        
-        maxHealth = const_maxHealth;
-        
         maxHealth = const_maxHealth;
         
         health = maxHealth;
@@ -116,12 +134,7 @@ var Enemy = function (parent, game){
     }
     
     function Update(){
-        /*game.physics.arcade.moveToXY(
-            enemySprite,
-            200, 
-            900, 
-            75
-        );*/
+
         if(attack_delay == 0){
                 can_attack = true;
             }
@@ -154,8 +167,6 @@ var Enemy = function (parent, game){
         }
         
         //collisions with units
-        //game.physics.arcade.collide(enemySprite, uGroup);
-        //game.physics.arcade.collide(enemySprite, uGroup, print, null, null, this);
         position = enemySprite.position;
 
 
@@ -179,7 +190,7 @@ var Enemy = function (parent, game){
         
     function damage(dmg){
         health = health - dmg;
-        //console.log(health);
+        console.log(health);
         
         healthBar.crop(new Phaser.Rectangle(0,0,100*(health/maxHealth), 20))
         healthBar.updateCrop();

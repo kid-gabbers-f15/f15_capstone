@@ -207,12 +207,6 @@ var Enemy = function (parent, game){
     function dec_attack_delay(){
         attack_delay = attack_delay - 1;
     }
-    function get_attack_delay(){
-        return attack_delay;
-    }
-    function zero_attack_delay(){
-        attack_delay = 0;
-    }
     function getHealth(){
         return health;
     }
@@ -233,8 +227,6 @@ var Enemy = function (parent, game){
     that.set_tisAttack = set_tisAttack;
     that.dec_attack_delay = dec_attack_delay;
     that.reset_attack_delay = reset_attack_delay;
-    that.get_attack_delay = get_attack_delay;
-    that.zero_attack_delay = zero_attack_delay;
     return that;
 }
 

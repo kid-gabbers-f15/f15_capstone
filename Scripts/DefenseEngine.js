@@ -46,6 +46,8 @@ var DefenseEngine = function (game){
         background = game.add.sprite(game.world.centerX, game.world.centerY, 'background');
         background.anchor.setTo(0.5, 0.5);
         
+        //create a sprite to act as the area for the user's base
+        //this 'windows' the base from other elements in the game 
         topBase = game.add.sprite(game.world.centerX/2, 10, 'topBase');
         topBase.isActive = true;
         game.physics.enable(topBase, Phaser.Physics.ARCADE);
@@ -66,6 +68,7 @@ var DefenseEngine = function (game){
     }
     
     function Update(){
+        //check for collision with enemies with base window
         var enemyGroup = getEnemyManager().getEgroup();
         game.physics.arcade.collide(topBase, enemyGroup);
             enemyManager.Update();

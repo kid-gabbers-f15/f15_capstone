@@ -7,7 +7,7 @@ var Enemy = function (parent, game){
     var position = {};
     var health = 100;
     var maxHealth = 100;
-    var const_maxHealth = 100; //will be the definite health for units
+    var const_maxHealth = 100; //will be the definite health for enemy units
     
     var velocityX = 10;
     
@@ -31,7 +31,7 @@ var Enemy = function (parent, game){
         isActive = false;
         position.x = x;
         position.y = y;
-        can_attack = true;
+        can_attack = true; //upon creation enemies should be able to attack instantly
         attack_delay = 0;
         
         enemySprite = game.add.sprite(position.x, position.y, 'enemy' );
@@ -75,7 +75,7 @@ var Enemy = function (parent, game){
         isActive = true;
         enemySprite.position = {x, y};
         this.target = target;
-        attack_delay = 0;
+        attack_delay = 0; 
         can_attack = true;
         
     }
@@ -146,7 +146,8 @@ var Enemy = function (parent, game){
         //game.physics.arcade.collide(enemySprite, uGroup, print, null, null, this);
         position = enemySprite.position;
 
-
+        //loop through units and enemies to check for collision
+        //after a collision is detectd, pull the unit object and enemy object for interaction
         var enemyGroup = defEngine.getEnemyManager().getEnemyGroup();
         var unitpGroup = defEngine.getPlayer().getUnitPGroup();
         for(var k = 0; k < enemyGroup.length; k++){

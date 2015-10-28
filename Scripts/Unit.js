@@ -237,7 +237,6 @@ var Unit = function (parent, game){
     function add_unit(num_unit){
             if(curr_children != max_size){
                curr_children = curr_children + num_unit;
-               // console.log("added " + num_unit + " unit"); 
             }
         }
         

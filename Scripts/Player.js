@@ -1,4 +1,5 @@
 var Player = function (game){
+    //unit manager
     var that = {};
     var unit1;
     var unit2;

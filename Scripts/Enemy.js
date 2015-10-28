@@ -2,6 +2,7 @@ var Enemy = function (parent, game){
     var that = {};
     
     var enemySprite;
+    
     var healthBar;
     
     var position = {};
@@ -10,8 +11,6 @@ var Enemy = function (parent, game){
     var const_maxHealth = 100; //will be the definite health for units
     
     var velocityX = 10;
-    
-    
     
     var isActive;
     
@@ -64,8 +63,7 @@ var Enemy = function (parent, game){
         console.log("BOSS TIME")
         
         enemySprite.loadTexture('EnemyBoss_1');
-        healthBar.loadTexture('Boss_1_Health')
-        
+        healthBar.loadTexture('Boss_1_Health');
         maxHealth = const_maxHealth*10; //multiply by 10 the health to make it stronger
         
         

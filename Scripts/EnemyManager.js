@@ -59,8 +59,6 @@ var EnemyManager = function (game){
                 
             if(killCnter < WAVECOUNT){  //if you havent defeated all enemies  
             
-                
-                
                 for(var i = 0; i < enemyGroup.length; ++i){
                     if(enemyGroup[i].getIsActive() == true){
                         enemyGroup[i].Update(); //move them closer to player since theyre not dead, and incremement killcnter if health is zero

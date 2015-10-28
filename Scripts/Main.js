@@ -117,7 +117,9 @@ var Defense = {
         game.scale.setMinMax(800, 450, 1920, 1080);
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
-        
+
+        game.stage.backgroundColor = '#098AC3';
+
         console.log("Defense started");
         game.physics.startSystem(Phaser.Physics.ARCADE);
         defEngine.Preload();

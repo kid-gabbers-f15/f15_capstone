@@ -54,12 +54,12 @@ var DefenseEngine = function (game){
     function OnCreate(){
       
         //drawing background
-        background = game.add.sprite(game.world.centerX, game.world.centerY, 'background');
+        background = game.add.sprite(game.world.centerX, game.world.centerY + game.world.centerY/2, 'background');
         background.anchor.setTo(0.5, 0.5);
+        background.crop(new Phaser.Rectangle(0, 540, 1920, 1080));
         
         topBase = game.add.sprite(game.world.centerX, game.world.centerY/2, 'topBase');
         topBase.anchor.setTo(0.5, 0.5);
-        topBase.scale.setTo(2, 1);
         topBase.isActive = true;
         game.physics.enable(topBase, Phaser.Physics.ARCADE);
         topBase.body.immovable = true;

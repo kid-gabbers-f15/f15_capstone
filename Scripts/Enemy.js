@@ -25,6 +25,8 @@ var Enemy = function (parent, game){
     function Preload(){
         game.load.image('enemy', "Assets/EnemyPlaceholder.png");
         game.load.image('healthBar', 'Assets/Placeholder4.png');
+        game.load.image('EnemyBoss_1', 'Assets/Enemy_Pictures/Boss_1.png');
+        game.load.image('Boss_1_Health', 'Assets/Enemy_Pictures/Boss_1Health.png');
     }
     
     function OnCreate(x, y, unitGroup, enemypGroup){
@@ -59,7 +61,11 @@ var Enemy = function (parent, game){
     function make_Boss(x, y, target){ //this will be resetting the enemy to a boss Unit
         console.log("BOSS TIME")
         
+        enemySprite.loadTexture('EnemyBoss_1');
+        healthBar.loadTexture('Boss_1_Health');
+        
         maxHealth = const_maxHealth*10; //multiply by 10 the health to make it stronger
+        
         
         health = maxHealth //times 10
         
@@ -73,15 +79,18 @@ var Enemy = function (parent, game){
         isActive = true;
         enemySprite.position = {x, y};
         this.target = target;
-        attack_delay = 0;
-        can_attack = true;
-        set_tisAttack();
-        zero_attack_delay();
+        this.attack_delay = 0;
+        this.can_attack = true;
+        this.set_tisAttack();
+        this.zero_attack_delay();
         
     }
     
     function ResetEnemy(x, y, target){
        // console.log("resetting");
+        
+        enemySprite.loadTexture('enemy');
+        healthBar.loadTexture('healthBar');
         
         maxHealth = const_maxHealth;
         

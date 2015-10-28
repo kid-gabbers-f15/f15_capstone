@@ -62,7 +62,7 @@ var Enemy = function (parent, game){
         console.log("BOSS TIME")
         
         enemySprite.loadTexture('EnemyBoss_1');
-        healthBar.loadTexture('Boss_1_Health');
+        healthBar.loadTexture('Boss_1_Health')
         
         maxHealth = const_maxHealth*10; //multiply by 10 the health to make it stronger
         

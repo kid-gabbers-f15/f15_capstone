@@ -62,8 +62,6 @@ var Menu = {
             game.state.start('PreloadCustomize');
         });
         
-        game.state.start("Preload");
-        
     }
     
 };

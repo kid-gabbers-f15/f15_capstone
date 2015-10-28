@@ -56,8 +56,6 @@ var Unit = function (parent, game){
         unitSprite.inputEnabled = true;
         unitSprite.input.useHandCursor = true;
         
-        
-        
         //text = game.add.text(position.x, position.y, curr_children, { font: "65px Arial", fill: "#ff0044", align: "center" });
         //text.anchor.set(0.25);
     
@@ -250,7 +248,6 @@ var Unit = function (parent, game){
     
     function dec_children(){
         curr_children = curr_children - 1;
-       // console.log(curr_children);
     }
     function update_text(){
         //text.setText(curr_children);
@@ -259,7 +256,6 @@ var Unit = function (parent, game){
     function removeBullet(bSprite, enemy){
         bSprite.destroy();
         enemy.damage(10);
-        //console.log("collide");
     }
     function isAttack(){
         return can_attack;

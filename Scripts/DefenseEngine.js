@@ -52,7 +52,6 @@ var DefenseEngine = function (game){
         topBase.isActive = true;
         game.physics.enable(topBase, Phaser.Physics.ARCADE);
         topBase.body.immovable = true;
-        //topBase.anchor.setTo(0.25,0.25);
         
         //base building
         baseData = JSON.parse(game.cache.getText('JSONBaseData'));

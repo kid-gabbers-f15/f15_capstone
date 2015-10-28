@@ -81,14 +81,9 @@ var Enemy = function (parent, game){
     }
     
     function ResetEnemy(x, y, target){
-       // console.log("resetting");
         
         maxHealth = const_maxHealth;
-        
-        maxHealth = const_maxHealth;
-        
         health = maxHealth;
-        
         healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
         healthBar.updateCrop();
         
@@ -141,9 +136,6 @@ var Enemy = function (parent, game){
             isActive = false;
         }
         
-        //collisions with units
-        //game.physics.arcade.collide(enemySprite, uGroup);
-        //game.physics.arcade.collide(enemySprite, uGroup, print, null, null, this);
         position = enemySprite.position;
 
         //loop through units and enemies to check for collision
@@ -168,8 +160,8 @@ var Enemy = function (parent, game){
         
     function damage(dmg){
         health = health - dmg;
-        //console.log(health);
-        
+
+
         healthBar.crop(new Phaser.Rectangle(0,0,100*(health/maxHealth), 20))
         healthBar.updateCrop();
         

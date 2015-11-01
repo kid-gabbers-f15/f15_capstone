@@ -81,11 +81,15 @@ var DefenseEngine = function (game){
     function getPlayer(){
         return player;
     }
+    function getTopBase(){
+        return topBase;
+    }
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;
     that.getEnemyManager = getEnemyManager;
     that.getPlayer = getPlayer;
+    that.getTopBase = getTopBase;
     
     
     return that;

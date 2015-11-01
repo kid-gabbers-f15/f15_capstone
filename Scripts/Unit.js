@@ -19,6 +19,7 @@ var Unit = function (parent, game){
 
     var collision_group;
     var text;
+    var topBase;
     
     var bulletType = 'shotgun';
 
@@ -40,6 +41,7 @@ var Unit = function (parent, game){
     
     
     function OnCreate(x, y, unitGroup, enemypGroup){
+        topBase = defEngine.getTopBase();
         position.x = x;
         position.y = y;
         
@@ -229,7 +231,15 @@ var Unit = function (parent, game){
                     }
                 }
             }
-        }      
+        } 
+        var herp = game.physics.arcade.overlap(topBase, bulletSpriteGroup, function(obj1, obj2){
+                        currentBullet = obj2;
+                }, null, null, this);
+                    if(herp == true)
+                    {
+                        removeBulletOnly(currentBullet);
+                    }
+        
     }
     
     function add_unit(num_unit){
@@ -256,6 +266,9 @@ var Unit = function (parent, game){
     function removeBullet(bSprite, enemy){
         bSprite.destroy();
         enemy.damage(10);
+    }
+    function removeBulletOnly(bSprite){
+        bSprite.destroy();
     }
     function isAttack(){
         return can_attack;

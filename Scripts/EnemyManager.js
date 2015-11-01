@@ -3,7 +3,7 @@ var EnemyManager = function (game){
 
     var enemyGroup = [];    
     
-    var WAVECOUNT = 5; //
+    var WAVECOUNT = 6; //
     var killCnter = 0;
     
     var waveNumber = 0; //Keeps count of wave number. notify boss wave 
@@ -21,11 +21,9 @@ var EnemyManager = function (game){
     function Preload(){
         for(var i = 0; i < WAVECOUNT; ++i){
             var enemy = Enemy(that, game);
-            
             enemyChecked.push(1);
             
             enemy.Preload();
-            
             enemyGroup.push(enemy);
         }
     }
@@ -34,18 +32,24 @@ var EnemyManager = function (game){
     function OnCreate(unitGroup, enemypGroup){
         uGroup = unitGroup;
         eGroup = enemypGroup;
-        for(var i = 0; i < enemyGroup.length; ++i){
+        
+        for(var i = 0; i < enemyGroup.length - 1; ++i){
             enemyGroup[i].OnCreate(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup);
             enemyGroup[i].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup.getChildAt(Math.floor(Math.random() * unitGroup.length)));
             enemyGroup[i].set_tisAttack(); //assert that the enemy is able to attack upon creation
         }
+        
+        enemyGroup[enemyGroup.length - 1].OnCreate(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup, true);
+        //enemyGroup[enemyGroup.length - 1].make_Boss(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup.getChildAt(Math.floor(Math.random() * unitGroup.length)));
+        //enemyGroup[enemyGroup.length - 1].set_tisAttack();
+        //enemyGroup[enemyGroup.length - 1].zero_attack_delay();
     }
     
     function Update(){
         
         if(ifBoss){
-            if(enemyGroup[0].getIsActive() == true){
-                enemyGroup[0].Update();
+            if(enemyGroup[enemyGroup.length - 1].getIsActive() == true){
+                enemyGroup[enemyGroup.length - 1].Update();
             }
             else{ //once the boss is dead
                 ifBoss = 0; //turn off boss mode
@@ -56,11 +60,9 @@ var EnemyManager = function (game){
         }
         else{
                 
-            if(killCnter < WAVECOUNT){  //if you havent defeated all enemies  
+            if(killCnter < WAVECOUNT - 1){  //if you havent defeated all enemies (minus boss)
             
-                
-                
-                for(var i = 0; i < enemyGroup.length; ++i){
+                for(var i = 0; i < enemyGroup.length - 1; ++i){
                     if(enemyGroup[i].getIsActive() == true){
                         enemyGroup[i].Update(); //move them closer to player since theyre not dead, and incremement killcnter if health is zero
                         
@@ -82,12 +84,12 @@ var EnemyManager = function (game){
                 ++waveNumber;
                 
                 if(waveNumber == 3){ //every three waves, a big one comes out
-                    enemyGroup[0].make_Boss(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
+                    enemyGroup[enemyGroup.length - 1].make_Boss(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
                     ifBoss = 1; //active boss level
                     waveNumber = 0;
                 }
                 else{    
-                    for(var j = 0; j < enemyGroup.length; ++j){
+                    for(var j = 0; j < enemyGroup.length - 1; ++j){
                         //console.log('Else');
                         enemyGroup[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
                         enemyChecked[j] = 1; //mark as unchecked for death since were resetting

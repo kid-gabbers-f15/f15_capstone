@@ -6,7 +6,8 @@ var game = {};
 var defEngine;
 var baseManager;
 //
-var _baseJSONstring = "";
+var _friendBaseJSONstring = "";
+var _playerBaseJSONstring = "";
 
 //Runs at start of game
 var Boot = {
@@ -60,8 +61,6 @@ var Menu = {
         button2.events.onInputDown.add(function(){
             game.state.start('PreloadCustomize');
         });
-        
-        game.state.start("Preload");
         
     }
     
@@ -118,7 +117,9 @@ var Defense = {
         game.scale.setMinMax(800, 450, 1920, 1080);
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
-        
+
+        game.stage.backgroundColor = '#098AC3';
+
         console.log("Defense started");
         game.physics.startSystem(Phaser.Physics.ARCADE);
         defEngine.Preload();

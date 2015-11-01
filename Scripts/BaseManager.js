@@ -48,14 +48,21 @@ var BaseManager = function(game){
     }
     
     function SaveBase(){
-        for(var i = 0; i < stickers.length; ++i){
+        _baseJSONstring += '{ "list" : [';
+        for(var i = 0; i < stickers.length - 1; ++i){
             var object = {};
             object.image = stickers.getChildAt(i).key;
             object.position = { x: stickers.getChildAt(i).position.x , y: stickers.getChildAt(i).y};
 
-            _baseJSONstring += JSON.stringify(object);
-            console.log(_baseJSONstring);
+            _baseJSONstring += JSON.stringify(object) + ', ';
         }
+        var object = {};
+            object.image = stickers.getChildAt(stickers.length - 1).key;
+            object.position = { x: stickers.getChildAt(stickers.length - 1).position.x , y: stickers.getChildAt(stickers.length - 1).y};
+
+            _baseJSONstring += JSON.stringify(object) + ']}';
+        console.log(_baseJSONstring);
+
     }
     
     that.setCurrentImage = function(newImage){

@@ -2,6 +2,7 @@ var Enemy = function (parent, game){
     var that = {};
     
     var enemySprite;
+    
     var healthBar;
     
     var position = {};
@@ -10,8 +11,6 @@ var Enemy = function (parent, game){
     var const_maxHealth = 100; //will be the definite health for enemy units
     
     var velocityX = 10;
-    
-    
     
     var isActive;
     
@@ -25,26 +24,53 @@ var Enemy = function (parent, game){
     function Preload(){
         game.load.image('enemy', "Assets/EnemyPlaceholder.png");
         game.load.image('healthBar', 'Assets/Placeholder4.png');
+        game.load.image('EnemyBoss_1', 'Assets/Enemy_Pictures/Boss_1.png');
+        game.load.image('Boss_1_Health', 'Assets/Enemy_Pictures/Boss_1Health.png');
     }
     
-    function OnCreate(x, y, unitGroup, enemypGroup){
+    function OnCreate(x, y, unitGroup, enemypGroup, isBoss){
         isActive = false;
         position.x = x;
         position.y = y;
         can_attack = true; //upon creation enemies should be able to attack instantly
         attack_delay = 0;
+
+        if(isBoss===true){
+            
+            enemySprite = game.add.sprite(position.x, position.y, 'EnemyBoss_1' );
+            game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
+            enemySprite.body.collideWorldBounds = true;
+            enemySprite.body.friction = 10;
+            enemySprite.body.drag = 100;
+    
+            enemySprite.anchor.setTo(0.5, 0.5);
+    
+            health = maxHealth*10;
+            healthBar = game.add.sprite(position.x - 50, position.y - 70, 'Boss_1_Health');
+            healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
+            
+            enemySprite.visible = false;
+            healthBar.visible = false;
+            enemySprite.inputEnabled = false;
+            enemySprite.isActive = false;
+            isActive = false;
         
-        enemySprite = game.add.sprite(position.x, position.y, 'enemy' );
-        game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
-        enemySprite.body.collideWorldBounds = true;
-        enemySprite.body.friction = 10;
-        enemySprite.body.drag = 100;
-
-        enemySprite.anchor.setTo(0.5, 0.5);
-
-        health = maxHealth;
-        healthBar = game.add.sprite(position.x - 50, position.y - 70, 'healthBar');
-        healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
+            
+        }else{
+            
+            enemySprite = game.add.sprite(position.x, position.y, 'enemy' );
+            game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
+            enemySprite.body.collideWorldBounds = true;
+            enemySprite.body.friction = 10;
+            enemySprite.body.drag = 100;
+    
+            enemySprite.anchor.setTo(0.5, 0.5);
+    
+            health = maxHealth;
+            healthBar = game.add.sprite(position.x - 50, position.y - 70, 'healthBar');
+            healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
+            
+        }
         
         enemySprite.inputEnabled = true;
         enemySprite.input.useHandCursor = true;
@@ -56,6 +82,7 @@ var Enemy = function (parent, game){
         uGroup = unitGroup;
         enemypGroup.add(enemySprite);
         eGroup = enemypGroup;
+        
     }
     
     function make_Boss(x, y, target){ //this will be resetting the enemy to a boss Unit
@@ -63,7 +90,7 @@ var Enemy = function (parent, game){
         
         maxHealth = const_maxHealth*10; //multiply by 10 the health to make it stronger
         
-        health = maxHealth //times 10
+        health = maxHealth;
         
         healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
         healthBar.updateCrop();
@@ -77,11 +104,11 @@ var Enemy = function (parent, game){
         this.target = target;
         attack_delay = 0; 
         can_attack = true;
-        
+
     }
     
     function ResetEnemy(x, y, target){
-        
+
         maxHealth = const_maxHealth;
         health = maxHealth;
         healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
@@ -99,12 +126,7 @@ var Enemy = function (parent, game){
     }
     
     function Update(){
-        /*game.physics.arcade.moveToXY(
-            enemySprite,
-            200, 
-            900, 
-            75
-        );*/
+
         if(attack_delay == 0){
                 can_attack = true;
             }
@@ -160,8 +182,6 @@ var Enemy = function (parent, game){
         
     function damage(dmg){
         health = health - dmg;
-
-
         healthBar.crop(new Phaser.Rectangle(0,0,100*(health/maxHealth), 20))
         healthBar.updateCrop();
         
@@ -190,9 +210,6 @@ var Enemy = function (parent, game){
     function set_fisAttack(){
         can_attack = false;
     }
-    function set_tisAttack(){
-        can_attack = true;
-    }
     function reset_attack_delay(){
         attack_delay = 100;
     }
@@ -216,7 +233,6 @@ var Enemy = function (parent, game){
     that.getHealth = getHealth;
     that.isAttack = isAttack;
     that.set_fisAttack = set_fisAttack;
-    that.set_tisAttack = set_tisAttack;
     that.dec_attack_delay = dec_attack_delay;
     that.reset_attack_delay = reset_attack_delay;
     return that;

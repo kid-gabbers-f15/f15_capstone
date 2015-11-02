@@ -65,10 +65,13 @@ var DefenseEngine = function (game){
         //create a sprite to act as the area for the user's base
         //this 'windows' the base from other elements in the game 
         
-        topBase = game.add.sprite(game.world.centerX/2, 10, 'topBase');
+       // topBase = game.add.sprite(game.world.centerX/2, 10, 'topBase');
+       topBase = game.add.sprite(0,0,'topBase');
         topBase.isActive = true;
+        topBase.visible = false;
         game.physics.enable(topBase, Phaser.Physics.ARCADE);
         topBase.body.immovable = true;
+        topBase.scale.setTo(2,1.0555);
         
         //friend base building
         friendBaseData = JSON.parse(game.cache.getText('JSONfriendBaseData'));
@@ -78,7 +81,7 @@ var DefenseEngine = function (game){
         console.log(playerBaseData);
         loadPlayerBase(playerBaseData);
         
-        pausebutton = game.add.text(0, 50, 'Pause', {font: "65px Arial", fill: "fff"});
+        pausebutton = game.add.text(0, 50, 'Pause', {font: "65px Arial", fill: "ff0044"});
         pausebutton.inputEnabled = true;
         
         pausebutton.events.onInputUp.add(function(){
@@ -95,7 +98,7 @@ var DefenseEngine = function (game){
             }
         }
         
-        shopbutton = game.add.text(0, 100, 'Shop', {font: "65px Arial", fill: "fff"});
+        shopbutton = game.add.text(0, 100, 'Shop', {font: "65px Arial", fill: "ff0044"});
         shopbutton.inputEnabled = true;
         
         

@@ -67,8 +67,7 @@ var DefenseEngine = function (game){
         //create a sprite to act as the area for the user's base
         //this 'windows' the base from other elements in the game 
         
-        topBaseBackground = game.add.sprite(0,0,'topBaseBackground');
-        topBaseBackground.scale.setTo(2,1.0555);
+        topBaseBackground = game.add.sprite(game.world.centerX/2, 10,'topBaseBackground');
         
        // topBase = game.add.sprite(game.world.centerX/2, 10, 'topBase');
        topBaseCollision = game.add.sprite(0,0,'topBaseCollision');

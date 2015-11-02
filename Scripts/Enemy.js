@@ -8,7 +8,7 @@ var Enemy = function (parent, game){
     var position = {};
     var health = 100;
     var maxHealth = 100;
-    var const_maxHealth = 100; //will be the definite health for units
+    var const_maxHealth = 100; //will be the definite health for enemy units
     
     var velocityX = 10;
     
@@ -20,6 +20,7 @@ var Enemy = function (parent, game){
     var target;
     var can_attack;
     var attack_delay;
+    var boss;
     
     function Preload(){
         game.load.image('enemy', "Assets/EnemyPlaceholder.png");
@@ -32,7 +33,7 @@ var Enemy = function (parent, game){
         isActive = false;
         position.x = x;
         position.y = y;
-        can_attack = true;
+        can_attack = true; //upon creation enemies should be able to attack instantly
         attack_delay = 0;
 
         if(isBoss===true){
@@ -54,6 +55,7 @@ var Enemy = function (parent, game){
             enemySprite.inputEnabled = false;
             enemySprite.isActive = false;
             isActive = false;
+            boss = true;
         
             
         }else{
@@ -69,6 +71,7 @@ var Enemy = function (parent, game){
             health = maxHealth;
             healthBar = game.add.sprite(position.x - 50, position.y - 70, 'healthBar');
             healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
+            boss = false;
             
         }
         
@@ -102,23 +105,16 @@ var Enemy = function (parent, game){
         isActive = true;
         enemySprite.position = {x, y};
         this.target = target;
-
-        this.attack_delay = 0;
-        this.can_attack = true;
-        this.set_tisAttack();
-        this.zero_attack_delay();
-        attack_delay = 0;
+        attack_delay = 0; 
         can_attack = true;
+        boss = true;
 
     }
     
     function ResetEnemy(x, y, target){
-       // console.log("resetting");
-        
+
         maxHealth = const_maxHealth;
-        
         health = maxHealth;
-        
         healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
         healthBar.updateCrop();
         
@@ -131,6 +127,7 @@ var Enemy = function (parent, game){
         this.target = target;
         can_attack = true;
         attack_delay = 0;
+        boss = false;
     }
     
     function Update(){
@@ -166,10 +163,10 @@ var Enemy = function (parent, game){
             isActive = false;
         }
         
-        //collisions with units
         position = enemySprite.position;
 
-
+        //loop through units and enemies to check for collision
+        //after a collision is detectd, pull the unit object and enemy object for interaction
         var enemyGroup = defEngine.getEnemyManager().getEnemyGroup();
         var unitpGroup = defEngine.getPlayer().getUnitPGroup();
         for(var k = 0; k < enemyGroup.length; k++){
@@ -190,8 +187,6 @@ var Enemy = function (parent, game){
         
     function damage(dmg){
         health = health - dmg;
-        console.log(health);
-        
         healthBar.crop(new Phaser.Rectangle(0,0,100*(health/maxHealth), 20))
         healthBar.updateCrop();
         
@@ -200,6 +195,12 @@ var Enemy = function (parent, game){
             healthBar.visible = false;
             enemySprite.inputEnabled = false;
             isActive = false;
+            if(boss){
+                defEngine.addGold(100);
+            }
+            else{
+                defEngine.addGold(10);
+            }
         }
     }
     
@@ -229,12 +230,6 @@ var Enemy = function (parent, game){
     function dec_attack_delay(){
         attack_delay = attack_delay - 1;
     }
-    function get_attack_delay(){
-        return attack_delay;
-    }
-    function zero_attack_delay(){
-        attack_delay = 0;
-    }
     function getHealth(){
         return health;
     }
@@ -255,8 +250,6 @@ var Enemy = function (parent, game){
     that.set_tisAttack = set_tisAttack;
     that.dec_attack_delay = dec_attack_delay;
     that.reset_attack_delay = reset_attack_delay;
-    that.get_attack_delay = get_attack_delay;
-    that.zero_attack_delay = zero_attack_delay;
     return that;
 }
 

@@ -36,8 +36,7 @@ var EnemyManager = function (game){
         for(var i = 0; i < enemyGroup.length - 1; ++i){
             enemyGroup[i].OnCreate(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup);
             enemyGroup[i].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup.getChildAt(Math.floor(Math.random() * unitGroup.length)));
-            enemyGroup[i].set_tisAttack();
-            enemyGroup[i].zero_attack_delay();
+            enemyGroup[i].set_tisAttack(); //assert that the enemy is able to attack upon creation
         }
         
         enemyGroup[enemyGroup.length - 1].OnCreate(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup, true);

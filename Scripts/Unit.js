@@ -20,7 +20,7 @@ var Unit = function (parent, game){
     var collision_group;
     var text;
     
-    var bulletType = 'shotgun';
+    var bulletType = 'none';
 
 
     function Preload(){
@@ -57,14 +57,20 @@ var Unit = function (parent, game){
         unitSprite.input.useHandCursor = true;
         
         
-        
         //text = game.add.text(position.x, position.y, curr_children, { font: "65px Arial", fill: "#ff0044", align: "center" });
         //text.anchor.set(0.25);
     
         unitSprite.events.onInputDown.add(function(){
-            add_unit(1);
-            update_text();
-        
+            if(bulletType=='none')
+            {
+                
+            }
+            
+            else
+            {
+                add_unit(1);
+            }
+            //update_text();
         });
         
         unitGroup.add(unitSprite);
@@ -78,6 +84,8 @@ var Unit = function (parent, game){
     
     function Update(){
         //update_text();
+        
+        // Change picture based on children
         if(old_curr_children != curr_children)
         {
             if(curr_children == 0)

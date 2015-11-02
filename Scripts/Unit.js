@@ -19,7 +19,7 @@ var Unit = function (parent, game){
 
     var collision_group;
     var text;
-    var topBase;
+    var topBaseCollision;
     
     var bulletType = 'shotgun';
 
@@ -41,7 +41,7 @@ var Unit = function (parent, game){
     
     
     function OnCreate(x, y, unitGroup, enemypGroup){
-        topBase = defEngine.getTopBase();
+        topBaseCollision = defEngine.getTopBaseCollision();
         position.x = x;
         position.y = y;
         
@@ -232,7 +232,7 @@ var Unit = function (parent, game){
                 }
             }
         } 
-        var herp = game.physics.arcade.overlap(topBase, bulletSpriteGroup, function(obj1, obj2){
+        var herp = game.physics.arcade.overlap(topBaseCollision, bulletSpriteGroup, function(obj1, obj2){
                         currentBullet = obj2;
                 }, null, null, this);
                     if(herp == true)

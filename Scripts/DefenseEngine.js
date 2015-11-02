@@ -2,7 +2,7 @@ var DefenseEngine = function (game){
     var that = {};
     
     var background;
-    var topBase;
+    var topBaseCollision;
     
     var enemyManager;
     var player;
@@ -16,6 +16,7 @@ var DefenseEngine = function (game){
     var friendBaseData;
     var pausetext;
     var shopmenu;
+    var topBaseBackground;
     
     function loadPlayerBase(base){
         for(var i = 0; i < base.list.length; ++i){
@@ -36,7 +37,8 @@ var DefenseEngine = function (game){
         //loading background image
         console.log("Preload for defense engine");
         game.load.image('background', 'Assets/BackgroundKidGabTemplate.png');
-        game.load.image('topBase', 'Assets/TopBaseImage.png');
+        game.load.image('topBaseCollision', 'Assets/TopBaseImage.png');
+        game.load.image('topBaseBackground', 'Assets/TopBaseImage.png');
 
         enemyManager = EnemyManager(game);
         enemyManager.Preload();
@@ -65,13 +67,16 @@ var DefenseEngine = function (game){
         //create a sprite to act as the area for the user's base
         //this 'windows' the base from other elements in the game 
         
+        topBaseBackground = game.add.sprite(0,0,'topBaseBackground');
+        topBaseBackground.scale.setTo(2,1.0555);
+        
        // topBase = game.add.sprite(game.world.centerX/2, 10, 'topBase');
-       topBase = game.add.sprite(0,0,'topBase');
-        topBase.isActive = true;
-        topBase.visible = false;
-        game.physics.enable(topBase, Phaser.Physics.ARCADE);
-        topBase.body.immovable = true;
-        topBase.scale.setTo(2,1.0555);
+       topBaseCollision = game.add.sprite(0,0,'topBaseCollision');
+        topBaseCollision.isActive = true;
+        topBaseCollision.visible = false;
+        game.physics.enable(topBaseCollision, Phaser.Physics.ARCADE);
+        topBaseCollision.body.immovable = true;
+        topBaseCollision.scale.setTo(2,1.0555);
         
         //friend base building
         friendBaseData = JSON.parse(game.cache.getText('JSONfriendBaseData'));
@@ -81,7 +86,7 @@ var DefenseEngine = function (game){
         console.log(playerBaseData);
         loadPlayerBase(playerBaseData);
         
-        pausebutton = game.add.text(0, 50, 'Pause', {font: "65px Arial", fill: "ff0044"});
+        pausebutton = game.add.text(0, 50, 'Pause', {font: "65px Arial", fill: "#ff0044"});
         pausebutton.inputEnabled = true;
         
         pausebutton.events.onInputUp.add(function(){
@@ -98,7 +103,7 @@ var DefenseEngine = function (game){
             }
         }
         
-        shopbutton = game.add.text(0, 100, 'Shop', {font: "65px Arial", fill: "ff0044"});
+        shopbutton = game.add.text(0, 100, 'Shop', {font: "65px Arial", fill: "#ff0044"});
         shopbutton.inputEnabled = true;
         
         
@@ -133,7 +138,7 @@ var DefenseEngine = function (game){
     function Update(){
         //check for collision with enemies with base window
         var enemyGroup = getEnemyManager().getEgroup();
-        game.physics.arcade.collide(topBase, enemyGroup);
+        game.physics.arcade.collide(topBaseCollision, enemyGroup);
             enemyManager.Update();
             player.Update();
             updateGold();
@@ -146,8 +151,8 @@ var DefenseEngine = function (game){
     function getPlayer(){
         return player;
     }
-    function getTopBase(){
-        return topBase;
+    function getTopBaseCollision(){
+        return topBaseCollision;
     }
     function updateGold(){
         goldText.setText("Gold: " + gold);
@@ -166,7 +171,7 @@ var DefenseEngine = function (game){
     that.OnCreate = OnCreate;
     that.getEnemyManager = getEnemyManager;
     that.getPlayer = getPlayer;
-    that.getTopBase = getTopBase;
+    that.getTopBaseCollision = getTopBaseCollision;
     that.updateGold = updateGold;
     that.addGold = addGold;
     that.getGold = getGold;

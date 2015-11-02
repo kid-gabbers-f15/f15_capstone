@@ -58,10 +58,6 @@ var Unit = function (parent, game){
         unitSprite.inputEnabled = true;
         unitSprite.input.useHandCursor = true;
         
-<<<<<<< HEAD
-        
-=======
->>>>>>> master
         //text = game.add.text(position.x, position.y, curr_children, { font: "65px Arial", fill: "#ff0044", align: "center" });
         //text.anchor.set(0.25);
     

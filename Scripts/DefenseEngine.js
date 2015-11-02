@@ -17,6 +17,7 @@ var DefenseEngine = function (game){
     var pausetext;
     var shopmenu;
     var topBaseBackground;
+    var unpauseButton;
     
     function loadPlayerBase(base){
         for(var i = 0; i < base.list.length; ++i){
@@ -67,8 +68,7 @@ var DefenseEngine = function (game){
         //create a sprite to act as the area for the user's base
         //this 'windows' the base from other elements in the game 
         
-        topBaseBackground = game.add.sprite(0,0,'topBaseBackground');
-        topBaseBackground.scale.setTo(2,1.0555);
+        topBaseBackground = game.add.sprite(game.world.centerX/2, 10,'topBaseBackground');
         
        // topBase = game.add.sprite(game.world.centerX/2, 10, 'topBase');
        topBaseCollision = game.add.sprite(0,0,'topBaseCollision');
@@ -89,43 +89,69 @@ var DefenseEngine = function (game){
         pausebutton = game.add.text(0, 50, 'Pause', {font: "65px Arial", fill: "#ff0044"});
         pausebutton.inputEnabled = true;
         
-        pausebutton.events.onInputUp.add(function(){
+        pausebutton.events.onInputDown.add(function(){
            game.paused = true; 
            pausetext = game.add.text(game.world.centerX, game.world.centerY, "PAUSED", { font: "65px Arial", fill: "#ff0044", align: "center" });
             pausetext.anchor.setTo(0.5,0.5);
+           // unpauseButton = game.add.text(game.world.width - 300, 20, "Resume", { font: "65px Arial", fill: "#ff0044", align: "center" });
+            //unpauseButton.inputEnabled = true;
             
         });
+        
         game.input.onDown.add(unpause, self);
         function unpause(event){
             if(game.paused){
-                game.paused = false;
-                pausetext.destroy();
+                if(shopmenu)
+                {
+                    var x1 = game.world.centerX - 150, x2 = game.world.centerX + 90, y1 = game.world.height - 140, y2 = game.world.height - 90;
+                    if(event.x > x1 && event.x < x2 && event.y > y1 && event.y < y2)
+                    {
+                        game.paused = false;
+                        pausetext.destroy();
+                        shopmenu.destroy();
+                        unpauseButton.destroy();                    }
+                }
+                else{
+                    game.paused = false;
+                    pausetext.destroy();
+                    //unpauseButton.destroy();
+                }
+                //determine if click was inside area and such
+                //game.paused = false;
+                //pausetext.destroy();
             }
         }
+        
         
         shopbutton = game.add.text(0, 100, 'Shop', {font: "65px Arial", fill: "#ff0044"});
         shopbutton.inputEnabled = true;
         
         
-        shopbutton.events.onInputUp.add(function(){
+        shopbutton.events.onInputDown.add(function(){
            game.paused = true; 
            pausetext = game.add.text(game.world.width - 300, 0, "PAUSED", { font: "65px Arial", fill: "#ff0044", align: "center" });
             //pausetext.anchor.setTo(0.5,0.5);
             shopmenu = game.add.sprite(game.world.centerX, game.world.centerY, 'image3');
             shopmenu.anchor.setTo(0.5,0.5);
             shopmenu.scale.setTo(10,10);
-            
+            unpauseButton = game.add.text(game.world.centerX - 150, game.world.height - 150, "Resume", { font: "65px Arial", fill: "#ff0044", align: "center" });
+            unpauseButton.inputEnabled = true;
             
         });
-        game.input.onDown.add(unpause, self);
-        function unpause(event){
+        /*
+        if(game.paused){
+            unpauseButton.events.onInputDown.add(function(){
             if(game.paused){
                 game.paused = false;
                 pausetext.destroy();
                 shopmenu.destroy();
-            }
+                unpauseButton.destroy();
+                }
+            });
         }
-        
+        */
+            
+            
         goldText = game.add.text(0, 0, "Gold: " + gold, { font: "65px Arial", fill: "#ff0044", align: "center" });
         
         unitGroup = game.add.group();

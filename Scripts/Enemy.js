@@ -20,6 +20,7 @@ var Enemy = function (parent, game){
     var target;
     var can_attack;
     var attack_delay;
+    var boss;
     
     function Preload(){
         game.load.image('enemy', "Assets/EnemyPlaceholder.png");
@@ -54,6 +55,7 @@ var Enemy = function (parent, game){
             enemySprite.inputEnabled = false;
             enemySprite.isActive = false;
             isActive = false;
+            boss = true;
         
             
         }else{
@@ -69,6 +71,7 @@ var Enemy = function (parent, game){
             health = maxHealth;
             healthBar = game.add.sprite(position.x - 50, position.y - 70, 'healthBar');
             healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
+            boss = false;
             
         }
         
@@ -104,6 +107,7 @@ var Enemy = function (parent, game){
         this.target = target;
         attack_delay = 0; 
         can_attack = true;
+        boss = true;
 
     }
     
@@ -123,6 +127,7 @@ var Enemy = function (parent, game){
         this.target = target;
         can_attack = true;
         attack_delay = 0;
+        boss = false;
     }
     
     function Update(){
@@ -190,6 +195,12 @@ var Enemy = function (parent, game){
             healthBar.visible = false;
             enemySprite.inputEnabled = false;
             isActive = false;
+            if(boss){
+                defEngine.addGold(100);
+            }
+            else{
+                defEngine.addGold(10);
+            }
         }
     }
     
@@ -209,6 +220,9 @@ var Enemy = function (parent, game){
     }
     function set_fisAttack(){
         can_attack = false;
+    }
+    function set_tisAttack(){
+        can_attack = true;
     }
     function reset_attack_delay(){
         attack_delay = 100;
@@ -233,6 +247,7 @@ var Enemy = function (parent, game){
     that.getHealth = getHealth;
     that.isAttack = isAttack;
     that.set_fisAttack = set_fisAttack;
+    that.set_tisAttack = set_tisAttack;
     that.dec_attack_delay = dec_attack_delay;
     that.reset_attack_delay = reset_attack_delay;
     return that;

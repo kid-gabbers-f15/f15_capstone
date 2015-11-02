@@ -9,8 +9,13 @@ var DefenseEngine = function (game){
     
     var unitGroup;
     var enemypGroup;
-    
+    var gold;
+    var goldText;
+    var shopbutton;
+    var pausebutton;
     var friendBaseData;
+    var pausetext;
+    var shopmenu;
     
     function loadPlayerBase(base){
         for(var i = 0; i < base.list.length; ++i){
@@ -52,13 +57,14 @@ var DefenseEngine = function (game){
     }
     
     function OnCreate(){
-      
+        gold = 500;
         //drawing background
         background = game.add.sprite(game.world.centerX, game.world.centerY + game.world.centerY/2, 'background');
         background.anchor.setTo(0.5, 0.5);
         background.crop(new Phaser.Rectangle(0, 540, 1920, 1080));
         //create a sprite to act as the area for the user's base
         //this 'windows' the base from other elements in the game 
+        
         topBase = game.add.sprite(game.world.centerX/2, 10, 'topBase');
         topBase.isActive = true;
         game.physics.enable(topBase, Phaser.Physics.ARCADE);
@@ -71,6 +77,48 @@ var DefenseEngine = function (game){
         playerBaseData = JSON.parse(game.cache.getText('JSONplayerBaseData'));
         console.log(playerBaseData);
         loadPlayerBase(playerBaseData);
+        
+        pausebutton = game.add.text(0, 50, 'Pause', {font: "65px Arial", fill: "fff"});
+        pausebutton.inputEnabled = true;
+        
+        pausebutton.events.onInputUp.add(function(){
+           game.paused = true; 
+           pausetext = game.add.text(game.world.centerX, game.world.centerY, "PAUSED", { font: "65px Arial", fill: "#ff0044", align: "center" });
+            pausetext.anchor.setTo(0.5,0.5);
+            
+        });
+        game.input.onDown.add(unpause, self);
+        function unpause(event){
+            if(game.paused){
+                game.paused = false;
+                pausetext.destroy();
+            }
+        }
+        
+        shopbutton = game.add.text(0, 100, 'Shop', {font: "65px Arial", fill: "fff"});
+        shopbutton.inputEnabled = true;
+        
+        
+        shopbutton.events.onInputUp.add(function(){
+           game.paused = true; 
+           pausetext = game.add.text(game.world.width - 300, 0, "PAUSED", { font: "65px Arial", fill: "#ff0044", align: "center" });
+            //pausetext.anchor.setTo(0.5,0.5);
+            shopmenu = game.add.sprite(game.world.centerX, game.world.centerY, 'image3');
+            shopmenu.anchor.setTo(0.5,0.5);
+            shopmenu.scale.setTo(10,10);
+            
+            
+        });
+        game.input.onDown.add(unpause, self);
+        function unpause(event){
+            if(game.paused){
+                game.paused = false;
+                pausetext.destroy();
+                shopmenu.destroy();
+            }
+        }
+        
+        goldText = game.add.text(0, 0, "Gold: " + gold, { font: "65px Arial", fill: "#ff0044", align: "center" });
         
         unitGroup = game.add.group();
         enemypGroup = game.add.group();
@@ -85,6 +133,7 @@ var DefenseEngine = function (game){
         game.physics.arcade.collide(topBase, enemyGroup);
             enemyManager.Update();
             player.Update();
+            updateGold();
     }
     
     function getEnemyManager(){
@@ -97,13 +146,28 @@ var DefenseEngine = function (game){
     function getTopBase(){
         return topBase;
     }
+    function updateGold(){
+        goldText.setText("Gold: " + gold);
+    }
+    function addGold(amount){
+        gold = gold + amount;
+    }
+    function getGold(){
+        return gold;
+    }
+    function spendGold(amount){
+        gold = gold - amount;
+    }
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;
     that.getEnemyManager = getEnemyManager;
     that.getPlayer = getPlayer;
     that.getTopBase = getTopBase;
-    
+    that.updateGold = updateGold;
+    that.addGold = addGold;
+    that.getGold = getGold;
+    that.spendGold = spendGold;
     
     return that;
 }

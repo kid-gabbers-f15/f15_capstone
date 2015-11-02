@@ -22,6 +22,9 @@ var Unit = function (parent, game){
     var topBaseCollision;
     
     var bulletType = 'none';
+    var pistolSprite;
+    var shotgunSprite;
+    var rifleSprite;
 
 
     function Preload(){
@@ -37,10 +40,15 @@ var Unit = function (parent, game){
         game.load.image('unit8', "Assets/Unit_Pictures/unit8.png");
         game.load.image('unit9', "Assets/Unit_Pictures/unit9.png");
         game.load.image('unit10', "Assets/Unit_Pictures/unit10.png");
+        game.load.image('pistolSprite', "Assets/Bullet_Type_Pictures/pistol.png");
+        game.load.image('shotgunSprite', "Assets/Bullet_Type_Pictures/shotgun.png");
+        game.load.image('rifleSprite', "Assets/Bullet_Type_Pictures/rifle.png");
     }
     
     
     function OnCreate(x, y, unitGroup, enemypGroup){
+        weaponSelection(0, 0, false);
+        
         topBaseCollision = defEngine.getTopBaseCollision();
         position.x = x;
         position.y = y;
@@ -64,14 +72,13 @@ var Unit = function (parent, game){
         unitSprite.events.onInputDown.add(function(){
             if(bulletType=='none')
             {
-                
+                weaponSelection(position.x, position.y, true);
             }
-            
             else
             {
                 add_unit(1);
+                //update_text();
             }
-            //update_text();
         });
         
         unitGroup.add(unitSprite);
@@ -283,7 +290,34 @@ var Unit = function (parent, game){
     function isAttack(){
         return can_attack;
     }
-
+    
+    function weaponSelection(x, y, visible){
+        if(pistolSprite != undefined)
+        {
+            console.log(pistolSprite);
+            pistolSprite.destroy();
+            shotgunSprite.destroy();
+            rifleSprite.destroy();
+            console.log('DESTROY!!!!!')
+        }
+        
+        pistolSprite = game.add.sprite(position.x-150, position.y, 'pistolSprite');
+        shotgunSprite = game.add.sprite(position.x-250, position.y, 'shotgunSprite');
+        rifleSprite = game.add.sprite(position.x-150, position.y-100, 'rifleSprite');
+        
+        //pistolSprite.visible = visible;
+        //shotgunSprite.visible = visible;
+        //rifleSprite.visible = visible;
+        
+        pistolSprite.events.onInputDown.add(function(){
+            bulletType = 'pistol';
+            pistolSprite.destroy();
+            shotgunSprite.destroy();
+            rifleSprite.destroy();
+            console.log('pistol clicked');
+        });
+    }
+    
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;

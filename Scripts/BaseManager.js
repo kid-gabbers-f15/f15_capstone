@@ -23,7 +23,6 @@ var BaseManager = function(game){
         background = game.add.sprite(game.world.centerX, game.world.centerY, 'background');
         background.anchor.setTo(0.5, 0.5);
         background.inputEnabled = true;
-        
         stickers = game.add.group();
         
         background.events.onInputDown.add(function(){

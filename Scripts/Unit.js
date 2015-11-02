@@ -19,6 +19,7 @@ var Unit = function (parent, game){
 
     var collision_group;
     var text;
+    var topBaseCollision;
     
     var bulletType = 'shotgun';
 
@@ -40,6 +41,7 @@ var Unit = function (parent, game){
     
     
     function OnCreate(x, y, unitGroup, enemypGroup){
+        topBaseCollision = defEngine.getTopBaseCollision();
         position.x = x;
         position.y = y;
         
@@ -55,8 +57,6 @@ var Unit = function (parent, game){
         
         unitSprite.inputEnabled = true;
         unitSprite.input.useHandCursor = true;
-        
-        
         
         //text = game.add.text(position.x, position.y, curr_children, { font: "65px Arial", fill: "#ff0044", align: "center" });
         //text.anchor.set(0.25);
@@ -231,13 +231,21 @@ var Unit = function (parent, game){
                     }
                 }
             }
-        }      
+        } 
+        var herp = game.physics.arcade.overlap(topBaseCollision, bulletSpriteGroup, function(obj1, obj2){
+                        currentBullet = obj2;
+                }, null, null, this);
+                    if(herp == true)
+                    {
+                        removeBulletOnly(currentBullet);
+                    }
+        
     }
     
     function add_unit(num_unit){
-            if(curr_children != max_size){
+            if(curr_children != max_size && defEngine.getGold() > 10){
                curr_children = curr_children + num_unit;
-               // console.log("added " + num_unit + " unit"); 
+               defEngine.spendGold(10);
             }
         }
         
@@ -251,7 +259,6 @@ var Unit = function (parent, game){
     
     function dec_children(){
         curr_children = curr_children - 1;
-       // console.log(curr_children);
     }
     function update_text(){
         //text.setText(curr_children);
@@ -260,7 +267,9 @@ var Unit = function (parent, game){
     function removeBullet(bSprite, enemy){
         bSprite.destroy();
         enemy.damage(10);
-        //console.log("collide");
+    }
+    function removeBulletOnly(bSprite){
+        bSprite.destroy();
     }
     function isAttack(){
         return can_attack;

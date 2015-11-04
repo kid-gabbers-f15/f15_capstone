@@ -23,9 +23,11 @@ var Enemy = function (parent, game){
     var boss;
     
     function Preload(){
-        game.load.image('enemy', "Assets/EnemyPlaceholder.png");
+        game.load.image('enemy1', "Assets/Enemy_Pictures/Enemy6.png");
+        game.load.image('enemy2', "Assets/Enemy_Pictures/Enemy2.png");
+        game.load.image('enemy3', "Assets/Enemy_Pictures/Enemy4.png");
         game.load.image('healthBar', 'Assets/Placeholder4.png');
-        game.load.image('EnemyBoss_1', 'Assets/Enemy_Pictures/Boss_1.png');
+        game.load.image('EnemyBoss_1', 'Assets/Enemy_Pictures/Enemy5.png');
         game.load.image('Boss_1_Health', 'Assets/Enemy_Pictures/Boss_1Health.png');
     }
     
@@ -60,7 +62,7 @@ var Enemy = function (parent, game){
             
         }else{
             
-            enemySprite = game.add.sprite(position.x, position.y, 'enemy' );
+            enemySprite = game.add.sprite(position.x, position.y, 'enemy' + Math.ceil(Math.random()*3) );
             game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
             enemySprite.body.collideWorldBounds = true;
             enemySprite.body.friction = 10;
@@ -85,6 +87,40 @@ var Enemy = function (parent, game){
         uGroup = unitGroup;
         enemypGroup.add(enemySprite);
         eGroup = enemypGroup;
+        
+    }
+    
+    /*  x and y is where the enemy will spwan
+        unitGroup is the respective units for that enemy
+        enemypGroup is the enemies that it will join
+    */
+    
+    function new_enemy(x, y, unitGroup, enemypGroup){
+        
+        enemySprite = game.add.sprite(position.x, position.y, 'enemy' + Math.ceil(Math.random()*3)  );
+        game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
+        enemySprite.body.collideWorldBounds = true;
+        enemySprite.body.friction = 10;
+        enemySprite.body.drag = 100;
+    
+        enemySprite.anchor.setTo(0.5, 0.5);
+    
+        health = maxHealth;
+        healthBar = game.add.sprite(position.x - 50, position.y - 70, 'healthBar');
+        healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
+            
+        
+        enemySprite.inputEnabled = true;
+        enemySprite.input.useHandCursor = true;
+        enemySprite.events.onInputDown.add(function(){
+            damage(10);
+            
+        });
+        
+        uGroup = unitGroup;
+        enemypGroup.add(enemySprite);
+        eGroup = enemypGroup;
+        
         
     }
     
@@ -250,6 +286,7 @@ var Enemy = function (parent, game){
     that.set_tisAttack = set_tisAttack;
     that.dec_attack_delay = dec_attack_delay;
     that.reset_attack_delay = reset_attack_delay;
+    that.new_enemy = new_enemy;
     return that;
 }
 

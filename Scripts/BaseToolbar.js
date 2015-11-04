@@ -12,6 +12,8 @@ var BaseToolbar = function(game, parent){
     var image4;
     
     function Preload(){
+        
+        
         game.load.image('image1', 'Assets/Placeholder1.png');
         game.load.image('image2', 'Assets/Placeholder2.png');
         game.load.image('image3', 'Assets/Placeholder3.png');

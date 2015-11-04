@@ -12,10 +12,14 @@ var BaseToolbar = function(game, parent){
     var image4;
     
     function Preload(){
-        game.load.image('image1', 'Assets/Placeholder1.png');
-        game.load.image('image2', 'Assets/Placeholder2.png');
-        game.load.image('image3', 'Assets/Placeholder3.png');
-        game.load.image('image4', 'Assets/Placeholder4.png');
+        game.load.image('BG1', 'Assets/BaseBackgrounds/BG1.png');
+        game.load.image('BG2', 'Assets/BaseBackgrounds/BG2.png');
+        game.load.image('BG3', 'Assets/BaseBackgrounds/BG3.png');
+
+        game.load.image('image1', 'Assets/BaseStickers/Animal1.png');
+        game.load.image('image2', 'Assets/BaseStickers/Animal2.png');
+        game.load.image('image3', 'Assets/BaseStickers/MusicNote1.png');
+        game.load.image('image4', 'Assets/BaseStickers/PaintBrush.png');
     }
     
     function OnCreate(){

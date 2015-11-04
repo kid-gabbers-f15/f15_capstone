@@ -18,6 +18,7 @@ var DefenseEngine = function (game){
     var shopmenu;
     var topBaseBackground;
     var unpauseButton;
+    var showShop = false;
     
     function loadPlayerBase(base){
         for(var i = 0; i < base.list.length; ++i){
@@ -98,31 +99,6 @@ var DefenseEngine = function (game){
             
         });
         
-        game.input.onDown.add(unpause, self);
-        function unpause(event){
-            if(game.paused){
-                if(shopmenu)
-                {
-                    var x1 = game.world.centerX - 150, x2 = game.world.centerX + 90, y1 = game.world.height - 140, y2 = game.world.height - 90;
-                    if(event.x > x1 && event.x < x2 && event.y > y1 && event.y < y2)
-                    {
-                        game.paused = false;
-                        pausetext.destroy();
-                        shopmenu.destroy();
-                        unpauseButton.destroy();                    }
-                }
-                else{
-                    game.paused = false;
-                    pausetext.destroy();
-                    //unpauseButton.destroy();
-                }
-                //determine if click was inside area and such
-                //game.paused = false;
-                //pausetext.destroy();
-            }
-        }
-        
-        
         shopbutton = game.add.text(0, 100, 'Shop', {font: "65px Arial", fill: "#ff0044"});
         shopbutton.inputEnabled = true;
         
@@ -136,8 +112,36 @@ var DefenseEngine = function (game){
             shopmenu.scale.setTo(10,10);
             unpauseButton = game.add.text(game.world.centerX - 150, game.world.height - 150, "Resume", { font: "65px Arial", fill: "#ff0044", align: "center" });
             unpauseButton.inputEnabled = true;
+            showShop = true;
             
         });
+        
+        game.input.onDown.add(unpause, self);
+        function unpause(event){
+            if(game.paused){
+                if(showShop == true)
+                {
+                    var x1 = game.world.centerX - 150, x2 = game.world.centerX + 90, y1 = game.world.height - 140, y2 = game.world.height - 90;
+                    if(event.x > x1 && event.x < x2 && event.y > y1 && event.y < y2)
+                    {
+                        game.paused = false;
+                        pausetext.destroy();
+                        shopmenu.destroy();
+                        unpauseButton.destroy();   
+                        showShop = false;
+                    }
+                }
+                else{
+                    game.paused = false;
+                    pausetext.destroy();
+                    //unpauseButton.destroy();
+                }
+                //determine if click was inside area and such
+                //game.paused = false;
+                //pausetext.destroy();
+            }
+        }
+        
         /*
         if(game.paused){
             unpauseButton.events.onInputDown.add(function(){
@@ -192,6 +196,15 @@ var DefenseEngine = function (game){
     function spendGold(amount){
         gold = gold - amount;
     }
+    function canAfford(amount)
+    {
+        if(gold - amount >= 0)
+        {
+            return true;   
+        }
+        else
+            return false;
+    }
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;
@@ -202,6 +215,7 @@ var DefenseEngine = function (game){
     that.addGold = addGold;
     that.getGold = getGold;
     that.spendGold = spendGold;
+    that.canAfford = canAfford;
     
     return that;
 }

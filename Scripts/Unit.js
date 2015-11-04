@@ -22,6 +22,7 @@ var Unit = function (parent, game){
     var topBaseCollision;
     
     var bulletType = 'none';
+    var cost;
     var pistolSprite;
     var shotgunSprite;
     var rifleSprite;
@@ -287,9 +288,9 @@ var Unit = function (parent, game){
     }
     
     function add_unit(num_unit){
-            if(curr_children != max_size && defEngine.canAfford(10)){
+            if(curr_children != max_size && defEngine.canAfford(cost)){
                curr_children = curr_children + num_unit;
-               defEngine.spendGold(10);
+               defEngine.spendGold(cost);
             }
         }
         
@@ -343,7 +344,6 @@ var Unit = function (parent, game){
         
         if(showWeapons == true && pistolSprite == undefined)
         {
-            console.log('initial')
             pistolSprite = game.add.sprite(position.x-150, position.y, 'pistolSprite');
             shotgunSprite = game.add.sprite(position.x-250, position.y, 'shotgunSprite');
             rifleSprite = game.add.sprite(position.x-150, position.y-100, 'rifleSprite');
@@ -373,6 +373,7 @@ var Unit = function (parent, game){
         
         pistolSprite.events.onInputDown.add(function(){
             bulletType = 'pistol';
+            cost = 5;
             pistolSprite.visible = false;
             shotgunSprite.visible = false;
             rifleSprite.visible = false;
@@ -380,10 +381,13 @@ var Unit = function (parent, game){
             shotgunSprite.inputEnabled = false;
             rifleSprite.inputEnabled = false;
             unitSprite.loadTexture('unicorn1');
+            add_unit(1);
+            showWeapons = false;
         });
         
         shotgunSprite.events.onInputDown.add(function(){
             bulletType = 'shotgun';
+            cost = 20;
             pistolSprite.visible = false;
             shotgunSprite.visible = false;
             rifleSprite.visible = false;
@@ -391,10 +395,13 @@ var Unit = function (parent, game){
             shotgunSprite.inputEnabled = false;
             rifleSprite.inputEnabled = false;
             unitSprite.loadTexture('robot1');
+            add_unit(1);
+            showWeapons = false;
         });
         
         rifleSprite.events.onInputDown.add(function(){
             bulletType = 'rifle';
+            cost = 10;
             pistolSprite.visible = false;
             shotgunSprite.visible = false;
             rifleSprite.visible = false;
@@ -402,6 +409,8 @@ var Unit = function (parent, game){
             shotgunSprite.inputEnabled = false;
             rifleSprite.inputEnabled = false;
             unitSprite.loadTexture('superbear1');
+            add_unit(1);
+            showWeapons = false;
         });
     }
     

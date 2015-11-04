@@ -44,6 +44,9 @@ var Unit = function (parent, game){
         game.load.image('pistolSprite', "Assets/Bullet_Type_Pictures/pistol.png");
         game.load.image('shotgunSprite', "Assets/Bullet_Type_Pictures/shotgun.png");
         game.load.image('rifleSprite', "Assets/Bullet_Type_Pictures/rifle.png");
+        game.load.image('robot1', "Assets/Unit_Pictures/robot1.png");
+        game.load.image('superbear1', "Assets/Unit_Pictures/SuperBear.png");
+        game.load.image('unicorn1', "Assets/Unit_Pictures/Unicorn1.png");
     }
     
     
@@ -65,8 +68,8 @@ var Unit = function (parent, game){
         unitSprite.inputEnabled = true;
         unitSprite.input.useHandCursor = true;
         
-        //text = game.add.text(position.x, position.y, curr_children, { font: "65px Arial", fill: "#ff0044", align: "center" });
-        //text.anchor.set(0.25);
+        text = game.add.text(position.x, position.y, curr_children, { font: "65px Arial", fill: "#ff0044", align: "center" });
+        text.anchor.set(0.25);
     
         unitSprite.events.onInputDown.add(function(){
             if(bulletType=='none')
@@ -76,7 +79,7 @@ var Unit = function (parent, game){
             else
             {
                 add_unit(1);
-                //update_text();
+                update_text();
             }
         });
         
@@ -90,10 +93,10 @@ var Unit = function (parent, game){
     }
     
     function Update(){
-        //update_text();
+        update_text();
         
         // Change picture based on children
-        if(old_curr_children != curr_children)
+        /*if(old_curr_children != curr_children)
         {
             if(curr_children == 0)
             {
@@ -145,7 +148,7 @@ var Unit = function (parent, game){
             }
             
             old_curr_children = curr_children;
-        }
+        }*/
         
         var enemyGroup = defEngine.getEnemyManager().getEnemyGroup();
         
@@ -291,7 +294,7 @@ var Unit = function (parent, game){
         curr_children = curr_children - 1;
     }
     function update_text(){
-        //text.setText(curr_children);
+        text.setText(curr_children);
     }
 
     function removeBullet(bSprite, enemy){
@@ -365,6 +368,7 @@ var Unit = function (parent, game){
             pistolSprite.inputEnabled = false;
             shotgunSprite.inputEnabled = false;
             rifleSprite.inputEnabled = false;
+            unitSprite.loadTexture('unicorn1');
         });
         
         shotgunSprite.events.onInputDown.add(function(){
@@ -375,6 +379,7 @@ var Unit = function (parent, game){
             pistolSprite.inputEnabled = false;
             shotgunSprite.inputEnabled = false;
             rifleSprite.inputEnabled = false;
+            unitSprite.loadTexture('robot1');
         });
         
         rifleSprite.events.onInputDown.add(function(){
@@ -385,6 +390,7 @@ var Unit = function (parent, game){
             pistolSprite.inputEnabled = false;
             shotgunSprite.inputEnabled = false;
             rifleSprite.inputEnabled = false;
+            unitSprite.loadTexture('superbear1');
         });
     }
     

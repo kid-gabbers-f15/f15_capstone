@@ -198,7 +198,7 @@ var DefenseEngine = function (game){
     }
     function canAfford(amount)
     {
-        if(gold - amount > 0)
+        if(gold - amount >= 0)
         {
             return true;   
         }

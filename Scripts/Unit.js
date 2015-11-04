@@ -29,21 +29,7 @@ var Unit = function (parent, game){
 
 
     function Preload(){
-        game.load.image('bullet', "Assets/bullet.png");
-        game.load.image('unit0', "Assets/Unit_Pictures/unit0.png");
-        game.load.image('unit1', "Assets/Unit_Pictures/unit1.png");
-        game.load.image('unit2', "Assets/Unit_Pictures/unit2.png");
-        game.load.image('unit3', "Assets/Unit_Pictures/unit3.png");
-        game.load.image('unit4', "Assets/Unit_Pictures/unit4.png");
-        game.load.image('unit5', "Assets/Unit_Pictures/unit5.png");
-        game.load.image('unit6', "Assets/Unit_Pictures/unit6.png");
-        game.load.image('unit7', "Assets/Unit_Pictures/unit7.png");
-        game.load.image('unit8', "Assets/Unit_Pictures/unit8.png");
-        game.load.image('unit9', "Assets/Unit_Pictures/unit9.png");
-        game.load.image('unit10', "Assets/Unit_Pictures/unit10.png");
-        game.load.image('pistolSprite', "Assets/Bullet_Type_Pictures/pistol.png");
-        game.load.image('shotgunSprite', "Assets/Bullet_Type_Pictures/shotgun.png");
-        game.load.image('rifleSprite', "Assets/Bullet_Type_Pictures/rifle.png");
+        
     }
     
     

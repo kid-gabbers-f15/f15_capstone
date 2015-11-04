@@ -18,6 +18,9 @@ var Boot = {
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
         
+        var assetLoader = AssetLoader(game);
+        assetLoader.Preload();
+        
         console.log("Boot");
     },
     
@@ -31,6 +34,7 @@ var Boot = {
 var Menu = {
     //preload, create, update
     preload : function (){
+        
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; //resize your window to see the stage resize too
         game.scale.setMinMax(800, 450, 1920, 1080);
         game.scale.pageAlignHorizontally = true;

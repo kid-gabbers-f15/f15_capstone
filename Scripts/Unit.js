@@ -363,8 +363,6 @@ var Unit = function (parent, game){
             pistolSprite.inputEnabled = false;
             shotgunSprite.inputEnabled = false;
             rifleSprite.inputEnabled = false;
-            unitSprite.loadTexture('unicorn1');
-            add_unit(1);
             showWeapons = false;
             unitSprite.loadTexture('Unit3');
         });
@@ -378,8 +376,6 @@ var Unit = function (parent, game){
             pistolSprite.inputEnabled = false;
             shotgunSprite.inputEnabled = false;
             rifleSprite.inputEnabled = false;
-            unitSprite.loadTexture('robot1');
-            add_unit(1);
             showWeapons = false;
             unitSprite.loadTexture('Unit1');
         });
@@ -393,8 +389,6 @@ var Unit = function (parent, game){
             pistolSprite.inputEnabled = false;
             shotgunSprite.inputEnabled = false;
             rifleSprite.inputEnabled = false;
-            unitSprite.loadTexture('superbear1');
-            add_unit(1);
             showWeapons = false;
             unitSprite.loadTexture('Unit2');
         });

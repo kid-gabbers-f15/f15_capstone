@@ -287,7 +287,7 @@ var Unit = function (parent, game){
     }
     
     function add_unit(num_unit){
-            if(curr_children != max_size && defEngine.getGold() > 10){
+            if(curr_children != max_size && defEngine.canAfford(10)){
                curr_children = curr_children + num_unit;
                defEngine.spendGold(10);
             }

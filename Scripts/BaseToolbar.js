@@ -17,19 +17,24 @@ var BaseToolbar = function(game, parent){
         
     }
     
+    function addEventtoSlot(index, slot){
+        slot.events.onInputDown.add(function(){
+            clickSlot(index);
+        });
+    }
+    
     function OnCreate(){
 
         for(var i = 0; i < game.cache.getKeys().length; ++i){
             console.log(game.cache.getKeys()[i].indexOf('BaseSticker'));
             if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
                 if((0 + 200*slots.length) < 1920){
-                    var temp = game.add.sprite(0 + 200*slots.length, 900, game.cache.getKeys()[i]);
-                    slots.push({slot:temp, key:game.cache.getKeys()[i], keyIndex:i});
+                    var temp = {};
+                    temp = game.add.sprite(0 + 200*slots.length, 900, game.cache.getKeys()[i]);
                     temp.inputEnabled = true;
+                    addEventtoSlot(i, temp);
+                    slots.push({slot:temp, key:game.cache.getKeys()[i], keyIndex:i});
                     console.log(slots[slots.length-1].keyIndex);
-                    temp.events.onInputDown.add(function(){
-                        clickSlot(slots[slots.length-1].keyIndex);
-                    });
                 }
             }
         }

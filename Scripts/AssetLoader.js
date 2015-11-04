@@ -57,7 +57,7 @@ var AssetLoader = function(game){
         game.load.image('BaseSticker27', 'Assets/BaseStickers/MusicNote3.png');
         game.load.image('BaseSticker28', 'Assets/BaseStickers/MusicNote4.png');
         game.load.image('BaseSticker29', 'Assets/BaseStickers/PaintBrush.png');
-        game.load.image('BaseSticker30', 'Assets/BaseStickers/Unicorn.png');
+        game.load.image('BaseSticker30', 'Assets/BaseStickers/Unicorn1.png');
 
 
         //Units-----------------------------------------------------

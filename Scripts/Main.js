@@ -25,7 +25,7 @@ var Boot = {
     },
     
     create : function(){
-        game.state.start("PreloadCustomize");        
+        game.state.start("PreloadDefense");        
     }
     
 };

@@ -38,9 +38,6 @@ var DefenseEngine = function (game){
     function Preload(){
         //loading background image
         console.log("Preload for defense engine");
-        game.load.image('background', 'Assets/BackgroundKidGabTemplate.png');
-        game.load.image('topBaseCollision', 'Assets/TopBaseImage.png');
-        game.load.image('topBaseBackground', 'Assets/TopBaseImage.png');
 
         enemyManager = EnemyManager(game);
         enemyManager.Preload();
@@ -48,15 +45,8 @@ var DefenseEngine = function (game){
         player = Player(game);
         player.Preload();
         
-        game.load.image('unit', "Assets/Placeholder1.png");
-
         game.load.text('JSONfriendBaseData', 'Scripts/json.txt');
         game.load.text('JSONplayerBaseData', 'Scripts/json.txt');
-        
-        game.load.image('image1', 'Assets/Placeholder1.png');
-        game.load.image('image2', 'Assets/Placeholder2.png');
-        game.load.image('image3', 'Assets/Placeholder3.png');
-        game.load.image('image4', 'Assets/Placeholder4.png');
 
     }
     

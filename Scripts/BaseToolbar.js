@@ -11,54 +11,40 @@ var BaseToolbar = function(game, parent){
     var image3;
     var image4;
     
+    var slots = [];
+    
     function Preload(){
-        game.load.image('BG1', 'Assets/BaseBackgrounds/BG1.png');
-        game.load.image('BG2', 'Assets/BaseBackgrounds/BG2.png');
-        game.load.image('BG3', 'Assets/BaseBackgrounds/BG3.png');
-
-        game.load.image('image1', 'Assets/BaseStickers/Animal1.png');
-        game.load.image('image2', 'Assets/BaseStickers/Animal2.png');
-        game.load.image('image3', 'Assets/BaseStickers/MusicNote1.png');
-        game.load.image('image4', 'Assets/BaseStickers/PaintBrush.png');
+        
     }
     
     function OnCreate(){
-        slot1 = game.add.sprite(0, 900, 'image1');
-        slot1.inputEnabled = true;
-        slot1.events.onInputDown.add(function(){
-            clickSlot(1);
-        });
-        
-        slot2 = game.add.sprite(100, 900, 'image2');
-        slot2.inputEnabled = true;
-        slot2.events.onInputDown.add(function(){
-            clickSlot(2);
-        });
-        
-        slot3 = game.add.sprite(200, 900, 'image3');
-        slot3.inputEnabled = true;
-        slot3.events.onInputDown.add(function(){
-            clickSlot(3);
-        });
-        
-        slot4 = game.add.sprite(300, 900, 'image4');
-        slot4.inputEnabled = true;
-        slot4.events.onInputDown.add(function(){
-            clickSlot(4);
-        });
+
+        for(var i = 0; i < game.cache.getKeys().length; ++i){
+            console.log(game.cache.getKeys()[i].indexOf('BaseSticker'));
+            if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
+                if((0 + 200*slots.length) < 1920){
+                    var temp = game.add.sprite(0 + 200*slots.length, 900, game.cache.getKeys()[i]);
+                    slots.push({slot:temp, key:game.cache.getKeys()[i], keyIndex:i});
+                    temp.inputEnabled = true;
+                    console.log(slots[slots.length-1].keyIndex);
+                    temp.events.onInputDown.add(function(){
+                        clickSlot(slots[slots.length-1].keyIndex);
+                    });
+                }
+            }
+        }
         
     }
     
     function clickSlot(slotClicked){
         console.log("Clicked slot #" + slotClicked);
-        if(slotClicked === 1){
-            parent.setCurrentImage('image1');
-        }else if(slotClicked === 2){
-            parent.setCurrentImage('image2');
-        }else if(slotClicked === 3){
-            parent.setCurrentImage('image3');
-        }else if(slotClicked === 4){
-            parent.setCurrentImage('image4');
+         for(var i = 0; i < slots.length; ++i){
+            console.log(slots[i].key);
+            console.log(slots[i].keyIndex);
+            if(slotClicked === slots[i].keyIndex){
+                console.log(slots[i].key);
+                parent.setCurrentImage(slots[i].key);
+            }
         }
     }
     

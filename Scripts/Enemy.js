@@ -23,12 +23,7 @@ var Enemy = function (parent, game){
     var boss;
     
     function Preload(){
-        game.load.image('enemy1', "Assets/Enemy_Pictures/Enemy6.png");
-        game.load.image('enemy2', "Assets/Enemy_Pictures/Enemy2.png");
-        game.load.image('enemy3', "Assets/Enemy_Pictures/Enemy4.png");
-        game.load.image('healthBar', 'Assets/Placeholder4.png');
-        game.load.image('EnemyBoss_1', 'Assets/Enemy_Pictures/Enemy5.png');
-        game.load.image('Boss_1_Health', 'Assets/Enemy_Pictures/Boss_1Health.png');
+       
     }
     
     function OnCreate(x, y, unitGroup, enemypGroup, isBoss){

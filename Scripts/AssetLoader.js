@@ -79,6 +79,11 @@ var AssetLoader = function(game){
         game.load.image('EnemyBoss_1', 'Assets/Enemy_Pictures/Enemy5.png');
         game.load.image('Boss_1_Health', 'Assets/Enemy_Pictures/Boss_1Health.png');
         
+        //Main view stuff
+        game.load.image('background', 'Assets/BackgroundKidGabTemplate.png');
+        game.load.image('topBaseCollision', 'Assets/TopBaseImage.png');
+        game.load.image('topBaseBackground', 'Assets/TopBaseImage.png');
+        
     }
     
     that.Preload = Preload;

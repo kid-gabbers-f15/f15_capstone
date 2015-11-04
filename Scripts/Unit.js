@@ -95,6 +95,17 @@ var Unit = function (parent, game){
     function Update(){
         update_text();
         
+        if(old_curr_children != curr_children)
+        {
+            if(curr_children == 0)
+            {
+                unitSprite.loadTexture('unit0');
+                bulletType = 'none';
+            }
+            
+            old_curr_children = curr_children;
+        }
+        
         // Change picture based on children
         /*if(old_curr_children != curr_children)
         {

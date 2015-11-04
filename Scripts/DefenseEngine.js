@@ -87,7 +87,7 @@ var DefenseEngine = function (game){
         console.log(playerBaseData);
         loadPlayerBase(playerBaseData);
         
-        pausebutton = game.add.text(0, 50, 'Pause', {font: "65px Arial", fill: "#ff0044"});
+        pausebutton = game.add.text(0, 65, 'Pause', {font: "65px Arial", fill: "#ff0044"});
         pausebutton.inputEnabled = true;
         
         pausebutton.events.onInputDown.add(function(){
@@ -99,7 +99,7 @@ var DefenseEngine = function (game){
             
         });
         
-        shopbutton = game.add.text(0, 100, 'Shop', {font: "65px Arial", fill: "#ff0044"});
+        shopbutton = game.add.text(0, 130, 'Shop', {font: "65px Arial", fill: "#ff0044"});
         shopbutton.inputEnabled = true;
         
         

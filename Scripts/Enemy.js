@@ -90,6 +90,40 @@ var Enemy = function (parent, game){
         
     }
     
+    /*  x and y is where the enemy will spwan
+        unitGroup is the respective units for that enemy
+        enemypGroup is the enemies that it will join
+    */
+    
+    function new_enemy(x, y, unitGroup, enemypGroup){
+        
+        enemySprite = game.add.sprite(position.x, position.y, 'enemy'  + Math.ceil(Math.random()*3)  );
+        game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
+        enemySprite.body.collideWorldBounds = true;
+        enemySprite.body.friction = 10;
+        enemySprite.body.drag = 100;
+    
+        enemySprite.anchor.setTo(0.5, 0.5);
+    
+        health = maxHealth;
+        healthBar = game.add.sprite(position.x - 50, position.y - 70, 'healthBar');
+        healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
+            
+        
+        enemySprite.inputEnabled = true;
+        enemySprite.input.useHandCursor = true;
+        enemySprite.events.onInputDown.add(function(){
+            damage(10);
+            
+        });
+        
+        uGroup = unitGroup;
+        enemypGroup.add(enemySprite);
+        eGroup = enemypGroup;
+        
+        
+    }
+    
     function make_Boss(x, y, target){ //this will be resetting the enemy to a boss Unit
         console.log("BOSS TIME")
         
@@ -252,6 +286,7 @@ var Enemy = function (parent, game){
     that.set_tisAttack = set_tisAttack;
     that.dec_attack_delay = dec_attack_delay;
     that.reset_attack_delay = reset_attack_delay;
+    that.new_enemy = new_enemy;
     return that;
 }
 

@@ -25,7 +25,7 @@ var Boot = {
     },
     
     create : function(){
-        game.state.start("Menu");        
+        game.state.start("Defense");        
     }
     
 };

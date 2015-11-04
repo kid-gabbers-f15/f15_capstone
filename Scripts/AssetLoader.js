@@ -3,29 +3,29 @@ var AssetLoader = function(game){
     
     var Preload = function(){
         //Base Backgrounds-------------------------------------------------
-        game.load.image('BaseBackground1', 'Assets/BaseBackground/BG1.png');
-        game.load.image('BaseBackground2', 'Assets/BaseBackground/BG2.png');
-        game.load.image('BaseBackground3', 'Assets/BaseBackground/BG3.png');
-        game.load.image('BaseBackground4', 'Assets/BaseBackground/BG4.png');
-        game.load.image('BaseBackground5', 'Assets/BaseBackground/BG5.png');
-        game.load.image('BaseBackground6', 'Assets/BaseBackground/BG6.png');
-        game.load.image('BaseBackground7', 'Assets/BaseBackground/BG7.png');
-        game.load.image('BaseBackground8', 'Assets/BaseBackground/BG8.png');
-        game.load.image('BaseBackground9', 'Assets/BaseBackground/BG9.png');
-        game.load.image('BaseBackground10', 'Assets/BaseBackground/BG10.png');
-        game.load.image('BaseBackground11', 'Assets/BaseBackground/BG11.png');
-        game.load.image('BaseBackground12', 'Assets/BaseBackground/BG12.png');
-        game.load.image('BaseBackground13', 'Assets/BaseBackground/BG13.png');
-        game.load.image('BaseBackground14', 'Assets/BaseBackground/BG14.png');
-        game.load.image('BaseBackground15', 'Assets/BaseBackground/BG15.png');
-        game.load.image('BaseBackground16', 'Assets/BaseBackground/BG16.png');
-        game.load.image('BaseBackground17', 'Assets/BaseBackground/BG17.png');
-        game.load.image('BaseBackground18', 'Assets/BaseBackground/BG18.png');
-        game.load.image('BaseBackground19', 'Assets/BaseBackground/BG19.png');
-        game.load.image('BaseBackground20', 'Assets/BaseBackground/BG20.png');
-        game.load.image('BaseBackground21', 'Assets/BaseBackground/BG21.png');
-        game.load.image('BaseBackground22', 'Assets/BaseBackground/BG22.png');
-        game.load.image('BaseBackground23', 'Assets/BaseBackground/BG23.png');
+        game.load.image('BaseBackground1', 'Assets/BaseBackgrounds/BG1.png');
+        game.load.image('BaseBackground2', 'Assets/BaseBackgrounds/BG2.png');
+        game.load.image('BaseBackground3', 'Assets/BaseBackgrounds/BG3.png');
+        game.load.image('BaseBackground4', 'Assets/BaseBackgrounds/BG4.png');
+        game.load.image('BaseBackground5', 'Assets/BaseBackgrounds/BG5.png');
+        game.load.image('BaseBackground6', 'Assets/BaseBackgrounds/BG6.png');
+        game.load.image('BaseBackground7', 'Assets/BaseBackgrounds/BG7.png');
+        game.load.image('BaseBackground8', 'Assets/BaseBackgrounds/BG8.png');
+        game.load.image('BaseBackground9', 'Assets/BaseBackgrounds/BG9.png');
+        game.load.image('BaseBackground10', 'Assets/BaseBackgrounds/BG10.png');
+        game.load.image('BaseBackground11', 'Assets/BaseBackgrounds/BG11.png');
+        game.load.image('BaseBackground12', 'Assets/BaseBackgrounds/BG12.png');
+        game.load.image('BaseBackground13', 'Assets/BaseBackgrounds/BG13.png');
+        game.load.image('BaseBackground14', 'Assets/BaseBackgrounds/BG14.png');
+        game.load.image('BaseBackground15', 'Assets/BaseBackgrounds/BG15.png');
+        game.load.image('BaseBackground16', 'Assets/BaseBackgrounds/BG16.png');
+        game.load.image('BaseBackground17', 'Assets/BaseBackgrounds/BG17.png');
+        game.load.image('BaseBackground18', 'Assets/BaseBackgrounds/BG18.png');
+        game.load.image('BaseBackground19', 'Assets/BaseBackgrounds/BG19.png');
+        game.load.image('BaseBackground20', 'Assets/BaseBackgrounds/BG20.png');
+        game.load.image('BaseBackground21', 'Assets/BaseBackgrounds/BG21.png');
+        game.load.image('BaseBackground22', 'Assets/BaseBackgrounds/BG22.png');
+        game.load.image('BaseBackground23', 'Assets/BaseBackgrounds/BG23.png');
 
         //Base Stickers-----------------------------------------------------
         game.load.image('BaseSticker1', 'Assets/BaseStickers/Animal1.png');

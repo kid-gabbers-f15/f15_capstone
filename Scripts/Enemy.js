@@ -97,7 +97,7 @@ var Enemy = function (parent, game){
     
     function new_enemy(x, y, unitGroup, enemypGroup){
         
-        enemySprite = game.add.sprite(position.x, position.y, 'enemy'  + Math.ceil(Math.random()*3)  );
+        enemySprite = game.add.sprite(position.x, position.y, 'enemy' + Math.ceil(Math.random()*3)  );
         game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
         enemySprite.body.collideWorldBounds = true;
         enemySprite.body.friction = 10;

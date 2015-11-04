@@ -1,6 +1,8 @@
 var EnemyManager = function (game){
     var that = {};
 
+    var x = 0;
+
     var enemyGroup = [];    
     
     var enemy_count_in_wave = 6; //
@@ -126,11 +128,16 @@ var EnemyManager = function (game){
                         enemyGroup[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
                         enemyChecked[j] = 1; //mark as unchecked for death since were resetting
                         
+                        
+                        
+                        
                     }
+                    
+                    
+                    add_enemy(2);
+                    enemy_count_in_wave = enemy_count_in_wave + 2;
                 }
                 
-                add_enemy(2);
-                enemy_count_in_wave = enemy_count_in_wave + 2;
                 
                 
                 

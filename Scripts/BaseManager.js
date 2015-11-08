@@ -4,12 +4,17 @@ var BaseManager = function(game){
     var background;
     
     var baseToolbar;
+    var mainButton;
+    var grd;
     
     var currentImage;
     
     var stickers;
     
     var maxStickers = 20;
+    
+    
+    
     
     function Preload(){
         game.load.image('background', 'Assets/BackgroundKidGabTemplate.png');
@@ -38,8 +43,26 @@ var BaseManager = function(game){
                 }
             }
         });
-        
+    
         baseToolbar.OnCreate();
+        
+        mainButton = game.add.text(0, 0, "Main Menu");
+                mainButton.font = 'Revalia';
+                mainButton.fontSize = 60;
+                grd = mainButton.context.createLinearGradient(0, 0, 0, mainButton.canvas.height);
+                grd.addColorStop(0, '#8ED6FF');   
+                grd.addColorStop(1, '#004CB3');
+                mainButton.fill = grd;
+                mainButton.align = 'center';
+                mainButton.stroke = '#000000';
+                mainButton.strokeThickness = 2;
+                mainButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        mainButton.inputEnabled = true;
+        
+        mainButton.events.onInputDown.add(function(){
+            game.state.start("Defense");
+        });
+        
     }
     
     function Update(){

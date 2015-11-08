@@ -121,7 +121,7 @@ function startGame() {
     game = new Phaser.Game(1920, 1080, Phaser.AUTO, 'gameContainer')
     
     game.state.add('Boot', Boot);
-    game.state.add('PreloadDefense', Preload);
+    game.state.add('Preload', Preload);
     game.state.add('Defense', Defense);
     game.state.add('Customize', Customize);
     game.state.add('Shop', Shop);

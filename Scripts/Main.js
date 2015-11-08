@@ -25,13 +25,13 @@ var Boot = {
     },
     
     create : function(){
-        game.state.start("PreloadDefense");        
+        game.state.start("Preload");        
     }
     
 };
 
 //Loads all assets
-var PreloadDefense = {
+var Preload = {
     //preload, create, update
     preload : function (){
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; //resize your window to see the stage resize too
@@ -50,27 +50,6 @@ var PreloadDefense = {
     }
     
 };
-
-var PreloadCustomize = {
-    //preload, create, update
-    preload : function (){
-        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; //resize your window to see the stage resize too
-        game.scale.setMinMax(800, 450, 1920, 1080);
-        game.scale.pageAlignHorizontally = true;
-        game.scale.pageAlignVertically = true;
-        
-        console.log("Preload");
-    },
-    
-    create : function(){
-        defEngine = DefenseEngine(game);
-        baseManager = BaseManager(game);
-        
-        game.state.start("Customize");
-    }
-    
-};
-
 
 //Main gameplay
 var Defense = {
@@ -142,8 +121,7 @@ function startGame() {
     game = new Phaser.Game(1920, 1080, Phaser.AUTO, 'gameContainer')
     
     game.state.add('Boot', Boot);
-    game.state.add('PreloadDefense', PreloadDefense);
-    game.state.add('PreloadCustomize', PreloadCustomize);
+    game.state.add('PreloadDefense', Preload);
     game.state.add('Defense', Defense);
     game.state.add('Customize', Customize);
     game.state.add('Shop', Shop);

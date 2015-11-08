@@ -34,14 +34,12 @@ var DefenseEngine = function (game){
     }
     function loadFriendBase(base){
         for(var i = 0; i < base.list.length; ++i){
-            var temp = game.add.sprite(base.list[i].position.x/2, base.list[i].position.y/2 + game.world.centerY, base.list[i].image);
+            var temp = game.add.sprite(base.list[i].position.x/2 - 120, base.list[i].position.y/2 + game.world.centerY, base.list[i].image);
             temp.anchor.setTo(0.5, 0.5);
             temp.scale.setTo(0.5, 0.5);
         }
     }
     
-    
-
     
     function Preload(){
         //loading background image

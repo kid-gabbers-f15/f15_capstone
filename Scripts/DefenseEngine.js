@@ -57,7 +57,7 @@ var DefenseEngine = function (game){
         player = Player(game);
         player.Preload();
         
-        game.load.text('JSONfriendBaseData', 'Scripts/json.txt');
+        game.load.text('JSONfriendBaseData', 'Scripts/json2.txt');
         game.load.text('JSONplayerBaseData', 'Scripts/json.txt');
 
     }

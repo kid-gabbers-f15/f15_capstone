@@ -13,8 +13,8 @@ var BaseManager = function(game){
     
     var maxStickers = 20;
     
-    
-    
+    var baseoffsetX = 130;
+    var baseoffsetY = 110;
     
     function Preload(){
         game.load.image('background', 'Assets/BackgroundKidGabTemplate.png');
@@ -25,9 +25,9 @@ var BaseManager = function(game){
     }
     
     function OnCreate(){
-        background = game.add.sprite(game.world.centerX, game.world.centerY, 'background');
+        background = game.add.sprite(game.world.centerX + baseoffsetX, game.world.centerY - baseoffsetY, 'BaseBackground23');
         background.anchor.setTo(0.5, 0.5);
-        background.scale.setTo(.9, .9);
+        background.scale.setTo(1.5, 1.5);
         background.inputEnabled = true;
         stickers = game.add.group();
         

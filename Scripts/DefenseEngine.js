@@ -13,6 +13,8 @@ var DefenseEngine = function (game){
     var goldText;
     var shopbutton;
     var pausebutton;
+    var baseButton;
+    var basetext;
     var friendBaseData;
     var pausetext;
     var shopmenu;
@@ -40,17 +42,17 @@ var DefenseEngine = function (game){
     
     WebFontConfig = {
 
-    //  'active' means all requested fonts have finished loading
-    //  We set a 1 second delay before calling 'createText'.
-    //  For some reason if we don't the browser cannot render the text the first time it's created.
-    active: function() { game.time.events.add(Phaser.Timer.SECOND, OnCreate, this); },
+        //  'active' means all requested fonts have finished loading
+        //  We set a 1 second delay before calling 'createText'.
+        //  For some reason if we don't the browser cannot render the text the first time it's created.
+        active: function() { game.time.events.add(Phaser.Timer.SECOND, OnCreate, this); },
+    
+        //  The Google Fonts we want to load (specify as many as you like in the array)
+        google: {
+          families: ['Revalia']
+        }
 
-    //  The Google Fonts we want to load (specify as many as you like in the array)
-    google: {
-      families: ['Revalia']
-    }
-
-};
+    };
 
     
     function Preload(){
@@ -231,6 +233,23 @@ var DefenseEngine = function (game){
             goldText.strokeThickness = 2;
             goldText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         
+        
+         baseButton = game.add.text(0, 200, "Base");
+                baseButton.font = 'Revalia';
+                baseButton.fontSize = 60;
+                grd = baseButton.context.createLinearGradient(0, 0, 0, baseButton.canvas.height);
+                grd.addColorStop(0, '#8ED6FF');   
+                grd.addColorStop(1, '#004CB3');
+                baseButton.fill = grd;
+                baseButton.align = 'center';
+                baseButton.stroke = '#000000';
+                baseButton.strokeThickness = 2;
+                baseButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        baseButton.inputEnabled = true;
+        
+        baseButton.events.onInputDown.add(function(){
+            game.state.start("Customize");
+        });
         
         unitGroup = game.add.group();
         enemypGroup = game.add.group();

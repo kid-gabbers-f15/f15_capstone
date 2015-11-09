@@ -24,8 +24,20 @@ var DefenseEngine = function (game){
     var shopPage = 0;
     var nextButton;
     var backButton;
+    var shopMenuItems;
+    
+    var numOfSlots = 5;
+    var pageNum = 0;
+    var stickers = [];
+    var slots = [];
 
     var grd;
+    
+    function addEventtoSlot(index, slot){
+        slot.events.onInputDown.add(function(){
+            clickSlot(index);
+        });
+    }
     
     function loadPlayerBase(base){
         for(var i = 0; i < base.list.length; ++i){
@@ -42,6 +54,13 @@ var DefenseEngine = function (game){
         }
     }
     
+    function loadMenuItems(items){
+        for(var i = 0; i < items.list.length; i++){
+            var temp = game.add.sprite(items.list[i].position.x + game.world.centerX, items.list[i].position.y + game.world.centerY, items.list[i].image);
+            temp.anchor.setTo(0.5,0.5);
+            temp.scale.setTo(0.5,0.5);
+        }
+    }
     
     function Preload(){
         //loading background image
@@ -59,6 +78,7 @@ var DefenseEngine = function (game){
         
         game.load.text('JSONfriendBaseData', 'Scripts/json2.txt');
         game.load.text('JSONplayerBaseData', 'Scripts/json.txt');
+        game.load.text('JSONshopMenuItems', 'Scripts/shopItems.txt');
 
     }
     
@@ -88,7 +108,9 @@ var DefenseEngine = function (game){
         playerBaseData = JSON.parse(game.cache.getText('JSONplayerBaseData'));
         console.log(playerBaseData);
         loadPlayerBase(playerBaseData);
+        shopMenuItems = JSON.parse(game.cache.getText('JSONshopMenuItems'));
         
+        //create menu buttons - pause, open menu, base
         createButtons();
         
         
@@ -273,7 +295,12 @@ var DefenseEngine = function (game){
                     shopbutton.fill = grd;
                 }, this);
         
-        shopbutton.events.onInputDown.add(showShopMenu);
+        shopbutton.events.onInputDown.add(function(){
+            if(showShop == false){
+                showShopMenu();
+            }
+
+        });
         
          baseButton = game.add.text(0, 200, "Base");
                 baseButton.font = 'Revalia';
@@ -345,7 +372,34 @@ var DefenseEngine = function (game){
                         nextButton.destroy();
                         backButton.destroy();
                         showShop = false;
+                        removeShopItems();
+                        
                 })
+                
+                
+                
+                
+        for(var i = 0; i < game.cache.getKeys().length; ++i){
+            if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
+                stickers.push(game.cache.getKeys()[i]);
+            }
+        }
+        
+        for(var i = 0; i < numOfSlots; ++i){
+            var temp = {};
+            temp = game.add.sprite(game.world.centerX - 300, 150 + 150*slots.length, stickers[i]);
+            //temp = game.add.sprite(50 + 100*slots.length, 900, stickers[i]);
+            temp.scale.set(.75, .75);
+            temp.anchor.set(.5,.5);
+            temp.inputEnabled = true;
+            addEventtoSlot(i, temp);
+            slots.push({slot:temp, key:stickers[i], keyIndex:i});
+        }
+                
+                
+                
+                
+                
                 
             nextButton = game.add.text(game.world.centerX + 200, game.world.height - 150, "Next");
                     nextButton.font = 'Revalia';
@@ -367,7 +421,7 @@ var DefenseEngine = function (game){
                     nextButton.fill = grd;
                 }, this);
                 nextButton.events.onInputDown.add(function(){
-                        
+                        clickNext();
                 })
                 
             backButton = game.add.text(game.world.centerX - 400, game.world.height - 150, "Back");
@@ -390,10 +444,82 @@ var DefenseEngine = function (game){
                     backButton.fill = grd;
                 }, this);
                 backButton.events.onInputDown.add(function(){
-                        
+                        clickBack();
                 })
+               // loadMenuItems(shopMenuItems);
+                
+                
             
             showShop = true;
+    }
+    
+    function clickBack(){
+        if(pageNum > 0){
+            pageNum -= 1;
+            var i = pageNum * numOfSlots;
+                for(var n = 0; n < slots.length; ++n){
+                    while(i <= stickers.length){
+                        if(n < slots.length){
+                            slots[n].slot.loadTexture(stickers[i]);
+                            slots[n].keyIndex = i;
+                            slots[n].key = stickers[i];
+                            slots[n].slot.events.onInputDown.removeAll();
+                            addEventtoSlot(i, slots[n].slot);
+                            slots[n].slot.visible = true;
+                            slots[n].slot.inputEnabled = true;
+                            ++n;
+                        }else{
+                            break;
+                        }
+                    ++i;
+                }
+            }
+        }
+    }
+    
+    function clickNext(){
+        if((pageNum + 1) * numOfSlots < stickers.length){
+            pageNum += 1;
+            var i = pageNum * numOfSlots;
+            for(var n = 0; n < slots.length; ++n){
+                while(i < stickers.length){
+                    if(n < slots.length){
+                        slots[n].slot.loadTexture(stickers[i]);
+                        slots[n].keyIndex = i;
+                        slots[n].key = stickers[i];
+                        slots[n].slot.events.onInputDown.removeAll();
+                        addEventtoSlot(i, slots[n].slot);
+                        ++n;
+                    }else{
+                        break;
+                    }
+                ++i;
+                }
+                if(n < slots.length){
+                    slots[n].slot.visible = false;
+                    slots[n].slot.inputEnabled = false;
+                }
+            }
+        }
+    }
+    
+    function clickSlot(slotClicked){
+         for(var i = 0; i < slots.length; ++i){
+            if(slotClicked === slots[i].keyIndex){
+                console.log(slots[i].key);
+                //parent.setCurrentImage(slots[i].key);
+            }
+        }
+    }
+    function removeShopItems(){
+        for(var i = 0; i < numOfSlots; ++i){
+            slots[i].slot.visible = false;
+            slots[i].slot.inputEnabled = false;
+            console.log("hi");
+            //temp.inputEnabled = true;
+            //addEventtoSlot(i, temp);
+            //slots.push({slot:temp, key:stickers[i], keyIndex:i});
+        }
     }
 
 /*

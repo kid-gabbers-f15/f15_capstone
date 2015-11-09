@@ -160,6 +160,9 @@ var BaseToolbar = function(game, parent){
     that.Preload = Preload;
     that.OnCreate = OnCreate;
     that.Update = Update;
+    that.clickBack = clickBack;
+    that.clickNext = clickNext;
+    that.clickSlot = clickSlot;
     
     return that;    
 }

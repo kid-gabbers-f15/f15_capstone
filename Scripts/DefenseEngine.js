@@ -71,10 +71,10 @@ var DefenseEngine = function (game){
         
         //friend base building
         friendBaseData = JSON.parse(game.cache.getText('JSONfriendBaseData'));
-        console.log(friendBaseData);
+        //console.log(friendBaseData);
         loadFriendBase(friendBaseData);
         playerBaseData = JSON.parse(game.cache.getText('JSONplayerBaseData'));
-        console.log(playerBaseData);
+        //console.log(playerBaseData);
         loadPlayerBase(playerBaseData);
         
         pausebutton = game.add.text(0, 50, 'Pause', {font: "65px Arial", fill: "#ff0044"});

@@ -47,8 +47,9 @@ var Enemy = function (parent, game){
     
             health = maxHealth*10;
             healthBar = game.add.sprite(position.x - 50, position.y - 70, 'Boss_1_Health');
-            healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
-            healthBar.anchor.setTo(0.5,0.5);
+            healthBar.crop(new Phaser.Rectangle(0,0,100*(health/maxHealth), 20));
+            healthBar.updateCrop();
+            //healthBar.anchor.setTo(0.5,0.5);
             
             enemySprite.visible = false;
             healthBar.visible = false;
@@ -95,8 +96,8 @@ var Enemy = function (parent, game){
         if(boss)
         {
             health = maxHealth*10;
-            healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
-            healthBar.updateCrop();
+            //healthBar.crop(new Phaser.Rectangle(0,0,100*(health/maxHealth), 20));
+            //healthBar.updateCrop();
             
             enemySprite.visible = true;
             healthBar.visible = true;
@@ -114,8 +115,8 @@ var Enemy = function (parent, game){
         {
             maxHealth = const_maxHealth;
             health = maxHealth;
-            healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
-            healthBar.updateCrop();
+            //healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
+            //healthBar.updateCrop();
             
             enemySprite.visible = true;
             healthBar.visible = true;
@@ -132,7 +133,6 @@ var Enemy = function (parent, game){
     }
     
     function Update(){
-
         if(attack_delay == 0)
         {
             can_attack = true;
@@ -179,7 +179,6 @@ var Enemy = function (parent, game){
         for(var i = 0; i < unitpGroup.length; i++){
             game.physics.arcade.collide(enemySprite, unitpGroup[i].getUnitSprite(), 
             function(){
-                console.log(isAttack);
                 if(unitpGroup[i].get_children() > 0 && can_attack == true && isActive == true){
                      unitpGroup[i].dec_children();
                      can_attack = false;

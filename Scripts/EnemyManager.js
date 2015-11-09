@@ -128,7 +128,7 @@ var EnemyManager = function (game){
         }
         else // Normal wave
         {
-            console.log(killCnter + " < " + enemy_count_in_wave*3)
+            //console.log(killCnter + " < " + enemy_count_in_wave*3)
             if(killCnter < enemy_count_in_wave*3) // Enemies still alive
             { 
                 for(var i = 0; i < enemyGroup1.length; ++i)
@@ -216,22 +216,28 @@ var EnemyManager = function (game){
     
     function getEnemyGroup(){
         var enemyGroup = [];
-        enemyGroup = enemyGroup1;
-        for(var i; i<enemyGroup2.length; i++)
+        for(var i=0; i<enemyGroup1.length; i++)
+        {
+            if(enemyGroup1[i].getIsActive() == true)
+            {
+                enemyGroup.push(enemyGroup1[i]);
+            }
+        }
+        for(var i=0; i<enemyGroup2.length; i++)
         {
             if(enemyGroup2[i].getIsActive() == true)
             {
                 enemyGroup.push(enemyGroup2[i]);
             }
         }
-        for(var i; i<enemyGroup3.length; i++)
+        for(var i=0; i<enemyGroup3.length; i++)
         {
             if(enemyGroup3[i].getIsActive() == true)
             {
                 enemyGroup.push(enemyGroup3[i]);
             }
         }
-        for(var i; i<bossGroup.length; i++)
+        for(var i=0; i<bossGroup.length; i++)
         {
             if(bossGroup[i].getIsActive() == true)
             {

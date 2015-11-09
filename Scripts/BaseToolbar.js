@@ -5,8 +5,9 @@ var BaseToolbar = function(game, parent){
     var nextButton;
     var grd;
     
-    var numOfSlots;
-    var cacheIndex;
+    var numOfSlots = 8;
+    var pageNum = 0;
+    var stickers = [];
     var slots = [];
     var imagesInSlots = 0;
 
@@ -21,25 +22,23 @@ var BaseToolbar = function(game, parent){
     }
 
     function OnCreate(){
-        numOfSlots = 0;
-        cacheIndex = 0;
         for(var i = 0; i < game.cache.getKeys().length; ++i){
             console.log(game.cache.getKeys()[i].indexOf('BaseSticker'));
             if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
-                if(numOfSlots <= 10){
-                    ++numOfSlots;
-                    var temp = {};
-                    temp = game.add.sprite(50 + 100*slots.length, 900, game.cache.getKeys()[i]);
-                    temp.scale.set(.75, .75);
-                    temp.anchor.set(.5,.5);
-                    temp.inputEnabled = true;
-                    addEventtoSlot(i, temp);
-                    slots.push({slot:temp, key:game.cache.getKeys()[i], keyIndex:i});
-                    console.log(slots[slots.length-1].keyIndex);
-                    cacheIndex = i;
-                    ++imagesInSlots;
-                }
+                stickers.push(game.cache.getKeys()[i]);
             }
+        }
+        
+        for(var i = 0; i < numOfSlots; ++i){
+            var temp = {};
+            temp = game.add.sprite(50 + 100*slots.length, 900, stickers[i]);
+            console.log(stickers[i]);
+            temp.scale.set(.75, .75);
+            temp.anchor.set(.5,.5);
+            temp.inputEnabled = true;
+            addEventtoSlot(i, temp);
+            slots.push({slot:temp, key:stickers[i], keyIndex:i});
+            ++imagesInSlots;
         }
         
          backButton = game.add.text(0, 800, "Back");
@@ -79,30 +78,49 @@ var BaseToolbar = function(game, parent){
     }
     
     function clickBack(){
-        
-    }
-    
-    function clickNext(){
-        if(imagesInSlots === slots.length){
-            var i = cacheIndex + 1;
-            imagesInSlots = 0;
-            for(var n = 0; n < slots.length; ++n){
-                while(i < game.cache.getKeys().length){
-                    if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
+        if(pageNum > 0){
+            pageNum -= 1;
+            console.log("click");
+            var i = pageNum * numOfSlots;
+                for(var n = 0; n < slots.length; ++n){
+                    while(i <= stickers.length){
                         if(n < slots.length){
-                            slots[n].slot.loadTexture(game.cache.getKeys()[i]);
+                            console.log(stickers[i]);
+                            slots[n].slot.loadTexture(stickers[i]);
                             slots[n].keyIndex = i;
-                            slots[n].key = game.cache.getKeys()[i];
+                            slots[n].key = stickers[i];
                             slots[n].slot.events.onInputDown.removeAll();
                             addEventtoSlot(i, slots[n].slot);
+                            slots[n].slot.visible = true;
+                            slots[n].slot.inputEnabled = true;
                             ++n;
-                            cacheIndex = i;
-                            ++imagesInSlots;
                         }else{
                             break;
                         }
-                    }
                     ++i;
+                }
+            }
+        }
+    }
+    
+    function clickNext(){
+        if((pageNum + 1) * numOfSlots < stickers.length){
+            pageNum += 1;
+            var i = pageNum * numOfSlots;
+            for(var n = 0; n < slots.length; ++n){
+                while(i < stickers.length){
+                    if(n < slots.length){
+                        console.log(stickers[i]);
+                        slots[n].slot.loadTexture(stickers[i]);
+                        slots[n].keyIndex = i;
+                        slots[n].key = stickers[i];
+                        slots[n].slot.events.onInputDown.removeAll();
+                        addEventtoSlot(i, slots[n].slot);
+                        ++n;
+                    }else{
+                        break;
+                    }
+                ++i;
                 }
                 if(n < slots.length){
                     console.log("click");

@@ -59,6 +59,12 @@ var BaseManager = function(game){
                 mainButton.strokeThickness = 2;
                 mainButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         mainButton.inputEnabled = true;
+        mainButton.events.onInputOver.add(function(){
+            mainButton.fill = '#ff00ff';
+        }, this);
+        mainButton.events.onInputOut.add(function(){
+            mainButton.fill = grd;
+        }, this);
         
         mainButton.events.onInputDown.add(function(){
             game.state.start("Defense");

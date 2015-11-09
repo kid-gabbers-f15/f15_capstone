@@ -19,10 +19,9 @@ var DefenseEngine = function (game){
     var pausetext;
     var shopmenu;
     var topBaseBackground;
-    var unpauseButton;
+    var exitButton;
     var showShop = false;
 
-    var text = null;
     var grd;
     
     function loadPlayerBase(base){
@@ -99,8 +98,15 @@ var DefenseEngine = function (game){
                 pausebutton.strokeThickness = 2;
                 pausebutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         pausebutton.inputEnabled = true;
+        pausebutton.events.onInputOver.add(function(){
+                    pausebutton.fill = '#ff00ff';
+                }, this);
+                pausebutton.events.onInputOut.add(function(){
+                    pausebutton.fill = grd;
+                }, this);
         
         pausebutton.events.onInputDown.add(function(){
+            pausebutton.fill = grd;
            game.paused = true; 
            pausetext = game.add.text(game.world.centerX, game.world.centerY, "PAUSED");
            pausetext.anchor.setTo(0.5,0.5);
@@ -114,8 +120,8 @@ var DefenseEngine = function (game){
                 pausetext.stroke = '#000000';
                 pausetext.strokeThickness = 2;
                 pausetext.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-           // unpauseButton = game.add.text(game.world.width - 300, 20, "Resume", { font: "65px Arial", fill: "#ff0044", align: "center" });
-            //unpauseButton.inputEnabled = true;
+           // exitButton = game.add.text(game.world.width - 300, 20, "Resume", { font: "65px Arial", fill: "#ff0044", align: "center" });
+            //exitButton.inputEnabled = true;
             
         });
         
@@ -131,10 +137,16 @@ var DefenseEngine = function (game){
                 shopbutton.strokeThickness = 2;
                 shopbutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         shopbutton.inputEnabled = true;
-        
+                shopbutton.events.onInputOver.add(function(){
+                    shopbutton.fill = '#ff00ff';
+                }, this);
+                shopbutton.events.onInputOut.add(function(){
+                    shopbutton.fill = grd;
+                }, this);
         
         shopbutton.events.onInputDown.add(function(){
-           game.paused = true; 
+           shopbutton.fill = grd;
+           //game.paused = true; 
            pausetext = game.add.text(game.world.width - 200, 30, "PAUSED");
                     pausetext.font = 'Revalia';
                     pausetext.fontSize = 60;
@@ -150,19 +162,31 @@ var DefenseEngine = function (game){
             shopmenu = game.add.sprite(game.world.centerX, game.world.centerY, 'image3');
             shopmenu.anchor.setTo(0.5,0.5);
             shopmenu.scale.setTo(10,10);
-            unpauseButton = game.add.text(game.world.centerX - 150, game.world.height - 150, "Resume");
-                    unpauseButton.font = 'Revalia';
-                    unpauseButton.fontSize = 60;
-                    grd = unpauseButton.context.createLinearGradient(0, 0, 0, unpauseButton.canvas.height);
+            exitButton = game.add.text(game.world.centerX - 75, game.world.height - 150, "Exit");
+                    exitButton.font = 'Revalia';
+                    exitButton.fontSize = 60;
+                    grd = exitButton.context.createLinearGradient(0, 0, 0, exitButton.canvas.height);
                     grd.addColorStop(0, '#8ED6FF');   
                     grd.addColorStop(1, '#004CB3');
-                    unpauseButton.fill = grd;
-                    unpauseButton.align = 'center';
-                    unpauseButton.stroke = '#000000';
-                    unpauseButton.strokeThickness = 2;
-                    unpauseButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+                    exitButton.fill = grd;
+                    exitButton.align = 'center';
+                    exitButton.stroke = '#000000';
+                    exitButton.strokeThickness = 2;
+                    exitButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
             
-            unpauseButton.inputEnabled = true;
+                exitButton.inputEnabled = true;
+                exitButton.events.onInputOver.add(function(){
+                    exitButton.fill = '#ff00ff';
+                }, this);
+                exitButton.events.onInputOut.add(function(){
+                    exitButton.fill = grd;
+                }, this);
+                exitButton.events.onInputDown.add(function(){
+                    pausetext.destroy();
+                        shopmenu.destroy();
+                        exitButton.destroy();   
+                        showShop = false;
+                })
             showShop = true;
             
         });
@@ -170,23 +194,9 @@ var DefenseEngine = function (game){
         game.input.onDown.add(unpause, self);
         function unpause(event){
             if(game.paused){
-                if(showShop == true)
-                {
-                    var x1 = game.world.centerX - 150, x2 = game.world.centerX + 90, y1 = game.world.height - 140, y2 = game.world.height - 90;
-                    if(event.x > x1 && event.x < x2 && event.y > y1 && event.y < y2)
-                    {
-                        game.paused = false;
-                        pausetext.destroy();
-                        shopmenu.destroy();
-                        unpauseButton.destroy();   
-                        showShop = false;
-                    }
-                }
-                else{
                     game.paused = false;
                     pausetext.destroy();
-                    //unpauseButton.destroy();
-                }
+                    //exitButton.destroy();
                 //determine if click was inside area and such
                 //game.paused = false;
                 //pausetext.destroy();
@@ -195,12 +205,12 @@ var DefenseEngine = function (game){
         
         /*
         if(game.paused){
-            unpauseButton.events.onInputDown.add(function(){
+            exitButton.events.onInputDown.add(function(){
             if(game.paused){
                 game.paused = false;
                 pausetext.destroy();
                 shopmenu.destroy();
-                unpauseButton.destroy();
+                exitButton.destroy();
                 }
             });
         }
@@ -232,10 +242,16 @@ var DefenseEngine = function (game){
                 baseButton.strokeThickness = 2;
                 baseButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         baseButton.inputEnabled = true;
-        
+        baseButton.events.onInputOver.add(function(){
+            baseButton.fill = '#ff00ff';
+        }, this);
+        baseButton.events.onInputOut.add(function(){
+            baseButton.fill = grd;
+        }, this);
         baseButton.events.onInputDown.add(function(){
             game.state.start("Customize");
         });
+        
         
         unitGroup = game.add.group();
         enemypGroup = game.add.group();
@@ -278,9 +294,10 @@ var DefenseEngine = function (game){
         //check for collision with enemies with base window
         var enemyGroup = getEnemyManager().getEgroup();
         game.physics.arcade.collide(topBaseCollision, enemyGroup);
-            enemyManager.Update();
-            player.Update();
-            updateGold();
+        enemyManager.Update();
+        player.Update();
+        updateGold();
+        
     }
     
     function getEnemyManager(){
@@ -315,18 +332,19 @@ var DefenseEngine = function (game){
             return false;
     }
 
-
-function out() {
+/*
+function out(text) {
 
     text.fill = grd;
 
 }
 
-function over() {
+function over(text) {
 
     text.fill = '#ff00ff';
 
 }
+*/
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;

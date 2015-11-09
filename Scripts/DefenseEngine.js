@@ -10,7 +10,7 @@ var DefenseEngine = function (game){
     var unitGroup;
     var enemypGroup;
     var gold;
-    var goldText;
+    var resourceText;
     var shopbutton;
     var pausebutton;
     var baseButton;
@@ -21,6 +21,9 @@ var DefenseEngine = function (game){
     var topBaseBackground;
     var exitButton;
     var showShop = false;
+    var shopPage = 0;
+    var nextButton;
+    var backButton;
 
     var grd;
     
@@ -86,110 +89,9 @@ var DefenseEngine = function (game){
         console.log(playerBaseData);
         loadPlayerBase(playerBaseData);
         
-        pausebutton = game.add.text(0, 65, "Pause");
-                pausebutton.font = 'Revalia';
-                pausebutton.fontSize = 60;
-                grd = pausebutton.context.createLinearGradient(0, 0, 0, pausebutton.canvas.height);
-                grd.addColorStop(0, '#8ED6FF');   
-                grd.addColorStop(1, '#004CB3');
-                pausebutton.fill = grd;
-                pausebutton.align = 'center';
-                pausebutton.stroke = '#000000';
-                pausebutton.strokeThickness = 2;
-                pausebutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-        pausebutton.inputEnabled = true;
-        pausebutton.events.onInputOver.add(function(){
-                    pausebutton.fill = '#ff00ff';
-                }, this);
-                pausebutton.events.onInputOut.add(function(){
-                    pausebutton.fill = grd;
-                }, this);
+        createButtons();
         
-        pausebutton.events.onInputDown.add(function(){
-            pausebutton.fill = grd;
-           game.paused = true; 
-           pausetext = game.add.text(game.world.centerX, game.world.centerY, "PAUSED");
-           pausetext.anchor.setTo(0.5,0.5);
-                pausetext.font = 'Revalia';
-                pausetext.fontSize = 60;
-                grd = pausetext.context.createLinearGradient(0, 0, 0, pausetext.canvas.height);
-                grd.addColorStop(0, '#8ED6FF');   
-                grd.addColorStop(1, '#004CB3');
-                pausetext.fill = grd;
-                pausetext.align = 'center';
-                pausetext.stroke = '#000000';
-                pausetext.strokeThickness = 2;
-                pausetext.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-           // exitButton = game.add.text(game.world.width - 300, 20, "Resume", { font: "65px Arial", fill: "#ff0044", align: "center" });
-            //exitButton.inputEnabled = true;
-            
-        });
         
-        shopbutton = game.add.text(0, 130, "Shop");
-                shopbutton.font = 'Revalia';
-                shopbutton.fontSize = 60;
-                grd = shopbutton.context.createLinearGradient(0, 0, 0, shopbutton.canvas.height);
-                grd.addColorStop(0, '#8ED6FF');   
-                grd.addColorStop(1, '#004CB3');
-                shopbutton.fill = grd;
-                shopbutton.align = 'center';
-                shopbutton.stroke = '#000000';
-                shopbutton.strokeThickness = 2;
-                shopbutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-        shopbutton.inputEnabled = true;
-                shopbutton.events.onInputOver.add(function(){
-                    shopbutton.fill = '#ff00ff';
-                }, this);
-                shopbutton.events.onInputOut.add(function(){
-                    shopbutton.fill = grd;
-                }, this);
-        
-        shopbutton.events.onInputDown.add(function(){
-           shopbutton.fill = grd;
-           //game.paused = true; 
-           pausetext = game.add.text(game.world.width - 200, 30, "PAUSED");
-                    pausetext.font = 'Revalia';
-                    pausetext.fontSize = 60;
-                    grd = pausetext.context.createLinearGradient(0, 0, 0, pausetext.canvas.height);
-                    grd.addColorStop(0, '#8ED6FF');   
-                    grd.addColorStop(1, '#004CB3');
-                    pausetext.fill = grd;
-                    pausetext.align = 'center';
-                    pausetext.stroke = '#000000';
-                    pausetext.strokeThickness = 2;
-                    pausetext.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-            pausetext.anchor.setTo(0.5,0.5);
-            shopmenu = game.add.sprite(game.world.centerX, game.world.centerY, 'image3');
-            shopmenu.anchor.setTo(0.5,0.5);
-            shopmenu.scale.setTo(10,10);
-            exitButton = game.add.text(game.world.centerX - 75, game.world.height - 150, "Exit");
-                    exitButton.font = 'Revalia';
-                    exitButton.fontSize = 60;
-                    grd = exitButton.context.createLinearGradient(0, 0, 0, exitButton.canvas.height);
-                    grd.addColorStop(0, '#8ED6FF');   
-                    grd.addColorStop(1, '#004CB3');
-                    exitButton.fill = grd;
-                    exitButton.align = 'center';
-                    exitButton.stroke = '#000000';
-                    exitButton.strokeThickness = 2;
-                    exitButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-            
-                exitButton.inputEnabled = true;
-                exitButton.events.onInputOver.add(function(){
-                    exitButton.fill = '#ff00ff';
-                }, this);
-                exitButton.events.onInputOut.add(function(){
-                    exitButton.fill = grd;
-                }, this);
-                exitButton.events.onInputDown.add(function(){
-                    pausetext.destroy();
-                        shopmenu.destroy();
-                        exitButton.destroy();   
-                        showShop = false;
-                })
-            showShop = true;
-            
-        });
         
         game.input.onDown.add(unpause, self);
         function unpause(event){
@@ -217,40 +119,20 @@ var DefenseEngine = function (game){
         */
             
             
-        goldText = game.add.text(0, 0, "Gold: " + gold);
-            goldText.font = 'Revalia';
-            goldText.fontSize = 60;
-            grd = goldText.context.createLinearGradient(0, 0, 0, goldText.canvas.height);
+        resourceText = game.add.text(0, 0, "Gold: " + gold);
+            resourceText.font = 'Revalia';
+            resourceText.fontSize = 60;
+            grd = resourceText.context.createLinearGradient(0, 0, 0, resourceText.canvas.height);
             grd.addColorStop(0, '#8ED6FF');   
             grd.addColorStop(1, '#004CB3');
-            goldText.fill = grd;
-            goldText.align = 'center';
-            goldText.stroke = '#000000';
-            goldText.strokeThickness = 2;
-            goldText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+            resourceText.fill = grd;
+            resourceText.align = 'center';
+            resourceText.stroke = '#000000';
+            resourceText.strokeThickness = 2;
+            resourceText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         
         
-         baseButton = game.add.text(0, 200, "Base");
-                baseButton.font = 'Revalia';
-                baseButton.fontSize = 60;
-                grd = baseButton.context.createLinearGradient(0, 0, 0, baseButton.canvas.height);
-                grd.addColorStop(0, '#8ED6FF');   
-                grd.addColorStop(1, '#004CB3');
-                baseButton.fill = grd;
-                baseButton.align = 'center';
-                baseButton.stroke = '#000000';
-                baseButton.strokeThickness = 2;
-                baseButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-        baseButton.inputEnabled = true;
-        baseButton.events.onInputOver.add(function(){
-            baseButton.fill = '#ff00ff';
-        }, this);
-        baseButton.events.onInputOut.add(function(){
-            baseButton.fill = grd;
-        }, this);
-        baseButton.events.onInputDown.add(function(){
-            game.state.start("Customize");
-        });
+        
         
         
         unitGroup = game.add.group();
@@ -296,7 +178,7 @@ var DefenseEngine = function (game){
         game.physics.arcade.collide(topBaseCollision, enemyGroup);
         enemyManager.Update();
         player.Update();
-        updateGold();
+        updateResource();
         
     }
     
@@ -310,8 +192,8 @@ var DefenseEngine = function (game){
     function getTopBaseCollision(){
         return topBaseCollision;
     }
-    function updateGold(){
-        goldText.setText("Gold: " + gold);
+    function updateResource(){
+        resourceText.setText("Gold: " + gold);
     }
     function addGold(amount){
         gold = gold + amount;
@@ -330,6 +212,188 @@ var DefenseEngine = function (game){
         }
         else
             return false;
+    }
+    
+    function createButtons(){
+        pausebutton = game.add.text(0, 65, "Pause");
+                pausebutton.font = 'Revalia';
+                pausebutton.fontSize = 60;
+                grd = pausebutton.context.createLinearGradient(0, 0, 0, pausebutton.canvas.height);
+                grd.addColorStop(0, '#8ED6FF');   
+                grd.addColorStop(1, '#004CB3');
+                pausebutton.fill = grd;
+                pausebutton.align = 'center';
+                pausebutton.stroke = '#000000';
+                pausebutton.strokeThickness = 2;
+                pausebutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        pausebutton.inputEnabled = true;
+        pausebutton.events.onInputOver.add(function(){
+                    pausebutton.fill = '#ff00ff';
+                }, this);
+                pausebutton.events.onInputOut.add(function(){
+                    pausebutton.fill = grd;
+                }, this);
+        
+        pausebutton.events.onInputDown.add(function(){
+            pausebutton.fill = grd;
+           game.paused = true; 
+           pausetext = game.add.text(game.world.centerX, game.world.centerY, "PAUSED");
+           pausetext.anchor.setTo(0.5,0.5);
+                pausetext.font = 'Revalia';
+                pausetext.fontSize = 60;
+                grd = pausetext.context.createLinearGradient(0, 0, 0, pausetext.canvas.height);
+                grd.addColorStop(0, '#8ED6FF');   
+                grd.addColorStop(1, '#004CB3');
+                pausetext.fill = grd;
+                pausetext.align = 'center';
+                pausetext.stroke = '#000000';
+                pausetext.strokeThickness = 2;
+                pausetext.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+           // exitButton = game.add.text(game.world.width - 300, 20, "Resume", { font: "65px Arial", fill: "#ff0044", align: "center" });
+            //exitButton.inputEnabled = true;
+            
+        });
+        
+        shopbutton = game.add.text(0, 130, "Open Shop");
+                shopbutton.font = 'Revalia';
+                shopbutton.fontSize = 60;
+                grd = shopbutton.context.createLinearGradient(0, 0, 0, shopbutton.canvas.height);
+                grd.addColorStop(0, '#8ED6FF');   
+                grd.addColorStop(1, '#004CB3');
+                shopbutton.fill = grd;
+                shopbutton.align = 'center';
+                shopbutton.stroke = '#000000';
+                shopbutton.strokeThickness = 2;
+                shopbutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        shopbutton.inputEnabled = true;
+                shopbutton.events.onInputOver.add(function(){
+                    shopbutton.fill = '#ff00ff';
+                }, this);
+                shopbutton.events.onInputOut.add(function(){
+                    shopbutton.fill = grd;
+                }, this);
+        
+        shopbutton.events.onInputDown.add(showShopMenu);
+        
+         baseButton = game.add.text(0, 200, "Base");
+                baseButton.font = 'Revalia';
+                baseButton.fontSize = 60;
+                grd = baseButton.context.createLinearGradient(0, 0, 0, baseButton.canvas.height);
+                grd.addColorStop(0, '#8ED6FF');   
+                grd.addColorStop(1, '#004CB3');
+                baseButton.fill = grd;
+                baseButton.align = 'center';
+                baseButton.stroke = '#000000';
+                baseButton.strokeThickness = 2;
+                baseButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+            baseButton.inputEnabled = true;
+            baseButton.events.onInputOver.add(function(){
+                baseButton.fill = '#ff00ff';
+            }, this);
+            baseButton.events.onInputOut.add(function(){
+                baseButton.fill = grd;
+            }, this);
+            baseButton.events.onInputDown.add(function(){
+                game.state.start("Customize");
+            });
+    }
+    
+    function showShopMenu(){
+            shopPage = 0;
+           shopbutton.fill = grd;
+           //game.paused = true; 
+           //game is no longer pausing
+           /*
+           pausetext = game.add.text(game.world.width - 200, 30, "PAUSED");
+                    pausetext.font = 'Revalia';
+                    pausetext.fontSize = 60;
+                    grd = pausetext.context.createLinearGradient(0, 0, 0, pausetext.canvas.height);
+                    grd.addColorStop(0, '#8ED6FF');   
+                    grd.addColorStop(1, '#004CB3');
+                    pausetext.fill = grd;
+                    pausetext.align = 'center';
+                    pausetext.stroke = '#000000';
+                    pausetext.strokeThickness = 2;
+                    pausetext.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+            pausetext.anchor.setTo(0.5,0.5);
+            */
+            shopmenu = game.add.sprite(game.world.centerX, game.world.centerY, 'shopMenu');
+            shopmenu.anchor.setTo(0.5,0.5);
+            shopmenu.scale.setTo(10,10);
+            exitButton = game.add.text(game.world.centerX - 75, game.world.height - 150, "Exit");
+                    exitButton.font = 'Revalia';
+                    exitButton.fontSize = 60;
+                    grd = exitButton.context.createLinearGradient(0, 0, 0, exitButton.canvas.height);
+                    grd.addColorStop(0, '#8ED6FF');   
+                    grd.addColorStop(1, '#004CB3');
+                    exitButton.fill = grd;
+                    exitButton.align = 'center';
+                    exitButton.stroke = '#000000';
+                    exitButton.strokeThickness = 2;
+                    exitButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+            
+                exitButton.inputEnabled = true;
+                exitButton.events.onInputOver.add(function(){
+                    exitButton.fill = '#ff00ff';
+                }, this);
+                exitButton.events.onInputOut.add(function(){
+                    exitButton.fill = grd;
+                }, this);
+                exitButton.events.onInputDown.add(function(){
+                        shopmenu.destroy();
+                        exitButton.destroy();  
+                        nextButton.destroy();
+                        backButton.destroy();
+                        showShop = false;
+                })
+                
+            nextButton = game.add.text(game.world.centerX + 200, game.world.height - 150, "Next");
+                    nextButton.font = 'Revalia';
+                    nextButton.fontSize = 60;
+                    grd = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
+                    grd.addColorStop(0, '#8ED6FF');   
+                    grd.addColorStop(1, '#004CB3');
+                    nextButton.fill = grd;
+                    nextButton.align = 'center';
+                    nextButton.stroke = '#000000';
+                    nextButton.strokeThickness = 2;
+                    nextButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+            
+                nextButton.inputEnabled = true;
+                nextButton.events.onInputOver.add(function(){
+                    nextButton.fill = '#ff00ff';
+                }, this);
+                nextButton.events.onInputOut.add(function(){
+                    nextButton.fill = grd;
+                }, this);
+                nextButton.events.onInputDown.add(function(){
+                        
+                })
+                
+            backButton = game.add.text(game.world.centerX - 400, game.world.height - 150, "Back");
+                    backButton.font = 'Revalia';
+                    backButton.fontSize = 60;
+                    grd = backButton.context.createLinearGradient(0, 0, 0, backButton.canvas.height);
+                    grd.addColorStop(0, '#8ED6FF');   
+                    grd.addColorStop(1, '#004CB3');
+                    backButton.fill = grd;
+                    backButton.align = 'center';
+                    backButton.stroke = '#000000';
+                    backButton.strokeThickness = 2;
+                    backButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+            
+                backButton.inputEnabled = true;
+                backButton.events.onInputOver.add(function(){
+                    backButton.fill = '#ff00ff';
+                }, this);
+                backButton.events.onInputOut.add(function(){
+                    backButton.fill = grd;
+                }, this);
+                backButton.events.onInputDown.add(function(){
+                        
+                })
+            
+            showShop = true;
     }
 
 /*
@@ -351,7 +415,7 @@ function over(text) {
     that.getEnemyManager = getEnemyManager;
     that.getPlayer = getPlayer;
     that.getTopBaseCollision = getTopBaseCollision;
-    that.updateGold = updateGold;
+    that.updateResource = updateResource;
     that.addGold = addGold;
     that.getGold = getGold;
     that.spendGold = spendGold;

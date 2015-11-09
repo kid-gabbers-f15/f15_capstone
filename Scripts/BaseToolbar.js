@@ -54,6 +54,12 @@ var BaseToolbar = function(game, parent){
                 backButton.strokeThickness = 2;
                 backButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         backButton.inputEnabled = true;
+        backButton.events.onInputOver.add(function(){
+                    backButton.fill = '#ff00ff';
+                }, this);
+                backButton.events.onInputOut.add(function(){
+                    backButton.fill = grd;
+                }, this);
         
         backButton.events.onInputDown.add(function(){
             clickBack();
@@ -71,6 +77,12 @@ var BaseToolbar = function(game, parent){
                 nextButton.strokeThickness = 2;
                 nextButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         nextButton.inputEnabled = true;
+        nextButton.events.onInputOver.add(function(){
+                    nextButton.fill = '#ff00ff';
+                }, this);
+                nextButton.events.onInputOut.add(function(){
+                    nextButton.fill = grd;
+                }, this);
         
         nextButton.events.onInputDown.add(function(){
             clickNext();

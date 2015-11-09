@@ -9,7 +9,6 @@ var BaseToolbar = function(game, parent){
     var pageNum = 0;
     var stickers = [];
     var slots = [];
-    var imagesInSlots = 0;
 
     function Preload(){
         
@@ -23,7 +22,6 @@ var BaseToolbar = function(game, parent){
 
     function OnCreate(){
         for(var i = 0; i < game.cache.getKeys().length; ++i){
-            console.log(game.cache.getKeys()[i].indexOf('BaseSticker'));
             if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
                 stickers.push(game.cache.getKeys()[i]);
             }
@@ -38,7 +36,6 @@ var BaseToolbar = function(game, parent){
             temp.inputEnabled = true;
             addEventtoSlot(i, temp);
             slots.push({slot:temp, key:stickers[i], keyIndex:i});
-            ++imagesInSlots;
         }
         
          backButton = game.add.text(0, 800, "Back");

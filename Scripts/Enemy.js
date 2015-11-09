@@ -177,11 +177,12 @@ var Enemy = function (parent, game){
         var unitpGroup = defEngine.getPlayer().getUnitPGroup();
         
         for(var i = 0; i < unitpGroup.length; i++){
-            game.physics.arcade.collide(unitpGroup[i].getUnitSprite(), enemySprite, 
+            game.physics.arcade.collide(enemySprite, unitpGroup[i].getUnitSprite(), 
             function(){
-                if(unitpGroup[i].get_children() > 0 && isAttack == true && isActive == true){
+                console.log(isAttack);
+                if(unitpGroup[i].get_children() > 0 && can_attack == true && isActive == true){
                      unitpGroup[i].dec_children();
-                     isAttack = false;
+                     can_attack = false;
                      reset_attack_delay();
                 } 
             } 

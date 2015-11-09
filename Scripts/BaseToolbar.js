@@ -1,18 +1,15 @@
 var BaseToolbar = function(game, parent){
     var that = {};
     
-    var slot1;
-    var slot2;
-    var slot3;
-    var slot4;
+    var backButton;
+    var nextButton;
+    var grd;
     
-    var image1;
-    var image2;
-    var image3;
-    var image4;
-    
+    var numOfSlots;
+    var cacheIndex;
     var slots = [];
-    
+    var imagesInSlots = 0;
+
     function Preload(){
         
     }
@@ -22,23 +19,98 @@ var BaseToolbar = function(game, parent){
             clickSlot(index);
         });
     }
-    
-    function OnCreate(){
 
+    function OnCreate(){
+        numOfSlots = 0;
+        cacheIndex = 0;
         for(var i = 0; i < game.cache.getKeys().length; ++i){
             console.log(game.cache.getKeys()[i].indexOf('BaseSticker'));
             if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
-                if((0 + 200*slots.length) < 1920){
+                if(numOfSlots <= 10){
+                    ++numOfSlots;
                     var temp = {};
-                    temp = game.add.sprite(0 + 200*slots.length, 900, game.cache.getKeys()[i]);
+                    temp = game.add.sprite(50 + 100*slots.length, 900, game.cache.getKeys()[i]);
+                    temp.scale.set(.75, .75);
+                    temp.anchor.set(.5,.5);
                     temp.inputEnabled = true;
                     addEventtoSlot(i, temp);
                     slots.push({slot:temp, key:game.cache.getKeys()[i], keyIndex:i});
                     console.log(slots[slots.length-1].keyIndex);
+                    cacheIndex = i;
+                    ++imagesInSlots;
                 }
             }
         }
         
+         backButton = game.add.text(0, 800, "Back");
+                backButton.font = 'Revalia';
+                backButton.fontSize = 60;
+                grd = backButton.context.createLinearGradient(0, 0, 0, backButton.canvas.height);
+                grd.addColorStop(0, '#8ED6FF');   
+                grd.addColorStop(1, '#004CB3');
+                backButton.fill = grd;
+                backButton.align = 'center';
+                backButton.stroke = '#000000';
+                backButton.strokeThickness = 2;
+                backButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        backButton.inputEnabled = true;
+        
+        backButton.events.onInputDown.add(function(){
+            clickBack();
+        });
+        
+         nextButton = game.add.text(1720, 800, "Next");
+                nextButton.font = 'Revalia';
+                nextButton.fontSize = 60;
+                grd = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
+                grd.addColorStop(0, '#8ED6FF');   
+                grd.addColorStop(1, '#004CB3');
+                nextButton.fill = grd;
+                nextButton.align = 'center';
+                nextButton.stroke = '#000000';
+                nextButton.strokeThickness = 2;
+                nextButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        nextButton.inputEnabled = true;
+        
+        nextButton.events.onInputDown.add(function(){
+            clickNext();
+        });
+        
+    }
+    
+    function clickBack(){
+        
+    }
+    
+    function clickNext(){
+        if(imagesInSlots === slots.length){
+            var i = cacheIndex + 1;
+            imagesInSlots = 0;
+            for(var n = 0; n < slots.length; ++n){
+                while(i < game.cache.getKeys().length){
+                    if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
+                        if(n < slots.length){
+                            slots[n].slot.loadTexture(game.cache.getKeys()[i]);
+                            slots[n].keyIndex = i;
+                            slots[n].key = game.cache.getKeys()[i];
+                            slots[n].slot.events.onInputDown.removeAll();
+                            addEventtoSlot(i, slots[n].slot);
+                            ++n;
+                            cacheIndex = i;
+                            ++imagesInSlots;
+                        }else{
+                            break;
+                        }
+                    }
+                    ++i;
+                }
+                if(n < slots.length){
+                    console.log("click");
+                    slots[n].slot.visible = false;
+                    slots[n].slot.inputEnabled = false;
+                }
+            }
+        }
     }
     
     function clickSlot(slotClicked){

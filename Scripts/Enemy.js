@@ -22,6 +22,8 @@ var Enemy = function (parent, game){
     var totalMissingHealth = 0.0; //missing health bar
     var minusHealthIncr = 0.0; //how much health to take off the health bar
     
+    var initHealthBar = 0.0;
+    
     var target;
     var can_attack;
     var attack_delay;
@@ -58,6 +60,7 @@ var Enemy = function (parent, game){
             healthBar = game.add.sprite(position.x - 100, position.y - 200, 'Boss_1_Health');
             healthBar.crop(new Phaser.Rectangle(0,0,enemySprite.width, 20));
             healthBar.updateCrop();
+            initHealthBar = healthBar.width;
             //healthBar.anchor.setTo(0.5,0.5);
             
             enemySprite.visible = false;
@@ -81,6 +84,8 @@ var Enemy = function (parent, game){
             initialHealth = health;
             healthBar = game.add.sprite(position.x - 50, position.y - 70, 'healthBar');
             healthBar.crop(new Phaser.Rectangle(0,0,enemySprite.width, 20));
+            
+            initHealthBar = healthBar.width;
             enemySprite.visible = false;
             healthBar.visible = false;
             enemySprite.inputEnabled = false;
@@ -110,7 +115,7 @@ var Enemy = function (parent, game){
         {
             health = maxHealth*10;
             initialHealth = health;
-            //healthBar.crop(new Phaser.Rectangle(0,0,100*(health/maxHealth), 20));
+            healthBar.crop(new Phaser.Rectangle(0,0,enemySprite.width, 20));
             //healthBar.updateCrop();
             
             enemySprite.visible = true;
@@ -218,11 +223,11 @@ var Enemy = function (parent, game){
         }
         
         if(boss){
-            healthBar.crop(new Phaser.Rectangle(0,0, 200 * health/initialHealth, 20));
+            healthBar.crop(new Phaser.Rectangle(0,0, initHealthBar * health/initialHealth, 20));
         }
         else{
             
-            healthBar.crop(new Phaser.Rectangle(0,0, 100 * health/initialHealth, 20));
+            healthBar.crop(new Phaser.Rectangle(0,0, initHealthBar * health/initialHealth, 20));
         }
         healthBar.updateCrop();
         

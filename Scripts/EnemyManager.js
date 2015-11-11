@@ -60,6 +60,11 @@ var EnemyManager = function (game){
         uGroup = unitGroup;
         eGroup = enemypGroup;
         
+        
+        //here we create the enemies. four different groups for four different types
+        
+        
+        
         for(var i = 0; i < enemyGroup1.length; ++i){
             enemyGroup1[i].OnCreate(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup, false);
             enemyGroup1[i].set_tisAttack(); //assert that the enemy is able to attack upon creation
@@ -100,7 +105,7 @@ var EnemyManager = function (game){
                         {
                             console.log('killed boss');
                             bossGroup[i].setKilled(false);
-                            ifBoss = 0; //turn off boss mode
+                           // ifBoss = 0; //turn off boss mode
                             killCnter++;
                         }
                     }
@@ -124,11 +129,16 @@ var EnemyManager = function (game){
                 {
                     enemyGroup3[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
                 }
+                
+                ifBoss = 0;
+                
             }
         }
         else // Normal wave
         {
             //console.log(killCnter + " < " + enemy_count_in_wave*3)
+            
+            //it is *3 because there are 3 groups of enemies. enemy_count_in_wave stands for enemies per group
             if(killCnter < enemy_count_in_wave*3) // Enemies still alive
             { 
                 for(var i = 0; i < enemyGroup1.length; ++i)
@@ -196,7 +206,12 @@ var EnemyManager = function (game){
                 else // non boss wave
                 {    
                     enemy_count_in_wave = enemy_count_in_wave + 1;
-                    if(enemy_count_in_wave>10){enemy_count_in_wave=10;}
+                    if(enemy_count_in_wave>10){
+                        
+                        enemy_count_in_wave=10;
+                        
+                        
+                    }
                     for(var j = 0; j < enemy_count_in_wave; ++j)
                     {
                         enemyGroup1[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));

@@ -26,26 +26,15 @@ var Unit = function (parent, game){
     var pistolSprite;
     var shotgunSprite;
     var rifleSprite;
+    var pistolCostText;
+    var shotgunCostText;
+    var rifleCostText;
+    
     var showWeapons = false;
-
-    WebFontConfig = {
-
-    //  'active' means all requested fonts have finished loading
-    //  We set a 1 second delay before calling 'createText'.
-    //  For some reason if we don't the browser cannot render the text the first time it's created.
-    //active: function() { game.time.events.add(Phaser.Timer.SECOND, createText, this); },
-
-    //  The Google Fonts we want to load (specify as many as you like in the array)
-    google: {
-      families: ['Revalia']
-    }
-
-};
 
     function Preload(){
 
     }
-    
     
     function OnCreate(x, y, unitGroup, enemypGroup){
         topBaseCollision = defEngine.getTopBaseCollision();
@@ -79,14 +68,47 @@ var Unit = function (parent, game){
         text.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         
         pistolSprite = game.add.sprite(position.x-150, position.y, 'Unit3');
+        pistolCostText = game.add.text(position.x-150, position.y, '5');
+        pistolCostText.anchor.set(0.25);
+        pistolCostText.font = 'Revalia';
+        pistolCostText.fontSize = 30;
+        pistolCostText.fill = grd;
+        pistolCostText.align = 'center';
+        pistolCostText.stroke = '#000000';
+        pistolCostText.strokeThickness = 2;
+        pistolCostText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        
         shotgunSprite = game.add.sprite(position.x-250, position.y, 'Unit1');
+        shotgunCostText = game.add.text(position.x-250, position.y, '20');
+        shotgunCostText.anchor.set(0.25);
+        shotgunCostText.font = 'Revalia';
+        shotgunCostText.fontSize = 30;
+        shotgunCostText.fill = grd;
+        shotgunCostText.align = 'center';
+        shotgunCostText.stroke = '#000000';
+        shotgunCostText.strokeThickness = 2;
+        shotgunCostText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        
         rifleSprite = game.add.sprite(position.x-150, position.y-100, 'Unit2');
+        rifleCostText = game.add.text(position.x-150, position.y-100, '10');
+        rifleCostText.anchor.set(0.25);
+        rifleCostText.font = 'Revalia';
+        rifleCostText.fontSize = 30;
+        rifleCostText.fill = grd;
+        rifleCostText.align = 'center';
+        rifleCostText.stroke = '#000000';
+        rifleCostText.strokeThickness = 2;
+        rifleCostText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        
         pistolSprite.inputEnabled = false;
         shotgunSprite.inputEnabled = false;
         rifleSprite.inputEnabled = false;
         pistolSprite.visible = false;
         shotgunSprite.visible = false;
         rifleSprite.visible = false;
+        rifleCostText.visible = false;
+        pistolCostText.visible = false;
+        shotgunCostText.visible = false;
         
         pistolSprite.events.onInputDown.add(function(){
             bulletType = 'pistol';
@@ -94,6 +116,9 @@ var Unit = function (parent, game){
             pistolSprite.visible = false;
             shotgunSprite.visible = false;
             rifleSprite.visible = false;
+            rifleCostText.visible = false;
+            pistolCostText.visible = false;
+            shotgunCostText.visible = false;
             pistolSprite.inputEnabled = false;
             shotgunSprite.inputEnabled = false;
             rifleSprite.inputEnabled = false;
@@ -108,6 +133,9 @@ var Unit = function (parent, game){
             pistolSprite.visible = false;
             shotgunSprite.visible = false;
             rifleSprite.visible = false;
+            rifleCostText.visible = false;
+            pistolCostText.visible = false;
+            shotgunCostText.visible = false;
             pistolSprite.inputEnabled = false;
             shotgunSprite.inputEnabled = false;
             rifleSprite.inputEnabled = false;
@@ -122,6 +150,9 @@ var Unit = function (parent, game){
             pistolSprite.visible = false;
             shotgunSprite.visible = false;
             rifleSprite.visible = false;
+            rifleCostText.visible = false;
+            pistolCostText.visible = false;
+            shotgunCostText.visible = false;
             pistolSprite.inputEnabled = false;
             shotgunSprite.inputEnabled = false;
             rifleSprite.inputEnabled = false;
@@ -407,6 +438,9 @@ var Unit = function (parent, game){
             pistolSprite.inputEnabled = true;
             shotgunSprite.inputEnabled = true;
             rifleSprite.inputEnabled = true;
+            rifleCostText.visible = true;
+            pistolCostText.visible = true;
+            shotgunCostText.visible = true;
         }
         else
         {
@@ -416,6 +450,9 @@ var Unit = function (parent, game){
             pistolSprite.inputEnabled = false;
             shotgunSprite.inputEnabled = false;
             rifleSprite.inputEnabled = false;
+            rifleCostText.visible = false;
+            pistolCostText.visible = false;
+            shotgunCostText.visible = false;
         }
     }
     

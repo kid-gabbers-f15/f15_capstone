@@ -22,13 +22,16 @@ var Enemy = function (parent, game){
     var attack_delay;
     var boss;
     
+    var type;
+    var speed = 100;
+    
     var killed = false;
     
     function Preload(){
        
     }
     
-    function OnCreate(x, y, unitGroup, enemypGroup, isBoss){
+    function OnCreate(x, y, unitGroup, enemypGroup, isBoss, type){
         isActive = false;
         position.x = x;
         position.y = y;
@@ -78,6 +81,11 @@ var Enemy = function (parent, game){
             enemySprite.isActive = false;
             isActive = false;
             boss = false;
+            
+            if(type == 2)
+            {
+                speed = 200;
+            }
         }
         
         enemySprite.inputEnabled = false;
@@ -145,20 +153,15 @@ var Enemy = function (parent, game){
         
         healthBar.position.x = enemySprite.position.x - 50;
         healthBar.position.y = enemySprite.position.y - 70;
-        
-        
-        //WE HAVE A WINNER
-        /*game.physics.arcade.accelerateToXY(
-            enemySprite,
-            this.target.position.x,
-            this.target.position.y,
-            50);*/
             
+        //console.log(this.target.key);
+        console.log(uGroup);
+        
         game.physics.arcade.moveToXY(
             enemySprite,
             this.target.position.x,
             this.target.position.y,
-            100);
+            speed);
         
         if(health <= 0){
             enemySprite.visible = false;

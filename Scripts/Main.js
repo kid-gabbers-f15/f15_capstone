@@ -1,5 +1,17 @@
 //Game Code
+ WebFontConfig = {
 
+        //  'active' means all requested fonts have finished loading
+        //  We set a 1 second delay before calling 'createText'.
+        //  For some reason if we don't the browser cannot render the text the first time it's created.
+        active: function() { game.time.events.add(Phaser.Timer.SECOND, OnCreate, this); },
+    
+        //  The Google Fonts we want to load (specify as many as you like in the array)
+        google: {
+          families: ['Revalia']
+        }
+
+    };
 //global game variable
 var game = {};
 
@@ -25,13 +37,13 @@ var Boot = {
     },
     
     create : function(){
-        game.state.start("PreloadDefense");        
+        game.state.start("Preload");        
     }
     
 };
 
 //Loads all assets
-var PreloadDefense = {
+var Preload = {
     //preload, create, update
     preload : function (){
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; //resize your window to see the stage resize too
@@ -51,27 +63,6 @@ var PreloadDefense = {
     
 };
 
-var PreloadCustomize = {
-    //preload, create, update
-    preload : function (){
-        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; //resize your window to see the stage resize too
-        game.scale.setMinMax(800, 450, 1920, 1080);
-        game.scale.pageAlignHorizontally = true;
-        game.scale.pageAlignVertically = true;
-        
-        console.log("Preload");
-    },
-    
-    create : function(){
-        defEngine = DefenseEngine(game);
-        baseManager = BaseManager(game);
-        
-        game.state.start("Customize");
-    }
-    
-};
-
-
 //Main gameplay
 var Defense = {
     //preload, create, update
@@ -81,7 +72,7 @@ var Defense = {
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
 
-        game.stage.backgroundColor = '#098AC3';
+        game.stage.backgroundColor = '#FFFFFF';
 
         console.log("Defense started");
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -142,8 +133,7 @@ function startGame() {
     game = new Phaser.Game(1920, 1080, Phaser.AUTO, 'gameContainer')
     
     game.state.add('Boot', Boot);
-    game.state.add('PreloadDefense', PreloadDefense);
-    game.state.add('PreloadCustomize', PreloadCustomize);
+    game.state.add('Preload', Preload);
     game.state.add('Defense', Defense);
     game.state.add('Customize', Customize);
     game.state.add('Shop', Shop);

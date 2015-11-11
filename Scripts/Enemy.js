@@ -9,10 +9,12 @@ var Enemy = function (parent, game){
     var health = 100;
     var maxHealth = 100;
     var const_maxHealth = 100; //will be the definite health for enemy units
+    var initialHealth;
     
     var velocityX = 10;
     
     var isActive;
+    var dmgPerClick = 10;
     
     var uGroup;
     var eGroup;
@@ -49,8 +51,9 @@ var Enemy = function (parent, game){
             enemySprite.anchor.setTo(0.5, 0.5);
     
             health = maxHealth*10;
-            healthBar = game.add.sprite(position.x - 50, position.y - 70, 'Boss_1_Health');
-            healthBar.crop(new Phaser.Rectangle(0,0,100*(health/maxHealth), 20));
+            initialHealth = health;
+            healthBar = game.add.sprite(position.x - 100, position.y - 200, 'Boss_1_Health');
+            healthBar.crop(new Phaser.Rectangle(0,0,enemySprite.width, 20));
             healthBar.updateCrop();
             //healthBar.anchor.setTo(0.5,0.5);
             
@@ -72,9 +75,9 @@ var Enemy = function (parent, game){
             enemySprite.anchor.setTo(0.5, 0.5);
     
             health = maxHealth;
+            initialHealth = health;
             healthBar = game.add.sprite(position.x - 50, position.y - 70, 'healthBar');
-            healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
-            
+            healthBar.crop(new Phaser.Rectangle(0,0,enemySprite.width, 20));
             enemySprite.visible = false;
             healthBar.visible = false;
             enemySprite.inputEnabled = false;
@@ -91,15 +94,14 @@ var Enemy = function (parent, game){
         enemySprite.inputEnabled = false;
         //enemySprite.input.useHandCursor = true;
         enemySprite.events.onInputDown.add(function(){
-            
-            enemySprite.alpha = 0.8;
-        
-            damage(10); //damage per click
+            enemySprite.alpha = 0.1;
+           
             
         });
         
         enemySprite.events.onInputUp.add(function(){
-           enemySprite.alpha = 1.0; //feed back purposes
+            damage(dmgPerClick); //damage per click
+            
         });
         uGroup = unitGroup;
         enemypGroup.add(enemySprite);
@@ -111,6 +113,7 @@ var Enemy = function (parent, game){
         if(boss)
         {
             health = maxHealth*10;
+            initialHealth = health;
             //healthBar.crop(new Phaser.Rectangle(0,0,100*(health/maxHealth), 20));
             //healthBar.updateCrop();
             
@@ -131,6 +134,7 @@ var Enemy = function (parent, game){
             console.log("reseting regulars");
             maxHealth = const_maxHealth;
             health = maxHealth;
+            initialHealth = maxHealth;
             healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
             healthBar.updateCrop();
             
@@ -158,11 +162,18 @@ var Enemy = function (parent, game){
             attack_delay = attack_delay - 1;
         }
         
-        healthBar.position.x = enemySprite.position.x - 50;
-        healthBar.position.y = enemySprite.position.y - 70;
+        
+        if(boss){ //if this enemy is a boss, then move the health accordingly
+            healthBar.position.x = enemySprite.position.x - 110;
+            healthBar.position.y = enemySprite.position.y - 250;
+        }
+        else{
+            healthBar.position.x = enemySprite.position.x - 50;
+            healthBar.position.y = enemySprite.position.y - 70;
+        }
             
         //console.log(this.target.key);
-        console.log(uGroup);
+        //console.log(uGroup);
         
         game.physics.arcade.moveToXY(
             enemySprite,
@@ -204,9 +215,18 @@ var Enemy = function (parent, game){
         
     function damage(dmg){
         
-        enemySprite.alpha = 0.8;
         health = health - dmg;
-        healthBar.crop(new Phaser.Rectangle(0,0,100*(health/maxHealth), 20))
+        if(enemySprite.alpha >= 0.1){// make sure its not toooo see through
+            enemySprite.alpha = 1.0 - 1.0*(initialHealth-health)/initialHealth;
+            
+            
+        }
+        
+        
+        
+        
+        
+        healthBar.crop(new Phaser.Rectangle(0,0,health*healthBar.width/initialHealth, 20));
         healthBar.updateCrop();
         
         if(health <= 0){

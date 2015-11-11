@@ -19,6 +19,9 @@ var Enemy = function (parent, game){
     var uGroup;
     var eGroup;
     
+    var totalMissingHealth = 0.0; //missing health bar
+    var minusHealthIncr = 0.0; //how much health to take off the health bar
+    
     var target;
     var can_attack;
     var attack_delay;
@@ -94,14 +97,7 @@ var Enemy = function (parent, game){
         enemySprite.inputEnabled = false;
         //enemySprite.input.useHandCursor = true;
         enemySprite.events.onInputDown.add(function(){
-            enemySprite.alpha = 0.1;
-           
-            
-        });
-        
-        enemySprite.events.onInputUp.add(function(){
             damage(dmgPerClick); //damage per click
-            
         });
         uGroup = unitGroup;
         enemypGroup.add(enemySprite);
@@ -213,17 +209,20 @@ var Enemy = function (parent, game){
     function damage(dmg){
         
         health = health - dmg;
-        if(enemySprite.alpha >= 0.1){// make sure its not toooo see through
-            enemySprite.alpha = 1.0 - 1.0*(initialHealth-health)/initialHealth;
-            
-            
+        enemySprite.alpha = 1.0 - 1.0*(initialHealth-health)/initialHealth;
+        
+        if(enemySprite.alpha < 0.15){ //dont let it go lower than .15 too transparent
+            enemySprite.alpha = .15;
         }
         
+        if(boss){
+            healthBar.crop(new Phaser.Rectangle(0,0, 200 * health/initialHealth, 20));
+        }
+        else{
+            
+            healthBar.crop(new Phaser.Rectangle(0,0, 100 * health/initialHealth, 20));
+        }
         
-        
-        
-        
-        healthBar.crop(new Phaser.Rectangle(0,0,health*healthBar.width/initialHealth, 20));
         healthBar.updateCrop();
         
         if(health <= 0){

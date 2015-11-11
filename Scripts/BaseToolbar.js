@@ -8,7 +8,7 @@ var BaseToolbar = function(game, parent){
     
     var grd;
     
-    var numOfSlots = 8;
+    var numOfSlots = 10;
     var pageNum = 0;
     var stickers = [];
     var backgrounds = [];
@@ -43,7 +43,7 @@ var BaseToolbar = function(game, parent){
         
         for(var i = 0; i < numOfSlots; ++i){
             var temp = {};
-            temp = game.add.sprite(50 + 100*slots.length, 900, stickers[i]);
+            temp = game.add.sprite(150 + 175*slots.length, 950, stickers[i]);
             console.log(stickers[i]);
             temp.scale.set(.75, .75);
             temp.anchor.set(.5,.5);
@@ -60,7 +60,7 @@ var BaseToolbar = function(game, parent){
         
         for(var i = 0; i < numOfSlots; ++i){
             var temp = {};
-            temp = game.add.sprite(100 + 200*backgroundSlots.length, 900, backgrounds[i]);
+            temp = game.add.sprite(150 + 175*backgroundSlots.length, 950, backgrounds[i]);
             console.log(backgrounds[i]);
             temp.scale.set(.25, .25);
             temp.anchor.set(.5,.5);
@@ -77,7 +77,7 @@ var BaseToolbar = function(game, parent){
             slots[i].slot.inputEnabled = true;
         }
         
-        backButton = game.add.text(0, 900, "Back");
+        backButton = game.add.text(50, 1000, "Back");
                 backButton.font = 'Revalia';
                 backButton.fontSize = 40;
                 grd = backButton.context.createLinearGradient(0, 0, 0, backButton.canvas.height);
@@ -94,7 +94,7 @@ var BaseToolbar = function(game, parent){
             clickBack();
         });
         
-        nextButton = game.add.text(1720, 900, "Next");
+        nextButton = game.add.text(1770, 1000, "Next");
                 nextButton.font = 'Revalia';
                 nextButton.fontSize = 40;
                 grd = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
@@ -111,7 +111,7 @@ var BaseToolbar = function(game, parent){
             clickNext();
         });
         
-        backgroundButton = game.add.text(150, 800, "Backgrounds");
+        backgroundButton = game.add.text(300, 850, "Backgrounds");
                 backgroundButton.font = 'Revalia';
                 backgroundButton.fontSize = 30;
                 grd = backgroundButton.context.createLinearGradient(0, 0, 0, backgroundButton.canvas.height);
@@ -129,7 +129,7 @@ var BaseToolbar = function(game, parent){
             updateToolbar();
         });
         
-        stickersButton = game.add.text(0, 800, "Stickers");
+        stickersButton = game.add.text(50, 850, "Stickers");
                 stickersButton.font = 'Revalia';
                 stickersButton.fontSize = 30;
                 grd = stickersButton.context.createLinearGradient(0, 0, 0, stickersButton.canvas.height);

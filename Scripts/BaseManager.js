@@ -21,14 +21,27 @@ var BaseManager = function(game){
     var playerBaseData;
     
     function Preload(){
-        game.load.image('background', 'Assets/BackgroundKidGabTemplate.png');
-        game.load.image('image1', 'Assets/Placeholder1.png');
-        
+
         baseToolbar = BaseToolbar(game, this);
         baseToolbar.Preload();
     }
     
     function OnCreate(){
+        
+        var mainBackground = game.add.sprite(game.world.centerX, game.world.centerY, 'background');
+        mainBackground.anchor.setTo(0.5, 0.5);
+        mainBackground.crop(new Phaser.Rectangle(0, 540, 1920, 1080));
+        
+        var whiteBox1 = game.add.sprite(50, 50, 'whiteBox');
+        whiteBox1.anchor.setTo(0, 0);
+        whiteBox1.crop(new Phaser.Rectangle(0, 0, 400, 700));
+        whiteBox1.alpha = .8;
+        
+        var whiteBox2 = game.add.sprite(game.world.centerX, 950, 'whiteBox');
+        whiteBox2.anchor.setTo(0.5, 0.5);
+        whiteBox2.crop(new Phaser.Rectangle(0, 0, 1820, 200));
+        whiteBox2.alpha = .8;
+        
         var cookie = getCookie("JSON");
         if(cookie === ""){
             playerBaseData = JSON.parse(game.cache.getText('JSONplayerBaseData'));

@@ -54,10 +54,11 @@ var DefenseEngine = function (game){
         //loading background image
         console.log("Preload for defense engine");
         game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
-        game.load.image('background', 'Assets/BackgroundKidGabTemplate.png');
+        game.load.image('background', 'Assets/MainPageBG.png');
         game.load.image('topBaseCollision', 'Assets/TopBaseImage.png');
         game.load.image('topBaseBackground', 'Assets/TopBaseImage.png');
-
+        game.load.image('whiteBox', 'Assets/whiteBox.png');
+        
         enemyManager = EnemyManager(game);
         enemyManager.Preload();
         
@@ -72,18 +73,29 @@ var DefenseEngine = function (game){
     function OnCreate(){
         gold = 500;
         //drawing background
-        background = game.add.sprite(game.world.centerX, game.world.centerY + game.world.centerY/2, 'background');
+        background = game.add.sprite(game.world.centerX, game.world.centerY, 'background');
         background.anchor.setTo(0.5, 0.5);
         background.crop(new Phaser.Rectangle(0, 540, 1920, 1080));
+        
+        var whiteBox1 = game.add.sprite(game.world.centerX, game.world.centerY + game.world.centerY/2, 'whiteBox');
+        whiteBox1.anchor.setTo(0.5, 0.5);
+        whiteBox1.crop(new Phaser.Rectangle(0, 0, 1820, 480));
+        whiteBox1.alpha = .8;
+        
+        var whiteBox2 = game.add.sprite(game.world.centerX, game.world.centerY/2, 'whiteBox');
+        whiteBox2.anchor.setTo(0.5, 0.5);
+        whiteBox2.crop(new Phaser.Rectangle(0, 0, 1820, 480));
+        whiteBox2.alpha = .8;
+        
         //create a sprite to act as the area for the user's base
         //this 'windows' the base from other elements in the game 
         
-        topBaseBackground = game.add.sprite(game.world.centerX/2, 10,'topBaseBackground');
+        //topBaseBackground = game.add.sprite(game.world.centerX/2, 10,'topBaseBackground');
         
        // topBase = game.add.sprite(game.world.centerX/2, 10, 'topBase');
         topBaseCollision = game.add.sprite(0,0,'topBaseCollision');
         topBaseCollision.isActive = true;
-        topBaseCollision.visible = false;
+        topBaseCollision.alpha = 0;
         game.physics.enable(topBaseCollision, Phaser.Physics.ARCADE);
         topBaseCollision.body.immovable = true;
         topBaseCollision.scale.setTo(2,1.0555);
@@ -101,7 +113,7 @@ var DefenseEngine = function (game){
 
         loadPlayerBase(playerBaseData);
         
-        pausebutton = game.add.text(0, 65, "Pause");
+        pausebutton = game.add.text(50, 65, "Pause");
                 pausebutton.font = 'Revalia';
                 pausebutton.fontSize = 60;
                 grd = pausebutton.context.createLinearGradient(0, 0, 0, pausebutton.canvas.height);
@@ -133,7 +145,7 @@ var DefenseEngine = function (game){
             
         });
         
-        shopbutton = game.add.text(0, 130, "Shop");
+        shopbutton = game.add.text(50, 130, "Shop");
                 shopbutton.font = 'Revalia';
                 shopbutton.fontSize = 60;
                 grd = shopbutton.context.createLinearGradient(0, 0, 0, shopbutton.canvas.height);
@@ -221,7 +233,7 @@ var DefenseEngine = function (game){
         */
             
             
-        goldText = game.add.text(0, 0, "Gold: " + gold);
+        goldText = game.add.text(50, 0, "Gold: " + gold);
             goldText.font = 'Revalia';
             goldText.fontSize = 60;
             grd = goldText.context.createLinearGradient(0, 0, 0, goldText.canvas.height);
@@ -234,7 +246,7 @@ var DefenseEngine = function (game){
             goldText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         
         
-         baseButton = game.add.text(0, 200, "Base");
+         baseButton = game.add.text(50, 200, "Base");
                 baseButton.font = 'Revalia';
                 baseButton.fontSize = 60;
                 grd = baseButton.context.createLinearGradient(0, 0, 0, baseButton.canvas.height);

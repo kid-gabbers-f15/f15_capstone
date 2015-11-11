@@ -78,9 +78,9 @@ var Unit = function (parent, game){
         text.strokeThickness = 2;
         text.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         
-        pistolSprite = game.add.sprite(position.x-150, position.y, 'pistolSprite');
-        shotgunSprite = game.add.sprite(position.x-250, position.y, 'shotgunSprite');
-        rifleSprite = game.add.sprite(position.x-150, position.y-100, 'rifleSprite');
+        pistolSprite = game.add.sprite(position.x-150, position.y, 'Unit3');
+        shotgunSprite = game.add.sprite(position.x-250, position.y, 'Unit1');
+        rifleSprite = game.add.sprite(position.x-150, position.y-100, 'Unit2');
         pistolSprite.inputEnabled = false;
         shotgunSprite.inputEnabled = false;
         rifleSprite.inputEnabled = false;

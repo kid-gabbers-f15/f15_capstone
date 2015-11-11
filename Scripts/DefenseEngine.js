@@ -98,6 +98,7 @@ var DefenseEngine = function (game){
         }else{
             playerBaseData = JSON.parse(cookie);
         }
+
         loadPlayerBase(playerBaseData);
         
         pausebutton = game.add.text(0, 65, "Pause");

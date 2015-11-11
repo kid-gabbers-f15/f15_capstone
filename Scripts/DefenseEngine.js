@@ -154,14 +154,20 @@ var DefenseEngine = function (game){
             resourceText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         
         
-        
-        
+        for(var i = 0; i < game.cache.getKeys().length; ++i){
+            if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
+                stickers.push(game.cache.getKeys()[i]);
+            }
+        }
         
         unitGroup = game.add.group();
         enemypGroup = game.add.group();
 
         player.OnCreate(unitGroup, enemypGroup);
         enemyManager.OnCreate(unitGroup, enemypGroup);
+        
+        initializeShopMenu();
+        initializeShopItems();
     }
 /*
     //Example code for text with fonts and gradient
@@ -297,9 +303,8 @@ var DefenseEngine = function (game){
         
         shopbutton.events.onInputDown.add(function(){
             if(showShop == false){
-                showShopMenu();
+                openShop();
             }
-
         });
         
          baseButton = game.add.text(0, 200, "Base");
@@ -325,13 +330,13 @@ var DefenseEngine = function (game){
             });
     }
     
-    function showShopMenu(){
+    function initializeShopMenu(){
             shopPage = 0;
-           shopbutton.fill = grd;
-           //game.paused = true; 
-           //game is no longer pausing
-           /*
-           pausetext = game.add.text(game.world.width - 200, 30, "PAUSED");
+            shopbutton.fill = grd;
+            //game.paused = true; 
+            //game is no longer pausing
+            /*
+            pausetext = game.add.text(game.world.width - 200, 30, "PAUSED");
                     pausetext.font = 'Revalia';
                     pausetext.fontSize = 60;
                     grd = pausetext.context.createLinearGradient(0, 0, 0, pausetext.canvas.height);
@@ -345,8 +350,10 @@ var DefenseEngine = function (game){
             pausetext.anchor.setTo(0.5,0.5);
             */
             shopmenu = game.add.sprite(game.world.centerX, game.world.centerY, 'shopMenu');
-            shopmenu.anchor.setTo(0.5,0.5);
-            shopmenu.scale.setTo(10,10);
+                shopmenu.anchor.setTo(0.5,0.5);
+                shopmenu.scale.setTo(10,10);
+                shopmenu.inputEnabled = false;
+                shopmenu.visible = false;
             exitButton = game.add.text(game.world.centerX - 75, game.world.height - 150, "Exit");
                     exitButton.font = 'Revalia';
                     exitButton.fontSize = 60;
@@ -359,7 +366,8 @@ var DefenseEngine = function (game){
                     exitButton.strokeThickness = 2;
                     exitButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
             
-                exitButton.inputEnabled = true;
+                exitButton.inputEnabled = false;
+                exitButton.visible = false;
                 exitButton.events.onInputOver.add(function(){
                     exitButton.fill = '#ff00ff';
                 }, this);
@@ -367,38 +375,8 @@ var DefenseEngine = function (game){
                     exitButton.fill = grd;
                 }, this);
                 exitButton.events.onInputDown.add(function(){
-                        shopmenu.destroy();
-                        exitButton.destroy();  
-                        nextButton.destroy();
-                        backButton.destroy();
-                        showShop = false;
-                        removeShopItems();
-                        
+                        closeShop();
                 })
-                
-                
-                
-                
-        for(var i = 0; i < game.cache.getKeys().length; ++i){
-            if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
-                stickers.push(game.cache.getKeys()[i]);
-            }
-        }
-        
-        for(var i = 0; i < numOfSlots; ++i){
-            var temp = {};
-            temp = game.add.sprite(game.world.centerX - 300, 150 + 150*slots.length, stickers[i]);
-            //temp = game.add.sprite(50 + 100*slots.length, 900, stickers[i]);
-            temp.scale.set(.75, .75);
-            temp.anchor.set(.5,.5);
-            temp.inputEnabled = true;
-            addEventtoSlot(i, temp);
-            slots.push({slot:temp, key:stickers[i], keyIndex:i});
-        }
-                
-                
-                
-                
                 
                 
             nextButton = game.add.text(game.world.centerX + 200, game.world.height - 150, "Next");
@@ -413,7 +391,8 @@ var DefenseEngine = function (game){
                     nextButton.strokeThickness = 2;
                     nextButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
             
-                nextButton.inputEnabled = true;
+                nextButton.inputEnabled = false;
+                nextButton.visible = false;
                 nextButton.events.onInputOver.add(function(){
                     nextButton.fill = '#ff00ff';
                 }, this);
@@ -436,7 +415,8 @@ var DefenseEngine = function (game){
                     backButton.strokeThickness = 2;
                     backButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
             
-                backButton.inputEnabled = true;
+                backButton.inputEnabled = false;
+                backButton.visible = false;
                 backButton.events.onInputOver.add(function(){
                     backButton.fill = '#ff00ff';
                 }, this);
@@ -446,11 +426,6 @@ var DefenseEngine = function (game){
                 backButton.events.onInputDown.add(function(){
                         clickBack();
                 })
-               // loadMenuItems(shopMenuItems);
-                
-                
-            
-            showShop = true;
     }
     
     function clickBack(){
@@ -511,14 +486,56 @@ var DefenseEngine = function (game){
             }
         }
     }
+    function openShop(){
+        shopmenu.visible = true;
+        shopmenu.inputEnabled = true;
+        exitButton.visible = true;
+        exitButton.inputEnabled = true;
+        backButton.visible = true;
+        backButton.inputEnabled = true;
+        nextButton.visible = true;
+        nextButton.inputEnabled = true;
+        showShop = true;
+        showShopItems();
+    }
+    function closeShop(){
+        shopmenu.visible = false;
+        shopmenu.inputEnabled = false;
+        exitButton.visible = false;
+        exitButton.inputEnabled = false;
+        backButton.visible = false;
+        backButton.inputEnabled = false;
+        nextButton.visible = false;
+        nextButton.inputEnabled = false;
+        showShop = false;
+        removeShopItems();
+    }
     function removeShopItems(){
         for(var i = 0; i < numOfSlots; ++i){
             slots[i].slot.visible = false;
             slots[i].slot.inputEnabled = false;
-            console.log("hi");
             //temp.inputEnabled = true;
             //addEventtoSlot(i, temp);
             //slots.push({slot:temp, key:stickers[i], keyIndex:i});
+        }
+    }
+    function showShopItems(){
+        for(var i = 0; i < numOfSlots; i++){
+            slots[i].slot.visible = true;
+            slots[i].slot.inputEnabled = true;
+        }
+    }
+    function initializeShopItems(){
+                for(var i = 0; i < numOfSlots; ++i){
+                    var temp = {};
+                    temp = game.add.sprite(game.world.centerX - 300, 150 + 150*slots.length, stickers[i]);
+                    //temp = game.add.sprite(50 + 100*slots.length, 900, stickers[i]);
+                    temp.scale.set(.75, .75);
+                    temp.anchor.set(.5,.5);
+                    //temp.inputEnabled = true;
+                    temp.visible = false;
+                    addEventtoSlot(i, temp);
+                    slots.push({slot:temp, key:stickers[i], keyIndex:i});
         }
     }
 

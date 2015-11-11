@@ -211,7 +211,6 @@ var Enemy = function (parent, game){
     function damage(dmg){
         
         health = health - dmg;
-<<<<<<< HEAD
         enemySprite.alpha = 1.0 - 1.0*(initialHealth-health)/initialHealth;
         
         if(enemySprite.alpha < 0.15){ //dont let it go lower than .15 too transparent
@@ -225,14 +224,6 @@ var Enemy = function (parent, game){
             
             healthBar.crop(new Phaser.Rectangle(0,0, 100 * health/initialHealth, 20));
         }
-        
-=======
-        if(enemySprite.alpha >= 0.1){// make sure its not toooo see through
-            enemySprite.alpha = 1.0 - 1.0*(initialHealth-health)/initialHealth;
-        }
-        
-        healthBar.crop(new Phaser.Rectangle(0,0,health*healthBar.width/initialHealth, 20));
->>>>>>> 96533c25fdf3e7d222a5c0417e545f79b4a34d85
         healthBar.updateCrop();
         
         if(health <= 0){

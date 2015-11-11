@@ -104,7 +104,7 @@ var Enemy = function (parent, game){
         eGroup = enemypGroup;
     }
     
-    function ResetEnemy(x, y, target){
+    function ResetEnemy(x, y, newTarget){
         enemySprite.alpha = 1.0; 
         if(boss)
         {
@@ -119,7 +119,7 @@ var Enemy = function (parent, game){
             enemySprite.isActive = true;
             isActive = true;
             enemySprite.position = {x, y};
-            this.target = target;
+            target = newTarget;
             attack_delay = 0; 
             can_attack = true;
             boss = true;
@@ -140,7 +140,7 @@ var Enemy = function (parent, game){
             enemySprite.isActive = true;
             isActive = true;
             enemySprite.position = {x, y};
-            this.target = target;
+            target = newTarget;
             can_attack = true;
             attack_delay = 0;
             boss = false;
@@ -169,11 +169,15 @@ var Enemy = function (parent, game){
           
         var unitpGroup = defEngine.getPlayer().getUnitPGroup();
         
+        if(target.get_children() == 0)
+        {
+            retarget(unitpGroup);
+        }
         
         game.physics.arcade.moveToXY(
             enemySprite,
-            this.target.getUnitSprite().position.x,
-            this.target.getUnitSprite().position.y,
+            target.getUnitSprite().position.x,
+            target.getUnitSprite().position.y,
             speed);
         
         if(health <= 0){
@@ -188,8 +192,6 @@ var Enemy = function (parent, game){
         //loop through units and enemies to check for collision
         //after a collision is detectd, pull the unit object and enemy object for interaction
         //var enemyGroup = defEngine.getEnemyManager().getEnemyGroup();
-        
-       // console.log("enemyGroup: " + enemyGroup);
         
         for(var i = 0; i < unitpGroup.length; i++){
             game.physics.arcade.collide(enemySprite, unitpGroup[i].getUnitSprite(), 
@@ -209,6 +211,7 @@ var Enemy = function (parent, game){
     function damage(dmg){
         
         health = health - dmg;
+<<<<<<< HEAD
         enemySprite.alpha = 1.0 - 1.0*(initialHealth-health)/initialHealth;
         
         if(enemySprite.alpha < 0.15){ //dont let it go lower than .15 too transparent
@@ -223,6 +226,13 @@ var Enemy = function (parent, game){
             healthBar.crop(new Phaser.Rectangle(0,0, 100 * health/initialHealth, 20));
         }
         
+=======
+        if(enemySprite.alpha >= 0.1){// make sure its not toooo see through
+            enemySprite.alpha = 1.0 - 1.0*(initialHealth-health)/initialHealth;
+        }
+        
+        healthBar.crop(new Phaser.Rectangle(0,0,health*healthBar.width/initialHealth, 20));
+>>>>>>> 96533c25fdf3e7d222a5c0417e545f79b4a34d85
         healthBar.updateCrop();
         
         if(health <= 0){
@@ -240,14 +250,27 @@ var Enemy = function (parent, game){
         }
     }
     
+    function retarget(unitpGroup){
+        for(var i=0; i<unitpGroup.length; i++)
+        {
+            if(unitpGroup[i].get_children() != 0)
+            {
+                target = unitpGroup[i];
+                break;
+            }
+            if(i == unitpGroup.length - 1)
+            {
+                // Do whatever needs to be done when all units are at zero
+            }
+        }
+    }
+    
     function getPos(){
         return position;
     }
-    
     function getIsActive(){
         return isActive;
     }
-    
     function getEnemySprite(){
         return enemySprite;
     }

@@ -20,6 +20,8 @@ var EnemyManager = function (game){
     var uGroup;
     var eGroup;
     
+    var waitingForWave = false;
+    
     var eSpawn = {};
     eSpawn.x = 1850;
     eSpawn.y = 800;
@@ -113,7 +115,13 @@ var EnemyManager = function (game){
             }
             else // All Bosses dead
             {
-                killCnter = 0;
+                if(waitingForWave == false)
+                {
+                    setTimeout(restartWave, 2000);
+                    waitingForWave = true;
+                }
+                
+                /*killCnter = 0;
                  
                 enemy_count_in_wave = enemy_count_in_wave + 1;
                 if(enemy_count_in_wave>10){enemy_count_in_wave=10;}
@@ -130,7 +138,7 @@ var EnemyManager = function (game){
                     enemyGroup3[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
                 }
                 
-                ifBoss = 0;
+                ifBoss = 0;*/
                 
             }
         }
@@ -192,7 +200,13 @@ var EnemyManager = function (game){
             }
             else // all enemies dead
             {
-                console.log(waveNumber);
+                if(waitingForWave == false)
+                {
+                    setTimeout(restartWave, 2000);
+                    waitingForWave = true;
+                }
+                
+                /*console.log(waveNumber);
                 killCnter = 0;
                 ++waveNumber;
                 
@@ -225,9 +239,51 @@ var EnemyManager = function (game){
                     {
                         enemyGroup3[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
                     }
-                }
+                }*/
             }
         }
+    }
+    
+    function restartWave()
+    {
+        killCnter = 0;
+        ++waveNumber;
+        
+        if(waveNumber != boss_wave)
+        {
+            ifBoss = 0;
+        }
+        
+        if(waveNumber == boss_wave) //every three waves, a big one comes out
+        { 
+            ifBoss = 1; //active boss level
+            waveNumber = 0;
+            for(var i = 0; i < boss_count_in_wave; i++)
+            {
+                bossGroup[i].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
+            }
+        }
+        else // non boss wave
+        {    
+            enemy_count_in_wave = enemy_count_in_wave + 1;
+            if(enemy_count_in_wave>10){
+                enemy_count_in_wave=10;
+            }
+            for(var j = 0; j < enemy_count_in_wave; ++j)
+            {
+                enemyGroup1[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
+            }
+            for(var j = 0; j < enemy_count_in_wave; ++j)
+            {
+                enemyGroup2[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
+            }
+            for(var j = 0; j < enemy_count_in_wave; ++j)
+            {
+                enemyGroup3[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
+            }
+        }
+        
+        waitingForWave = false;
     }
     
     function getEnemyGroup(){

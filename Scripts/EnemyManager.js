@@ -136,7 +136,7 @@ var EnemyManager = function (game){
         }
         else // Normal wave
         {
-            //console.log(killCnter + " < " + enemy_count_in_wave*3)
+            console.log(killCnter + " < " + enemy_count_in_wave*3);
             
             //it is *3 because there are 3 groups of enemies. enemy_count_in_wave stands for enemies per group
             if(killCnter < enemy_count_in_wave*3) // Enemies still alive
@@ -152,7 +152,7 @@ var EnemyManager = function (game){
                         if(enemyGroup1[i].getIsActive() == false && enemyGroup1[i].getKilled() == true)
                         {
                             enemyGroup1[i].setKilled(false);
-                            console.log("killed e1");
+                            //console.log("killed e1");
                             ++killCnter;
                         }
                     }
@@ -168,7 +168,7 @@ var EnemyManager = function (game){
                         if(enemyGroup2[i].getIsActive() == false && enemyGroup2[i].getKilled() == true)
                         {
                             enemyGroup2[i].setKilled(false);
-                            console.log("killed e2");
+                            //console.log("killed e2");
                             ++killCnter;
                         }
                     }
@@ -184,7 +184,7 @@ var EnemyManager = function (game){
                         if(enemyGroup3[i].getIsActive() == false && enemyGroup3[i].getKilled() == true)
                         {
                             enemyGroup3[i].setKilled(false);
-                            console.log("killed e3");
+                            //console.log("killed e3");
                             ++killCnter;
                         }
                     }
@@ -192,12 +192,13 @@ var EnemyManager = function (game){
             }
             else // all enemies dead
             {
+                console.log(waveNumber);
                 killCnter = 0;
                 ++waveNumber;
                 
                 if(waveNumber == boss_wave){ //every three waves, a big one comes out
                     ifBoss = 1; //active boss level
-                    waveNumber = 0;
+                    waveNumber = 1;
                     for(var i = 0; i < boss_count_in_wave; i++)
                     {
                         bossGroup[i].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));

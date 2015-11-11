@@ -83,7 +83,7 @@ var Enemy = function (parent, game){
         enemySprite.inputEnabled = false;
         //enemySprite.input.useHandCursor = true;
         enemySprite.events.onInputDown.add(function(){
-            damage(10);
+            damage(100);
         });
         
         uGroup = unitGroup;
@@ -113,10 +113,11 @@ var Enemy = function (parent, game){
         }
         else
         {
+            console.log("reseting regulars");
             maxHealth = const_maxHealth;
             health = maxHealth;
-            //healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
-            //healthBar.updateCrop();
+            healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
+            healthBar.updateCrop();
             
             enemySprite.visible = true;
             healthBar.visible = true;

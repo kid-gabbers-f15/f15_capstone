@@ -163,8 +163,6 @@ var Enemy = function (parent, game){
         healthBar.position.x = enemySprite.position.x - 50;
         healthBar.position.y = enemySprite.position.y - 70;
         
-        console.log(unitpGroup[0].getUnitSprite());
-        
         game.physics.arcade.moveToXY(
             enemySprite,
             this.target.getUnitSprite().position.x,

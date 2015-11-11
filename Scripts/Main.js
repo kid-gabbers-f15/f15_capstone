@@ -4,7 +4,7 @@
         //  'active' means all requested fonts have finished loading
         //  We set a 1 second delay before calling 'createText'.
         //  For some reason if we don't the browser cannot render the text the first time it's created.
-        active: function() { game.time.events.add(Phaser.Timer.SECOND, OnCreate, this); },
+        //active: function() { game.time.events.add(Phaser.Timer.SECOND, , this); },
     
         //  The Google Fonts we want to load (specify as many as you like in the array)
         google: {
@@ -12,6 +12,18 @@
         }
 
     };
+    
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return "";
+}
+
 //global game variable
 var game = {};
 

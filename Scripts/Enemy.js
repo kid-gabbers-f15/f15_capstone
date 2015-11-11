@@ -9,32 +9,44 @@ var Enemy = function (parent, game){
     var health = 100;
     var maxHealth = 100;
     var const_maxHealth = 100; //will be the definite health for enemy units
+    var initialHealth;
     
     var velocityX = 10;
     
     var isActive;
+    var dmgPerClick = 10;
     
     var uGroup;
     var eGroup;
+    
+    var totalMissingHealth = 0.0; //missing health bar
+    var minusHealthIncr = 0.0; //how much health to take off the health bar
+    
+    var initHealthBar = 0.0;
     
     var target;
     var can_attack;
     var attack_delay;
     var boss;
     
+    var type;
+    var speed = 100;
+    
+    var killed = false;
+    
     function Preload(){
        
     }
     
-    function OnCreate(x, y, unitGroup, enemypGroup, isBoss){
+    function OnCreate(x, y, unitGroup, enemypGroup, isBoss, type){
         isActive = false;
         position.x = x;
         position.y = y;
         can_attack = true; //upon creation enemies should be able to attack instantly
         attack_delay = 0;
 
-        if(isBoss===true){
-            
+        if(isBoss==true) // Boss
+        {
             enemySprite = game.add.sprite(position.x, position.y, 'EnemyBoss_1' );
             game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
             enemySprite.body.collideWorldBounds = true;
@@ -44,8 +56,12 @@ var Enemy = function (parent, game){
             enemySprite.anchor.setTo(0.5, 0.5);
     
             health = maxHealth*10;
-            healthBar = game.add.sprite(position.x - 50, position.y - 70, 'Boss_1_Health');
-            healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
+            initialHealth = health;
+            healthBar = game.add.sprite(position.x - 100, position.y - 200, 'Boss_1_Health');
+            healthBar.crop(new Phaser.Rectangle(0,0,enemySprite.width, 20));
+            healthBar.updateCrop();
+            initHealthBar = healthBar.width;
+            //healthBar.anchor.setTo(0.5,0.5);
             
             enemySprite.visible = false;
             healthBar.visible = false;
@@ -53,10 +69,9 @@ var Enemy = function (parent, game){
             enemySprite.isActive = false;
             isActive = false;
             boss = true;
-        
-            
-        }else{
-            
+        }
+        else // Enemy
+        {
             enemySprite = game.add.sprite(position.x, position.y, 'enemy' + Math.ceil(Math.random()*3) );
             game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
             enemySprite.body.collideWorldBounds = true;
@@ -66,126 +81,109 @@ var Enemy = function (parent, game){
             enemySprite.anchor.setTo(0.5, 0.5);
     
             health = maxHealth;
+            initialHealth = health;
             healthBar = game.add.sprite(position.x - 50, position.y - 70, 'healthBar');
-            healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
+            healthBar.crop(new Phaser.Rectangle(0,0,enemySprite.width, 20));
+            
+            initHealthBar = healthBar.width;
+            enemySprite.visible = false;
+            healthBar.visible = false;
+            enemySprite.inputEnabled = false;
+            enemySprite.isActive = false;
+            isActive = false;
             boss = false;
             
+            if(type == 2)
+            {
+                speed = 200;
+            }
         }
         
-        enemySprite.inputEnabled = true;
-        enemySprite.input.useHandCursor = true;
+        enemySprite.inputEnabled = false;
+        //enemySprite.input.useHandCursor = true;
         enemySprite.events.onInputDown.add(function(){
-            damage(10);
-            
+            damage(dmgPerClick); //damage per click
         });
-        
         uGroup = unitGroup;
         enemypGroup.add(enemySprite);
         eGroup = enemypGroup;
-        
     }
     
-    /*  x and y is where the enemy will spwan
-        unitGroup is the respective units for that enemy
-        enemypGroup is the enemies that it will join
-    */
-    
-    function new_enemy(x, y, unitGroup, enemypGroup){
-        
-        enemySprite = game.add.sprite(position.x, position.y, 'enemy' + Math.ceil(Math.random()*3)  );
-        game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
-        enemySprite.body.collideWorldBounds = true;
-        enemySprite.body.friction = 10;
-        enemySprite.body.drag = 100;
-    
-        enemySprite.anchor.setTo(0.5, 0.5);
-    
-        health = maxHealth;
-        healthBar = game.add.sprite(position.x - 50, position.y - 70, 'healthBar');
-        healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
+    function ResetEnemy(x, y, newTarget){
+        enemySprite.alpha = 1.0; 
+        if(boss)
+        {
+            health = maxHealth*10;
+            initialHealth = health;
+            healthBar.crop(new Phaser.Rectangle(0,0,enemySprite.width, 20));
+            //healthBar.updateCrop();
             
-        
-        enemySprite.inputEnabled = true;
-        enemySprite.input.useHandCursor = true;
-        enemySprite.events.onInputDown.add(function(){
-            damage(10);
+            enemySprite.visible = true;
+            healthBar.visible = true;
+            enemySprite.inputEnabled = true;
+            enemySprite.isActive = true;
+            isActive = true;
+            enemySprite.position = {x, y};
+            target = newTarget;
+            attack_delay = 0; 
+            can_attack = true;
+            boss = true;
+            killed = false;
+        }
+        else
+        {
+            console.log("reseting regulars");
+            maxHealth = const_maxHealth;
+            health = maxHealth;
+            initialHealth = maxHealth;
+            healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
+            healthBar.updateCrop();
             
-        });
-        
-        uGroup = unitGroup;
-        enemypGroup.add(enemySprite);
-        eGroup = enemypGroup;
-        
-        
-    }
-    
-    function make_Boss(x, y, target){ //this will be resetting the enemy to a boss Unit
-        console.log("BOSS TIME")
-        
-        maxHealth = const_maxHealth*10; //multiply by 10 the health to make it stronger
-        
-        health = maxHealth;
-        
-        healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
-        healthBar.updateCrop();
-        
-        enemySprite.visible = true;
-        healthBar.visible = true;
-        enemySprite.inputEnabled = true;
-        enemySprite.isActive = true;
-        isActive = true;
-        enemySprite.position = {x, y};
-        this.target = target;
-        attack_delay = 0; 
-        can_attack = true;
-        boss = true;
-
-    }
-    
-    function ResetEnemy(x, y, target){
-
-        maxHealth = const_maxHealth;
-        health = maxHealth;
-        healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
-        healthBar.updateCrop();
-        
-        enemySprite.visible = true;
-        healthBar.visible = true;
-        enemySprite.inputEnabled = true;
-        enemySprite.isActive = true;
-        isActive = true;
-        enemySprite.position = {x, y};
-        this.target = target;
-        can_attack = true;
-        attack_delay = 0;
-        boss = false;
+            enemySprite.visible = true;
+            healthBar.visible = true;
+            enemySprite.inputEnabled = true;
+            enemySprite.isActive = true;
+            isActive = true;
+            enemySprite.position = {x, y};
+            target = newTarget;
+            can_attack = true;
+            attack_delay = 0;
+            boss = false;
+            killed = false;
+        }
     }
     
     function Update(){
-
-        if(attack_delay == 0){
-                can_attack = true;
-            }
-        if(attack_delay > 0){
-                attack_delay = attack_delay - 1;
-            }
+        if(attack_delay == 0)
+        {
+            can_attack = true;
+        }
+        if(attack_delay > 0)
+        {
+            attack_delay = attack_delay - 1;
+        }
         
-        healthBar.position.x = enemySprite.position.x - 50;
-        healthBar.position.y = enemySprite.position.y - 70;
+        if(boss){ //if this enemy is a boss, then move the health accordingly
+            healthBar.position.x = enemySprite.position.x - 110;
+            healthBar.position.y = enemySprite.position.y - 250;
+        }
+        else{
+            healthBar.position.x = enemySprite.position.x - 50;
+            healthBar.position.y = enemySprite.position.y - 70;
+        }
+          
+        var unitpGroup = defEngine.getPlayer().getUnitPGroup();
         
+        if(target.get_children() == 0)
+        {
+            retarget(unitpGroup);
+        }
         
-        //WE HAVE A WINNER
-        /*game.physics.arcade.accelerateToXY(
-            enemySprite,
-            this.target.position.x,
-            this.target.position.y,
-            50);*/
-            
         game.physics.arcade.moveToXY(
             enemySprite,
-            this.target.position.x,
-            this.target.position.y,
-            100);
+            target.getUnitSprite().position.x,
+            target.getUnitSprite().position.y,
+            speed);
         
         if(health <= 0){
             enemySprite.visible = false;
@@ -198,27 +196,39 @@ var Enemy = function (parent, game){
 
         //loop through units and enemies to check for collision
         //after a collision is detectd, pull the unit object and enemy object for interaction
-        var enemyGroup = defEngine.getEnemyManager().getEnemyGroup();
-        var unitpGroup = defEngine.getPlayer().getUnitPGroup();
-        for(var k = 0; k < enemyGroup.length; k++){
-            for(var i = 0; i < unitpGroup.length; i++){
-                game.physics.arcade.collide(unitpGroup[i].getUnitSprite(), enemyGroup[k].getEnemySprite(), 
-                function(){
-                    if(unitpGroup[i].get_children() > 0 && enemyGroup[k].isAttack() == true && enemyGroup[k].isActive() == true){
-                         unitpGroup[i].dec_children();
-                         enemyGroup[k].set_fisAttack();
-                         enemyGroup[k].reset_attack_delay();
-                         } 
-                    } 
-                , null, null, this);
-            }   
-        }
+        //var enemyGroup = defEngine.getEnemyManager().getEnemyGroup();
+        
+        for(var i = 0; i < unitpGroup.length; i++){
+            game.physics.arcade.collide(enemySprite, unitpGroup[i].getUnitSprite(), 
+            function(){
+                if(unitpGroup[i].get_children() > 0 && can_attack == true && isActive == true){
+                     unitpGroup[i].dec_children();
+                     can_attack = false;
+                     reset_attack_delay();
+                } 
+            } 
+            , null, null, this);
+        }   
+        
         
     }
         
     function damage(dmg){
+        
         health = health - dmg;
-        healthBar.crop(new Phaser.Rectangle(0,0,100*(health/maxHealth), 20))
+        enemySprite.alpha = 1.0 - 1.0*(initialHealth-health)/initialHealth;
+        
+        if(enemySprite.alpha < 0.15){ //dont let it go lower than .15 too transparent
+            enemySprite.alpha = .15;
+        }
+        
+        if(boss){
+            healthBar.crop(new Phaser.Rectangle(0,0, initHealthBar * health/initialHealth, 20));
+        }
+        else{
+            
+            healthBar.crop(new Phaser.Rectangle(0,0, initHealthBar * health/initialHealth, 20));
+        }
         healthBar.updateCrop();
         
         if(health <= 0){
@@ -226,6 +236,7 @@ var Enemy = function (parent, game){
             healthBar.visible = false;
             enemySprite.inputEnabled = false;
             isActive = false;
+            killed = true;
             if(boss){
                 defEngine.addGold(100);
             }
@@ -235,14 +246,27 @@ var Enemy = function (parent, game){
         }
     }
     
+    function retarget(unitpGroup){
+        for(var i=0; i<unitpGroup.length; i++)
+        {
+            if(unitpGroup[i].get_children() != 0)
+            {
+                target = unitpGroup[i];
+                break;
+            }
+            if(i == unitpGroup.length - 1)
+            {
+                // Do whatever needs to be done when all units are at zero
+            }
+        }
+    }
+    
     function getPos(){
         return position;
     }
-    
     function getIsActive(){
         return isActive;
     }
-    
     function getEnemySprite(){
         return enemySprite;
     }
@@ -264,6 +288,12 @@ var Enemy = function (parent, game){
     function getHealth(){
         return health;
     }
+    function getKilled(){
+        return killed;
+    }
+    function setKilled(bool){
+        killed = bool;
+    }
     
     that.ResetEnemy = ResetEnemy;
     that.isActive = function(){return isActive};
@@ -274,14 +304,14 @@ var Enemy = function (parent, game){
     that.getPos = getPos;
     that.getIsActive = getIsActive;
     that.getEnemySprite = getEnemySprite;
-    that.make_Boss = make_Boss;
     that.getHealth = getHealth;
     that.isAttack = isAttack;
     that.set_fisAttack = set_fisAttack;
     that.set_tisAttack = set_tisAttack;
     that.dec_attack_delay = dec_attack_delay;
     that.reset_attack_delay = reset_attack_delay;
-    that.new_enemy = new_enemy;
+    that.getKilled = getKilled;
+    that.setKilled = setKilled;
     return that;
 }
 

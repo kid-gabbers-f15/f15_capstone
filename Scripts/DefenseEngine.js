@@ -38,12 +38,12 @@ var DefenseEngine = function (game){
     }
     
     function loadFriendBase(base){
-        var bg = game.add.sprite(game.world.centerX/2, game.world.centerY + game.world.centerY/2, base.background);
+        var bg = game.add.sprite(game.world.centerX/2 - 150, game.world.centerY + game.world.centerY/2, base.background);
         bg.anchor.setTo(.5, .5);
         bg.crop(new Phaser.Rectangle(0, 0, 800, 600));
         bg.scale.setTo(.75, .75);
         for(var i = 0; i < base.list.length; ++i){
-            var temp = game.add.sprite((base.list[i].position.x-130)/2, (base.list[i].position.y + 110)/2 + game.world.centerY, base.list[i].image);
+            var temp = game.add.sprite((base.list[i].position.x-130)/2 - 150, (base.list[i].position.y + 110)/2 + game.world.centerY, base.list[i].image);
             temp.anchor.setTo(0.5, 0.5);
             temp.scale.setTo(0.5, 0.5);
         }

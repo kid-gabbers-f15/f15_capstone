@@ -135,7 +135,12 @@ var BaseToolbar = function(game, parent){
                 backgroundButton.strokeThickness = 2;
                 backgroundButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         backgroundButton.inputEnabled = true;
-        
+        backgroundButton.events.onInputOver.add(function(){
+                backgroundButton.fill = '#ff00ff';
+            }, this);
+        backgroundButton.events.onInputOut.add(function(){
+                backgroundButton.fill = grd;
+            }, this);
         backgroundButton.events.onInputDown.add(function(){
             toolbar = 'backgrounds';
             updateToolbar();
@@ -153,7 +158,12 @@ var BaseToolbar = function(game, parent){
                 stickersButton.strokeThickness = 2;
                 stickersButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         stickersButton.inputEnabled = true;
-        
+        stickersButton.events.onInputOver.add(function(){
+                stickersButton.fill = '#ff00ff';
+            }, this);
+        stickersButton.events.onInputOut.add(function(){
+                stickersButton.fill = grd;
+            }, this);
         stickersButton.events.onInputDown.add(function(){
             toolbar = 'stickers';
             updateToolbar();

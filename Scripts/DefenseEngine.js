@@ -75,10 +75,11 @@ var DefenseEngine = function (game){
         //loading background image
         console.log("Preload for defense engine");
         game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
-        game.load.image('background', 'Assets/BackgroundKidGabTemplate.png');
+        game.load.image('background', 'Assets/MainPageBG.png');
         game.load.image('topBaseCollision', 'Assets/TopBaseImage.png');
         game.load.image('topBaseBackground', 'Assets/TopBaseImage.png');
-
+        game.load.image('whiteBox', 'Assets/whiteBox.png');
+        
         enemyManager = EnemyManager(game);
         enemyManager.Preload();
         
@@ -94,18 +95,29 @@ var DefenseEngine = function (game){
     function OnCreate(){
         gold = 500;
         //drawing background
-        background = game.add.sprite(game.world.centerX, game.world.centerY + game.world.centerY/2, 'background');
+        background = game.add.sprite(game.world.centerX, game.world.centerY, 'background');
         background.anchor.setTo(0.5, 0.5);
         background.crop(new Phaser.Rectangle(0, 540, 1920, 1080));
+        
+        var whiteBox1 = game.add.sprite(game.world.centerX, game.world.centerY + game.world.centerY/2, 'whiteBox');
+        whiteBox1.anchor.setTo(0.5, 0.5);
+        whiteBox1.crop(new Phaser.Rectangle(0, 0, 1820, 480));
+        whiteBox1.alpha = .8;
+        
+        var whiteBox2 = game.add.sprite(game.world.centerX, game.world.centerY/2, 'whiteBox');
+        whiteBox2.anchor.setTo(0.5, 0.5);
+        whiteBox2.crop(new Phaser.Rectangle(0, 0, 1820, 480));
+        whiteBox2.alpha = .8;
+        
         //create a sprite to act as the area for the user's base
         //this 'windows' the base from other elements in the game 
         
-        topBaseBackground = game.add.sprite(game.world.centerX/2, 10,'topBaseBackground');
+        //topBaseBackground = game.add.sprite(game.world.centerX/2, 10,'topBaseBackground');
         
        // topBase = game.add.sprite(game.world.centerX/2, 10, 'topBase');
         topBaseCollision = game.add.sprite(0,0,'topBaseCollision');
         topBaseCollision.isActive = true;
-        topBaseCollision.visible = false;
+        topBaseCollision.alpha = 0;
         game.physics.enable(topBaseCollision, Phaser.Physics.ARCADE);
         topBaseCollision.body.immovable = true;
         topBaseCollision.scale.setTo(2,1.0555);
@@ -123,11 +135,53 @@ var DefenseEngine = function (game){
 
         loadPlayerBase(playerBaseData);
         shopMenuItems = JSON.parse(game.cache.getText('JSONshopMenuItems'));
-        
         //create menu buttons - pause, open menu, base
         createButtons();
         
+        pausebutton = game.add.text(50, 65, "Pause");
+                pausebutton.font = 'Revalia';
+                pausebutton.fontSize = 60;
+                grd = pausebutton.context.createLinearGradient(0, 0, 0, pausebutton.canvas.height);
+                grd.addColorStop(0, '#8ED6FF');   
+                grd.addColorStop(1, '#004CB3');
+                pausebutton.fill = grd;
+                pausebutton.align = 'center';
+                pausebutton.stroke = '#000000';
+                pausebutton.strokeThickness = 2;
+                pausebutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        pausebutton.inputEnabled = true;
         
+        pausebutton.events.onInputDown.add(function(){
+           game.paused = true; 
+           pausetext = game.add.text(game.world.centerX, game.world.centerY, "PAUSED");
+           pausetext.anchor.setTo(0.5,0.5);
+                pausetext.font = 'Revalia';
+                pausetext.fontSize = 60;
+                grd = pausetext.context.createLinearGradient(0, 0, 0, pausetext.canvas.height);
+                grd.addColorStop(0, '#8ED6FF');   
+                grd.addColorStop(1, '#004CB3');
+                pausetext.fill = grd;
+                pausetext.align = 'center';
+                pausetext.stroke = '#000000';
+                pausetext.strokeThickness = 2;
+                pausetext.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+           // unpauseButton = game.add.text(game.world.width - 300, 20, "Resume", { font: "65px Arial", fill: "#ff0044", align: "center" });
+            //unpauseButton.inputEnabled = true;
+            
+        });
+        
+        shopbutton = game.add.text(50, 130, "Shop");
+                shopbutton.font = 'Revalia';
+                shopbutton.fontSize = 60;
+                grd = shopbutton.context.createLinearGradient(0, 0, 0, shopbutton.canvas.height);
+                grd.addColorStop(0, '#8ED6FF');   
+                grd.addColorStop(1, '#004CB3');
+                shopbutton.fill = grd;
+                shopbutton.align = 'center';
+                shopbutton.stroke = '#000000';
+                shopbutton.strokeThickness = 2;
+                shopbutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        shopbutton.inputEnabled = true;
         
         game.input.onDown.add(unpause, self);
         function unpause(event){
@@ -153,12 +207,15 @@ var DefenseEngine = function (game){
             });
         }
         */
-            
-            
         resourceText = game.add.text(0, 0, "Gold: " + gold);
             resourceText.font = 'Revalia';
             resourceText.fontSize = 60;
             grd = resourceText.context.createLinearGradient(0, 0, 0, resourceText.canvas.height);
+
+        goldText = game.add.text(50, 0, "Gold: " + gold);
+            goldText.font = 'Revalia';
+            goldText.fontSize = 60;
+            grd = goldText.context.createLinearGradient(0, 0, 0, goldText.canvas.height);
             grd.addColorStop(0, '#8ED6FF');   
             grd.addColorStop(1, '#004CB3');
             resourceText.fill = grd;
@@ -166,13 +223,28 @@ var DefenseEngine = function (game){
             resourceText.stroke = '#000000';
             resourceText.strokeThickness = 2;
             resourceText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-        
-        
+
         for(var i = 0; i < game.cache.getKeys().length; ++i){
             if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
                 stickers.push(game.cache.getKeys()[i]);
             }
         }
+         baseButton = game.add.text(50, 200, "Base");
+                baseButton.font = 'Revalia';
+                baseButton.fontSize = 60;
+                grd = baseButton.context.createLinearGradient(0, 0, 0, baseButton.canvas.height);
+                grd.addColorStop(0, '#8ED6FF');   
+                grd.addColorStop(1, '#004CB3');
+                baseButton.fill = grd;
+                baseButton.align = 'center';
+                baseButton.stroke = '#000000';
+                baseButton.strokeThickness = 2;
+                baseButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        baseButton.inputEnabled = true;
+        
+        baseButton.events.onInputDown.add(function(){
+            game.state.start("Customize");
+        });
         
         unitGroup = game.add.group();
         enemypGroup = game.add.group();

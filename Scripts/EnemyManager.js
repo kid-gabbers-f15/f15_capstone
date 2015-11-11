@@ -194,6 +194,8 @@ var EnemyManager = function (game){
         killCnter = 0;
         ++waveNumber;
         
+        var unitpGroup = defEngine.getPlayer().getUnitPGroup();
+        
         if(waveNumber != boss_wave)
         {
             ifBoss = 0;
@@ -205,7 +207,7 @@ var EnemyManager = function (game){
             waveNumber = 0;
             for(var i = 0; i < boss_count_in_wave; i++)
             {
-                bossGroup[i].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
+                bossGroup[i].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitpGroup[(Math.floor(Math.random() * unitpGroup.length))]);
             }
         }
         else // non boss wave
@@ -216,15 +218,15 @@ var EnemyManager = function (game){
             }
             for(var j = 0; j < enemy_count_in_wave; ++j)
             {
-                enemyGroup1[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
+                enemyGroup1[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitpGroup[(Math.floor(Math.random() * unitpGroup.length))]);
             }
             for(var j = 0; j < enemy_count_in_wave; ++j)
             {
-                enemyGroup2[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
+                enemyGroup2[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitpGroup[(Math.floor(Math.random() * unitpGroup.length))]);
             }
             for(var j = 0; j < enemy_count_in_wave; ++j)
             {
-                enemyGroup3[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
+                enemyGroup3[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitpGroup[(Math.floor(Math.random() * unitpGroup.length))]);
             }
         }
         

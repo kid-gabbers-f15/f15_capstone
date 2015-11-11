@@ -151,16 +151,17 @@ var Enemy = function (parent, game){
             attack_delay = attack_delay - 1;
         }
         
+        var unitpGroup = defEngine.getPlayer().getUnitPGroup();
+        
         healthBar.position.x = enemySprite.position.x - 50;
         healthBar.position.y = enemySprite.position.y - 70;
-            
-        //console.log(this.target.key);
-        console.log(uGroup);
+        
+        console.log(unitpGroup[0].getUnitSprite());
         
         game.physics.arcade.moveToXY(
             enemySprite,
-            this.target.position.x,
-            this.target.position.y,
+            this.target.getUnitSprite().position.x,
+            this.target.getUnitSprite().position.y,
             speed);
         
         if(health <= 0){
@@ -177,8 +178,6 @@ var Enemy = function (parent, game){
         //var enemyGroup = defEngine.getEnemyManager().getEnemyGroup();
         
        // console.log("enemyGroup: " + enemyGroup);
-        
-        var unitpGroup = defEngine.getPlayer().getUnitPGroup();
         
         for(var i = 0; i < unitpGroup.length; i++){
             game.physics.arcade.collide(enemySprite, unitpGroup[i].getUnitSprite(), 

@@ -83,16 +83,23 @@ var Enemy = function (parent, game){
         enemySprite.inputEnabled = false;
         //enemySprite.input.useHandCursor = true;
         enemySprite.events.onInputDown.add(function(){
-            damage(100);
+            
+            enemySprite.alpha = 0.8;
+        
+            damage(10); //damage per click
+            
         });
         
+        enemySprite.events.onInputUp.add(function(){
+           enemySprite.alpha = 1.0; //feed back purposes
+        });
         uGroup = unitGroup;
         enemypGroup.add(enemySprite);
         eGroup = enemypGroup;
     }
     
     function ResetEnemy(x, y, target){
-
+        enemySprite.alpha = 1.0; 
         if(boss)
         {
             health = maxHealth*10;
@@ -193,6 +200,8 @@ var Enemy = function (parent, game){
     }
         
     function damage(dmg){
+        
+        enemySprite.alpha = 0.8;
         health = health - dmg;
         healthBar.crop(new Phaser.Rectangle(0,0,100*(health/maxHealth), 20))
         healthBar.updateCrop();

@@ -68,22 +68,22 @@ var EnemyManager = function (game){
         
         
         for(var i = 0; i < enemyGroup1.length; ++i){
-            enemyGroup1[i].OnCreate(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup, false);
+            enemyGroup1[i].OnCreate(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup, false, 1);
             enemyGroup1[i].set_tisAttack(); //assert that the enemy is able to attack upon creation
         }
         
         for(var i = 0; i < enemyGroup2.length; ++i){
-            enemyGroup2[i].OnCreate(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup, false);
+            enemyGroup2[i].OnCreate(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup, false, 2);
             enemyGroup2[i].set_tisAttack(); //assert that the enemy is able to attack upon creation
         }
         
         for(var i = 0; i < enemyGroup3.length; ++i){
-            enemyGroup3[i].OnCreate(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup, false);
+            enemyGroup3[i].OnCreate(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup, false, 3);
             enemyGroup3[i].set_tisAttack(); //assert that the enemy is able to attack upon creation
         }
         
         for(var i = 0; i < bossGroup.length; ++i){
-            bossGroup[i].OnCreate(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup, true);
+            bossGroup[i].OnCreate(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup, true, 0);
             bossGroup[i].set_tisAttack(); //assert that the enemy is able to attack upon creation
         }
     }
@@ -120,26 +120,6 @@ var EnemyManager = function (game){
                     setTimeout(restartWave, 2000);
                     waitingForWave = true;
                 }
-                
-                /*killCnter = 0;
-                 
-                enemy_count_in_wave = enemy_count_in_wave + 1;
-                if(enemy_count_in_wave>10){enemy_count_in_wave=10;}
-                for(var j = 0; j < enemy_count_in_wave; ++j)
-                {
-                    enemyGroup1[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
-                }
-                for(var j = 0; j < enemy_count_in_wave; ++j)
-                {
-                    enemyGroup2[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
-                }
-                for(var j = 0; j < enemy_count_in_wave; ++j)
-                {
-                    enemyGroup3[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
-                }
-                
-                ifBoss = 0;*/
-                
             }
         }
         else // Normal wave
@@ -205,41 +185,6 @@ var EnemyManager = function (game){
                     setTimeout(restartWave, 2000);
                     waitingForWave = true;
                 }
-                
-                /*console.log(waveNumber);
-                killCnter = 0;
-                ++waveNumber;
-                
-                if(waveNumber == boss_wave){ //every three waves, a big one comes out
-                    ifBoss = 1; //active boss level
-                    waveNumber = 1;
-                    for(var i = 0; i < boss_count_in_wave; i++)
-                    {
-                        bossGroup[i].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
-                    }
-                }
-                else // non boss wave
-                {    
-                    enemy_count_in_wave = enemy_count_in_wave + 1;
-                    if(enemy_count_in_wave>10){
-                        
-                        enemy_count_in_wave=10;
-                        
-                        
-                    }
-                    for(var j = 0; j < enemy_count_in_wave; ++j)
-                    {
-                        enemyGroup1[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
-                    }
-                    for(var j = 0; j < enemy_count_in_wave; ++j)
-                    {
-                        enemyGroup2[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
-                    }
-                    for(var j = 0; j < enemy_count_in_wave; ++j)
-                    {
-                        enemyGroup3[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), uGroup.getChildAt(Math.floor(Math.random() * uGroup.length)));
-                    }
-                }*/
             }
         }
     }

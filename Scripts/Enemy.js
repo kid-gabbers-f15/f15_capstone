@@ -83,7 +83,7 @@ var Enemy = function (parent, game){
         enemySprite.inputEnabled = false;
         //enemySprite.input.useHandCursor = true;
         enemySprite.events.onInputDown.add(function(){
-            damage(10);
+            damage(100);
         });
         
         uGroup = unitGroup;

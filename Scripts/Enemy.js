@@ -132,7 +132,7 @@ var Enemy = function (parent, game){
         }
         else
         {
-            console.log("reseting regulars");
+            //console.log("reseting regulars");
             maxHealth = const_maxHealth;
             health = maxHealth;
             initialHealth = maxHealth;
@@ -252,6 +252,22 @@ var Enemy = function (parent, game){
             if(unitpGroup[i].get_children() != 0)
             {
                 target = unitpGroup[i];
+                
+                var diff = target.getUnitSprite().position.y - enemySprite.position.y;
+                
+                enemySprite.position.x += 15;
+                
+                if(diff > 0)
+                {
+                    enemySprite.position.y += 15;
+                }
+                else
+                {
+                    enemySprite.position.y -= 15;
+                }
+                
+                console.log(target.getUnitSprite().position.y);
+                
                 break;
             }
             if(i == unitpGroup.length - 1)

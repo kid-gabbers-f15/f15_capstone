@@ -16,6 +16,10 @@ var BaseManager = function(game){
     var baseoffsetX = 130;
     var baseoffsetY = 110;
     
+    var backgroundSprite = '';
+    
+    var playerBaseData;
+    
     function Preload(){
         game.load.image('background', 'Assets/BackgroundKidGabTemplate.png');
         game.load.image('image1', 'Assets/Placeholder1.png');
@@ -25,10 +29,20 @@ var BaseManager = function(game){
     }
     
     function OnCreate(){
-        background = game.add.sprite(game.world.centerX + baseoffsetX, game.world.centerY - baseoffsetY, 'BaseBackground23');
+        var cookie = getCookie("JSON");
+        if(cookie === ""){
+            playerBaseData = JSON.parse(game.cache.getText('JSONplayerBaseData'));
+        }else{
+            playerBaseData = JSON.parse(cookie);
+        }
+        
+        
+        backgroundSprite = playerBaseData.background;
+        background = game.add.sprite(game.world.centerX + baseoffsetX, game.world.centerY - baseoffsetY, backgroundSprite);
         background.anchor.setTo(0.5, 0.5);
         background.scale.setTo(1.5, 1.5);
         background.inputEnabled = true;
+        background.crop(new Phaser.Rectangle(0, 0, 800, 600));
         stickers = game.add.group();
         
         background.events.onInputDown.add(function(){
@@ -61,9 +75,25 @@ var BaseManager = function(game){
         mainButton.inputEnabled = true;
         
         mainButton.events.onInputDown.add(function(){
+            SaveBase();
             game.state.start("Defense");
         });
         
+        
+        for(var i = 0; i < playerBaseData.list.length; ++i){
+            var temp = game.add.sprite(playerBaseData.list[i].position.x,  playerBaseData.list[i].position.y, playerBaseData.list[i].image);
+            temp.anchor.setTo(0.5, 0.5);
+            temp.inputEnabled = true;
+            addEventtoSprite(temp);
+            stickers.add(temp);
+        }
+        
+    }
+    
+    function addEventtoSprite(sprite){
+        sprite.events.onInputDown.add(function(){
+            sprite.destroy();
+        });
     }
     
     function Update(){
@@ -71,7 +101,8 @@ var BaseManager = function(game){
     }
     
     function SaveBase(){
-        _playerBaseJSONstring += '{ "list" : [';
+        _playerBaseJSONstring = '';
+        _playerBaseJSONstring += '{"background" : "' + backgroundSprite + '", "list" : [';
         for(var i = 0; i < stickers.length - 1; ++i){
             var object = {};
             object.image = stickers.getChildAt(i).key;
@@ -86,11 +117,17 @@ var BaseManager = function(game){
             _playerBaseJSONstring += JSON.stringify(object) + ']}';
         console.log(_playerBaseJSONstring);
 
+        document.cookie = "JSON=" + _playerBaseJSONstring;
     }
     
     that.setCurrentImage = function(newImage){
         currentImage = newImage;
         console.log("Current image is " + newImage);
+    }
+    
+    that.setBackground = function(newBG){
+        background.loadTexture(newBG);
+        backgroundSprite = newBG;
     }
     
     that.Preload = Preload;

@@ -3,13 +3,20 @@ var BaseToolbar = function(game, parent){
     
     var backButton;
     var nextButton;
+    var stickersButton;
+    var backgroundButton;
+    
     var grd;
     
     var numOfSlots = 8;
     var pageNum = 0;
     var stickers = [];
+    var backgrounds = [];
     var slots = [];
-
+    var backgroundSlots = [];
+    
+    var toolbar = '';
+    
     function Preload(){
         
     }
@@ -19,8 +26,15 @@ var BaseToolbar = function(game, parent){
             clickSlot(index);
         });
     }
+    
+    function addEventtoBGSlot(index, slot){
+        slot.events.onInputDown.add(function(){
+            clickBackground(index);
+        });
+    }
 
     function OnCreate(){
+        toolbar = 'stickers';
         for(var i = 0; i < game.cache.getKeys().length; ++i){
             if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
                 stickers.push(game.cache.getKeys()[i]);
@@ -38,9 +52,34 @@ var BaseToolbar = function(game, parent){
             slots.push({slot:temp, key:stickers[i], keyIndex:i});
         }
         
-         backButton = game.add.text(0, 800, "Back");
+        for(var i = 0; i < game.cache.getKeys().length; ++i){
+            if(game.cache.getKeys()[i].indexOf('BaseBackground') >= 0){
+                backgrounds.push(game.cache.getKeys()[i]);
+            }
+        }
+        
+        for(var i = 0; i < numOfSlots; ++i){
+            var temp = {};
+            temp = game.add.sprite(100 + 200*backgroundSlots.length, 900, backgrounds[i]);
+            console.log(backgrounds[i]);
+            temp.scale.set(.25, .25);
+            temp.anchor.set(.5,.5);
+            temp.crop(new Phaser.Rectangle(0,0,600,600));
+            temp.inputEnabled = true;
+            addEventtoBGSlot(i, temp);
+            backgroundSlots.push({slot:temp, key:backgrounds[i], keyIndex:i});
+        }
+        
+        for(var i = 0; i < numOfSlots; ++i){
+            backgroundSlots[i].slot.visible = false;
+            backgroundSlots[i].slot.inputEnabled = false;
+            slots[i].slot.visible = true;
+            slots[i].slot.inputEnabled = true;
+        }
+        
+        backButton = game.add.text(0, 900, "Back");
                 backButton.font = 'Revalia';
-                backButton.fontSize = 60;
+                backButton.fontSize = 40;
                 grd = backButton.context.createLinearGradient(0, 0, 0, backButton.canvas.height);
                 grd.addColorStop(0, '#8ED6FF');   
                 grd.addColorStop(1, '#004CB3');
@@ -55,9 +94,9 @@ var BaseToolbar = function(game, parent){
             clickBack();
         });
         
-         nextButton = game.add.text(1720, 800, "Next");
+        nextButton = game.add.text(1720, 900, "Next");
                 nextButton.font = 'Revalia';
-                nextButton.fontSize = 60;
+                nextButton.fontSize = 40;
                 grd = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
                 grd.addColorStop(0, '#8ED6FF');   
                 grd.addColorStop(1, '#004CB3');
@@ -72,15 +111,123 @@ var BaseToolbar = function(game, parent){
             clickNext();
         });
         
+        backgroundButton = game.add.text(150, 800, "Backgrounds");
+                backgroundButton.font = 'Revalia';
+                backgroundButton.fontSize = 30;
+                grd = backgroundButton.context.createLinearGradient(0, 0, 0, backgroundButton.canvas.height);
+                grd.addColorStop(0, '#8ED6FF');   
+                grd.addColorStop(1, '#004CB3');
+                backgroundButton.fill = grd;
+                backgroundButton.align = 'center';
+                backgroundButton.stroke = '#000000';
+                backgroundButton.strokeThickness = 2;
+                backgroundButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        backgroundButton.inputEnabled = true;
+        
+        backgroundButton.events.onInputDown.add(function(){
+            toolbar = 'backgrounds';
+            updateToolbar();
+        });
+        
+        stickersButton = game.add.text(0, 800, "Stickers");
+                stickersButton.font = 'Revalia';
+                stickersButton.fontSize = 30;
+                grd = stickersButton.context.createLinearGradient(0, 0, 0, stickersButton.canvas.height);
+                grd.addColorStop(0, '#8ED6FF');   
+                grd.addColorStop(1, '#004CB3');
+                stickersButton.fill = grd;
+                stickersButton.align = 'center';
+                stickersButton.stroke = '#000000';
+                stickersButton.strokeThickness = 2;
+                stickersButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        stickersButton.inputEnabled = true;
+        
+        stickersButton.events.onInputDown.add(function(){
+            toolbar = 'stickers';
+            updateToolbar();
+        });
+        
+    }
+    
+    function updateToolbar(){
+        if(toolbar === 'stickers'){
+            for(var i = 0; i < numOfSlots; ++i){
+                backgroundSlots[i].slot.visible = false;
+                backgroundSlots[i].slot.inputEnabled = false;
+                slots[i].slot.visible = true;
+                slots[i].slot.inputEnabled = true;
+                
+            }
+        }else if(toolbar === 'backgrounds'){
+             for(var i = 0; i < numOfSlots; ++i){
+                backgroundSlots[i].slot.visible = true;
+                backgroundSlots[i].slot.inputEnabled = true;
+                slots[i].slot.visible = false;
+                slots[i].slot.inputEnabled = false;
+                
+            }
+        }
     }
     
     function clickBack(){
-        if(pageNum > 0){
-            pageNum -= 1;
-            console.log("click");
-            var i = pageNum * numOfSlots;
+        if(toolbar === 'stickers'){
+            if(pageNum > 0){
+                pageNum -= 1;
+                console.log("click");
+                var i = pageNum * numOfSlots;
+                    for(var n = 0; n < slots.length; ++n){
+                        while(i <= stickers.length){
+                            if(n < slots.length){
+                                console.log(stickers[i]);
+                                slots[n].slot.loadTexture(stickers[i]);
+                                slots[n].keyIndex = i;
+                                slots[n].key = stickers[i];
+                                slots[n].slot.events.onInputDown.removeAll();
+                                addEventtoSlot(i, slots[n].slot);
+                                slots[n].slot.visible = true;
+                                slots[n].slot.inputEnabled = true;
+                                ++n;
+                            }else{
+                                break;
+                            }
+                        ++i;
+                    }
+                }
+            }
+        }else if(toolbar ==='backgrounds'){
+            if(pageNum > 0){
+                pageNum -= 1;
+                console.log("click");
+                var i = pageNum * numOfSlots;
+                    for(var n = 0; n < backgroundSlots.length; ++n){
+                        while(i <= backgrounds.length){
+                            if(n < backgroundSlots.length){
+                                console.log(backgrounds[i]);
+                                backgroundSlots[n].slot.loadTexture(backgrounds[i]);
+                                backgroundSlots[n].keyIndex = i;
+                                backgroundSlots[n].key = backgrounds[i];
+                                backgroundSlots[n].slot.events.onInputDown.removeAll();
+                                addEventtoBGSlot(i, backgroundSlots[n].slot);
+                                backgroundSlots[n].slot.visible = true;
+                                backgroundSlots[n].slot.inputEnabled = true;
+                                ++n;
+                            }else{
+                                break;
+                            }
+                        ++i;
+                    }
+                }
+            }
+        }
+    }
+    
+    function clickNext(){
+        if(toolbar === 'stickers'){
+            if((pageNum + 1) * numOfSlots < stickers.length){
+                pageNum += 1;
+                var i = pageNum * numOfSlots;
                 for(var n = 0; n < slots.length; ++n){
-                    while(i <= stickers.length){
+                    while(i < stickers.length){
                         if(n < slots.length){
                             console.log(stickers[i]);
                             slots[n].slot.loadTexture(stickers[i]);
@@ -88,41 +235,43 @@ var BaseToolbar = function(game, parent){
                             slots[n].key = stickers[i];
                             slots[n].slot.events.onInputDown.removeAll();
                             addEventtoSlot(i, slots[n].slot);
-                            slots[n].slot.visible = true;
-                            slots[n].slot.inputEnabled = true;
                             ++n;
                         }else{
                             break;
                         }
                     ++i;
+                    }
+                    if(n < slots.length){
+                        console.log("click");
+                        slots[n].slot.visible = false;
+                        slots[n].slot.inputEnabled = false;
+                    }
                 }
             }
-        }
-    }
-    
-    function clickNext(){
-        if((pageNum + 1) * numOfSlots < stickers.length){
-            pageNum += 1;
-            var i = pageNum * numOfSlots;
-            for(var n = 0; n < slots.length; ++n){
-                while(i < stickers.length){
-                    if(n < slots.length){
-                        console.log(stickers[i]);
-                        slots[n].slot.loadTexture(stickers[i]);
-                        slots[n].keyIndex = i;
-                        slots[n].key = stickers[i];
-                        slots[n].slot.events.onInputDown.removeAll();
-                        addEventtoSlot(i, slots[n].slot);
-                        ++n;
-                    }else{
-                        break;
+        }else if(toolbar === 'backgrounds'){
+            if((pageNum + 1) * numOfSlots < backgrounds.length){
+                pageNum += 1;
+                var i = pageNum * numOfSlots;
+                for(var n = 0; n < backgroundSlots.length; ++n){
+                    while(i < backgrounds.length){
+                        if(n < backgroundSlots.length){
+                            console.log(backgrounds[i]);
+                            backgroundSlots[n].slot.loadTexture(backgrounds[i]);
+                            backgroundSlots[n].keyIndex = i;
+                            backgroundSlots[n].key = backgrounds[i];
+                            backgroundSlots[n].slot.events.onInputDown.removeAll();
+                            addEventtoBGSlot(i, backgroundSlots[n].slot);
+                            ++n;
+                        }else{
+                            break;
+                        }
+                    ++i;
                     }
-                ++i;
-                }
-                if(n < slots.length){
-                    console.log("click");
-                    slots[n].slot.visible = false;
-                    slots[n].slot.inputEnabled = false;
+                    if(n < backgroundSlots.length){
+                        console.log("click");
+                        backgroundSlots[n].slot.visible = false;
+                        backgroundSlots[n].slot.inputEnabled = false;
+                    }
                 }
             }
         }
@@ -136,6 +285,18 @@ var BaseToolbar = function(game, parent){
             if(slotClicked === slots[i].keyIndex){
                 console.log(slots[i].key);
                 parent.setCurrentImage(slots[i].key);
+            }
+        }
+    }
+    
+    function clickBackground(slotClicked){
+        console.log("Clicked slot #" + slotClicked);
+         for(var i = 0; i < backgroundSlots.length; ++i){
+            console.log(backgroundSlots[i].key);
+            console.log(backgroundSlots[i].keyIndex);
+            if(slotClicked === backgroundSlots[i].keyIndex){
+                console.log(backgroundSlots[i].key);
+                parent.setBackground(backgroundSlots[i].key);
             }
         }
     }

@@ -97,6 +97,8 @@ var Preload = {
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
         
+        
+        
         console.log("Preload");
     },
     

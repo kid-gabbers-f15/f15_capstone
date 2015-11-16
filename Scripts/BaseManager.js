@@ -120,10 +120,11 @@ var BaseManager = function(game){
 
             playerState.base.list.push(object);
         }
+        playerState.base.background = backgroundSprite;
         PlayerStateJSONString = JSON.stringify(playerState);
         console.log(PlayerStateJSONString);
 
-        document.cookie = "playerState=" + PlayerStateJSONString;
+        document.cookie = "PlayerState=" + PlayerStateJSONString;
     }
     
     that.setCurrentImage = function(newImage){

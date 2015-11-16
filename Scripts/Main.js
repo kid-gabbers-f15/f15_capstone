@@ -36,7 +36,8 @@ var baseManager;
 var shopManager;
 //
 var _friendBaseJSONstring = "";
-var _playerBaseJSONstring = "";
+var PlayerStateJSONString = "";
+var playerState = {};
 
 //Runs at start of game
 var Boot = {
@@ -49,6 +50,20 @@ var Boot = {
         
         var assetLoader = AssetLoader(game);
         assetLoader.Preload();
+        
+        var cookie = getCookie("PlayerState");
+        if(cookie === ""){
+            playerState = {};
+            playerState.gold = 500;
+            playerState.points = 0;
+            playerState.base = {};
+                playerState.base.background = "BaseBackground1";
+                playerState.base.totalSlots = 5;
+                playerState.base.list = [];
+            playerState.purchases = [];
+        }else{
+            playerState = JSON.parse(cookie);
+        }
         
         LoadingText = game.add.text(game.world.width/2, game.world.height/2, "Loading...");
                     LoadingText.font = 'Revalia';

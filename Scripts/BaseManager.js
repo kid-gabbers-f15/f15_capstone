@@ -10,8 +10,7 @@ var BaseManager = function(game){
     var currentImage; // string, name of current image
     
     var stickers; // array, list of stickers
-    
-    var maxStickers = 20; // int, max number of stickers player can place
+    var maxStickers = 1; // int, max number of stickers player can place
     
     var baseoffsetX = 130; // int, x screen offset for the base
     var baseoffsetY = 110; // int, y screen offset for the base
@@ -40,16 +39,8 @@ var BaseManager = function(game){
         whiteBox2.crop(new Phaser.Rectangle(0, 0, 1820, 200));
         whiteBox2.alpha = .8;
         
-        var cookie = getCookie("JSON");
-        if(cookie === ""){
-            playerBaseData = JSON.parse(game.cache.getText('JSONplayerBaseData'));
-        }
-        else{
-            playerBaseData = JSON.parse(cookie);
-        }
-        
-        
-        backgroundSprite = playerBaseData.background;
+
+        backgroundSprite = playerState.base.background;
         background = game.add.sprite(game.world.centerX + baseoffsetX, game.world.centerY - baseoffsetY, backgroundSprite);
         background.anchor.setTo(0.5, 0.5);
         background.scale.setTo(1.5, 1.5);
@@ -59,7 +50,7 @@ var BaseManager = function(game){
         
         background.events.onInputDown.add(function(){
             if(currentImage !== undefined && currentImage !== null){
-                if(stickers.length < maxStickers){
+                if(stickers.length < playerState.base.totalSlots){
                     var temp = game.add.sprite(game.input.mousePointer.x, game.input.mousePointer.y, currentImage);
                     temp.anchor.setTo(0.5, 0.5);
                     temp.inputEnabled = true;
@@ -97,8 +88,8 @@ var BaseManager = function(game){
             game.state.start("Preload");
         });
         
-        for(var i = 0; i < playerBaseData.list.length; ++i){
-            var temp = game.add.sprite(playerBaseData.list[i].position.x,  playerBaseData.list[i].position.y, playerBaseData.list[i].image);
+        for(var i = 0; i < playerState.base.list.length; ++i){
+            var temp = game.add.sprite(playerState.base.list[i].position.x,  playerState.base.list[i].position.y, playerState.base.list[i].image);
             temp.anchor.setTo(0.5, 0.5);
             temp.inputEnabled = true;
             addEventtoSprite(temp);
@@ -121,25 +112,18 @@ var BaseManager = function(game){
     }
     
     function SaveBase(){
-        _playerBaseJSONstring = '';
-        _playerBaseJSONstring += '{"background" : "' + backgroundSprite + '", "list" : [';
-        
-        for(var i = 0; i < stickers.length - 1; ++i){
+        for(var i = 0; i < stickers.length; ++i){
             var object = {};
             object.image = stickers.getChildAt(i).key;
             object.position = { x: stickers.getChildAt(i).position.x , y: stickers.getChildAt(i).y};
 
-            _playerBaseJSONstring += JSON.stringify(object) + ', ';
+            playerState.base.list.push(object);
         }
-        
-        var object = {};
-        object.image = stickers.getChildAt(stickers.length - 1).key;
-        object.position = { x: stickers.getChildAt(stickers.length - 1).position.x , y: stickers.getChildAt(stickers.length - 1).y};
-        
-        _playerBaseJSONstring += JSON.stringify(object) + ']}';
-        console.log(_playerBaseJSONstring);
 
-        document.cookie = "JSON=" + _playerBaseJSONstring;
+        PlayerStateJSONString = JSON.stringify(playerState);
+        console.log(PlayerStateJSONString);
+
+        document.cookie = "playerState=" + PlayerStateJSONString;
     }
     
     /*

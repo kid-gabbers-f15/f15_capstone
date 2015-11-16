@@ -103,14 +103,7 @@ var DefenseEngine = function (game){
         friendBaseData = JSON.parse(game.cache.getText('JSONfriendBaseData'));
         loadFriendBase(friendBaseData);
 
-        var cookie = getCookie("JSON");
-        if(cookie === ""){
-            playerBaseData = JSON.parse(game.cache.getText('JSONplayerBaseData'));
-        }else{
-            playerBaseData = JSON.parse(cookie);
-        }
-
-        loadPlayerBase(playerBaseData);
+        loadPlayerBase(playerState.base);
         //create menu buttons - pause, open menu, base
         createButtons();
         
@@ -123,7 +116,7 @@ var DefenseEngine = function (game){
             }
         }
 
-        resourceText = game.add.text(0, 0, "Gold: " + gold);
+        resourceText = game.add.text(50, 10, "Gold: " + gold);
             resourceText.font = 'Revalia';
             resourceText.fontSize = 60;
             grd = resourceText.context.createLinearGradient(0, 0, 0, resourceText.canvas.height);
@@ -188,7 +181,7 @@ var DefenseEngine = function (game){
     }
     
     function createButtons(){
-        pausebutton = game.add.text(0, 65, "Pause");
+        pausebutton = game.add.text(50, 65, "Pause");
                 pausebutton.font = 'Revalia';
                 pausebutton.fontSize = 60;
                 grd = pausebutton.context.createLinearGradient(0, 0, 0, pausebutton.canvas.height);
@@ -227,7 +220,7 @@ var DefenseEngine = function (game){
             
         });
         
-        shopbutton = game.add.text(0, 130, "Open Shop");
+        shopbutton = game.add.text(50, 130, "Open Shop");
                 shopbutton.font = 'Revalia';
                 shopbutton.fontSize = 60;
                 grd = shopbutton.context.createLinearGradient(0, 0, 0, shopbutton.canvas.height);
@@ -252,7 +245,7 @@ var DefenseEngine = function (game){
             }
         });
         
-         baseButton = game.add.text(0, 200, "Base");
+         baseButton = game.add.text(50, 200, "Base");
                 baseButton.font = 'Revalia';
                 baseButton.fontSize = 60;
                 grd = baseButton.context.createLinearGradient(0, 0, 0, baseButton.canvas.height);

@@ -13,6 +13,9 @@ var EnemyManager = function (game){
     var boss_count_in_wave = 1;
     var killCnter = 0;
     
+    var grd; //gradient of the text for the wave number
+    var waveNumText;
+    var currentWave;
     var waveNumber = 0; //Keeps count of wave number. notify boss wave
     var boss_wave = 3;
     var ifBoss = 0; //zero is no boss one is boss
@@ -27,33 +30,27 @@ var EnemyManager = function (game){
     eSpawn.y = 800;
     
     function Preload(){
-        for(var i = 0; i < total_enemies; ++i)
+        for(var i = 0; i < total_enemies; ++i) //add each enemies to their respective arrays
         {
-            var enemy = Enemy(that, game);
+            var enemy1 = Enemy(that, game);
             
-            enemy.Preload();
-            enemyGroup1.push(enemy);
-        }
-        for(var i = 0; i < total_enemies; ++i)
-        {
-            var enemy = Enemy(that, game);
+            enemy1.Preload();
+            enemyGroup1.push(enemy1);
+        
+            var enemy2 = Enemy(that, game);
             
-            enemy.Preload();
-            enemyGroup2.push(enemy);
-        }
-        for(var i = 0; i < total_enemies; ++i)
-        {
-            var enemy = Enemy(that, game);
+            enemy2.Preload();
+            enemyGroup2.push(enemy2);
+       
+            var enemy3 = Enemy(that, game);
             
-            enemy.Preload();
-            enemyGroup3.push(enemy);
-        }
-        for(var i = 0; i < total_enemies; ++i)
-        {
-            var enemy = Enemy(that, game);
+            enemy3.Preload();
+            enemyGroup3.push(enemy3);
+        
+            var enemyBoss = Enemy(that, game);
             
-            enemy.Preload();
-            bossGroup.push(enemy);
+            enemyBoss.Preload();
+            bossGroup.push(enemyBoss);
         }
     }
     
@@ -61,7 +58,7 @@ var EnemyManager = function (game){
     function OnCreate(unitGroup, enemypGroup){
         uGroup = unitGroup;
         eGroup = enemypGroup;
-        
+        currentWave = 0;
         
         //here we create the enemies. four different groups for four different types
         
@@ -86,6 +83,22 @@ var EnemyManager = function (game){
             bossGroup[i].OnCreate(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup, true, 0);
             bossGroup[i].set_tisAttack(); //assert that the enemy is able to attack upon creation
         }
+        
+        
+        //..........................
+        //create the text for the wave count
+        waveNumText = game.add.text(50, 260, "Wave: " + currentWave);
+                    waveNumText.font = 'Revalia';
+                    waveNumText.fontSize = 60;
+                    grd = waveNumText.context.createLinearGradient(0, 0, 0, waveNumText.canvas.height);
+                    grd.addColorStop(0, '#8ED6FF');   
+                    grd.addColorStop(1, '#004CB3');
+                    waveNumText.fill = grd;
+                    waveNumText.align = 'center';
+                    waveNumText.stroke = '#000000';
+                    waveNumText.strokeThickness = 2;
+                    waveNumText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        waveNumText.anchor.setTo(0.0,0.0); //set the point of reference for the sprite
     }
     
     function Update(){
@@ -194,6 +207,10 @@ var EnemyManager = function (game){
         killCnter = 0;
         ++waveNumber;
         
+        ++currentWave;
+        
+        update_Wave_Text(); //increment the wave count text
+        
         var unitpGroup = defEngine.getPlayer().getUnitPGroup();
         
         if(waveNumber != boss_wave)
@@ -268,6 +285,15 @@ var EnemyManager = function (game){
     function getEgroup(){
         return eGroup;
     }
+    
+    
+    function update_Wave_Text(){
+
+        waveNumText.setText("Wave: " + currentWave);
+        
+        
+    }
+    
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;

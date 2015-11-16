@@ -53,7 +53,8 @@ var Enemy = function (parent, game){
         can_attack = true; // upon creation enemies should be able to attack instantly
         attack_delay = 0;
 
-        if(isBoss==true) // This enemy is a boss
+
+        if(isBoss) //if the enemy is a boss
         {
             enemySprite = game.add.sprite(position.x, position.y, 'EnemyBoss_1' );
             game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
@@ -61,9 +62,9 @@ var Enemy = function (parent, game){
             enemySprite.body.friction = 10;
             enemySprite.body.drag = 100;
     
-            enemySprite.anchor.setTo(0.5, 0.5);
+            enemySprite.anchor.setTo(0.5, 0.5); 
     
-            health = maxHealth*10;
+            health = maxHealth*10;// boss health
             initialHealth = health;
             healthBar = game.add.sprite(position.x - 100, position.y - 200, 'Boss_1_Health');
             healthBar.crop(new Phaser.Rectangle(0,0,enemySprite.width, 20));
@@ -111,7 +112,7 @@ var Enemy = function (parent, game){
         enemySprite.events.onInputDown.add(function(){
             damage(dmgPerClick); //damage per click
         });
-        uGroup = unitGroup;
+        uGroup = unitGroup; //the group that the enemies will attack
         enemypGroup.add(enemySprite);
         eGroup = enemypGroup;
     }
@@ -122,7 +123,8 @@ var Enemy = function (parent, game){
     newTarget - object, unit for enemy to target
     */
     function ResetEnemy(x, y, newTarget){
-        enemySprite.alpha = 1.0; 
+        //reset the enemies to their original status
+        enemySprite.alpha = 1.0; ///reset the opacity to 100%
         if(boss)
         {
             health = maxHealth*10;
@@ -163,7 +165,9 @@ var Enemy = function (parent, game){
         }
     }
     
-    function Update(){
+    function Update(){ //udpate the enemies
+        
+        //if they can attack the units again or not
         if(attack_delay == 0)
         {
             can_attack = true;
@@ -195,14 +199,14 @@ var Enemy = function (parent, game){
             target.getUnitSprite().position.y,
             speed);
         
-        if(health <= 0){
+        if(health <= 0){ //if they have been defeated
             enemySprite.visible = false;
             healthBar.visible = false;
             enemySprite.inputEnabled = false;
             isActive = false;
         }
         
-        position = enemySprite.position;
+        position = enemySprite.position; //their new position
 
         //loop through units and enemies to check for collision
         //after a collision is detectd, pull the unit object and enemy object for interaction
@@ -227,15 +231,14 @@ var Enemy = function (parent, game){
     dmg - int, amount of damage to do to the enemy
     */
     function damage(dmg){
-        
         health = health - dmg;
-        enemySprite.alpha = 1.0 - 1.0*(initialHealth-health)/initialHealth;
+        enemySprite.alpha = 1.0 - 1.0*(initialHealth-health)/initialHealth; //decrease the opacity depending on the ratio between currenthealth and initial health
         
-        if(enemySprite.alpha < 0.15){ //dont let it go lower than .15 too transparent
-            enemySprite.alpha = .15;
+        if(enemySprite.alpha < 0.2){ //dont let it go lower than .15. too transparent
+            enemySprite.alpha = .2;
         }
         
-        if(boss){
+        if(boss){ //crop it depending on whether the enemy is a boss or a regular
             healthBar.crop(new Phaser.Rectangle(0,0, initHealthBar * health/initialHealth, 20));
         }
         else{
@@ -244,7 +247,7 @@ var Enemy = function (parent, game){
         }
         healthBar.updateCrop();
         
-        if(health <= 0){
+        if(health <= 0){ //if the enemy has been defeated
             enemySprite.visible = false;
             healthBar.visible = false;
             enemySprite.inputEnabled = false;
@@ -259,7 +262,7 @@ var Enemy = function (parent, game){
         }
     }
     
-    function retarget(unitpGroup){
+    function retarget(unitpGroup){ //here we have the enemies target another unit if their initial targets are non-existent
         for(var i=0; i<unitpGroup.length; i++)
         {
             if(unitpGroup[i].get_children() != 0)

@@ -4,7 +4,7 @@
         //  'active' means all requested fonts have finished loading
         //  We set a 1 second delay before calling 'createText'.
         //  For some reason if we don't the browser cannot render the text the first time it's created.
-        //active: function() { game.time.events.add(Phaser.Timer.SECOND, , this); },
+        //active: function() { game.time.events.add(Phaser.Timer.SECOND, Boot, this); },
     
         //  The Google Fonts we want to load (specify as many as you like in the array)
         google: {
@@ -27,8 +27,13 @@ function getCookie(cname) {
 //global game variable
 var game = {};
 
+
+var LoadingText;
+var gradientText;
+
 var defEngine;
 var baseManager;
+var shopManager;
 //
 var _friendBaseJSONstring = "";
 var _playerBaseJSONstring = "";
@@ -44,6 +49,20 @@ var Boot = {
         
         var assetLoader = AssetLoader(game);
         assetLoader.Preload();
+        
+        LoadingText = game.add.text(game.world.width/2, game.world.height/2, "Loading...");
+                    LoadingText.font = 'Revalia';
+                    LoadingText.fontSize = 80;
+                    gradientText = LoadingText.context.createLinearGradient(0, 0, 0, LoadingText.canvas.height);
+                    gradientText.addColorStop(0, '#8ED6FF');   
+                    gradientText.addColorStop(1, '#004CB3');
+                    LoadingText.fill = gradientText;
+                    LoadingText.align = 'center';
+                    LoadingText.stroke = '#000000';
+                    LoadingText.strokeThickness = 2;
+                    LoadingText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        LoadingText.anchor.setTo(0.5,0.5); //set the point of reference for the sprite
+        
         
         console.log("Boot");
     },
@@ -69,6 +88,7 @@ var Preload = {
     create : function(){
         defEngine = DefenseEngine(game);
         baseManager = BaseManager(game);
+        shopManager = ShopManager(game);
         
         game.state.start("Defense");
     }
@@ -89,10 +109,13 @@ var Defense = {
         console.log("Defense started");
         game.physics.startSystem(Phaser.Physics.ARCADE);
         defEngine.Preload();
+        shopManager.Preload();
     },
     
     create : function(){
         defEngine.OnCreate();
+        shopManager.OnCreate();
+
     },
     
     update : function (){

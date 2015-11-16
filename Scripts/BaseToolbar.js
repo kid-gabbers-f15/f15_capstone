@@ -89,6 +89,12 @@ var BaseToolbar = function(game, parent){
                 backButton.strokeThickness = 2;
                 backButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         backButton.inputEnabled = true;
+        backButton.events.onInputOver.add(function(){
+                    backButton.fill = '#ff00ff';
+                }, this);
+                backButton.events.onInputOut.add(function(){
+                    backButton.fill = grd;
+                }, this);
         
         backButton.events.onInputDown.add(function(){
             clickBack();
@@ -106,6 +112,12 @@ var BaseToolbar = function(game, parent){
                 nextButton.strokeThickness = 2;
                 nextButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         nextButton.inputEnabled = true;
+        nextButton.events.onInputOver.add(function(){
+                    nextButton.fill = '#ff00ff';
+                }, this);
+                nextButton.events.onInputOut.add(function(){
+                    nextButton.fill = grd;
+                }, this);
         
         nextButton.events.onInputDown.add(function(){
             clickNext();
@@ -123,7 +135,12 @@ var BaseToolbar = function(game, parent){
                 backgroundButton.strokeThickness = 2;
                 backgroundButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         backgroundButton.inputEnabled = true;
-        
+        backgroundButton.events.onInputOver.add(function(){
+                backgroundButton.fill = '#ff00ff';
+            }, this);
+        backgroundButton.events.onInputOut.add(function(){
+                backgroundButton.fill = grd;
+            }, this);
         backgroundButton.events.onInputDown.add(function(){
             toolbar = 'backgrounds';
             updateToolbar();
@@ -141,7 +158,12 @@ var BaseToolbar = function(game, parent){
                 stickersButton.strokeThickness = 2;
                 stickersButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         stickersButton.inputEnabled = true;
-        
+        stickersButton.events.onInputOver.add(function(){
+                stickersButton.fill = '#ff00ff';
+            }, this);
+        stickersButton.events.onInputOut.add(function(){
+                stickersButton.fill = grd;
+            }, this);
         stickersButton.events.onInputDown.add(function(){
             toolbar = 'stickers';
             updateToolbar();
@@ -309,6 +331,9 @@ var BaseToolbar = function(game, parent){
     that.Preload = Preload;
     that.OnCreate = OnCreate;
     that.Update = Update;
+    that.clickBack = clickBack;
+    that.clickNext = clickNext;
+    that.clickSlot = clickSlot;
     
     return that;    
 }

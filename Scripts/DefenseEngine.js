@@ -10,20 +10,17 @@ var DefenseEngine = function (game){
     var unitGroup;
     var enemypGroup;
     var gold;
-    var goldText;
+    var resourceText;
     var shopbutton;
     var pausebutton;
     var baseButton;
     var basetext;
     var friendBaseData;
     var pausetext;
-    var shopmenu;
-    var topBaseBackground;
-    var unpauseButton;
-    var showShop = false;
-
-    var text = null;
     var grd;
+    var playerBaseData;
+    
+    
     
     function loadPlayerBase(base){
         var bg = game.add.sprite(game.world.centerX, game.world.centerY/2, base.background);
@@ -67,6 +64,8 @@ var DefenseEngine = function (game){
         
         game.load.text('JSONfriendBaseData', 'Scripts/json2.txt');
         game.load.text('JSONplayerBaseData', 'Scripts/json.txt');
+
+        //shopManager.Preload();
 
     }
     
@@ -112,201 +111,48 @@ var DefenseEngine = function (game){
         }
 
         loadPlayerBase(playerBaseData);
-        
-        pausebutton = game.add.text(50, 65, "Pause");
-                pausebutton.font = 'Revalia';
-                pausebutton.fontSize = 60;
-                grd = pausebutton.context.createLinearGradient(0, 0, 0, pausebutton.canvas.height);
-                grd.addColorStop(0, '#8ED6FF');   
-                grd.addColorStop(1, '#004CB3');
-                pausebutton.fill = grd;
-                pausebutton.align = 'center';
-                pausebutton.stroke = '#000000';
-                pausebutton.strokeThickness = 2;
-                pausebutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-        pausebutton.inputEnabled = true;
-        
-        pausebutton.events.onInputDown.add(function(){
-           game.paused = true; 
-           pausetext = game.add.text(game.world.centerX, game.world.centerY, "PAUSED");
-           pausetext.anchor.setTo(0.5,0.5);
-                pausetext.font = 'Revalia';
-                pausetext.fontSize = 60;
-                grd = pausetext.context.createLinearGradient(0, 0, 0, pausetext.canvas.height);
-                grd.addColorStop(0, '#8ED6FF');   
-                grd.addColorStop(1, '#004CB3');
-                pausetext.fill = grd;
-                pausetext.align = 'center';
-                pausetext.stroke = '#000000';
-                pausetext.strokeThickness = 2;
-                pausetext.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-           // unpauseButton = game.add.text(game.world.width - 300, 20, "Resume", { font: "65px Arial", fill: "#ff0044", align: "center" });
-            //unpauseButton.inputEnabled = true;
-            
-        });
-        
-        shopbutton = game.add.text(50, 130, "Shop");
-                shopbutton.font = 'Revalia';
-                shopbutton.fontSize = 60;
-                grd = shopbutton.context.createLinearGradient(0, 0, 0, shopbutton.canvas.height);
-                grd.addColorStop(0, '#8ED6FF');   
-                grd.addColorStop(1, '#004CB3');
-                shopbutton.fill = grd;
-                shopbutton.align = 'center';
-                shopbutton.stroke = '#000000';
-                shopbutton.strokeThickness = 2;
-                shopbutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-        shopbutton.inputEnabled = true;
-        
-        
-        shopbutton.events.onInputDown.add(function(){
-           game.paused = true; 
-           pausetext = game.add.text(game.world.width - 200, 30, "PAUSED");
-                    pausetext.font = 'Revalia';
-                    pausetext.fontSize = 60;
-                    grd = pausetext.context.createLinearGradient(0, 0, 0, pausetext.canvas.height);
-                    grd.addColorStop(0, '#8ED6FF');   
-                    grd.addColorStop(1, '#004CB3');
-                    pausetext.fill = grd;
-                    pausetext.align = 'center';
-                    pausetext.stroke = '#000000';
-                    pausetext.strokeThickness = 2;
-                    pausetext.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-            pausetext.anchor.setTo(0.5,0.5);
-            shopmenu = game.add.sprite(game.world.centerX, game.world.centerY, 'image3');
-            shopmenu.anchor.setTo(0.5,0.5);
-            shopmenu.scale.setTo(10,10);
-            unpauseButton = game.add.text(game.world.centerX - 150, game.world.height - 150, "Resume");
-                    unpauseButton.font = 'Revalia';
-                    unpauseButton.fontSize = 60;
-                    grd = unpauseButton.context.createLinearGradient(0, 0, 0, unpauseButton.canvas.height);
-                    grd.addColorStop(0, '#8ED6FF');   
-                    grd.addColorStop(1, '#004CB3');
-                    unpauseButton.fill = grd;
-                    unpauseButton.align = 'center';
-                    unpauseButton.stroke = '#000000';
-                    unpauseButton.strokeThickness = 2;
-                    unpauseButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-            
-            unpauseButton.inputEnabled = true;
-            showShop = true;
-            
-        });
+        //create menu buttons - pause, open menu, base
+        createButtons();
         
         game.input.onDown.add(unpause, self);
         function unpause(event){
             if(game.paused){
-                if(showShop == true)
-                {
-                    var x1 = game.world.centerX - 150, x2 = game.world.centerX + 90, y1 = game.world.height - 140, y2 = game.world.height - 90;
-                    if(event.x > x1 && event.x < x2 && event.y > y1 && event.y < y2)
-                    {
-                        game.paused = false;
-                        pausetext.destroy();
-                        shopmenu.destroy();
-                        unpauseButton.destroy();   
-                        showShop = false;
-                    }
-                }
-                else{
                     game.paused = false;
                     pausetext.destroy();
-                    //unpauseButton.destroy();
-                }
-                //determine if click was inside area and such
-                //game.paused = false;
-                //pausetext.destroy();
+
             }
         }
-        
-        /*
-        if(game.paused){
-            unpauseButton.events.onInputDown.add(function(){
-            if(game.paused){
-                game.paused = false;
-                pausetext.destroy();
-                shopmenu.destroy();
-                unpauseButton.destroy();
-                }
-            });
-        }
-        */
-            
-            
-        goldText = game.add.text(50, 0, "Gold: " + gold);
-            goldText.font = 'Revalia';
-            goldText.fontSize = 60;
-            grd = goldText.context.createLinearGradient(0, 0, 0, goldText.canvas.height);
+
+        resourceText = game.add.text(50, 10, "Gold: " + gold);
+            resourceText.font = 'Revalia';
+            resourceText.fontSize = 60;
+            grd = resourceText.context.createLinearGradient(0, 0, 0, resourceText.canvas.height);
             grd.addColorStop(0, '#8ED6FF');   
             grd.addColorStop(1, '#004CB3');
-            goldText.fill = grd;
-            goldText.align = 'center';
-            goldText.stroke = '#000000';
-            goldText.strokeThickness = 2;
-            goldText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+            resourceText.fill = grd;
+            resourceText.align = 'center';
+            resourceText.stroke = '#000000';
+            resourceText.strokeThickness = 2;
+            resourceText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+
         
-        
-         baseButton = game.add.text(50, 200, "Base");
-                baseButton.font = 'Revalia';
-                baseButton.fontSize = 60;
-                grd = baseButton.context.createLinearGradient(0, 0, 0, baseButton.canvas.height);
-                grd.addColorStop(0, '#8ED6FF');   
-                grd.addColorStop(1, '#004CB3');
-                baseButton.fill = grd;
-                baseButton.align = 'center';
-                baseButton.stroke = '#000000';
-                baseButton.strokeThickness = 2;
-                baseButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-        baseButton.inputEnabled = true;
-        
-        baseButton.events.onInputDown.add(function(){
-            game.state.start("Customize");
-        });
         
         unitGroup = game.add.group();
         enemypGroup = game.add.group();
 
         player.OnCreate(unitGroup, enemypGroup);
         enemyManager.OnCreate(unitGroup, enemypGroup);
+        
     }
-/*
-    //Example code for text with fonts and gradient
-    
-    function createText(text) {
-
-    text = game.add.text(game.world.centerX, game.world.centerY, "- phaser -\nrocking with\ngoogle web fonts");
-    text.anchor.setTo(0.5);
-
-    text.font = 'Revalia';
-    text.fontSize = 60;
-
-    //  x0, y0 - x1, y1
-    grd = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
-    grd.addColorStop(0, '#8ED6FF');   
-    grd.addColorStop(1, '#004CB3');
-    text.fill = grd;
-
-    text.align = 'center';
-    text.stroke = '#000000';
-    text.strokeThickness = 2;
-    text.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-
-    text.inputEnabled = true;
-    text.input.enableDrag();
-
-    text.events.onInputOver.add(over, this);
-    text.events.onInputOut.add(out, this);
-
-}
-*/
     
     function Update(){
         //check for collision with enemies with base window
         var enemyGroup = getEnemyManager().getEgroup();
         game.physics.arcade.collide(topBaseCollision, enemyGroup);
-            enemyManager.Update();
-            player.Update();
-            updateGold();
+        enemyManager.Update();
+        player.Update();
+        updateResource();
+        
     }
     
     function getEnemyManager(){
@@ -319,8 +165,8 @@ var DefenseEngine = function (game){
     function getTopBaseCollision(){
         return topBaseCollision;
     }
-    function updateGold(){
-        goldText.setText("Gold: " + gold);
+    function updateResource(){
+        resourceText.setText("Gold: " + gold);
     }
     function addGold(amount){
         gold = gold + amount;
@@ -340,26 +186,119 @@ var DefenseEngine = function (game){
         else
             return false;
     }
+    
+    function createButtons(){
+        pausebutton = game.add.text(50, 65, "Pause");
+                pausebutton.font = 'Revalia';
+                pausebutton.fontSize = 60;
+                grd = pausebutton.context.createLinearGradient(0, 0, 0, pausebutton.canvas.height);
+                grd.addColorStop(0, '#8ED6FF');   
+                grd.addColorStop(1, '#004CB3');
+                pausebutton.fill = grd;
+                pausebutton.align = 'center';
+                pausebutton.stroke = '#000000';
+                pausebutton.strokeThickness = 2;
+                pausebutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        pausebutton.inputEnabled = true;
+        pausebutton.events.onInputOver.add(function(){
+                    pausebutton.fill = '#ff00ff';
+                }, this);
+                pausebutton.events.onInputOut.add(function(){
+                    pausebutton.fill = grd;
+                }, this);
+        
+        pausebutton.events.onInputDown.add(function(){
+            pausebutton.fill = grd;
+           game.paused = true; 
+           pausetext = game.add.text(game.world.centerX, game.world.centerY, "PAUSED");
+           pausetext.anchor.setTo(0.5,0.5);
+                pausetext.font = 'Revalia';
+                pausetext.fontSize = 60;
+                grd = pausetext.context.createLinearGradient(0, 0, 0, pausetext.canvas.height);
+                grd.addColorStop(0, '#8ED6FF');   
+                grd.addColorStop(1, '#004CB3');
+                pausetext.fill = grd;
+                pausetext.align = 'center';
+                pausetext.stroke = '#000000';
+                pausetext.strokeThickness = 2;
+                pausetext.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+           // exitButton = game.add.text(game.world.width - 300, 20, "Resume", { font: "65px Arial", fill: "#ff0044", align: "center" });
+            //exitButton.inputEnabled = true;
+            
+        });
+        
+        shopbutton = game.add.text(50, 130, "Open Shop");
+                shopbutton.font = 'Revalia';
+                shopbutton.fontSize = 60;
+                grd = shopbutton.context.createLinearGradient(0, 0, 0, shopbutton.canvas.height);
+                grd.addColorStop(0, '#8ED6FF');   
+                grd.addColorStop(1, '#004CB3');
+                shopbutton.fill = grd;
+                shopbutton.align = 'center';
+                shopbutton.stroke = '#000000';
+                shopbutton.strokeThickness = 2;
+                shopbutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        shopbutton.inputEnabled = true;
+                shopbutton.events.onInputOver.add(function(){
+                    shopbutton.fill = '#ff00ff';
+                }, this);
+                shopbutton.events.onInputOut.add(function(){
+                    shopbutton.fill = grd;
+                }, this);
+        
+        shopbutton.events.onInputDown.add(function(){
+            if(shopManager.getShowShop() == false){
+                shopManager.openShop();
+            }
+        });
+        
+         baseButton = game.add.text(50, 200, "Base");
+                baseButton.font = 'Revalia';
+                baseButton.fontSize = 60;
+                grd = baseButton.context.createLinearGradient(0, 0, 0, baseButton.canvas.height);
+                grd.addColorStop(0, '#8ED6FF');   
+                grd.addColorStop(1, '#004CB3');
+                baseButton.fill = grd;
+                baseButton.align = 'center';
+                baseButton.stroke = '#000000';
+                baseButton.strokeThickness = 2;
+                baseButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+            baseButton.inputEnabled = true;
+            baseButton.events.onInputOver.add(function(){
+                baseButton.fill = '#ff00ff';
+            }, this);
+            baseButton.events.onInputOut.add(function(){
+                baseButton.fill = grd;
+            }, this);
+            baseButton.events.onInputDown.add(function(){
+                game.state.start("Customize");
+            });
+    }
+    
+   
+    
 
 
-function out() {
+/*
+function out(text) {
 
     text.fill = grd;
 
 }
 
-function over() {
+function over(text) {
 
     text.fill = '#ff00ff';
 
 }
+*/
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;
     that.getEnemyManager = getEnemyManager;
     that.getPlayer = getPlayer;
     that.getTopBaseCollision = getTopBaseCollision;
-    that.updateGold = updateGold;
+    that.updateResource = updateResource;
     that.addGold = addGold;
     that.getGold = getGold;
     that.spendGold = spendGold;

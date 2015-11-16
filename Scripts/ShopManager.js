@@ -15,7 +15,7 @@ var ShopManager = function (game){
     var slots = [];
     var grd;
 
-    function loadMenuItems(items){
+    function loadShopItems(items){
         for(var i = 0; i < items.list.length; i++){
             var temp = game.add.sprite(items.list[i].position.x + game.world.centerX, items.list[i].position.y + game.world.centerY, items.list[i].image);
             temp.anchor.setTo(0.5,0.5);
@@ -37,9 +37,11 @@ var ShopManager = function (game){
     
     function OnCreate(){
         shopMenuItems = JSON.parse(game.cache.getText('JSONshopMenuItems'));
+        loadShopItems(shopMenuItems);
+        
         
         for(var i = 0; i < game.cache.getKeys().length; ++i){
-            if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
+            if(game.cache.getKeys()[i].indexOf('Item') >= 0){
                 stickers.push(game.cache.getKeys()[i]);
             }
         }
@@ -253,6 +255,7 @@ var ShopManager = function (game){
     function initializeShopItems(){
                 for(var i = 0; i < numOfSlots; ++i){
                     var temp = {};
+                    var text;
                     temp = game.add.sprite(game.world.centerX - 300, 150 + 150*slots.length, stickers[i]);
                     //temp = game.add.sprite(50 + 100*slots.length, 900, stickers[i]);
                     temp.scale.set(.75, .75);
@@ -260,7 +263,8 @@ var ShopManager = function (game){
                     //temp.inputEnabled = true;
                     temp.visible = false;
                     addEventtoSlot(i, temp);
-                    slots.push({slot:temp, key:stickers[i], keyIndex:i});
+                    text = temp.key;
+                    slots.push({slot:temp, key:stickers[i], keyIndex:i, name:text});
         }
     }
     function getShowShop(){

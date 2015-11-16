@@ -120,23 +120,18 @@ var BaseManager = function(game){
     }
     
     function SaveBase(){
-        _playerBaseJSONstring = '';
-        _playerBaseJSONstring += '{"background" : "' + backgroundSprite + '", "list" : [';
-        for(var i = 0; i < stickers.length - 1; ++i){
+        for(var i = 0; i < stickers.length; ++i){
+            
             var object = {};
             object.image = stickers.getChildAt(i).key;
             object.position = { x: stickers.getChildAt(i).position.x , y: stickers.getChildAt(i).y};
 
-            _playerBaseJSONstring += JSON.stringify(object) + ', ';
+            playerState.base.list.push(object);
         }
-        var object = {};
-            object.image = stickers.getChildAt(stickers.length - 1).key;
-            object.position = { x: stickers.getChildAt(stickers.length - 1).position.x , y: stickers.getChildAt(stickers.length - 1).y};
+        PlayerStateJSONString = JSON.stringify(playerState);
+        console.log(PlayerStateJSONString);
 
-            _playerBaseJSONstring += JSON.stringify(object) + ']}';
-        console.log(_playerBaseJSONstring);
-
-        document.cookie = "JSON=" + _playerBaseJSONstring;
+        document.cookie = "playerState=" + PlayerStateJSONString;
     }
     
     that.setCurrentImage = function(newImage){

@@ -105,8 +105,6 @@ var EnemyManager = function (game){
                     waveNumText.strokeThickness = 2;
                     waveNumText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         waveNumText.anchor.setTo(0.0,0.0); //set the point of reference for the sprite
-    
-        
     }
     
     function Update(){

@@ -59,7 +59,6 @@ var AssetLoader = function(game){
         game.load.image('BaseSticker29', 'Assets/BaseStickers/PaintBrush.png');
         game.load.image('BaseSticker30', 'Assets/BaseStickers/Unicorn1.png');
 
-
         //Units-----------------------------------------------------
         game.load.image('Unit1','Assets/Unit_Pictures/robot1.png');
         game.load.image('Unit2','Assets/Unit_Pictures/SuperBear.png');
@@ -86,7 +85,6 @@ var AssetLoader = function(game){
         
         //shop stuff-------------------------------------------------
         game.load.image('shopMenu', 'Assets/Placeholder3.png');
-        
     }
     
     that.Preload = Preload;

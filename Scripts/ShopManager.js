@@ -15,14 +15,15 @@ var ShopManager = function (game){
     var slots = [];
     var grd;
 
+/*
     function loadShopItems(items){
         for(var i = 0; i < items.list.length; i++){
-            var temp = game.add.sprite(items.list[i].position.x + game.world.centerX, items.list[i].position.y + game.world.centerY, items.list[i].image);
-            temp.anchor.setTo(0.5,0.5);
-            temp.scale.setTo(0.5,0.5);
+            //var temp = game.add.sprite(items.list[i].position.x + game.world.centerX, items.list[i].position.y + game.world.centerY, items.list[i].image);
+            //temp.anchor.setTo(0.5,0.5);
+            //temp.scale.setTo(0.5,0.5);
         }
     }
-    
+  */  
     function addEventtoSlot(index, slot){
         slot.events.onInputDown.add(function(){
             clickSlot(index);
@@ -37,7 +38,7 @@ var ShopManager = function (game){
     
     function OnCreate(){
         shopMenuItems = JSON.parse(game.cache.getText('JSONshopMenuItems'));
-        loadShopItems(shopMenuItems);
+       // loadShopItems(shopMenuItems);
         
         
         for(var i = 0; i < game.cache.getKeys().length; ++i){

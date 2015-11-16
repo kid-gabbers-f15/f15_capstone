@@ -4,7 +4,7 @@
         //  'active' means all requested fonts have finished loading
         //  We set a 1 second delay before calling 'createText'.
         //  For some reason if we don't the browser cannot render the text the first time it's created.
-        //active: function() { game.time.events.add(Phaser.Timer.SECOND, , this); },
+        //active: function() { game.time.events.add(Phaser.Timer.SECOND, Boot, this); },
     
         //  The Google Fonts we want to load (specify as many as you like in the array)
         google: {
@@ -33,6 +33,7 @@ var gradientText;
 
 var defEngine;
 var baseManager;
+var shopManager;
 //
 var _friendBaseJSONstring = "";
 var _playerBaseJSONstring = "";
@@ -87,6 +88,7 @@ var Preload = {
     create : function(){
         defEngine = DefenseEngine(game);
         baseManager = BaseManager(game);
+        shopManager = ShopManager(game);
         
         game.state.start("Defense");
     }
@@ -107,10 +109,13 @@ var Defense = {
         console.log("Defense started");
         game.physics.startSystem(Phaser.Physics.ARCADE);
         defEngine.Preload();
+        shopManager.Preload();
     },
     
     create : function(){
         defEngine.OnCreate();
+        shopManager.OnCreate();
+
     },
     
     update : function (){

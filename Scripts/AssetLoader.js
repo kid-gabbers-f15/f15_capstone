@@ -84,6 +84,9 @@ var AssetLoader = function(game){
         game.load.image('topBaseCollision', 'Assets/TopBaseImage.png');
         game.load.image('topBaseBackground', 'Assets/TopBaseImage.png');
         
+        //shop stuff-------------------------------------------------
+        game.load.image('shopMenu', 'Assets/Placeholder3.png');
+        
     }
     
     that.Preload = Preload;

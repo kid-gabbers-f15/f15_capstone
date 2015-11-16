@@ -30,33 +30,27 @@ var EnemyManager = function (game){
     eSpawn.y = 800;
     
     function Preload(){
-        for(var i = 0; i < total_enemies; ++i)
+        for(var i = 0; i < total_enemies; ++i) //add each enemies to their respective arrays
         {
-            var enemy = Enemy(that, game);
+            var enemy1 = Enemy(that, game);
             
-            enemy.Preload();
-            enemyGroup1.push(enemy);
-        }
-        for(var i = 0; i < total_enemies; ++i)
-        {
-            var enemy = Enemy(that, game);
+            enemy1.Preload();
+            enemyGroup1.push(enemy1);
+        
+            var enemy2 = Enemy(that, game);
             
-            enemy.Preload();
-            enemyGroup2.push(enemy);
-        }
-        for(var i = 0; i < total_enemies; ++i)
-        {
-            var enemy = Enemy(that, game);
+            enemy2.Preload();
+            enemyGroup2.push(enemy2);
+       
+            var enemy3 = Enemy(that, game);
             
-            enemy.Preload();
-            enemyGroup3.push(enemy);
-        }
-        for(var i = 0; i < total_enemies; ++i)
-        {
-            var enemy = Enemy(that, game);
+            enemy3.Preload();
+            enemyGroup3.push(enemy3);
+        
+            var enemyBoss = Enemy(that, game);
             
-            enemy.Preload();
-            bossGroup.push(enemy);
+            enemyBoss.Preload();
+            bossGroup.push(enemyBoss);
         }
     }
     

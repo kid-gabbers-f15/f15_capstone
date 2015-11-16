@@ -213,13 +213,12 @@ var Enemy = function (parent, game){
         
     }
         
-    function damage(dmg){
-        
+    function damage(dmg){;
         health = health - dmg;
         enemySprite.alpha = 1.0 - 1.0*(initialHealth-health)/initialHealth; //decrease the opacity depending on the ratio between currenthealth and initial health
         
-        if(enemySprite.alpha < 0.15){ //dont let it go lower than .15. too transparent
-            enemySprite.alpha = .15;
+        if(enemySprite.alpha < 0.2){ //dont let it go lower than .15. too transparent
+            enemySprite.alpha = .2;
         }
         
         if(boss){ //crop it depending on whether the enemy is a boss or a regular

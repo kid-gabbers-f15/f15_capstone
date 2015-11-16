@@ -112,6 +112,7 @@ var BaseManager = function(game){
     }
     
     function SaveBase(){
+        playerState.base.list = [];
         for(var i = 0; i < stickers.length; ++i){
             var object = {};
             object.image = stickers.getChildAt(i).key;

@@ -112,6 +112,7 @@ var BaseManager = function(game){
     }
     
     function SaveBase(){
+        playerState.base.list = [];
         for(var i = 0; i < stickers.length; ++i){
             var object = {};
             object.image = stickers.getChildAt(i).key;
@@ -120,10 +121,11 @@ var BaseManager = function(game){
             playerState.base.list.push(object);
         }
 
+        playerState.base.background = backgroundSprite;
         PlayerStateJSONString = JSON.stringify(playerState);
         console.log(PlayerStateJSONString);
 
-        document.cookie = "playerState=" + PlayerStateJSONString;
+        document.cookie = "PlayerState=" + PlayerStateJSONString;
     }
     
     /*

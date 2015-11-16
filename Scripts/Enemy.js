@@ -54,8 +54,7 @@ var Enemy = function (parent, game){
         attack_delay = 0;
 
 
-        if(isBoss) //if the enemy is a boss
-        {
+        if(isBoss){ //if the enemy is a boss
             enemySprite = game.add.sprite(position.x, position.y, 'EnemyBoss_1' );
             game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
             enemySprite.body.collideWorldBounds = true;
@@ -78,8 +77,7 @@ var Enemy = function (parent, game){
             isActive = false;
             boss = true;
         }
-        else // This is a regular enemy
-        {
+        else{ // This is a regular enemy
             enemySprite = game.add.sprite(position.x, position.y, 'enemy' + Math.ceil(Math.random()*3) );
             game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
             enemySprite.body.collideWorldBounds = true;
@@ -101,8 +99,7 @@ var Enemy = function (parent, game){
             isActive = false;
             boss = false;
             
-            if(type == 2)
-            {
+            if(type == 2){
                 speed = 200;
             }
         }
@@ -125,8 +122,7 @@ var Enemy = function (parent, game){
     function ResetEnemy(x, y, newTarget){
         //reset the enemies to their original status
         enemySprite.alpha = 1.0; ///reset the opacity to 100%
-        if(boss)
-        {
+        if(boss){
             health = maxHealth*10;
             initialHealth = health;
             healthBar.crop(new Phaser.Rectangle(0,0,enemySprite.width, 20));
@@ -143,8 +139,7 @@ var Enemy = function (parent, game){
             boss = true;
             killed = false;
         }
-        else
-        {
+        else{
             maxHealth = const_maxHealth;
             health = maxHealth;
             initialHealth = maxHealth;
@@ -168,12 +163,10 @@ var Enemy = function (parent, game){
     function Update(){ //udpate the enemies
         
         //if they can attack the units again or not
-        if(attack_delay == 0)
-        {
+        if(attack_delay == 0){
             can_attack = true;
         }
-        if(attack_delay > 0)
-        {
+        if(attack_delay > 0){
             attack_delay = attack_delay - 1;
         }
         
@@ -188,8 +181,7 @@ var Enemy = function (parent, game){
           
         var unitpGroup = defEngine.getPlayer().getUnitPGroup();
         
-        if(target.get_children() == 0)
-        {
+        if(target.get_children() == 0){
             retarget(unitpGroup);
         }
         
@@ -220,11 +212,8 @@ var Enemy = function (parent, game){
                      can_attack = false;
                      reset_attack_delay();
                 } 
-            } 
-            , null, null, this);
+            }, null, null, this);
         }   
-        
-        
     }
     
     /*
@@ -263,29 +252,24 @@ var Enemy = function (parent, game){
     }
     
     function retarget(unitpGroup){ //here we have the enemies target another unit if their initial targets are non-existent
-        for(var i=0; i<unitpGroup.length; i++)
-        {
-            if(unitpGroup[i].get_children() != 0)
-            {
+        for(var i=0; i<unitpGroup.length; i++){
+            if(unitpGroup[i].get_children() != 0){
                 target = unitpGroup[i];
                 
                 var diff = target.getUnitSprite().position.y - enemySprite.position.y;
                 
                 enemySprite.position.x += 15;
                 
-                if(diff > 0)
-                {
+                if(diff > 0){
                     enemySprite.position.y += 15;
                 }
-                else
-                {
+                else{
                     enemySprite.position.y -= 15;
                 }
                 
                 break;
             }
-            if(i == unitpGroup.length - 1)
-            {
+            if(i == unitpGroup.length - 1){
                 // Do whatever needs to be done when all units are at zero
             }
         }

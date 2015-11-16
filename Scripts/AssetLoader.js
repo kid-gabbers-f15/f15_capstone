@@ -85,6 +85,16 @@ var AssetLoader = function(game){
         
         //shop stuff-------------------------------------------------
         game.load.image('shopMenu', 'Assets/Placeholder3.png');
+        game.load.image('Item1', 'Assets/BaseStickers/Animal1.png');
+        game.load.image('Item2', 'Assets/BaseStickers/Animal2.png');
+        game.load.image('Item3', 'Assets/BaseStickers/Animal3.png');
+        game.load.image('Item4', 'Assets/BaseStickers/Animal4.png');
+        game.load.image('Item5', 'Assets/BaseStickers/Animal5.png');
+        game.load.image('Item6', 'Assets/BaseStickers/Animal6.png');
+        game.load.image('Item7', 'Assets/BaseStickers/Animal7.png');
+        game.load.image('Item8', 'Assets/BaseStickers/Animal8.png');
+        game.load.image('Item9', 'Assets/BaseStickers/Animal9.png');
+
     }
     
     that.Preload = Preload;

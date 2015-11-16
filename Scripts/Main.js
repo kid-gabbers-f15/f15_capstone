@@ -29,6 +29,7 @@ var game = {};
 
 var defEngine;
 var baseManager;
+var shopManager;
 //
 var _friendBaseJSONstring = "";
 var _playerBaseJSONstring = "";
@@ -69,6 +70,7 @@ var Preload = {
     create : function(){
         defEngine = DefenseEngine(game);
         baseManager = BaseManager(game);
+        shopManager = ShopManager(game);
         
         game.state.start("Defense");
     }
@@ -89,10 +91,13 @@ var Defense = {
         console.log("Defense started");
         game.physics.startSystem(Phaser.Physics.ARCADE);
         defEngine.Preload();
+        shopManager.Preload();
     },
     
     create : function(){
         defEngine.OnCreate();
+        shopManager.OnCreate();
+
     },
     
     update : function (){

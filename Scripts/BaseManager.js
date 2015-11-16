@@ -11,7 +11,7 @@ var BaseManager = function(game){
     
     var stickers;
     
-    var maxStickers = 20;
+    var maxStickers = 1;
     
     var baseoffsetX = 130;
     var baseoffsetY = 110;
@@ -42,15 +42,7 @@ var BaseManager = function(game){
         whiteBox2.crop(new Phaser.Rectangle(0, 0, 1820, 200));
         whiteBox2.alpha = .8;
         
-        var cookie = getCookie("JSON");
-        if(cookie === ""){
-            playerBaseData = JSON.parse(game.cache.getText('JSONplayerBaseData'));
-        }else{
-            playerBaseData = JSON.parse(cookie);
-        }
-        
-        
-        backgroundSprite = playerBaseData.background;
+        backgroundSprite = playerState.base.background;
         background = game.add.sprite(game.world.centerX + baseoffsetX, game.world.centerY - baseoffsetY, backgroundSprite);
         background.anchor.setTo(0.5, 0.5);
         background.scale.setTo(1.5, 1.5);
@@ -60,7 +52,7 @@ var BaseManager = function(game){
         
         background.events.onInputDown.add(function(){
             if(currentImage !== undefined && currentImage !== null){
-                if(stickers.length < maxStickers){
+                if(stickers.length < playerState.base.totalSlots){
                     var temp = game.add.sprite(game.input.mousePointer.x, game.input.mousePointer.y, currentImage);
                     temp.anchor.setTo(0.5, 0.5);
                     temp.inputEnabled = true;
@@ -99,8 +91,8 @@ var BaseManager = function(game){
         });
         
         
-        for(var i = 0; i < playerBaseData.list.length; ++i){
-            var temp = game.add.sprite(playerBaseData.list[i].position.x,  playerBaseData.list[i].position.y, playerBaseData.list[i].image);
+        for(var i = 0; i < playerState.base.list.length; ++i){
+            var temp = game.add.sprite(playerState.base.list[i].position.x,  playerState.base.list[i].position.y, playerState.base.list[i].image);
             temp.anchor.setTo(0.5, 0.5);
             temp.inputEnabled = true;
             addEventtoSprite(temp);

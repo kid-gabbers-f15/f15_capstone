@@ -253,6 +253,8 @@ var Enemy = function (parent, game){
             {
                 target = unitpGroup[i];
                 
+                console.log(target.getUnitSprite().position.y);
+                
                 var diff = target.getUnitSprite().position.y - enemySprite.position.y;
                 
                 enemySprite.position.x += 15;

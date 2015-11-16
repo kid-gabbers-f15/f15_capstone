@@ -1,27 +1,27 @@
 var DefenseEngine = function (game){
     var that = {};
     
-    var background;
-    var topBaseCollision;
+    var background; // string, name of background picture
+    var topBaseCollision; // object, sprite for things to hit at the bottom of the base
     
-    var enemyManager;
-    var player;
+    var enemyManager; // object, instance of EnemyManager
+    var player; // object, instance of Player
     
-    var unitGroup;
-    var enemypGroup;
-    var gold;
-    var resourceText;
-    var shopbutton;
-    var pausebutton;
-    var baseButton;
-    var basetext;
-    var friendBaseData;
-    var pausetext;
-    var grd;
-    var playerBaseData;
+    var unitGroup; // phaser group, group of unit sprites
+    var enemypGroup; // phaser group, group of enemy sprites
+    var gold; // int, amount of money player has
+    var resourceText; // phaser text, displays amount of gold
+    var shopbutton; // phaser text, button to go to shop
+    var pausebutton; // phaser text, button to pause the game
+    var baseButton; // phaser text, button to go to the base builder
+    var friendBaseData; // JSON string, JSON representing the friend's base you are defending
+    var pausetext; // phaser text, 'PAUSED' that pops up when the game is paused
+    var grd; // phaser color gradient, used for a color gradient on text
+    var playerBaseData; // JSON string, JSON representing the player's base
     
-    
-    
+    /*
+    base - object, player's base
+    */
     function loadPlayerBase(base){
         var bg = game.add.sprite(game.world.centerX, game.world.centerY/2, base.background);
         bg.anchor.setTo(.5, .5);
@@ -34,6 +34,9 @@ var DefenseEngine = function (game){
         }
     }
     
+    /*
+    base - object, friend's base
+    */
     function loadFriendBase(base){
         var bg = game.add.sprite(game.world.centerX/2 - 150, game.world.centerY + game.world.centerY/2, base.background);
         bg.anchor.setTo(.5, .5);
@@ -66,7 +69,6 @@ var DefenseEngine = function (game){
         game.load.text('JSONplayerBaseData', 'Scripts/json.txt');
 
         //shopManager.Preload();
-
     }
     
     function OnCreate(){
@@ -91,7 +93,7 @@ var DefenseEngine = function (game){
         
         //topBaseBackground = game.add.sprite(game.world.centerX/2, 10,'topBaseBackground');
         
-       // topBase = game.add.sprite(game.world.centerX/2, 10, 'topBase');
+        //topBase = game.add.sprite(game.world.centerX/2, 10, 'topBase');
         topBaseCollision = game.add.sprite(0,0,'topBaseCollision');
         topBaseCollision.isActive = true;
         topBaseCollision.alpha = 0;
@@ -117,25 +119,22 @@ var DefenseEngine = function (game){
         }
 
         resourceText = game.add.text(50, 10, "Gold: " + gold);
-            resourceText.font = 'Revalia';
-            resourceText.fontSize = 60;
-            grd = resourceText.context.createLinearGradient(0, 0, 0, resourceText.canvas.height);
-            grd.addColorStop(0, '#8ED6FF');   
-            grd.addColorStop(1, '#004CB3');
-            resourceText.fill = grd;
-            resourceText.align = 'center';
-            resourceText.stroke = '#000000';
-            resourceText.strokeThickness = 2;
-            resourceText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-
-        
+        resourceText.font = 'Revalia';
+        resourceText.fontSize = 60;
+        grd = resourceText.context.createLinearGradient(0, 0, 0, resourceText.canvas.height);
+        grd.addColorStop(0, '#8ED6FF');   
+        grd.addColorStop(1, '#004CB3');
+        resourceText.fill = grd;
+        resourceText.align = 'center';
+        resourceText.stroke = '#000000';
+        resourceText.strokeThickness = 2;
+        resourceText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         
         unitGroup = game.add.group();
         enemypGroup = game.add.group();
 
         player.OnCreate(unitGroup, enemypGroup);
         enemyManager.OnCreate(unitGroup, enemypGroup);
-        
     }
     
     function Update(){
@@ -145,13 +144,11 @@ var DefenseEngine = function (game){
         enemyManager.Update();
         player.Update();
         updateResource();
-        
     }
     
     function getEnemyManager(){
         return enemyManager;
     }
-    
     function getPlayer(){
         return player;
     }
@@ -202,42 +199,43 @@ var DefenseEngine = function (game){
         
         pausebutton.events.onInputDown.add(function(){
             pausebutton.fill = grd;
-           game.paused = true; 
-           pausetext = game.add.text(game.world.centerX, game.world.centerY, "PAUSED");
-           pausetext.anchor.setTo(0.5,0.5);
-                pausetext.font = 'Revalia';
-                pausetext.fontSize = 60;
-                grd = pausetext.context.createLinearGradient(0, 0, 0, pausetext.canvas.height);
-                grd.addColorStop(0, '#8ED6FF');   
-                grd.addColorStop(1, '#004CB3');
-                pausetext.fill = grd;
-                pausetext.align = 'center';
-                pausetext.stroke = '#000000';
-                pausetext.strokeThickness = 2;
-                pausetext.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+            game.paused = true; 
+            pausetext = game.add.text(game.world.centerX, game.world.centerY, "PAUSED");
+            pausetext.anchor.setTo(0.5,0.5);
+            pausetext.font = 'Revalia';
+            pausetext.fontSize = 60;
+            grd = pausetext.context.createLinearGradient(0, 0, 0, pausetext.canvas.height);
+            grd.addColorStop(0, '#8ED6FF');   
+            grd.addColorStop(1, '#004CB3');
+            pausetext.fill = grd;
+            pausetext.align = 'center';
+            pausetext.stroke = '#000000';
+            pausetext.strokeThickness = 2;
+            pausetext.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
            // exitButton = game.add.text(game.world.width - 300, 20, "Resume", { font: "65px Arial", fill: "#ff0044", align: "center" });
             //exitButton.inputEnabled = true;
             
         });
         
         shopbutton = game.add.text(50, 130, "Open Shop");
-                shopbutton.font = 'Revalia';
-                shopbutton.fontSize = 60;
-                grd = shopbutton.context.createLinearGradient(0, 0, 0, shopbutton.canvas.height);
-                grd.addColorStop(0, '#8ED6FF');   
-                grd.addColorStop(1, '#004CB3');
-                shopbutton.fill = grd;
-                shopbutton.align = 'center';
-                shopbutton.stroke = '#000000';
-                shopbutton.strokeThickness = 2;
-                shopbutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        shopbutton.font = 'Revalia';
+        shopbutton.fontSize = 60;
+        grd = shopbutton.context.createLinearGradient(0, 0, 0, shopbutton.canvas.height);
+        grd.addColorStop(0, '#8ED6FF');   
+        grd.addColorStop(1, '#004CB3');
+        shopbutton.fill = grd;
+        shopbutton.align = 'center';
+        shopbutton.stroke = '#000000';
+        shopbutton.strokeThickness = 2;
+        shopbutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        
         shopbutton.inputEnabled = true;
-                shopbutton.events.onInputOver.add(function(){
-                    shopbutton.fill = '#ff00ff';
-                }, this);
-                shopbutton.events.onInputOut.add(function(){
-                    shopbutton.fill = grd;
-                }, this);
+        shopbutton.events.onInputOver.add(function(){
+            shopbutton.fill = '#ff00ff';
+        }, this);
+        shopbutton.events.onInputOut.add(function(){
+            shopbutton.fill = grd;
+        }, this);
         
         shopbutton.events.onInputDown.add(function(){
             if(shopManager.getShowShop() == false){
@@ -245,46 +243,42 @@ var DefenseEngine = function (game){
             }
         });
         
-         baseButton = game.add.text(50, 200, "Base");
-                baseButton.font = 'Revalia';
-                baseButton.fontSize = 60;
-                grd = baseButton.context.createLinearGradient(0, 0, 0, baseButton.canvas.height);
-                grd.addColorStop(0, '#8ED6FF');   
-                grd.addColorStop(1, '#004CB3');
-                baseButton.fill = grd;
-                baseButton.align = 'center';
-                baseButton.stroke = '#000000';
-                baseButton.strokeThickness = 2;
-                baseButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-            baseButton.inputEnabled = true;
-            baseButton.events.onInputOver.add(function(){
-                baseButton.fill = '#ff00ff';
-            }, this);
-            baseButton.events.onInputOut.add(function(){
-                baseButton.fill = grd;
-            }, this);
-            baseButton.events.onInputDown.add(function(){
-                game.state.start("Customize");
-            });
+        baseButton = game.add.text(50, 200, "Base");
+        baseButton.font = 'Revalia';
+        baseButton.fontSize = 60;
+        grd = baseButton.context.createLinearGradient(0, 0, 0, baseButton.canvas.height);
+        grd.addColorStop(0, '#8ED6FF');   
+        grd.addColorStop(1, '#004CB3');
+        baseButton.fill = grd;
+        baseButton.align = 'center';
+        baseButton.stroke = '#000000';
+        baseButton.strokeThickness = 2;
+        
+        baseButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        baseButton.inputEnabled = true;
+        baseButton.events.onInputOver.add(function(){
+            baseButton.fill = '#ff00ff';
+        }, this);
+        baseButton.events.onInputOut.add(function(){
+            baseButton.fill = grd;
+        }, this);
+        baseButton.events.onInputDown.add(function(){
+            game.state.start("Customize");
+        });
+    }
+    /*
+    function out(text) {
+    
+        text.fill = grd;
+    
     }
     
-   
+    function over(text) {
     
-
-
-/*
-function out(text) {
-
-    text.fill = grd;
-
-}
-
-function over(text) {
-
-    text.fill = '#ff00ff';
-
-}
-*/
+        text.fill = '#ff00ff';
+    
+    }
+    */
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;

@@ -103,14 +103,7 @@ var DefenseEngine = function (game){
         friendBaseData = JSON.parse(game.cache.getText('JSONfriendBaseData'));
         loadFriendBase(friendBaseData);
 
-        var cookie = getCookie("JSON");
-        if(cookie === ""){
-            playerBaseData = JSON.parse(game.cache.getText('JSONplayerBaseData'));
-        }else{
-            playerBaseData = JSON.parse(cookie);
-        }
-
-        loadPlayerBase(playerBaseData);
+        loadPlayerBase(playerState.base);
         //create menu buttons - pause, open menu, base
         createButtons();
         

@@ -1,51 +1,59 @@
 var Enemy = function (parent, game){
     var that = {};
     
-    var enemySprite;
+    var enemySprite; // object, phaster sprite
     
-    var healthBar;
+    var healthBar; // object, phaser sprite?
     
-    var position = {};
-    var health = 100;
-    var maxHealth = 100;
-    var const_maxHealth = 100; //will be the definite health for enemy units
-    var initialHealth;
+    var position = {}; // object, used to keep enemy x and y position
+    var health = 100; // int, enemy health
+    var maxHealth = 100; // int, most health an enemy can have
+    var const_maxHealth = 100; // int, will be the definite health for enemy units
     
-    var velocityX = 10;
+    var initialHealth; // int, staring health, uneeded?
+    var velocityX = 10; // int, default speed, uneeded?
     
-    var isActive;
-    var dmgPerClick = 10;
+    var isActive; // bool, is this enemy active and on screen
+    var dmgPerClick = 10; // int, how much damage is done to the enemy when clicked
     
-    var uGroup;
-    var eGroup;
+    var uGroup; // array, unit group
+    var eGroup; // array, enemy group
     
-    var totalMissingHealth = 0.0; //missing health bar
-    var minusHealthIncr = 0.0; //how much health to take off the health bar
+    var totalMissingHealth = 0.0; // float, missing health bar
+    var minusHealthIncr = 0.0; // float, how much health to take off the health bar
     
-    var initHealthBar = 0.0;
+    var initHealthBar = 0.0; // float, initial amount og healthbar
     
-    var target;
-    var can_attack;
-    var attack_delay;
-    var boss;
+    var target; // unit object, unit the enemy is atacking
+    var can_attack; // bool, can this unit attack or not, used for delay between attacks
+    var attack_delay; // int, amount of time enemy has to wait between attacks
+    var boss; // bool, is this enemy a boss or not
     
-    var type;
-    var speed = 100;
+    var type; // int, what type of enemy
+    var speed = 100; // int, speed of the enemy
     
-    var killed = false;
+    var killed = false; // bool, has the enemy been killed this wave
     
     function Preload(){
        
     }
     
+    /*
+    x - int, enemy x position
+    y - int, enemy y position
+    unitGroup - array, group of units to check for collision and attacking
+    enemypGroup - ?
+    isBoss - bool, is this enemy a boss or not
+    type - int, type of enemy
+    */
     function OnCreate(x, y, unitGroup, enemypGroup, isBoss, type){
         isActive = false;
         position.x = x;
         position.y = y;
-        can_attack = true; //upon creation enemies should be able to attack instantly
+        can_attack = true; // upon creation enemies should be able to attack instantly
         attack_delay = 0;
 
-        if(isBoss==true) // Boss
+        if(isBoss==true) // This enemy is a boss
         {
             enemySprite = game.add.sprite(position.x, position.y, 'EnemyBoss_1' );
             game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
@@ -61,7 +69,6 @@ var Enemy = function (parent, game){
             healthBar.crop(new Phaser.Rectangle(0,0,enemySprite.width, 20));
             healthBar.updateCrop();
             initHealthBar = healthBar.width;
-            //healthBar.anchor.setTo(0.5,0.5);
             
             enemySprite.visible = false;
             healthBar.visible = false;
@@ -70,7 +77,7 @@ var Enemy = function (parent, game){
             isActive = false;
             boss = true;
         }
-        else // Enemy
+        else // This is a regular enemy
         {
             enemySprite = game.add.sprite(position.x, position.y, 'enemy' + Math.ceil(Math.random()*3) );
             game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
@@ -109,6 +116,11 @@ var Enemy = function (parent, game){
         eGroup = enemypGroup;
     }
     
+    /*
+    x - int, enemy x position
+    y - int, enemy y position
+    newTarget - object, unit for enemy to target
+    */
     function ResetEnemy(x, y, newTarget){
         enemySprite.alpha = 1.0; 
         if(boss)
@@ -116,7 +128,6 @@ var Enemy = function (parent, game){
             health = maxHealth*10;
             initialHealth = health;
             healthBar.crop(new Phaser.Rectangle(0,0,enemySprite.width, 20));
-            //healthBar.updateCrop();
             
             enemySprite.visible = true;
             healthBar.visible = true;
@@ -132,7 +143,6 @@ var Enemy = function (parent, game){
         }
         else
         {
-            //console.log("reseting regulars");
             maxHealth = const_maxHealth;
             health = maxHealth;
             initialHealth = maxHealth;
@@ -212,7 +222,10 @@ var Enemy = function (parent, game){
         
         
     }
-        
+    
+    /*
+    dmg - int, amount of damage to do to the enemy
+    */
     function damage(dmg){
         
         health = health - dmg;
@@ -253,8 +266,6 @@ var Enemy = function (parent, game){
             {
                 target = unitpGroup[i];
                 
-                console.log(target.getUnitSprite().position.y);
-                
                 var diff = target.getUnitSprite().position.y - enemySprite.position.y;
                 
                 enemySprite.position.x += 15;
@@ -267,8 +278,6 @@ var Enemy = function (parent, game){
                 {
                     enemySprite.position.y -= 15;
                 }
-                
-                console.log(target.getUnitSprite().position.y);
                 
                 break;
             }

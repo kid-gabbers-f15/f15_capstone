@@ -65,7 +65,7 @@ var DefenseEngine = function (game){
         game.load.text('JSONfriendBaseData', 'Scripts/json2.txt');
         game.load.text('JSONplayerBaseData', 'Scripts/json.txt');
 
-        shopManager.Preload();
+        //shopManager.Preload();
 
     }
     
@@ -143,7 +143,6 @@ var DefenseEngine = function (game){
         player.OnCreate(unitGroup, enemypGroup);
         enemyManager.OnCreate(unitGroup, enemypGroup);
         
-        shopManager.OnCreate();
     }
     
     function Update(){

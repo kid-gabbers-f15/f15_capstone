@@ -91,10 +91,13 @@ var Defense = {
         console.log("Defense started");
         game.physics.startSystem(Phaser.Physics.ARCADE);
         defEngine.Preload();
+        shopManager.Preload();
     },
     
     create : function(){
         defEngine.OnCreate();
+        shopManager.OnCreate();
+
     },
     
     update : function (){

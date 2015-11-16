@@ -95,7 +95,7 @@ var BaseManager = function(game){
         
         mainButton.events.onInputDown.add(function(){
             SaveBase();
-            game.state.start("Defense");
+            game.state.start("Preload");
         });
         
         

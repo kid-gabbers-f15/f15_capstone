@@ -15,7 +15,7 @@ var EnemyManager = function (game){
     
     var grd; //gradient of the text for the wave number
     var waveNumText;
-    var waveNumTextFont = 'Times New Roman'; //wave text font
+    var waveNumTextFont = 'Revalia'; //wave text font
     
     var currentWave;
     var waveNumber = 0; //Keeps count of wave number. notify boss wave

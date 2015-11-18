@@ -39,6 +39,9 @@ var BaseManager = function(game){
         whiteBox2.crop(new Phaser.Rectangle(0, 0, 1820, 200));
         whiteBox2.alpha = .8;
         
+        var unitSlots = game.add.sprite(900, 860, 'unitSlot8');
+        unitSlots.anchor.setTo(.5, .5);
+        unitSlots.scale.setTo(1.2,1.2);
 
         backgroundSprite = playerState.base.background;
         background = game.add.sprite(game.world.centerX + baseoffsetX, game.world.centerY - baseoffsetY, backgroundSprite);

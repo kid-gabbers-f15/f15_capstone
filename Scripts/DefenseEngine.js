@@ -86,6 +86,10 @@ var DefenseEngine = function (game){
         whiteBox2.crop(new Phaser.Rectangle(0, 0, 1820, 480));
         whiteBox2.alpha = .8;
         
+        var unitSlots = game.add.sprite(900, 860, 'unitSlot8');
+        unitSlots.anchor.setTo(.5, .5);
+        unitSlots.scale.setTo(1.2,1.2);
+        
         //create a sprite to act as the area for the user's base
         //this 'windows' the base from other elements in the game 
         

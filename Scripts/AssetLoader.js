@@ -94,6 +94,17 @@ var AssetLoader = function(game){
         game.load.image('Item7', 'Assets/BaseStickers/Animal7.png');
         game.load.image('Item8', 'Assets/BaseStickers/Animal8.png');
         game.load.image('Item9', 'Assets/BaseStickers/Animal9.png');
+        
+        
+        //unit slots----------------------------------------------
+        game.load.image('unitSlot1', 'Assets/shelves1.png');
+        game.load.image('unitSlot2', 'Assets/shelves2.png');
+        game.load.image('unitSlot3', 'Assets/shelves3.png');
+        game.load.image('unitSlot4', 'Assets/shelves4.png');
+        game.load.image('unitSlot5', 'Assets/shelves5.png');
+        game.load.image('unitSlot6', 'Assets/shelves6.png');
+        game.load.image('unitSlot7', 'Assets/shelves7.png');
+        game.load.image('unitSlot8', 'Assets/shelves8.png');
 
     }
     

@@ -193,3 +193,9 @@ function startGame() {
     game.state.start('Boot');
 }
 
+function saveGame(){
+    var PlayerStateJSONString = JSON.stringify(playerState);
+    console.log(PlayerStateJSONString);
+
+    document.cookie = "PlayerState=" + PlayerStateJSONString;
+}

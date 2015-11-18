@@ -9,7 +9,6 @@ var DefenseEngine = function (game){
     
     var unitGroup; // phaser group, group of unit sprites
     var enemypGroup; // phaser group, group of enemy sprites
-    var gold; // int, amount of money player has
     var resourceText; // phaser text, displays amount of gold
     var shopbutton; // phaser text, button to go to shop
     var pausebutton; // phaser text, button to pause the game
@@ -72,7 +71,6 @@ var DefenseEngine = function (game){
     }
     
     function OnCreate(){
-        gold = 500;
         //drawing background
         background = game.add.sprite(game.world.centerX, game.world.centerY, 'background');
         background.anchor.setTo(0.5, 0.5);
@@ -118,7 +116,7 @@ var DefenseEngine = function (game){
             }
         }
 
-        resourceText = game.add.text(50, 10, "Gold: " + gold);
+        resourceText = game.add.text(50, 10, "Gold: " + playerState.gold);
         resourceText.font = 'Revalia';
         resourceText.fontSize = 60;
         grd = resourceText.context.createLinearGradient(0, 0, 0, resourceText.canvas.height);
@@ -156,20 +154,20 @@ var DefenseEngine = function (game){
         return topBaseCollision;
     }
     function updateResource(){
-        resourceText.setText("Gold: " + gold);
+        resourceText.setText("Gold: " + playerState.gold);
     }
     function addGold(amount){
-        gold = gold + amount;
+        playerState.gold = playerState.gold + amount;
     }
     function getGold(){
-        return gold;
+        return playerState.gold;
     }
     function spendGold(amount){
-        gold = gold - amount;
+        playerState.gold = playerState.gold - amount;
     }
     function canAfford(amount)
     {
-        if(gold - amount >= 0)
+        if(playerState.gold - amount >= 0)
         {
             return true;   
         }

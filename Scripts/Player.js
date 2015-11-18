@@ -1,14 +1,20 @@
 var Player = function (game){
     //unit manager
     var that = {};
-    var unit1;
-    var unit2;
-    var unit3;
     var unitpGroup = [];
-    var upGroup;
+    var unitSlotPositions = new Array(
+        {x: 676, y: 795},
+        {x: 720, y: 925},
+        {x: 810, y: 770},
+        {x: 850, y: 995},
+        {x: 950, y: 870},
+        {x: 870, y: 630},
+        {x: 995, y: 730},
+        {x: 1080, y: 890}
+        );
     
     function Preload(){
-        for(var i = 0; i < 3; i++){
+        for(var i = 0; i < playerState.unitSlots; i++){
             var unit = Unit(that, game);
             unit.Preload();
             unitpGroup.push(unit);
@@ -16,12 +22,9 @@ var Player = function (game){
     }
     
     function OnCreate(unitGroup, enemypGroup){
-        upGroup = unitGroup;
-        var y_pos = 699;
         for(var i = 0; i < unitpGroup.length; i++)
         {
-            unitpGroup[i].OnCreate(900, y_pos, unitGroup);
-            y_pos = y_pos + 111;
+            unitpGroup[i].OnCreate(unitSlotPositions[i].x, unitSlotPositions[i].y, unitGroup);
         }
     }
     

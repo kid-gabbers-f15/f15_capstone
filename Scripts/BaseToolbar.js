@@ -78,97 +78,100 @@ var BaseToolbar = function(game, parent){
         }
         
         backButton = game.add.text(50, 1000, "Back");
-                backButton.font = 'Revalia';
-                backButton.fontSize = 40;
-                grd = backButton.context.createLinearGradient(0, 0, 0, backButton.canvas.height);
-                grd.addColorStop(0, '#8ED6FF');   
-                grd.addColorStop(1, '#004CB3');
-                backButton.fill = grd;
-                backButton.align = 'center';
-                backButton.stroke = '#000000';
-                backButton.strokeThickness = 2;
-                backButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        backButton.font = 'Revalia';
+        backButton.fontSize = 40;
+        grd = backButton.context.createLinearGradient(0, 0, 0, backButton.canvas.height);
+        grd.addColorStop(0, '#8ED6FF');   
+        grd.addColorStop(1, '#004CB3');
+        backButton.fill = grd;
+        backButton.align = 'center';
+        backButton.stroke = '#000000';
+        backButton.strokeThickness = 2;
+        backButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         backButton.inputEnabled = true;
+        
         backButton.events.onInputOver.add(function(){
-                    backButton.fill = '#ff00ff';
-                }, this);
-                backButton.events.onInputOut.add(function(){
-                    backButton.fill = grd;
-                }, this);
+            backButton.fill = '#ff00ff';
+        }, this);
+        backButton.events.onInputOut.add(function(){
+            backButton.fill = grd;
+        }, this);
         
         backButton.events.onInputDown.add(function(){
             clickBack();
         });
         
         nextButton = game.add.text(1770, 1000, "Next");
-                nextButton.font = 'Revalia';
-                nextButton.fontSize = 40;
-                grd = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
-                grd.addColorStop(0, '#8ED6FF');   
-                grd.addColorStop(1, '#004CB3');
-                nextButton.fill = grd;
-                nextButton.align = 'center';
-                nextButton.stroke = '#000000';
-                nextButton.strokeThickness = 2;
-                nextButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        nextButton.font = 'Revalia';
+        nextButton.fontSize = 40;
+        grd = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
+        grd.addColorStop(0, '#8ED6FF');   
+        grd.addColorStop(1, '#004CB3');
+        nextButton.fill = grd;
+        nextButton.align = 'center';
+        nextButton.stroke = '#000000';
+        nextButton.strokeThickness = 2;
+        nextButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         nextButton.inputEnabled = true;
+        
         nextButton.events.onInputOver.add(function(){
-                    nextButton.fill = '#ff00ff';
-                }, this);
-                nextButton.events.onInputOut.add(function(){
-                    nextButton.fill = grd;
-                }, this);
+            nextButton.fill = '#ff00ff';
+        }, this);
+        nextButton.events.onInputOut.add(function(){
+            nextButton.fill = grd;
+        }, this);
         
         nextButton.events.onInputDown.add(function(){
             clickNext();
         });
         
         backgroundButton = game.add.text(300, 850, "Backgrounds");
-                backgroundButton.font = 'Revalia';
-                backgroundButton.fontSize = 30;
-                grd = backgroundButton.context.createLinearGradient(0, 0, 0, backgroundButton.canvas.height);
-                grd.addColorStop(0, '#8ED6FF');   
-                grd.addColorStop(1, '#004CB3');
-                backgroundButton.fill = grd;
-                backgroundButton.align = 'center';
-                backgroundButton.stroke = '#000000';
-                backgroundButton.strokeThickness = 2;
-                backgroundButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        backgroundButton.font = 'Revalia';
+        backgroundButton.fontSize = 30;
+        grd = backgroundButton.context.createLinearGradient(0, 0, 0, backgroundButton.canvas.height);
+        grd.addColorStop(0, '#8ED6FF');   
+        grd.addColorStop(1, '#004CB3');
+        backgroundButton.fill = grd;
+        backgroundButton.align = 'center';
+        backgroundButton.stroke = '#000000';
+        backgroundButton.strokeThickness = 2;
+        backgroundButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         backgroundButton.inputEnabled = true;
+        
         backgroundButton.events.onInputOver.add(function(){
-                backgroundButton.fill = '#ff00ff';
-            }, this);
+            backgroundButton.fill = '#ff00ff';
+        }, this);
         backgroundButton.events.onInputOut.add(function(){
-                backgroundButton.fill = grd;
-            }, this);
+            backgroundButton.fill = grd;
+        }, this);
         backgroundButton.events.onInputDown.add(function(){
             toolbar = 'backgrounds';
             updateToolbar();
         });
         
         stickersButton = game.add.text(50, 850, "Stickers");
-                stickersButton.font = 'Revalia';
-                stickersButton.fontSize = 30;
-                grd = stickersButton.context.createLinearGradient(0, 0, 0, stickersButton.canvas.height);
-                grd.addColorStop(0, '#8ED6FF');   
-                grd.addColorStop(1, '#004CB3');
-                stickersButton.fill = grd;
-                stickersButton.align = 'center';
-                stickersButton.stroke = '#000000';
-                stickersButton.strokeThickness = 2;
-                stickersButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        stickersButton.font = 'Revalia';
+        stickersButton.fontSize = 30;
+        grd = stickersButton.context.createLinearGradient(0, 0, 0, stickersButton.canvas.height);
+        grd.addColorStop(0, '#8ED6FF');   
+        grd.addColorStop(1, '#004CB3');
+        stickersButton.fill = grd;
+        stickersButton.align = 'center';
+        stickersButton.stroke = '#000000';
+        stickersButton.strokeThickness = 2;
+        stickersButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         stickersButton.inputEnabled = true;
+        
         stickersButton.events.onInputOver.add(function(){
-                stickersButton.fill = '#ff00ff';
-            }, this);
+            stickersButton.fill = '#ff00ff';
+        }, this);
         stickersButton.events.onInputOut.add(function(){
-                stickersButton.fill = grd;
-            }, this);
+            stickersButton.fill = grd;
+        }, this);
         stickersButton.events.onInputDown.add(function(){
             toolbar = 'stickers';
             updateToolbar();
         });
-        
     }
     
     function updateToolbar(){
@@ -178,7 +181,6 @@ var BaseToolbar = function(game, parent){
                 backgroundSlots[i].slot.inputEnabled = false;
                 slots[i].slot.visible = true;
                 slots[i].slot.inputEnabled = true;
-                
             }
         }else if(toolbar === 'backgrounds'){
              for(var i = 0; i < numOfSlots; ++i){
@@ -186,7 +188,6 @@ var BaseToolbar = function(game, parent){
                 backgroundSlots[i].slot.inputEnabled = true;
                 slots[i].slot.visible = false;
                 slots[i].slot.inputEnabled = false;
-                
             }
         }
     }
@@ -197,46 +198,49 @@ var BaseToolbar = function(game, parent){
                 pageNum -= 1;
                 console.log("click");
                 var i = pageNum * numOfSlots;
-                    for(var n = 0; n < slots.length; ++n){
-                        while(i <= stickers.length){
-                            if(n < slots.length){
-                                console.log(stickers[i]);
-                                slots[n].slot.loadTexture(stickers[i]);
-                                slots[n].keyIndex = i;
-                                slots[n].key = stickers[i];
-                                slots[n].slot.events.onInputDown.removeAll();
-                                addEventtoSlot(i, slots[n].slot);
-                                slots[n].slot.visible = true;
-                                slots[n].slot.inputEnabled = true;
-                                ++n;
-                            }else{
-                                break;
-                            }
-                        ++i;
+                for(var n = 0; n < slots.length; ++n){
+                    while(i <= stickers.length){
+                        if(n < slots.length){
+                            console.log(stickers[i]);
+                            slots[n].slot.loadTexture(stickers[i]);
+                            slots[n].keyIndex = i;
+                            slots[n].key = stickers[i];
+                            slots[n].slot.events.onInputDown.removeAll();
+                            addEventtoSlot(i, slots[n].slot);
+                            slots[n].slot.visible = true;
+                            slots[n].slot.inputEnabled = true;
+                            ++n;
+                        }
+                        else{
+                            break;
+                        }
+                    ++i;
                     }
                 }
             }
-        }else if(toolbar ==='backgrounds'){
+        }
+        else if(toolbar ==='backgrounds'){
             if(pageNum > 0){
                 pageNum -= 1;
                 console.log("click");
                 var i = pageNum * numOfSlots;
-                    for(var n = 0; n < backgroundSlots.length; ++n){
-                        while(i <= backgrounds.length){
-                            if(n < backgroundSlots.length){
-                                console.log(backgrounds[i]);
-                                backgroundSlots[n].slot.loadTexture(backgrounds[i]);
-                                backgroundSlots[n].keyIndex = i;
-                                backgroundSlots[n].key = backgrounds[i];
-                                backgroundSlots[n].slot.events.onInputDown.removeAll();
-                                addEventtoBGSlot(i, backgroundSlots[n].slot);
-                                backgroundSlots[n].slot.visible = true;
-                                backgroundSlots[n].slot.inputEnabled = true;
-                                ++n;
-                            }else{
-                                break;
-                            }
-                        ++i;
+                for(var n = 0; n < backgroundSlots.length; ++n){
+                    while(i <= backgrounds.length){
+                        if(n < backgroundSlots.length){
+                            console.log(backgrounds[i]);
+                            backgroundSlots[n].slot.loadTexture(backgrounds[i]);
+                            backgroundSlots[n].keyIndex = i;
+                            backgroundSlots[n].key = backgrounds[i];
+                            backgroundSlots[n].slot.events.onInputDown.removeAll();
+                            addEventtoBGSlot(i, backgroundSlots[n].slot);
+                            backgroundSlots[n].slot.visible = true;
+                            backgroundSlots[n].slot.inputEnabled = true;
+                            ++n;
+                        }
+                        else{
+                            break;
+                        }
+                    ++i;
                     }
                 }
             }
@@ -258,7 +262,8 @@ var BaseToolbar = function(game, parent){
                             slots[n].slot.events.onInputDown.removeAll();
                             addEventtoSlot(i, slots[n].slot);
                             ++n;
-                        }else{
+                        }
+                        else{
                             break;
                         }
                     ++i;
@@ -270,7 +275,8 @@ var BaseToolbar = function(game, parent){
                     }
                 }
             }
-        }else if(toolbar === 'backgrounds'){
+        }
+        else if(toolbar === 'backgrounds'){
             if((pageNum + 1) * numOfSlots < backgrounds.length){
                 pageNum += 1;
                 var i = pageNum * numOfSlots;
@@ -284,7 +290,8 @@ var BaseToolbar = function(game, parent){
                             backgroundSlots[n].slot.events.onInputDown.removeAll();
                             addEventtoBGSlot(i, backgroundSlots[n].slot);
                             ++n;
-                        }else{
+                        }
+                        else{
                             break;
                         }
                     ++i;
@@ -301,7 +308,7 @@ var BaseToolbar = function(game, parent){
     
     function clickSlot(slotClicked){
         console.log("Clicked slot #" + slotClicked);
-         for(var i = 0; i < slots.length; ++i){
+        for(var i = 0; i < slots.length; ++i){
             console.log(slots[i].key);
             console.log(slots[i].keyIndex);
             if(slotClicked === slots[i].keyIndex){
@@ -313,7 +320,7 @@ var BaseToolbar = function(game, parent){
     
     function clickBackground(slotClicked){
         console.log("Clicked slot #" + slotClicked);
-         for(var i = 0; i < backgroundSlots.length; ++i){
+        for(var i = 0; i < backgroundSlots.length; ++i){
             console.log(backgroundSlots[i].key);
             console.log(backgroundSlots[i].keyIndex);
             if(slotClicked === backgroundSlots[i].keyIndex){
@@ -324,7 +331,6 @@ var BaseToolbar = function(game, parent){
     }
     
     function Update(){
-        
         
     }
     

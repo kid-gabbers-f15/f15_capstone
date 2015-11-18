@@ -34,8 +34,10 @@ var Enemy = function (parent, game){
     
     var killed = false; // bool, has the enemy been killed this wave
     
+    var text = ""; // string, text to be displayed on the enemy sprite
+    
     function Preload(){
-       
+        
     }
     
     /*
@@ -53,15 +55,13 @@ var Enemy = function (parent, game){
         can_attack = true; // upon creation enemies should be able to attack instantly
         attack_delay = 0;
 
-
         if(isBoss){ //if the enemy is a boss
-            enemySprite = game.add.sprite(position.x, position.y, 'EnemyBoss_1' );
+            enemySprite = game.add.sprite(position.x, position.y, 'EnemyBoss_1');
             game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
             enemySprite.body.collideWorldBounds = true;
             enemySprite.body.friction = 10;
             enemySprite.body.drag = 100;
-    
-            enemySprite.anchor.setTo(0.5, 0.5); 
+            enemySprite.anchor.setTo(0.5, 0.5);
     
             health = maxHealth*10;// boss health
             initialHealth = health;
@@ -112,6 +112,14 @@ var Enemy = function (parent, game){
         uGroup = unitGroup; //the group that the enemies will attack
         enemypGroup.add(enemySprite);
         eGroup = enemypGroup;
+        
+        // Text for enemy
+        var style = { font: "25px Arial", fill: "#fff", wordWrap: true, wordWrapWidth: enemySprite.width, align: "center" };
+        var textList = defEngine.getEnemyManager().getEnemyText();
+        var selectedText = textList[Math.floor((Math.random() * 4) + 0)];
+        console.log('selectedText: ' + selectedText);
+        text = game.add.text(0, 0, selectedText, style);
+        text.anchor.set(0.5);
     }
     
     /*
@@ -138,6 +146,7 @@ var Enemy = function (parent, game){
             can_attack = true;
             boss = true;
             killed = false;
+            text.visible = true;
         }
         else{
             maxHealth = const_maxHealth;
@@ -157,10 +166,14 @@ var Enemy = function (parent, game){
             attack_delay = 0;
             boss = false;
             killed = false;
+            text.visible = true;
         }
     }
     
     function Update(){ //udpate the enemies
+        // Update Text
+        text.x = Math.floor(enemySprite.x);
+        text.y = Math.floor(enemySprite.y + 12);
         
         //if they can attack the units again or not
         if(attack_delay == 0){
@@ -191,12 +204,15 @@ var Enemy = function (parent, game){
             target.getUnitSprite().position.y,
             speed);
         
-        if(health <= 0){ //if they have been defeated
+        /*if(health <= 0){ //if they have been defeated
+            console.log("It's only a flesh wound.")
             enemySprite.visible = false;
             healthBar.visible = false;
             enemySprite.inputEnabled = false;
             isActive = false;
-        }
+            //text.visible = false;
+            console.log('text.visible: ' + text.visible);
+        }*/
         
         position = enemySprite.position; //their new position
 
@@ -242,6 +258,7 @@ var Enemy = function (parent, game){
             enemySprite.inputEnabled = false;
             isActive = false;
             killed = true;
+            text.visible = false;
             if(boss){
                 defEngine.addGold(100);
             }

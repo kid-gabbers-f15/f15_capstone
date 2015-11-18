@@ -39,7 +39,6 @@ var BaseManager = function(game){
         whiteBox2.crop(new Phaser.Rectangle(0, 0, 1820, 200));
         whiteBox2.alpha = .8;
         
-
         backgroundSprite = playerState.base.background;
         background = game.add.sprite(game.world.centerX + baseoffsetX, game.world.centerY - baseoffsetY, backgroundSprite);
         background.anchor.setTo(0.5, 0.5);

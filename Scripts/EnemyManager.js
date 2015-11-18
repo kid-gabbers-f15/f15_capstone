@@ -206,6 +206,9 @@ var EnemyManager = function (game){
     
     function restartWave()
     {
+        playerState.points = waveNumber; //keep track of high score for player
+        
+        
         killCnter = 0;
         ++waveNumber;
         

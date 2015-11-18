@@ -44,6 +44,7 @@ var Unit = function (parent, game){
         bulletSpriteGroup = game.add.group();
         
         unitSprite = game.add.sprite(position.x, position.y, 'unit0' );
+        unitSprite.alpha=0;
         game.physics.enable(unitSprite, Phaser.Physics.ARCADE);
         unitSprite.body.collideWorldBounds = true;
 
@@ -200,8 +201,9 @@ var Unit = function (parent, game){
         if(curr_children == 0)
             {
                 unitSprite.loadTexture('unit0');
+                unitSprite.alpha=0;
                 bulletType = 'none';
-            }
+            }else unitSprite.alpha = 1;
         
         // Change picture based on children
         /*if(old_curr_children != curr_children)

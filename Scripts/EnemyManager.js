@@ -15,6 +15,8 @@ var EnemyManager = function (game){
     
     var grd; //gradient of the text for the wave number
     var waveNumText;
+    var waveNumTextFont = 'Revalia'; //wave text font
+    
     var currentWave;
     var waveNumber = 0; //Keeps count of wave number. notify boss wave
     var boss_wave = 3;
@@ -88,7 +90,7 @@ var EnemyManager = function (game){
         //..........................
         //create the text for the wave count
         waveNumText = game.add.text(50, 260, "Wave: " + currentWave);
-                    waveNumText.font = 'Revalia';
+                    waveNumText.font = waveNumTextFont;
                     waveNumText.fontSize = 60;
                     grd = waveNumText.context.createLinearGradient(0, 0, 0, waveNumText.canvas.height);
                     grd.addColorStop(0, '#8ED6FF');   
@@ -204,6 +206,9 @@ var EnemyManager = function (game){
     
     function restartWave()
     {
+        playerState.points = waveNumber; //keep track of high score for player
+        
+        
         killCnter = 0;
         ++waveNumber;
         

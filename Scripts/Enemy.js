@@ -221,14 +221,16 @@ var Enemy = function (parent, game){
         //var enemyGroup = defEngine.getEnemyManager().getEnemyGroup();
         
         for(var i = 0; i < unitpGroup.length; i++){
-            game.physics.arcade.collide(enemySprite, unitpGroup[i].getUnitSprite(), 
-            function(){
-                if(unitpGroup[i].get_children() > 0 && can_attack == true && isActive == true){
-                     unitpGroup[i].dec_children();
-                     can_attack = false;
-                     reset_attack_delay();
-                } 
-            }, null, null, this);
+            if(unitpGroup[i].get_children() > 0){
+                game.physics.arcade.collide(enemySprite, unitpGroup[i].getUnitSprite(), 
+                function(){
+                    if(can_attack == true && isActive == true){
+                         unitpGroup[i].dec_children();
+                         can_attack = false;
+                         reset_attack_delay();
+                    } 
+                }, null, null, this);
+            }
         }   
     }
     

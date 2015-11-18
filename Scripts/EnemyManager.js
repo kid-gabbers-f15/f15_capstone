@@ -236,7 +236,7 @@ var EnemyManager = function (game){
             waveNumber = 0;
             for(var i = 0; i < boss_count_in_wave; i++)
             {
-                bossGroup[i].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitpGroup[(Math.floor(Math.random() * unitpGroup.length))]);
+                bossGroup[i].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
             }
         }
         else // non boss wave
@@ -247,20 +247,34 @@ var EnemyManager = function (game){
             }
             for(var j = 0; j < enemy_count_in_wave; ++j)
             {
-                enemyGroup1[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitpGroup[(Math.floor(Math.random() * unitpGroup.length))]);
+                enemyGroup1[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
             }
             for(var j = 0; j < enemy_count_in_wave; ++j)
             {
-                enemyGroup2[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitpGroup[(Math.floor(Math.random() * unitpGroup.length))]);
+                enemyGroup2[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
             }
             for(var j = 0; j < enemy_count_in_wave; ++j)
             {
-                enemyGroup3[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitpGroup[(Math.floor(Math.random() * unitpGroup.length))]);
+                enemyGroup3[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
             }
         }
         
         waitingForWave = false;
     }
+    
+    function findUnit(uGroup){
+        var temp = uGroup[0];
+        for(var i = 1; i < uGroup.length; ++i){
+            if(uGroup[i].getUnitSprite().x > temp.getUnitSprite().x){
+                if(uGroup[i].get_children()>0){
+                    temp = uGroup[i];
+                }
+            }
+        }
+        return temp;
+    }
+    
+    
     
     // Getters
     function getEnemyGroup(){

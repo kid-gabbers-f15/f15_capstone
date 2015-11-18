@@ -31,6 +31,8 @@ var EnemyManager = function (game){
     eSpawn.x = 1850;
     eSpawn.y = 800;
     
+    var enemyTextList = []; // Empty list for text used on enemies
+    
     function Preload(){
         for(var i = 0; i < total_enemies; ++i) //add each enemies to their respective arrays
         {
@@ -54,17 +56,22 @@ var EnemyManager = function (game){
             enemyBoss.Preload();
             bossGroup.push(enemyBoss);
         }
+        
+        // Load text file for enemy sprite text
+        game.load.text('enemyText', '/Scripts/enemyText.txt');
     }
     
     
     function OnCreate(unitGroup, enemypGroup){
+        // Enemy text
+        var enemyText = game.cache.getText('enemyText');
+        enemyTextList = enemyText.split('\n');
+        
         uGroup = unitGroup;
         eGroup = enemypGroup;
         currentWave = 0;
         
         //here we create the enemies. four different groups for four different types
-        
-        
         
         for(var i = 0; i < enemyGroup1.length; ++i){
             enemyGroup1[i].OnCreate(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup, false, 1);
@@ -139,7 +146,7 @@ var EnemyManager = function (game){
         }
         else // Normal wave
         {
-            console.log(killCnter + " < " + enemy_count_in_wave*3);
+            //console.log(killCnter + " < " + enemy_count_in_wave*3);
             
             //it is *3 because there are 3 groups of enemies. enemy_count_in_wave stands for enemies per group
             if(killCnter < enemy_count_in_wave*3) // Enemies still alive
@@ -255,6 +262,7 @@ var EnemyManager = function (game){
         waitingForWave = false;
     }
     
+    // Getters
     function getEnemyGroup(){
         var enemyGroup = [];
         for(var i=0; i<enemyGroup1.length; i++)
@@ -290,13 +298,11 @@ var EnemyManager = function (game){
     function getEgroup(){
         return eGroup;
     }
-    
-    
     function update_Wave_Text(){
-
         waveNumText.setText("Wave: " + currentWave);
-        
-        
+    }
+    function getEnemyText(){
+        return enemyTextList;
     }
     
     that.Preload = Preload;
@@ -304,6 +310,7 @@ var EnemyManager = function (game){
     that.OnCreate = OnCreate;
     that.getEnemyGroup = getEnemyGroup;
     that.getEgroup = getEgroup;
+    that.getEnemyText = getEnemyText;
 
     return that;
 }

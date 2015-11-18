@@ -254,6 +254,15 @@ var ShopManager = function (game){
             slots[i].cost.visible = false;
         }
         pageNum = 0;
+       for(var i = 0; i < numOfSlots; i++)
+            {
+                slots[i].slot.loadTexture(stickers[i]);
+                slots[i].keyIndex = i;
+                slots[i].key = stickers[i];
+                slots[i].slot.events.onInputDown.removeAll();
+                slots[i].name.setText(shopMenuItems.list[i].name);
+                slots[i].cost.setText(shopMenuItems.list[i].cost);
+            }
     }
     function showShopItems(){
         for(var i = 0; i < numOfSlots; i++){
@@ -261,6 +270,7 @@ var ShopManager = function (game){
             slots[i].slot.inputEnabled = true;
             slots[i].name.visible = true;
             slots[i].cost.visible = true;
+            addEventtoSlot(i, slots[i].slot);
         }
     }
     function initializeShopItems(){

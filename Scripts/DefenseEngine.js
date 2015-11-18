@@ -17,7 +17,7 @@ var DefenseEngine = function (game){
     var pausetext; // phaser text, 'PAUSED' that pops up when the game is paused
     var grd; // phaser color gradient, used for a color gradient on text
     var playerBaseData; // JSON string, JSON representing the player's base
-    
+    var unitSlots; //phaser sprite, changes based on how many unit slots player has unlocked.
     /*
     base - object, player's base
     */
@@ -86,16 +86,12 @@ var DefenseEngine = function (game){
         whiteBox2.crop(new Phaser.Rectangle(0, 0, 1820, 480));
         whiteBox2.alpha = .8;
         
-        var unitSlots = game.add.sprite(900, 860, 'unitSlot8');
+        unitSlots = game.add.sprite(900, 860, 'unitSlot' + playerState.unitSlots);
         unitSlots.anchor.setTo(.5, .5);
         unitSlots.scale.setTo(1.2,1.2);
         
         //create a sprite to act as the area for the user's base
         //this 'windows' the base from other elements in the game 
-        
-        //topBaseBackground = game.add.sprite(game.world.centerX/2, 10,'topBaseBackground');
-        
-        //topBase = game.add.sprite(game.world.centerX/2, 10, 'topBase');
         topBaseCollision = game.add.sprite(0,0,'topBaseCollision');
         topBaseCollision.isActive = true;
         topBaseCollision.alpha = 0;
@@ -106,8 +102,10 @@ var DefenseEngine = function (game){
         //friend base building
         friendBaseData = JSON.parse(game.cache.getText('JSONfriendBaseData'));
         loadFriendBase(friendBaseData);
-
+        
+        //player base building
         loadPlayerBase(playerState.base);
+        
         //create menu buttons - pause, open menu, base
         createButtons();
         

@@ -15,6 +15,8 @@ var ShopManager = function (game){
     var slots = [];
     var grd;
 
+    var test_name;
+
 /*
     function loadShopItems(items){
         for(var i = 0; i < items.list.length; i++){
@@ -39,7 +41,6 @@ var ShopManager = function (game){
     function OnCreate(){
         shopMenuItems = JSON.parse(game.cache.getText('JSONshopMenuItems'));
        // loadShopItems(shopMenuItems);
-        
         
         for(var i = 0; i < game.cache.getKeys().length; ++i){
             if(game.cache.getKeys()[i].indexOf('Item') >= 0){
@@ -167,6 +168,10 @@ var ShopManager = function (game){
                             slots[n].keyIndex = i;
                             slots[n].key = stickers[i];
                             slots[n].slot.events.onInputDown.removeAll();
+                            slots[n].name.setText(shopMenuItems.list[i].name);
+                            slots[n].name.visible = true;
+                            slots[n].cost.setText(shopMenuItems.list[i].cost);
+                            slots[n].cost.visible = true;
                             addEventtoSlot(i, slots[n].slot);
                             slots[n].slot.visible = true;
                             slots[n].slot.inputEnabled = true;
@@ -191,6 +196,8 @@ var ShopManager = function (game){
                         slots[n].keyIndex = i;
                         slots[n].key = stickers[i];
                         slots[n].slot.events.onInputDown.removeAll();
+                        slots[n].name.setText(shopMenuItems.list[i].name);
+                        slots[n].cost.setText(shopMenuItems.list[i].cost);
                         addEventtoSlot(i, slots[n].slot);
                         ++n;
                     }else{
@@ -201,6 +208,8 @@ var ShopManager = function (game){
                 if(n < slots.length){
                     slots[n].slot.visible = false;
                     slots[n].slot.inputEnabled = false;
+                    slots[n].name.visible = false;
+                    slots[n].cost.visible = false;
                 }
             }
         }
@@ -210,7 +219,6 @@ var ShopManager = function (game){
          for(var i = 0; i < slots.length; ++i){
             if(slotClicked === slots[i].keyIndex){
                 console.log(slots[i].key);
-                //parent.setCurrentImage(slots[i].key);
             }
         }
     }
@@ -242,30 +250,38 @@ var ShopManager = function (game){
         for(var i = 0; i < numOfSlots; ++i){
             slots[i].slot.visible = false;
             slots[i].slot.inputEnabled = false;
-            //temp.inputEnabled = true;
-            //addEventtoSlot(i, temp);
-            //slots.push({slot:temp, key:stickers[i], keyIndex:i});
+            slots[i].name.visible = false;
+            slots[i].cost.visible = false;
         }
+        pageNum = 0;
     }
     function showShopItems(){
         for(var i = 0; i < numOfSlots; i++){
             slots[i].slot.visible = true;
             slots[i].slot.inputEnabled = true;
+            slots[i].name.visible = true;
+            slots[i].cost.visible = true;
         }
     }
     function initializeShopItems(){
                 for(var i = 0; i < numOfSlots; ++i){
                     var temp = {};
-                    var text;
+                    var name;
+                    var cost;
                     temp = game.add.sprite(game.world.centerX - 300, 150 + 150*slots.length, stickers[i]);
                     //temp = game.add.sprite(50 + 100*slots.length, 900, stickers[i]);
+                    name = game.add.text(game.world.centerX, 150+ 150*slots.length, shopMenuItems.list[i].name);
+                    name.visible = false;
+                    cost = game.add.text(game.world.centerX + 200, 150 + 150*slots.length, shopMenuItems.list[i].cost);
+                    cost.visible = false;
                     temp.scale.set(.75, .75);
                     temp.anchor.set(.5,.5);
                     //temp.inputEnabled = true;
                     temp.visible = false;
                     addEventtoSlot(i, temp);
-                    text = temp.key;
-                    slots.push({slot:temp, key:stickers[i], keyIndex:i, name:text});
+                    //name = shopMenuItems.list[i].name;
+                   // cost = shopMenuItems.list[i].cost;
+                    slots.push({slot:temp, key:stickers[i], keyIndex:i, name:name, cost:cost});
         }
     }
     function getShowShop(){

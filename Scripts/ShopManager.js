@@ -217,8 +217,13 @@ var ShopManager = function (game){
     
     function clickSlot(slotClicked){
          for(var i = 0; i < slots.length; ++i){
-            if(slotClicked === slots[i].keyIndex){
-                console.log(slots[i].key);
+            if(slotClicked === slots[i].keyIndex)
+            {
+                if(defEngine.canAfford(slots[i].cost._text))
+                {
+                    defEngine.spendGold(slots[i].cost._text);
+                }
+                console.log(slots[i].cost._text);
             }
         }
     }
@@ -252,15 +257,23 @@ var ShopManager = function (game){
             slots[i].slot.inputEnabled = false;
             slots[i].name.visible = false;
             slots[i].cost.visible = false;
+            slots[i].slot.events.onInputDown.removeAll();
         }
-        pageNum = 0;
     }
     function showShopItems(){
+        pageNum = 0;
         for(var i = 0; i < numOfSlots; i++){
             slots[i].slot.visible = true;
             slots[i].slot.inputEnabled = true;
             slots[i].name.visible = true;
             slots[i].cost.visible = true;
+            
+            slots[i].slot.loadTexture(stickers[i]);
+            slots[i].keyIndex = i;
+            slots[i].key = stickers[i];
+            slots[i].name.setText(shopMenuItems.list[i].name);
+            slots[i].cost.setText(shopMenuItems.list[i].cost);
+            addEventtoSlot(i, slots[i].slot);
         }
     }
     function initializeShopItems(){
@@ -278,7 +291,6 @@ var ShopManager = function (game){
                     temp.anchor.set(.5,.5);
                     //temp.inputEnabled = true;
                     temp.visible = false;
-                    addEventtoSlot(i, temp);
                     //name = shopMenuItems.list[i].name;
                    // cost = shopMenuItems.list[i].cost;
                     slots.push({slot:temp, key:stickers[i], keyIndex:i, name:name, cost:cost});

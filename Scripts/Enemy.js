@@ -290,6 +290,7 @@ var Enemy = function (parent, game){
             }
             if(i == unitpGroup.length - 1){
                 // Do whatever needs to be done when all units are at zero
+                target = defEngine.friendBaseTarget();
             }
         }
     }

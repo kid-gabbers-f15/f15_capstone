@@ -18,6 +18,8 @@ var DefenseEngine = function (game){
     var grd; // phaser color gradient, used for a color gradient on text
     var playerBaseData; // JSON string, JSON representing the player's base
     var unitSlots; //phaser sprite, changes based on how many unit slots player has unlocked.
+    
+    var friendBaseTarget = {};
     /*
     base - object, player's base
     */
@@ -46,6 +48,16 @@ var DefenseEngine = function (game){
             temp.anchor.setTo(0.5, 0.5);
             temp.scale.setTo(0.5, 0.5);
         }
+        
+        game.physics.enable(bg, Phaser.Physics.ARCADE);
+        friendBaseTarget = Unit(null, game);
+        friendBaseTarget.setUnitSprite(bg);
+        friendBaseTarget.setAsBase();
+        var txt = game.add.text(50, 10, "");
+        txt.alpha = 0;
+        friendBaseTarget.setText(txt);
+        player.getUnitPGroup().push(friendBaseTarget);
+        
     }
     
     
@@ -72,6 +84,7 @@ var DefenseEngine = function (game){
     
     function OnCreate(){
         //drawing background
+        
         background = game.add.sprite(game.world.centerX, game.world.centerY, 'background');
         background.anchor.setTo(0.5, 0.5);
         background.crop(new Phaser.Rectangle(0, 540, 1920, 1080));
@@ -98,13 +111,6 @@ var DefenseEngine = function (game){
         game.physics.enable(topBaseCollision, Phaser.Physics.ARCADE);
         topBaseCollision.body.immovable = true;
         topBaseCollision.scale.setTo(2,1.0555);
-        
-        //friend base building
-        friendBaseData = JSON.parse(game.cache.getText('JSONfriendBaseData'));
-        loadFriendBase(friendBaseData);
-        
-        //player base building
-        loadPlayerBase(playerState.base);
         
         //create menu buttons - pause, open menu, base
         createButtons();
@@ -135,6 +141,14 @@ var DefenseEngine = function (game){
 
         player.OnCreate(unitGroup, enemypGroup);
         enemyManager.OnCreate(unitGroup, enemypGroup);
+        
+        //friend base building
+        friendBaseData = JSON.parse(game.cache.getText('JSONfriendBaseData'));
+        loadFriendBase(friendBaseData);
+        
+        //player base building
+        loadPlayerBase(playerState.base);
+        
     }
     
     function Update(){
@@ -290,6 +304,7 @@ var DefenseEngine = function (game){
     that.getGold = getGold;
     that.spendGold = spendGold;
     that.canAfford = canAfford;
+    that.friendBaseTarget = function(){return friendBaseTarget;}
     
     return that;
 }

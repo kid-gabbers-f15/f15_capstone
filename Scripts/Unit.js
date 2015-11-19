@@ -29,7 +29,7 @@ var Unit = function (parent, game){
     var pistolCostText;
     var shotgunCostText;
     var rifleCostText;
-    
+    var thisIsBase; //bool to see if this unit is a base, or just a single unit
     var showWeapons = false;
 
     function Preload(){
@@ -37,6 +37,7 @@ var Unit = function (parent, game){
     }
     
     function OnCreate(x, y, unitGroup, enemypGroup){
+        thisIsBase = false;
         topBaseCollision = defEngine.getTopBaseCollision();
         position.x = x;
         position.y = y;
@@ -458,6 +459,10 @@ var Unit = function (parent, game){
         }
     }
     
+    that.setUnitSprite = function(newSprite){ unitSprite = newSprite;}
+    that.setText = function(newText){ text = newText;}
+    that.setAsBase = function(){thisIsBase = true;}
+    that.thisIsBase = function(){return thisIsBase;}
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;
@@ -465,6 +470,5 @@ var Unit = function (parent, game){
     that.get_children = get_children;
     that.dec_children = dec_children;
     that.isAttack = isAttack;
-    
     return that;
 }

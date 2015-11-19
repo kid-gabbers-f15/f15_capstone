@@ -30,7 +30,9 @@ var Player = function (game){
     
     function Update(){
         for(var i = 0; i < unitpGroup.length; i++){
-            unitpGroup[i].Update();
+            if(unitpGroup[i].thisIsBase() === false){
+                unitpGroup[i].Update();
+            }
         }
     }
     function getUnitPGroup(){

@@ -33,7 +33,6 @@ var ShopManager = function (game){
     }
     
     function Preload(){
-        game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
         game.load.text('JSONshopMenuItems', 'Scripts/shopItems.txt');
     }
     

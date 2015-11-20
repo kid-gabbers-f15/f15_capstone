@@ -64,7 +64,6 @@ var DefenseEngine = function (game){
     function Preload(){
         //loading background image
         console.log("Preload for defense engine");
-        game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
         game.load.image('background', 'Assets/MainPageBG.png');
         game.load.image('topBaseCollision', 'Assets/TopBaseImage.png');
         game.load.image('topBaseBackground', 'Assets/TopBaseImage.png');

@@ -4,7 +4,7 @@
         //  'active' means all requested fonts have finished loading
         //  We set a 1 second delay before calling 'createText'.
         //  For some reason if we don't the browser cannot render the text the first time it's created.
-        //active: function() { game.time.events.add(Phaser.Timer.SECOND, Boot, this); },
+        active: function() { game.time.events.add(Phaser.Timer.SECOND, loadingScreen(), this); },
     
         //  The Google Fonts we want to load (specify as many as you like in the array)
         google: {
@@ -39,6 +39,21 @@ var _friendBaseJSONstring = "";
 var PlayerStateJSONString = "";
 var playerState = {};
 
+var loadingScreen = function(){
+    LoadingText = game.add.text(game.world.width/2, game.world.height/2, "Loading...");
+    LoadingText.font = 'Revalia';
+    LoadingText.fontSize = 80;
+    gradientText = LoadingText.context.createLinearGradient(0, 0, 0, LoadingText.canvas.height);
+    gradientText.addColorStop(0, '#8ED6FF');   
+    gradientText.addColorStop(1, '#004CB3');
+    LoadingText.fill = gradientText;
+    LoadingText.align = 'center';
+    LoadingText.stroke = '#000000';
+    LoadingText.strokeThickness = 2;
+    LoadingText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+    LoadingText.anchor.setTo(0.5,0.5);
+}
+
 //Runs at start of game
 var Boot = {
     //preload, create, update
@@ -66,19 +81,8 @@ var Boot = {
             playerState = JSON.parse(cookie);
         }
         
-        LoadingText = game.add.text(game.world.width/2, game.world.height/2, "Loading...");
-                    LoadingText.font = 'Revalia';
-                    LoadingText.fontSize = 80;
-                    gradientText = LoadingText.context.createLinearGradient(0, 0, 0, LoadingText.canvas.height);
-                    gradientText.addColorStop(0, '#8ED6FF');   
-                    gradientText.addColorStop(1, '#004CB3');
-                    LoadingText.fill = gradientText;
-                    LoadingText.align = 'center';
-                    LoadingText.stroke = '#000000';
-                    LoadingText.strokeThickness = 2;
-                    LoadingText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-        LoadingText.anchor.setTo(0.5,0.5); //set the point of reference for the sprite
-        
+         //set the point of reference for the sprite
+        //loadingScreen();
         
         console.log("Boot");
     },

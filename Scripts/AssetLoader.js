@@ -2,6 +2,9 @@ var AssetLoader = function(game){
     var that = {};
     
     var Preload = function(){
+        game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
+
+        
         //Base Backgrounds-------------------------------------------------
         game.load.image('BaseBackground1', 'Assets/BaseBackgrounds/BG1.png');
         game.load.image('BaseBackground2', 'Assets/BaseBackgrounds/BG2.png');

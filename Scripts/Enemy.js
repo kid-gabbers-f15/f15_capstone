@@ -230,6 +230,12 @@ var Enemy = function (parent, game){
                          reset_attack_delay();
                     } 
                 }, null, null, this);
+            }else{
+                game.physics.arcade.collide(enemySprite, defEngine.friendBaseTarget().getUnitSprite(), 
+                function(){
+                    //decrease global health value
+                    damage(health, false);//immediately is killed
+                }, null, null, this);
             }
         }   
     }
@@ -237,7 +243,7 @@ var Enemy = function (parent, game){
     /*
     dmg - int, amount of damage to do to the enemy
     */
-    function damage(dmg){
+    function damage(dmg, getGold){ //by default, get gold is undefined, so only need to check if explicitly false
         health = health - dmg;
         enemySprite.alpha = 1.0 - 1.0*(initialHealth-health)/initialHealth; //decrease the opacity depending on the ratio between currenthealth and initial health
         
@@ -261,11 +267,13 @@ var Enemy = function (parent, game){
             isActive = false;
             killed = true;
             text.visible = false;
-            if(boss){
-                defEngine.addGold(100);
-            }
-            else{
-                defEngine.addGold(10);
+            if(getGold != false){
+                if(boss){
+                    defEngine.addGold(100);
+                }
+                else{
+                    defEngine.addGold(10);
+                }
             }
         }
     }

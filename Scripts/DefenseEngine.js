@@ -50,6 +50,8 @@ var DefenseEngine = function (game){
         }
         
         game.physics.enable(bg, Phaser.Physics.ARCADE);
+        bg.body.immovable = true;
+        
         friendBaseTarget = Unit(null, game);
         friendBaseTarget.setUnitSprite(bg);
         friendBaseTarget.setAsBase();
@@ -77,13 +79,12 @@ var DefenseEngine = function (game){
         
         game.load.text('JSONfriendBaseData', 'Scripts/json2.txt');
         game.load.text('JSONplayerBaseData', 'Scripts/json.txt');
-
+        
         //shopManager.Preload();
     }
     
     function OnCreate(){
         //drawing background
-        
         background = game.add.sprite(game.world.centerX, game.world.centerY, 'background');
         background.anchor.setTo(0.5, 0.5);
         background.crop(new Phaser.Rectangle(0, 540, 1920, 1080));

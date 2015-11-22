@@ -4,7 +4,7 @@
         //  'active' means all requested fonts have finished loading
         //  We set a 1 second delay before calling 'createText'.
         //  For some reason if we don't the browser cannot render the text the first time it's created.
-        active: function() { game.time.events.add(Phaser.Timer.SECOND, loadingScreen(), this); },
+        //active: function() { game.time.events.add(Phaser.Timer.SECOND, window.onload, this); },
     
         //  The Google Fonts we want to load (specify as many as you like in the array)
         google: {
@@ -62,6 +62,8 @@ var Boot = {
         game.scale.setMinMax(800, 450, 1920, 1080);
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
+
+        loadingScreen();
         
         var assetLoader = AssetLoader(game);
         assetLoader.Preload();
@@ -83,7 +85,7 @@ var Boot = {
         
          //set the point of reference for the sprite
         //loadingScreen();
-        
+
         console.log("Boot");
     },
     
@@ -110,7 +112,12 @@ var Preload = {
         baseManager = BaseManager(game);
         shopManager = ShopManager(game);
         
-        game.state.start("Defense");
+    },
+    
+    update : function(){
+        if(game.load.isLoading != true){
+            game.state.start("Defense");
+        }        
     }
     
 };

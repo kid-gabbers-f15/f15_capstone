@@ -4,6 +4,25 @@ var AssetLoader = function(game){
     var Preload = function(){
         game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
+         //Units-----------------------------------------------------
+        game.load.image('Unit1','Assets/Unit_Pictures/robot1.png');
+        game.load.image('Unit2','Assets/Unit_Pictures/SuperBear.png');
+        game.load.image('Unit3','Assets/Unit_Pictures/Unicorn1.png');
+
+        game.load.image('unit0', "Assets/Unit_Pictures/unit0.png");
+        game.load.image('bullet', "Assets/bullet.png");
+        game.load.image('pistolSprite', "Assets/Bullet_Type_Pictures/pistol.png");
+        game.load.image('shotgunSprite', "Assets/Bullet_Type_Pictures/shotgun.png");
+        game.load.image('rifleSprite', "Assets/Bullet_Type_Pictures/rifle.png");
+        
+        //enemies----------------------------------------------------
+        game.load.image('enemy1', "Assets/Enemy_Pictures/Enemy6.png");
+        game.load.image('enemy2', "Assets/Enemy_Pictures/Enemy2.png");
+        game.load.image('enemy3', "Assets/Enemy_Pictures/Enemy4.png");
+        game.load.image('healthBar', 'Assets/Placeholder4.png');
+        game.load.image('EnemyBoss_1', 'Assets/Enemy_Pictures/Enemy5.png');
+        game.load.image('Boss_1_Health', 'Assets/Enemy_Pictures/Boss_1Health.png');
+        
         
         //Base Backgrounds-------------------------------------------------
         game.load.image('BaseBackground1', 'Assets/BaseBackgrounds/BG1.png');
@@ -62,25 +81,7 @@ var AssetLoader = function(game){
         game.load.image('BaseSticker29', 'Assets/BaseStickers/PaintBrush.png');
         game.load.image('BaseSticker30', 'Assets/BaseStickers/Unicorn1.png');
 
-        //Units-----------------------------------------------------
-        game.load.image('Unit1','Assets/Unit_Pictures/robot1.png');
-        game.load.image('Unit2','Assets/Unit_Pictures/SuperBear.png');
-        game.load.image('Unit3','Assets/Unit_Pictures/Unicorn1.png');
-
-        game.load.image('unit0', "Assets/Unit_Pictures/unit0.png");
-        game.load.image('bullet', "Assets/bullet.png");
-        game.load.image('pistolSprite', "Assets/Bullet_Type_Pictures/pistol.png");
-        game.load.image('shotgunSprite', "Assets/Bullet_Type_Pictures/shotgun.png");
-        game.load.image('rifleSprite', "Assets/Bullet_Type_Pictures/rifle.png");
-        
-        //enemies----------------------------------------------------
-        game.load.image('enemy1', "Assets/Enemy_Pictures/Enemy6.png");
-        game.load.image('enemy2', "Assets/Enemy_Pictures/Enemy2.png");
-        game.load.image('enemy3', "Assets/Enemy_Pictures/Enemy4.png");
-        game.load.image('healthBar', 'Assets/Placeholder4.png');
-        game.load.image('EnemyBoss_1', 'Assets/Enemy_Pictures/Enemy5.png');
-        game.load.image('Boss_1_Health', 'Assets/Enemy_Pictures/Boss_1Health.png');
-        
+       
         //Main view stuff
         game.load.image('background', 'Assets/BackgroundKidGabTemplate.png');
         game.load.image('topBaseCollision', 'Assets/TopBaseImage.png');

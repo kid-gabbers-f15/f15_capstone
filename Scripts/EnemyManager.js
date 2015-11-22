@@ -17,6 +17,10 @@ var EnemyManager = function (game){
     var waveNumText;
     var waveNumTextFont = 'Revalia'; //wave text font
     
+    var numThatHasSpawned = 0; //number of enemies that have spawned
+    var numNeedsToBeSpawned = 0;
+    
+    
     var currentWave;
     var waveNumber = 0; //Keeps count of wave number. notify boss wave
     var boss_wave = 3;
@@ -147,10 +151,11 @@ var EnemyManager = function (game){
         else // Normal wave
         {
             //console.log(killCnter + " < " + enemy_count_in_wave*3);
-            
+            numNeedsToBeSpawned = enemy_count_in_wave * 3;
             //it is *3 because there are 3 groups of enemies. enemy_count_in_wave stands for enemies per group
             if(killCnter < enemy_count_in_wave*3) // Enemies still alive
-            { 
+            {   
+                
                 for(var i = 0; i < enemyGroup1.length; ++i)
                 {
                     if(enemyGroup1[i].getIsActive() == true) // enemy alive
@@ -213,6 +218,8 @@ var EnemyManager = function (game){
     
     function restartWave()
     {
+        numNeedsToBeSpawned = 0;
+        numThatHasSpawned = 0;
         playerState.points = waveNumber; //keep track of high score for player
         
         
@@ -243,19 +250,20 @@ var EnemyManager = function (game){
         {    
             enemy_count_in_wave = enemy_count_in_wave + 1;
             
-            
+            /*
             if(enemy_count_in_wave>10){ //increase the number of enemies from each group
                 enemy_count_in_wave=10;
             }
-            
+            */
             
             for(var j = 0; j < enemy_count_in_wave; ++j) //reset enemies to spawn again
             {
                 enemyGroup1[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
-            
+                numThatHasSpawned++;
                 enemyGroup2[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
-            
+                numThatHasSpawned++;
                 enemyGroup3[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
+                numThatHasSpawned++;
             }
         }
         

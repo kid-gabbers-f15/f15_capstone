@@ -242,19 +242,19 @@ var EnemyManager = function (game){
         else // non boss wave
         {    
             enemy_count_in_wave = enemy_count_in_wave + 1;
-            if(enemy_count_in_wave>10){
+            
+            
+            if(enemy_count_in_wave>10){ //increase the number of enemies from each group
                 enemy_count_in_wave=10;
             }
-            for(var j = 0; j < enemy_count_in_wave; ++j)
+            
+            
+            for(var j = 0; j < enemy_count_in_wave; ++j) //reset enemies to spawn again
             {
                 enemyGroup1[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
-            }
-            for(var j = 0; j < enemy_count_in_wave; ++j)
-            {
+            
                 enemyGroup2[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
-            }
-            for(var j = 0; j < enemy_count_in_wave; ++j)
-            {
+            
                 enemyGroup3[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
             }
         }

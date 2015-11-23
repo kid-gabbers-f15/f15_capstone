@@ -7,7 +7,7 @@ var DefenseEngine = function (game){
     var enemyManager; // object, instance of EnemyManager
     var player; // object, instance of Player
     
-    var unitGroup; // phaser group, group of unit sprites
+    var unitGroup; // phaser group, group of unit sprites? Objects?
     var enemypGroup; // phaser group, group of enemy sprites
     var resourceText; // phaser text, displays amount of gold
     var shopbutton; // phaser text, button to go to shop
@@ -17,7 +17,8 @@ var DefenseEngine = function (game){
     var pausetext; // phaser text, 'PAUSED' that pops up when the game is paused
     var grd; // phaser color gradient, used for a color gradient on text
     var playerBaseData; // JSON string, JSON representing the player's base
-    var unitSlots; //phaser sprite, changes based on how many unit slots player has unlocked.
+    var unitSlots; // phaser sprite, changes based on how many unit slots player has unlocked.
+    var global_health = 100; // int, overall game health value, lose when zero
     
     var friendBaseTarget = {};
     /*
@@ -181,8 +182,9 @@ var DefenseEngine = function (game){
     function spendGold(amount){
         playerState.gold = playerState.gold - amount;
     }
-    function canAfford(amount)
-    {
+    
+    // amount - int, how much something costs
+    function canAfford(amount){
         if(playerState.gold - amount >= 0)
         {
             return true;   
@@ -191,25 +193,31 @@ var DefenseEngine = function (game){
             return false;
     }
     
+    // damage - int, damage to deal to global_health
+    function damageGlobalHealth(damage){
+        global_health -= damage;
+        console.log(global_health);
+    }
+    
     function createButtons(){
         pausebutton = game.add.text(50, 65, "Pause");
-                pausebutton.font = 'Revalia';
-                pausebutton.fontSize = 60;
-                grd = pausebutton.context.createLinearGradient(0, 0, 0, pausebutton.canvas.height);
-                grd.addColorStop(0, '#8ED6FF');   
-                grd.addColorStop(1, '#004CB3');
-                pausebutton.fill = grd;
-                pausebutton.align = 'center';
-                pausebutton.stroke = '#000000';
-                pausebutton.strokeThickness = 2;
-                pausebutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        pausebutton.font = 'Revalia';
+        pausebutton.fontSize = 60;
+        grd = pausebutton.context.createLinearGradient(0, 0, 0, pausebutton.canvas.height);
+        grd.addColorStop(0, '#8ED6FF');   
+        grd.addColorStop(1, '#004CB3');
+        pausebutton.fill = grd;
+        pausebutton.align = 'center';
+        pausebutton.stroke = '#000000';
+        pausebutton.strokeThickness = 2;
+        pausebutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         pausebutton.inputEnabled = true;
         pausebutton.events.onInputOver.add(function(){
-                    pausebutton.fill = '#ff00ff';
-                }, this);
-                pausebutton.events.onInputOut.add(function(){
-                    pausebutton.fill = grd;
-                }, this);
+            pausebutton.fill = '#ff00ff';
+        }, this);
+        pausebutton.events.onInputOut.add(function(){
+            pausebutton.fill = grd;
+        }, this);
         
         pausebutton.events.onInputDown.add(function(){
             pausebutton.fill = grd;
@@ -226,9 +234,6 @@ var DefenseEngine = function (game){
             pausetext.stroke = '#000000';
             pausetext.strokeThickness = 2;
             pausetext.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-           // exitButton = game.add.text(game.world.width - 300, 20, "Resume", { font: "65px Arial", fill: "#ff0044", align: "center" });
-            //exitButton.inputEnabled = true;
-            
         });
         
         shopbutton = game.add.text(50, 130, "Open Shop");
@@ -304,6 +309,7 @@ var DefenseEngine = function (game){
     that.getGold = getGold;
     that.spendGold = spendGold;
     that.canAfford = canAfford;
+    that.damageGlobalHealth = damageGlobalHealth;
     that.friendBaseTarget = function(){return friendBaseTarget;}
     
     return that;

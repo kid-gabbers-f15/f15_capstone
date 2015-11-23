@@ -233,7 +233,7 @@ var Enemy = function (parent, game){
             }else{
                 game.physics.arcade.collide(enemySprite, defEngine.friendBaseTarget().getUnitSprite(), 
                 function(){
-                    //decrease global health value
+                    defEngine.damageGlobalHealth(10);
                     damage(health, false);//immediately is killed
                 }, null, null, this);
             }

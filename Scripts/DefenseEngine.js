@@ -148,13 +148,13 @@ var DefenseEngine = function (game){
         
         //player base building
         loadPlayerBase(playerState.base);
-        
     }
     
     function Update(){
         //check for collision with enemies with base window
         var enemyGroup = getEnemyManager().getEgroup();
         game.physics.arcade.collide(topBaseCollision, enemyGroup);
+
         enemyManager.Update();
         player.Update();
         updateResource();

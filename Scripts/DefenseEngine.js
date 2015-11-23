@@ -3,11 +3,9 @@ var DefenseEngine = function (game){
     
     var background; // string, name of background picture
     var topBaseCollision; // object, sprite for things to hit at the bottom of the base
-    
     var enemyManager; // object, instance of EnemyManager
     var player; // object, instance of Player
-    
-    var unitGroup; // phaser group, group of unit sprites
+    var unitGroup; // phaser group, group of unit sprites? Objects?
     var enemypGroup; // phaser group, group of enemy sprites
     var resourceText; // phaser text, displays amount of gold
     var shopbutton; // phaser text, button to go to shop
@@ -17,9 +15,11 @@ var DefenseEngine = function (game){
     var pausetext; // phaser text, 'PAUSED' that pops up when the game is paused
     var grd; // phaser color gradient, used for a color gradient on text
     var playerBaseData; // JSON string, JSON representing the player's base
-    var unitSlots; //phaser sprite, changes based on how many unit slots player has unlocked.
-    
+    var unitSlots; // phaser sprite, changes based on how many unit slots player has unlocked.
+    var globalHealth = 100; // int, overall game health value, lose when zero
+    var globalHealthBar; // sprite, visual representation of globalHealth
     var friendBaseTarget = {};
+    
     /*
     base - object, player's base
     */
@@ -59,9 +59,7 @@ var DefenseEngine = function (game){
         txt.alpha = 0;
         friendBaseTarget.setText(txt);
         player.getUnitPGroup().push(friendBaseTarget);
-        
     }
-    
     
     function Preload(){
         //loading background image
@@ -99,10 +97,10 @@ var DefenseEngine = function (game){
         whiteBox2.crop(new Phaser.Rectangle(0, 0, 1820, 480));
         whiteBox2.alpha = .8;
         
-        unitSlots = game.add.sprite(900, 860, 'unitSlot' + playerState.unitSlots);
+        unitSlots = game.add.sprite(1100, 860, 'unitSlot' + playerState.unitSlots);
         unitSlots.anchor.setTo(.5, .5);
         unitSlots.scale.setTo(1.2,1.2);
-        
+         
         //create a sprite to act as the area for the user's base
         //this 'windows' the base from other elements in the game 
         topBaseCollision = game.add.sprite(0,0,'topBaseCollision');
@@ -114,16 +112,15 @@ var DefenseEngine = function (game){
         
         //create menu buttons - pause, open menu, base
         createButtons();
-        
+        //should the game be paused, listen for a click on the game to unpause
         game.input.onDown.add(unpause, self);
         function unpause(event){
             if(game.paused){
                     game.paused = false;
                     pausetext.destroy();
-
             }
         }
-
+        //text displaying the current amount of resource
         resourceText = game.add.text(50, 10, "Gold: " + playerState.gold);
         resourceText.font = 'Revalia';
         resourceText.fontSize = 60;
@@ -148,6 +145,10 @@ var DefenseEngine = function (game){
         
         //player base building
         loadPlayerBase(playerState.base);
+        
+        // Health bar for friends base
+        globalHealthBar = game.add.sprite(75, 580, 'baseHealthBar');
+        globalHealthBar.crop(new Phaser.Rectangle(0, 0, 1000, 20));
     }
     
     function Update(){
@@ -158,6 +159,8 @@ var DefenseEngine = function (game){
         enemyManager.Update();
         player.Update();
         updateResource();
+        
+        globalHealthBar.crop(new Phaser.Rectangle(0, 0, 500 * globalHealth/100, 20));
     }
     
     function getEnemyManager(){
@@ -181,8 +184,9 @@ var DefenseEngine = function (game){
     function spendGold(amount){
         playerState.gold = playerState.gold - amount;
     }
-    function canAfford(amount)
-    {
+    
+    // amount - int, how much something costs
+    function canAfford(amount){
         if(playerState.gold - amount >= 0)
         {
             return true;   
@@ -191,25 +195,32 @@ var DefenseEngine = function (game){
             return false;
     }
     
+    // damage - int, damage to deal to globalHealth
+    function damageGlobalHealth(damage){
+        globalHealth -= damage;
+        console.log(globalHealth);
+    }
+    
     function createButtons(){
+        //pause button creation
         pausebutton = game.add.text(50, 65, "Pause");
-                pausebutton.font = 'Revalia';
-                pausebutton.fontSize = 60;
-                grd = pausebutton.context.createLinearGradient(0, 0, 0, pausebutton.canvas.height);
-                grd.addColorStop(0, '#8ED6FF');   
-                grd.addColorStop(1, '#004CB3');
-                pausebutton.fill = grd;
-                pausebutton.align = 'center';
-                pausebutton.stroke = '#000000';
-                pausebutton.strokeThickness = 2;
-                pausebutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        pausebutton.font = 'Revalia';
+        pausebutton.fontSize = 60;
+        grd = pausebutton.context.createLinearGradient(0, 0, 0, pausebutton.canvas.height);
+        grd.addColorStop(0, '#8ED6FF');   
+        grd.addColorStop(1, '#004CB3');
+        pausebutton.fill = grd;
+        pausebutton.align = 'center';
+        pausebutton.stroke = '#000000';
+        pausebutton.strokeThickness = 2;
+        pausebutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         pausebutton.inputEnabled = true;
         pausebutton.events.onInputOver.add(function(){
-                    pausebutton.fill = '#ff00ff';
-                }, this);
-                pausebutton.events.onInputOut.add(function(){
-                    pausebutton.fill = grd;
-                }, this);
+            pausebutton.fill = '#ff00ff';
+        }, this);
+        pausebutton.events.onInputOut.add(function(){
+            pausebutton.fill = grd;
+        }, this);
         
         pausebutton.events.onInputDown.add(function(){
             pausebutton.fill = grd;
@@ -226,11 +237,8 @@ var DefenseEngine = function (game){
             pausetext.stroke = '#000000';
             pausetext.strokeThickness = 2;
             pausetext.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-           // exitButton = game.add.text(game.world.width - 300, 20, "Resume", { font: "65px Arial", fill: "#ff0044", align: "center" });
-            //exitButton.inputEnabled = true;
-            
         });
-        
+        //shop button creation
         shopbutton = game.add.text(50, 130, "Open Shop");
         shopbutton.font = 'Revalia';
         shopbutton.fontSize = 60;
@@ -242,7 +250,6 @@ var DefenseEngine = function (game){
         shopbutton.stroke = '#000000';
         shopbutton.strokeThickness = 2;
         shopbutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-        
         shopbutton.inputEnabled = true;
         shopbutton.events.onInputOver.add(function(){
             shopbutton.fill = '#ff00ff';
@@ -256,7 +263,7 @@ var DefenseEngine = function (game){
                 shopManager.openShop();
             }
         });
-        
+        //base button creation
         baseButton = game.add.text(50, 200, "Base");
         baseButton.font = 'Revalia';
         baseButton.fontSize = 60;
@@ -267,7 +274,6 @@ var DefenseEngine = function (game){
         baseButton.align = 'center';
         baseButton.stroke = '#000000';
         baseButton.strokeThickness = 2;
-        
         baseButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         baseButton.inputEnabled = true;
         baseButton.events.onInputOver.add(function(){
@@ -280,19 +286,7 @@ var DefenseEngine = function (game){
             game.state.start("Customize");
         });
     }
-    /*
-    function out(text) {
     
-        text.fill = grd;
-    
-    }
-    
-    function over(text) {
-    
-        text.fill = '#ff00ff';
-    
-    }
-    */
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;
@@ -304,6 +298,7 @@ var DefenseEngine = function (game){
     that.getGold = getGold;
     that.spendGold = spendGold;
     that.canAfford = canAfford;
+    that.damageGlobalHealth = damageGlobalHealth;
     that.friendBaseTarget = function(){return friendBaseTarget;}
     
     return that;

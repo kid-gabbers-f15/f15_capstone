@@ -3,7 +3,7 @@ var Unit = function (parent, game){
     var position = {};
     var unitSprite;
     var max_size = 10;
-    var curr_children = 0;
+    var curr_children = 0; //number of units within the unit slot
     var old_curr_children = 0;
     var clicks = 0;
     var shoot = true;
@@ -205,61 +205,6 @@ var Unit = function (parent, game){
                 unitSprite.alpha=0;
                 bulletType = 'none';
             }else unitSprite.alpha = 1;
-        
-        // Change picture based on children
-        /*if(old_curr_children != curr_children)
-        {
-            if(curr_children == 0)
-            {
-                unitSprite.loadTexture('unit0');
-            }
-            else if(curr_children == 1)
-            {
-                unitSprite.loadTexture('unit1');
-            }
-            else if(curr_children == 2)
-            {
-                unitSprite.loadTexture('unit2');
-            }
-            else if(curr_children == 3)
-            {
-                unitSprite.loadTexture('unit3');
-            }
-            else if(curr_children == 4)
-            {
-                unitSprite.loadTexture('unit4');
-            }
-            else if(curr_children == 5)
-            {
-                unitSprite.loadTexture('unit5');
-            }
-            else if(curr_children == 6)
-            {
-                unitSprite.loadTexture('unit6');
-            }
-            else if(curr_children == 6)
-            {
-                unitSprite.loadTexture('unit6');
-            }
-            else if(curr_children == 7)
-            {
-                unitSprite.loadTexture('unit7');
-            }
-            else if(curr_children == 8)
-            {
-                unitSprite.loadTexture('unit8');
-            }
-            else if(curr_children == 9)
-            {
-                unitSprite.loadTexture('unit9');
-            }
-            else if(curr_children == 10)
-            {
-                unitSprite.loadTexture('unit10');
-            }
-            
-            old_curr_children = curr_children;
-        }*/
         
         var enemyGroup = defEngine.getEnemyManager().getEnemyGroup();
         

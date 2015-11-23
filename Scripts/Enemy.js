@@ -105,7 +105,6 @@ var Enemy = function (parent, game){
         }
         
         enemySprite.inputEnabled = false;
-        //enemySprite.input.useHandCursor = true;
         enemySprite.events.onInputDown.add(function(){
             damage(dmgPerClick); //damage per click
         });
@@ -183,7 +182,8 @@ var Enemy = function (parent, game){
             attack_delay = attack_delay - 1;
         }
         
-        if(boss){ //if this enemy is a boss, then move the health accordingly
+        //if this enemy is a boss, then move the health accordingly
+        if(boss){
             healthBar.position.x = enemySprite.position.x - 110;
             healthBar.position.y = enemySprite.position.y - 250;
         }
@@ -233,7 +233,7 @@ var Enemy = function (parent, game){
             }else{
                 game.physics.arcade.collide(enemySprite, defEngine.friendBaseTarget().getUnitSprite(), 
                 function(){
-                    //decrease global health value
+                    defEngine.damageGlobalHealth(10);
                     damage(health, false);//immediately is killed
                 }, null, null, this);
             }

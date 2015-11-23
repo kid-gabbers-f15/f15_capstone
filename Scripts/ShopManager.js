@@ -17,7 +17,8 @@ var ShopManager = function (game){
 
     var test_name;
 
-/*
+    //Example Code for reference------
+    /*
     function loadShopItems(items){
         for(var i = 0; i < items.list.length; i++){
             //var temp = game.add.sprite(items.list[i].position.x + game.world.centerX, items.list[i].position.y + game.world.centerY, items.list[i].image);
@@ -25,7 +26,8 @@ var ShopManager = function (game){
             //temp.scale.setTo(0.5,0.5);
         }
     }
-  */  
+    */  
+  
     function addEventtoSlot(index, slot){
         slot.events.onInputDown.add(function(){
             clickSlot(index);
@@ -39,14 +41,13 @@ var ShopManager = function (game){
     
     function OnCreate(){
         shopMenuItems = JSON.parse(game.cache.getText('JSONshopMenuItems'));
-       // loadShopItems(shopMenuItems);
         
         for(var i = 0; i < game.cache.getKeys().length; ++i){
             if(game.cache.getKeys()[i].indexOf('Item') >= 0){
                 stickers.push(game.cache.getKeys()[i]);
             }
         }
-        
+        //define the shop menu and the items that go within it
         initializeShopMenu();
         initializeShopItems();
         
@@ -59,101 +60,83 @@ var ShopManager = function (game){
     
      function initializeShopMenu(){
             shopPage = 0;
-            //shopbutton.fill = grd;
-            
-            //game.paused = true; 
-            //game is no longer pausing
-            /*
-            pausetext = game.add.text(game.world.width - 200, 30, "PAUSED");
-                    pausetext.font = 'Revalia';
-                    pausetext.fontSize = 60;
-                    grd = pausetext.context.createLinearGradient(0, 0, 0, pausetext.canvas.height);
-                    grd.addColorStop(0, '#8ED6FF');   
-                    grd.addColorStop(1, '#004CB3');
-                    pausetext.fill = grd;
-                    pausetext.align = 'center';
-                    pausetext.stroke = '#000000';
-                    pausetext.strokeThickness = 2;
-                    pausetext.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-            pausetext.anchor.setTo(0.5,0.5);
-            */
             shopmenu = game.add.sprite(game.world.centerX, game.world.centerY, 'shopMenu');
-                shopmenu.anchor.setTo(0.5,0.5);
-                shopmenu.scale.setTo(10,10);
-                shopmenu.inputEnabled = false;
-                shopmenu.visible = false;
+            shopmenu.anchor.setTo(0.5,0.5);
+            shopmenu.scale.setTo(10,10);
+            shopmenu.inputEnabled = false;
+            shopmenu.visible = false;
             exitButton = game.add.text(game.world.centerX - 75, game.world.height - 150, "Exit");
-                    exitButton.font = 'Revalia';
-                    exitButton.fontSize = 60;
-                    grd = exitButton.context.createLinearGradient(0, 0, 0, exitButton.canvas.height);
-                    grd.addColorStop(0, '#8ED6FF');   
-                    grd.addColorStop(1, '#004CB3');
-                    exitButton.fill = grd;
-                    exitButton.align = 'center';
-                    exitButton.stroke = '#000000';
-                    exitButton.strokeThickness = 2;
-                    exitButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+            exitButton.font = 'Revalia';
+            exitButton.fontSize = 60;
+            grd = exitButton.context.createLinearGradient(0, 0, 0, exitButton.canvas.height);
+            grd.addColorStop(0, '#8ED6FF');   
+            grd.addColorStop(1, '#004CB3');
+            exitButton.fill = grd;
+            exitButton.align = 'center';
+            exitButton.stroke = '#000000';
+            exitButton.strokeThickness = 2;
+            exitButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
             
-                exitButton.inputEnabled = false;
-                exitButton.visible = false;
-                exitButton.events.onInputOver.add(function(){
-                    exitButton.fill = '#ff00ff';
-                }, this);
-                exitButton.events.onInputOut.add(function(){
-                    exitButton.fill = grd;
-                }, this);
-                exitButton.events.onInputDown.add(function(){
-                        closeShop();
-                })
+            exitButton.inputEnabled = false;
+            exitButton.visible = false;
+            exitButton.events.onInputOver.add(function(){
+                exitButton.fill = '#ff00ff';
+            }, this);
+            exitButton.events.onInputOut.add(function(){
+                exitButton.fill = grd;
+            }, this);
+            exitButton.events.onInputDown.add(function(){
+                    closeShop();
+            })
                 
                 
             nextButton = game.add.text(game.world.centerX + 200, game.world.height - 150, "Next");
-                    nextButton.font = 'Revalia';
-                    nextButton.fontSize = 60;
-                    grd = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
-                    grd.addColorStop(0, '#8ED6FF');   
-                    grd.addColorStop(1, '#004CB3');
-                    nextButton.fill = grd;
-                    nextButton.align = 'center';
-                    nextButton.stroke = '#000000';
-                    nextButton.strokeThickness = 2;
-                    nextButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-            
-                nextButton.inputEnabled = false;
-                nextButton.visible = false;
-                nextButton.events.onInputOver.add(function(){
-                    nextButton.fill = '#ff00ff';
-                }, this);
-                nextButton.events.onInputOut.add(function(){
-                    nextButton.fill = grd;
-                }, this);
-                nextButton.events.onInputDown.add(function(){
-                        clickNext();
-                })
+            nextButton.font = 'Revalia';
+            nextButton.fontSize = 60;
+            grd = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
+            grd.addColorStop(0, '#8ED6FF');   
+            grd.addColorStop(1, '#004CB3');
+            nextButton.fill = grd;
+            nextButton.align = 'center';
+            nextButton.stroke = '#000000';
+            nextButton.strokeThickness = 2;
+            nextButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        
+            nextButton.inputEnabled = false;
+            nextButton.visible = false;
+            nextButton.events.onInputOver.add(function(){
+                nextButton.fill = '#ff00ff';
+            }, this);
+            nextButton.events.onInputOut.add(function(){
+                nextButton.fill = grd;
+            }, this);
+            nextButton.events.onInputDown.add(function(){
+                    clickNext();
+            })
                 
             backButton = game.add.text(game.world.centerX - 400, game.world.height - 150, "Back");
-                    backButton.font = 'Revalia';
-                    backButton.fontSize = 60;
-                    grd = backButton.context.createLinearGradient(0, 0, 0, backButton.canvas.height);
-                    grd.addColorStop(0, '#8ED6FF');   
-                    grd.addColorStop(1, '#004CB3');
-                    backButton.fill = grd;
-                    backButton.align = 'center';
-                    backButton.stroke = '#000000';
-                    backButton.strokeThickness = 2;
-                    backButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+            backButton.font = 'Revalia';
+            backButton.fontSize = 60;
+            grd = backButton.context.createLinearGradient(0, 0, 0, backButton.canvas.height);
+            grd.addColorStop(0, '#8ED6FF');   
+            grd.addColorStop(1, '#004CB3');
+            backButton.fill = grd;
+            backButton.align = 'center';
+            backButton.stroke = '#000000';
+            backButton.strokeThickness = 2;
+            backButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
             
-                backButton.inputEnabled = false;
-                backButton.visible = false;
-                backButton.events.onInputOver.add(function(){
-                    backButton.fill = '#ff00ff';
-                }, this);
-                backButton.events.onInputOut.add(function(){
-                    backButton.fill = grd;
-                }, this);
-                backButton.events.onInputDown.add(function(){
-                        clickBack();
-                })
+            backButton.inputEnabled = false;
+            backButton.visible = false;
+            backButton.events.onInputOver.add(function(){
+                backButton.fill = '#ff00ff';
+            }, this);
+            backButton.events.onInputOut.add(function(){
+                backButton.fill = grd;
+            }, this);
+            backButton.events.onInputDown.add(function(){
+                    clickBack();
+            })
     }
     
     function clickBack(){
@@ -281,17 +264,13 @@ var ShopManager = function (game){
                     var name;
                     var cost;
                     temp = game.add.sprite(game.world.centerX - 300, 150 + 150*slots.length, stickers[i]);
-                    //temp = game.add.sprite(50 + 100*slots.length, 900, stickers[i]);
                     name = game.add.text(game.world.centerX, 150+ 150*slots.length, shopMenuItems.list[i].name);
                     name.visible = false;
                     cost = game.add.text(game.world.centerX + 200, 150 + 150*slots.length, shopMenuItems.list[i].cost);
                     cost.visible = false;
                     temp.scale.set(.75, .75);
                     temp.anchor.set(.5,.5);
-                    //temp.inputEnabled = true;
                     temp.visible = false;
-                    //name = shopMenuItems.list[i].name;
-                   // cost = shopMenuItems.list[i].cost;
                     slots.push({slot:temp, key:stickers[i], keyIndex:i, name:name, cost:cost});
         }
     }

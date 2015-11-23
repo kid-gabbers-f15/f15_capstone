@@ -183,7 +183,8 @@ var Enemy = function (parent, game){
             attack_delay = attack_delay - 1;
         }
         
-        if(boss){ //if this enemy is a boss, then move the health accordingly
+        //if this enemy is a boss, then move the health accordingly
+        if(boss){
             healthBar.position.x = enemySprite.position.x - 110;
             healthBar.position.y = enemySprite.position.y - 250;
         }

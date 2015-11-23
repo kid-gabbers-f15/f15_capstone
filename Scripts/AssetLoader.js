@@ -4,7 +4,7 @@ var AssetLoader = function(game){
     var Preload = function(){
         game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
-         //Units-----------------------------------------------------
+        //Units-----------------------------------------------------
         game.load.image('Unit1','Assets/Unit_Pictures/robot1.png');
         game.load.image('Unit2','Assets/Unit_Pictures/SuperBear.png');
         game.load.image('Unit3','Assets/Unit_Pictures/Unicorn1.png');
@@ -22,7 +22,6 @@ var AssetLoader = function(game){
         game.load.image('healthBar', 'Assets/Placeholder4.png');
         game.load.image('EnemyBoss_1', 'Assets/Enemy_Pictures/Enemy5.png');
         game.load.image('Boss_1_Health', 'Assets/Enemy_Pictures/Boss_1Health.png');
-        
         
         //Base Backgrounds-------------------------------------------------
         game.load.image('BaseBackground1', 'Assets/BaseBackgrounds/BG1.png');
@@ -80,7 +79,9 @@ var AssetLoader = function(game){
         game.load.image('BaseSticker28', 'Assets/BaseStickers/MusicNote4.png');
         game.load.image('BaseSticker29', 'Assets/BaseStickers/PaintBrush.png');
         game.load.image('BaseSticker30', 'Assets/BaseStickers/Unicorn1.png');
-
+       
+        //Base Health
+        game.load.image('baseHealthBar', 'Assets/baseHealthBar.png');
        
         //Main view stuff
         game.load.image('background', 'Assets/BackgroundKidGabTemplate.png');
@@ -99,7 +100,6 @@ var AssetLoader = function(game){
         game.load.image('Item8', 'Assets/BaseStickers/Animal8.png');
         game.load.image('Item9', 'Assets/BaseStickers/Animal9.png');
         
-        
         //unit slots----------------------------------------------
         game.load.image('unitSlot1', 'Assets/shelves1.png');
         game.load.image('unitSlot2', 'Assets/shelves2.png');
@@ -109,7 +109,6 @@ var AssetLoader = function(game){
         game.load.image('unitSlot6', 'Assets/shelves6.png');
         game.load.image('unitSlot7', 'Assets/shelves7.png');
         game.load.image('unitSlot8', 'Assets/shelves8.png');
-
     }
     
     that.Preload = Preload;

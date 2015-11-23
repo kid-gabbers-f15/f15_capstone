@@ -3,10 +3,8 @@ var DefenseEngine = function (game){
     
     var background; // string, name of background picture
     var topBaseCollision; // object, sprite for things to hit at the bottom of the base
-    
     var enemyManager; // object, instance of EnemyManager
     var player; // object, instance of Player
-    
     var unitGroup; // phaser group, group of unit sprites? Objects?
     var enemypGroup; // phaser group, group of enemy sprites
     var resourceText; // phaser text, displays amount of gold
@@ -18,9 +16,10 @@ var DefenseEngine = function (game){
     var grd; // phaser color gradient, used for a color gradient on text
     var playerBaseData; // JSON string, JSON representing the player's base
     var unitSlots; // phaser sprite, changes based on how many unit slots player has unlocked.
-    var global_health = 100; // int, overall game health value, lose when zero
-    
+    var globalHealth = 100; // int, overall game health value, lose when zero
+    var globalHealthBar; // sprite, visual representation of globalHealth
     var friendBaseTarget = {};
+    
     /*
     base - object, player's base
     */
@@ -60,9 +59,7 @@ var DefenseEngine = function (game){
         txt.alpha = 0;
         friendBaseTarget.setText(txt);
         player.getUnitPGroup().push(friendBaseTarget);
-        
     }
-    
     
     function Preload(){
         //loading background image
@@ -80,8 +77,6 @@ var DefenseEngine = function (game){
         
         game.load.text('JSONfriendBaseData', 'Scripts/json2.txt');
         game.load.text('JSONplayerBaseData', 'Scripts/json.txt');
-        
-        //shopManager.Preload();
     }
     
     function OnCreate(){
@@ -121,7 +116,6 @@ var DefenseEngine = function (game){
             if(game.paused){
                     game.paused = false;
                     pausetext.destroy();
-
             }
         }
 
@@ -149,6 +143,10 @@ var DefenseEngine = function (game){
         
         //player base building
         loadPlayerBase(playerState.base);
+        
+        // Health bar for friends base
+        globalHealthBar = game.add.sprite(75, 580, 'baseHealthBar');
+        globalHealthBar.crop(new Phaser.Rectangle(0, 0, 1000, 20));
     }
     
     function Update(){
@@ -159,6 +157,8 @@ var DefenseEngine = function (game){
         enemyManager.Update();
         player.Update();
         updateResource();
+        
+        globalHealthBar.crop(new Phaser.Rectangle(0, 0, 500 * globalHealth/100, 20));
     }
     
     function getEnemyManager(){
@@ -193,10 +193,10 @@ var DefenseEngine = function (game){
             return false;
     }
     
-    // damage - int, damage to deal to global_health
+    // damage - int, damage to deal to globalHealth
     function damageGlobalHealth(damage){
-        global_health -= damage;
-        console.log(global_health);
+        globalHealth -= damage;
+        console.log(globalHealth);
     }
     
     function createButtons(){
@@ -285,19 +285,7 @@ var DefenseEngine = function (game){
             game.state.start("Customize");
         });
     }
-    /*
-    function out(text) {
     
-        text.fill = grd;
-    
-    }
-    
-    function over(text) {
-    
-        text.fill = '#ff00ff';
-    
-    }
-    */
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;

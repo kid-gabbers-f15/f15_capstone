@@ -99,7 +99,7 @@ var DefenseEngine = function (game){
         whiteBox2.crop(new Phaser.Rectangle(0, 0, 1820, 480));
         whiteBox2.alpha = .8;
         
-        unitSlots = game.add.sprite(900, 860, 'unitSlot' + playerState.unitSlots);
+        unitSlots = game.add.sprite(1100, 860, 'unitSlot' + playerState.unitSlots);
         unitSlots.anchor.setTo(.5, .5);
         unitSlots.scale.setTo(1.2,1.2);
         

@@ -3,14 +3,14 @@ var Player = function (game){
     var that = {};
     var unitpGroup = [];
     var unitSlotPositions = new Array(
-        {x: 676, y: 795},
-        {x: 720, y: 925},
-        {x: 810, y: 770},
-        {x: 850, y: 995},
-        {x: 950, y: 870},
-        {x: 870, y: 630},
-        {x: 995, y: 730},
-        {x: 1080, y: 890}
+        {x: 876, y: 795},
+        {x: 920, y: 925},
+        {x: 1010, y: 770},
+        {x: 1050, y: 995},
+        {x: 1150, y: 870},
+        {x: 1070, y: 630},
+        {x: 1195, y: 730},
+        {x: 1280, y: 890}
         );
     
     function Preload(){

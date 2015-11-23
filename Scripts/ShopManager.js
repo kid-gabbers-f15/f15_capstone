@@ -33,7 +33,7 @@ var ShopManager = function (game){
     }
     
     function Preload(){
-        game.load.text('JSONshopMenuItems', 'Scripts/shopItems.txt');
+        game.load.text('JSONshopMenuItems', KCG_SCRIPT_PATH+'shopItems.txt');
     }
     
     

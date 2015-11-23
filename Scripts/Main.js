@@ -14,6 +14,10 @@
     };
     
 function getCookie(cname) {
+	if(user_player_state){
+		return user_player_state;
+	}
+	
     var name = cname + "=";
     var ca = document.cookie.split(';');
     for(var i=0; i<ca.length; i++) {
@@ -39,6 +43,9 @@ var _friendBaseJSONstring = "";
 var PlayerStateJSONString = "";
 var playerState = {};
 
+var maxWidth = 960;
+var maxHeight = 540;
+
 var loadingScreen = function(){
     LoadingText = game.add.text(game.world.width/2, game.world.height/2, "Loading...");
     LoadingText.font = 'Revalia';
@@ -59,7 +66,7 @@ var Boot = {
     //preload, create, update
     preload : function (){
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; //resize your window to see the stage resize too
-        game.scale.setMinMax(800, 450, 1920, 1080);
+        game.scale.setMinMax(800, 450, maxWidth, maxHeight);
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
 
@@ -100,7 +107,7 @@ var Preload = {
     //preload, create, update
     preload : function (){
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; //resize your window to see the stage resize too
-        game.scale.setMinMax(800, 450, 1920, 1080);
+        game.scale.setMinMax(800, 450, maxWidth, maxHeight);
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
         
@@ -127,7 +134,7 @@ var Defense = {
     //preload, create, update
     preload : function (){
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; //resize your window to see the stage resize too
-        game.scale.setMinMax(800, 450, 1920, 1080);
+        game.scale.setMinMax(800, 450, maxWidth, maxHeight);
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
 
@@ -156,7 +163,7 @@ var Customize = {
     //preload, create, update
     preload : function (){
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; //resize your window to see the stage resize too
-        game.scale.setMinMax(800, 450, 1920, 1080);
+        game.scale.setMinMax(800, 450, maxWidth, maxHeight);
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
         
@@ -178,7 +185,7 @@ var Shop = {
     //preload, create, update
     preload : function (){
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL; //resize your window to see the stage resize too
-        game.scale.setMinMax(800, 450, 1920, 1080);
+        game.scale.setMinMax(800, 450, maxWidth, maxHeight);
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
         
@@ -192,6 +199,13 @@ var Shop = {
 
 //runs at start of game, begins game loop
 function startGame() {
+	if(!KCG_ASSET_PATH){
+		KCG_ASSET_PATH = 'Assets/';
+	}
+	if(!KCG_SCRIPT_PATH){
+		KCG_SCRIPT_PATH = 'Scripts/';
+	}
+	
     game = new Phaser.Game(1920, 1080, Phaser.AUTO, 'gameContainer')
     
     game.state.add('Boot', Boot);
@@ -208,4 +222,19 @@ function saveGame(){
     console.log(PlayerStateJSONString);
 
     document.cookie = "PlayerState=" + PlayerStateJSONString;
+	
+	kcg_save_ajax();
+}
+
+function kcg_save_ajax(){
+    var PlayerStateJSONString = JSON.stringify(playerState);
+	data = {
+		'action': 'kidgab_capstone_game_save_game_state',
+		'kcg_game_state': PlayerStateJSONString,
+		async : false
+	};
+	// since wp 2.8, ajaxurl is always defined in the admin header and points to admin-ajax.php
+	jQueryA.post(ajaxurl, data, function(response) { // response should be a comma-separated list of 0s or 1s. 1s mean the username is taken.
+		console.log('response: '+response);
+	});
 }

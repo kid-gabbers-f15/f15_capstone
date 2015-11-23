@@ -63,7 +63,7 @@ var EnemyManager = function (game){
         }
         
         // Load text file for enemy sprite text
-        game.load.text('enemyText', '/Scripts/enemyText.txt');
+        game.load.text('enemyText', KCG_SCRIPT_PATH+'enemyText.txt');
     }
     
     

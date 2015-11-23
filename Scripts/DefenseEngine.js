@@ -95,10 +95,10 @@ var DefenseEngine = function (game){
         whiteBox2.crop(new Phaser.Rectangle(0, 0, 1820, 480));
         whiteBox2.alpha = .8;
         
-        unitSlots = game.add.sprite(900, 860, 'unitSlot' + playerState.unitSlots);
+        unitSlots = game.add.sprite(1100, 860, 'unitSlot' + playerState.unitSlots);
         unitSlots.anchor.setTo(.5, .5);
         unitSlots.scale.setTo(1.2,1.2);
-        
+         
         //create a sprite to act as the area for the user's base
         //this 'windows' the base from other elements in the game 
         topBaseCollision = game.add.sprite(0,0,'topBaseCollision');
@@ -110,7 +110,7 @@ var DefenseEngine = function (game){
         
         //create menu buttons - pause, open menu, base
         createButtons();
-        
+        //should the game be paused, listen for a click on the game to unpause
         game.input.onDown.add(unpause, self);
         function unpause(event){
             if(game.paused){
@@ -118,7 +118,7 @@ var DefenseEngine = function (game){
                     pausetext.destroy();
             }
         }
-
+        //text displaying the current amount of resource
         resourceText = game.add.text(50, 10, "Gold: " + playerState.gold);
         resourceText.font = 'Revalia';
         resourceText.fontSize = 60;
@@ -200,6 +200,7 @@ var DefenseEngine = function (game){
     }
     
     function createButtons(){
+        //pause button creation
         pausebutton = game.add.text(50, 65, "Pause");
         pausebutton.font = 'Revalia';
         pausebutton.fontSize = 60;
@@ -235,7 +236,7 @@ var DefenseEngine = function (game){
             pausetext.strokeThickness = 2;
             pausetext.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         });
-        
+        //shop button creation
         shopbutton = game.add.text(50, 130, "Open Shop");
         shopbutton.font = 'Revalia';
         shopbutton.fontSize = 60;
@@ -247,7 +248,6 @@ var DefenseEngine = function (game){
         shopbutton.stroke = '#000000';
         shopbutton.strokeThickness = 2;
         shopbutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-        
         shopbutton.inputEnabled = true;
         shopbutton.events.onInputOver.add(function(){
             shopbutton.fill = '#ff00ff';
@@ -261,7 +261,7 @@ var DefenseEngine = function (game){
                 shopManager.openShop();
             }
         });
-        
+        //base button creation
         baseButton = game.add.text(50, 200, "Base");
         baseButton.font = 'Revalia';
         baseButton.fontSize = 60;
@@ -272,7 +272,6 @@ var DefenseEngine = function (game){
         baseButton.align = 'center';
         baseButton.stroke = '#000000';
         baseButton.strokeThickness = 2;
-        
         baseButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         baseButton.inputEnabled = true;
         baseButton.events.onInputOver.add(function(){

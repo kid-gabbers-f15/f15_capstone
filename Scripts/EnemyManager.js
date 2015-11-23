@@ -9,13 +9,18 @@ var EnemyManager = function (game){
     var bossGroup = [];
     
     var total_enemies = 10;
-    var enemy_count_in_wave = 0;
+    var enemy_count_in_wave = 0; //number of enemies from each group
     var boss_count_in_wave = 1;
     var killCnter = 0;
+    var enemies_from_each_group = 0;//number of enemies from each group
     
     var grd; //gradient of the text for the wave number
     var waveNumText;
     var waveNumTextFont = 'Revalia'; //wave text font
+    
+    var numThatHasSpawned = 0; //number of enemies that have spawned
+    var numNeedsToBeSpawned = 0;
+    
     
     var currentWave;
     var waveNumber = 0; //Keeps count of wave number. notify boss wave
@@ -146,11 +151,13 @@ var EnemyManager = function (game){
         }
         else // Normal wave
         {
-            //console.log(killCnter + " < " + enemy_count_in_wave*3);
+            console.log(killCnter + " < " + enemy_count_in_wave*3);
+            var unitpGroup = defEngine.getPlayer().getUnitPGroup();
+            
             
             //it is *3 because there are 3 groups of enemies. enemy_count_in_wave stands for enemies per group
-            if(killCnter < enemy_count_in_wave*3) // Enemies still alive
-            { 
+            if(killCnter < numNeedsToBeSpawned) // Enemies still alive
+            {   
                 for(var i = 0; i < enemyGroup1.length; ++i)
                 {
                     if(enemyGroup1[i].getIsActive() == true) // enemy alive
@@ -161,8 +168,14 @@ var EnemyManager = function (game){
                     {
                         if(enemyGroup1[i].getIsActive() == false && enemyGroup1[i].getKilled() == true)
                         {
-                            enemyGroup1[i].setKilled(false);
-                            //console.log("killed e1");
+                            if(numThatHasSpawned < numNeedsToBeSpawned){
+                                enemyGroup1[i].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
+                                numThatHasSpawned++;
+                            }
+                            else{
+                                enemyGroup1[i].setKilled(false);
+                            }
+                            console.log("killed e1");
                             ++killCnter;
                         }
                     }
@@ -177,8 +190,13 @@ var EnemyManager = function (game){
                     {
                         if(enemyGroup2[i].getIsActive() == false && enemyGroup2[i].getKilled() == true)
                         {
-                            enemyGroup2[i].setKilled(false);
-                            //console.log("killed e2");
+                            if(numThatHasSpawned < numNeedsToBeSpawned){
+                               enemyGroup2[i].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
+                               numThatHasSpawned++;
+                            }
+                            else{
+                                enemyGroup2[i].setKilled(false);
+                            }
                             ++killCnter;
                         }
                     }
@@ -193,8 +211,13 @@ var EnemyManager = function (game){
                     {
                         if(enemyGroup3[i].getIsActive() == false && enemyGroup3[i].getKilled() == true)
                         {
-                            enemyGroup3[i].setKilled(false);
-                            //console.log("killed e3");
+                            if(numThatHasSpawned < numNeedsToBeSpawned){
+                                enemyGroup3[i].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
+                                numThatHasSpawned++;
+                            }
+                            else{
+                                enemyGroup3[i].setKilled(false);
+                            }
                             ++killCnter;
                         }
                     }
@@ -213,6 +236,8 @@ var EnemyManager = function (game){
     
     function restartWave()
     {
+        numNeedsToBeSpawned = 0;
+        numThatHasSpawned = 0;
         playerState.points = waveNumber; //keep track of high score for player
         
         
@@ -242,21 +267,32 @@ var EnemyManager = function (game){
         else // non boss wave
         {    
             enemy_count_in_wave = enemy_count_in_wave + 1;
-            if(enemy_count_in_wave>10){
-                enemy_count_in_wave=10;
+        
+            numNeedsToBeSpawned = enemy_count_in_wave * 3; //total number of enemies that will need to be spawned
+            
+            
+            if(enemy_count_in_wave>10){ //increase the number of enemies from each group
+                enemies_from_each_group = 10; //10 is the limit since each group only has 10 max. Memory limit.
             }
-            for(var j = 0; j < enemy_count_in_wave; ++j)
+            else{
+                enemies_from_each_group = enemy_count_in_wave;
+            }
+            
+            
+            
+            
+            for(var j = 0; j < enemies_from_each_group; ++j) //reset enemies to spawn again
             {
                 enemyGroup1[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
-            }
-            for(var j = 0; j < enemy_count_in_wave; ++j)
-            {
+                numThatHasSpawned++;
                 enemyGroup2[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
-            }
-            for(var j = 0; j < enemy_count_in_wave; ++j)
-            {
+                numThatHasSpawned++;
                 enemyGroup3[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
+                numThatHasSpawned++;
             }
+            
+            
+            
         }
         
         waitingForWave = false;

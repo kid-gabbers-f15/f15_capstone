@@ -105,7 +105,6 @@ var Enemy = function (parent, game){
         }
         
         enemySprite.inputEnabled = false;
-        //enemySprite.input.useHandCursor = true;
         enemySprite.events.onInputDown.add(function(){
             damage(dmgPerClick); //damage per click
         });

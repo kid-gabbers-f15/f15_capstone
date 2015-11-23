@@ -89,7 +89,7 @@ var BaseToolbar = function(game, parent){
         backButton.strokeThickness = 2;
         backButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         backButton.inputEnabled = true;
-        
+ 
         backButton.events.onInputOver.add(function(){
             backButton.fill = '#ff00ff';
         }, this);

@@ -79,8 +79,6 @@ var DefenseEngine = function (game){
         
         game.load.text('JSONfriendBaseData', 'Scripts/json2.txt');
         game.load.text('JSONplayerBaseData', 'Scripts/json.txt');
-        
-        //shopManager.Preload();
     }
     
     function OnCreate(){
@@ -99,10 +97,10 @@ var DefenseEngine = function (game){
         whiteBox2.crop(new Phaser.Rectangle(0, 0, 1820, 480));
         whiteBox2.alpha = .8;
         
-        unitSlots = game.add.sprite(900, 860, 'unitSlot' + playerState.unitSlots);
+        unitSlots = game.add.sprite(1100, 860, 'unitSlot' + playerState.unitSlots);
         unitSlots.anchor.setTo(.5, .5);
         unitSlots.scale.setTo(1.2,1.2);
-        
+         
         //create a sprite to act as the area for the user's base
         //this 'windows' the base from other elements in the game 
         topBaseCollision = game.add.sprite(0,0,'topBaseCollision');
@@ -114,7 +112,7 @@ var DefenseEngine = function (game){
         
         //create menu buttons - pause, open menu, base
         createButtons();
-        
+        //should the game be paused, listen for a click on the game to unpause
         game.input.onDown.add(unpause, self);
         function unpause(event){
             if(game.paused){
@@ -123,7 +121,7 @@ var DefenseEngine = function (game){
 
             }
         }
-
+        //text displaying the current amount of resource
         resourceText = game.add.text(50, 10, "Gold: " + playerState.gold);
         resourceText.font = 'Revalia';
         resourceText.fontSize = 60;
@@ -192,24 +190,25 @@ var DefenseEngine = function (game){
     }
     
     function createButtons(){
+        //pause button creation
         pausebutton = game.add.text(50, 65, "Pause");
-                pausebutton.font = 'Revalia';
-                pausebutton.fontSize = 60;
-                grd = pausebutton.context.createLinearGradient(0, 0, 0, pausebutton.canvas.height);
-                grd.addColorStop(0, '#8ED6FF');   
-                grd.addColorStop(1, '#004CB3');
-                pausebutton.fill = grd;
-                pausebutton.align = 'center';
-                pausebutton.stroke = '#000000';
-                pausebutton.strokeThickness = 2;
-                pausebutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        pausebutton.font = 'Revalia';
+        pausebutton.fontSize = 60;
+        grd = pausebutton.context.createLinearGradient(0, 0, 0, pausebutton.canvas.height);
+        grd.addColorStop(0, '#8ED6FF');   
+        grd.addColorStop(1, '#004CB3');
+        pausebutton.fill = grd;
+        pausebutton.align = 'center';
+        pausebutton.stroke = '#000000';
+        pausebutton.strokeThickness = 2;
+        pausebutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         pausebutton.inputEnabled = true;
         pausebutton.events.onInputOver.add(function(){
-                    pausebutton.fill = '#ff00ff';
-                }, this);
-                pausebutton.events.onInputOut.add(function(){
-                    pausebutton.fill = grd;
-                }, this);
+            pausebutton.fill = '#ff00ff';
+        }, this);
+        pausebutton.events.onInputOut.add(function(){
+            pausebutton.fill = grd;
+        }, this);
         
         pausebutton.events.onInputDown.add(function(){
             pausebutton.fill = grd;
@@ -226,11 +225,8 @@ var DefenseEngine = function (game){
             pausetext.stroke = '#000000';
             pausetext.strokeThickness = 2;
             pausetext.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-           // exitButton = game.add.text(game.world.width - 300, 20, "Resume", { font: "65px Arial", fill: "#ff0044", align: "center" });
-            //exitButton.inputEnabled = true;
-            
         });
-        
+        //shop button creation
         shopbutton = game.add.text(50, 130, "Open Shop");
         shopbutton.font = 'Revalia';
         shopbutton.fontSize = 60;
@@ -242,7 +238,6 @@ var DefenseEngine = function (game){
         shopbutton.stroke = '#000000';
         shopbutton.strokeThickness = 2;
         shopbutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-        
         shopbutton.inputEnabled = true;
         shopbutton.events.onInputOver.add(function(){
             shopbutton.fill = '#ff00ff';
@@ -256,7 +251,7 @@ var DefenseEngine = function (game){
                 shopManager.openShop();
             }
         });
-        
+        //base button creation
         baseButton = game.add.text(50, 200, "Base");
         baseButton.font = 'Revalia';
         baseButton.fontSize = 60;
@@ -267,7 +262,6 @@ var DefenseEngine = function (game){
         baseButton.align = 'center';
         baseButton.stroke = '#000000';
         baseButton.strokeThickness = 2;
-        
         baseButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         baseButton.inputEnabled = true;
         baseButton.events.onInputOver.add(function(){
@@ -280,19 +274,7 @@ var DefenseEngine = function (game){
             game.state.start("Customize");
         });
     }
-    /*
-    function out(text) {
     
-        text.fill = grd;
-    
-    }
-    
-    function over(text) {
-    
-        text.fill = '#ff00ff';
-    
-    }
-    */
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;

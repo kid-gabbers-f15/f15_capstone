@@ -14,7 +14,7 @@
     };
     
 function getCookie(cname) {
-	if(user_player_state){
+	if(user_player_state != undefined){
 		return user_player_state;
 	}
 	
@@ -199,10 +199,10 @@ var Shop = {
 
 //runs at start of game, begins game loop
 function startGame() {
-	if(!KCG_ASSET_PATH){
+	if(KCG_ASSET_PATH === undefined){
 		KCG_ASSET_PATH = 'Assets/';
 	}
-	if(!KCG_SCRIPT_PATH){
+	if(KCG_SCRIPT_PATH === undefined){
 		KCG_SCRIPT_PATH = 'Scripts/';
 	}
 	

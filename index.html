@@ -12,7 +12,7 @@
     <script src="Scripts/Player.js"></script>
     <script src="Scripts/DefenseEngine.js"></script>
     <script src="Scripts/Main.js"></script>
-    <script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>
+    <!---<script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>----->
     <script src="Scripts/phaser.js"></script>
     <style type="text/css">
         body {
@@ -24,6 +24,10 @@
 
     <script type="text/javascript">
 
+    var KCG_SCRIPT_PATH = undefined;
+    var KCG_ASSET_PATH = undefined;
+    var user_player_state = undefined;
+    
     window.onload = function() {
         console.clear();
         startGame();

@@ -278,6 +278,21 @@ var ShopManager = function (game){
         return showShop;
     }
     
+    //add unit slot to player state (max of 8)
+    function buyUnitSlot(){
+        
+    }
+    
+    //add stickerslot to playerstate
+    function buyStickerSlot(){
+        
+    }
+    
+    //replenish global health
+    function buyHealthPotion(){
+        
+    }
+    
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;

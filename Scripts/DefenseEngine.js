@@ -163,6 +163,11 @@ var DefenseEngine = function (game){
         globalHealthBar.crop(new Phaser.Rectangle(0, 0, 500 * globalHealth/100, 20));
     }
     
+    function addUnit(){
+        unitSlots.loadTexture('unitSlot' + playerState.unitSlots);
+        player.addSlot(unitGroup);
+    }
+    
     function getEnemyManager(){
         return enemyManager;
     }
@@ -287,6 +292,7 @@ var DefenseEngine = function (game){
         });
     }
     
+    that.addUnit = addUnit;
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;

@@ -280,7 +280,8 @@ var ShopManager = function (game){
     
     //add unit slot to player state (max of 8)
     function buyUnitSlot(){
-        
+        playerState.unitSlots += 1;
+        defEngine.addUnit();
     }
     
     //add stickerslot to playerstate

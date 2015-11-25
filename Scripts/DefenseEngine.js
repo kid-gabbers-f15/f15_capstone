@@ -292,6 +292,8 @@ var DefenseEngine = function (game){
         });
     }
     
+    
+    that.setGlobalHealth = function(h){globalHealth = h;}
     that.addUnit = addUnit;
     that.Preload = Preload;
     that.Update = Update;

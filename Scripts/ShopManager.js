@@ -286,12 +286,13 @@ var ShopManager = function (game){
     
     //add stickerslot to playerstate
     function buyStickerSlot(){
+        playerState.base.totalSlots += 1;
         
     }
     
     //replenish global health
     function buyHealthPotion(){
-        
+        defEngine.setGlobalHealth(100);
     }
     
     that.Preload = Preload;

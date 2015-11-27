@@ -8,6 +8,12 @@ var ShopManager = function (game){
     var shopPage = 0;
     var nextButton;
     var backButton;
+    
+    var healthButton;
+    var slotButton;
+    var stickerButton;
+    
+    
     var shopMenuItems;
     var numOfSlots = 5;
     var pageNum = 0;
@@ -62,10 +68,10 @@ var ShopManager = function (game){
             shopPage = 0;
             shopmenu = game.add.sprite(game.world.centerX, game.world.centerY, 'shopMenu');
             shopmenu.anchor.setTo(0.5,0.5);
-            shopmenu.scale.setTo(10,10);
+            shopmenu.scale.setTo(15,10);
             shopmenu.inputEnabled = false;
             shopmenu.visible = false;
-            exitButton = game.add.text(game.world.centerX - 75, game.world.height - 150, "Exit");
+            exitButton = game.add.text(game.world.centerX + 250, game.world.height - 150, "Exit");
             exitButton.font = 'Revalia';
             exitButton.fontSize = 60;
             grd = exitButton.context.createLinearGradient(0, 0, 0, exitButton.canvas.height);
@@ -90,7 +96,7 @@ var ShopManager = function (game){
             })
                 
                 
-            nextButton = game.add.text(game.world.centerX + 200, game.world.height - 150, "Next");
+            nextButton = game.add.text(game.world.centerX + 500, game.world.height - 150, "Next");
             nextButton.font = 'Revalia';
             nextButton.fontSize = 60;
             grd = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
@@ -114,7 +120,7 @@ var ShopManager = function (game){
                     clickNext();
             })
                 
-            backButton = game.add.text(game.world.centerX - 400, game.world.height - 150, "Back");
+            backButton = game.add.text(game.world.centerX, game.world.height - 150, "Back");
             backButton.font = 'Revalia';
             backButton.fontSize = 60;
             grd = backButton.context.createLinearGradient(0, 0, 0, backButton.canvas.height);
@@ -136,6 +142,88 @@ var ShopManager = function (game){
             }, this);
             backButton.events.onInputDown.add(function(){
                     clickBack();
+            })
+            
+            
+            healthButton = game.add.text(game.world.centerX - 700, 150, "Buy Health");
+            healthButton.font = 'Revalia';
+            healthButton.fontSize = 60;
+            grd = healthButton.context.createLinearGradient(0, 0, 0, healthButton.canvas.height);
+            grd.addColorStop(0, '#8ED6FF');   
+            grd.addColorStop(1, '#004CB3');
+            healthButton.fill = grd;
+            healthButton.align = 'center';
+            healthButton.stroke = '#000000';
+            healthButton.strokeThickness = 2;
+            healthButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+            
+            healthButton.inputEnabled = false;
+            healthButton.visible = false;
+            healthButton.events.onInputOver.add(function(){
+                healthButton.fill = '#ff00ff';
+            }, this);
+            healthButton.events.onInputOut.add(function(){
+                healthButton.fill = grd;
+            }, this);
+            healthButton.events.onInputDown.add(function(){
+                   if(defEngine.globalHealth < 100 && playerState.gold >= ((100-defEngine.globalHealth) * 5)){
+                      playerState.gold -= (100 - defEngine.globalHealth) * 5;   //costs 5 gold for every global health healed.
+                      buyHealthPotion();
+                   }
+            })
+            
+            slotButton = game.add.text(game.world.centerX - 700, 250, "Buy Unit Slot");
+            slotButton.font = 'Revalia';
+            slotButton.fontSize = 60;
+            grd = slotButton.context.createLinearGradient(0, 0, 0, slotButton.canvas.height);
+            grd.addColorStop(0, '#8ED6FF');   
+            grd.addColorStop(1, '#004CB3');
+            slotButton.fill = grd;
+            slotButton.align = 'center';
+            slotButton.stroke = '#000000';
+            slotButton.strokeThickness = 2;
+            slotButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+            
+            slotButton.inputEnabled = false;
+            slotButton.visible = false;
+            slotButton.events.onInputOver.add(function(){
+                slotButton.fill = '#ff00ff';
+            }, this);
+            slotButton.events.onInputOut.add(function(){
+                slotButton.fill = grd;
+            }, this);
+            slotButton.events.onInputDown.add(function(){
+                   if(playerState.unitSlots < 8 && playerState.gold >= 250){
+                       playerState.gold -= 250;
+                       buyUnitSlot();
+                   }
+            })
+            
+            stickerButton = game.add.text(game.world.centerX - 700, 350, "Buy Sticker Slot");
+            stickerButton.font = 'Revalia';
+            stickerButton.fontSize = 60;
+            grd = stickerButton.context.createLinearGradient(0, 0, 0, stickerButton.canvas.height);
+            grd.addColorStop(0, '#8ED6FF');   
+            grd.addColorStop(1, '#004CB3');
+            stickerButton.fill = grd;
+            stickerButton.align = 'center';
+            stickerButton.stroke = '#000000';
+            stickerButton.strokeThickness = 2;
+            stickerButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+            
+            stickerButton.inputEnabled = false;
+            stickerButton.visible = false;
+            stickerButton.events.onInputOver.add(function(){
+                stickerButton.fill = '#ff00ff';
+            }, this);
+            stickerButton.events.onInputOut.add(function(){
+                stickerButton.fill = grd;
+            }, this);
+            stickerButton.events.onInputDown.add(function(){
+                   if(playerState.base.stickers < 30 && playerState.gold >= 100){
+                       playerState.gold -= 100;
+                       buyStickerSlot();
+                   }
             })
     }
     
@@ -218,6 +306,14 @@ var ShopManager = function (game){
         backButton.inputEnabled = true;
         nextButton.visible = true;
         nextButton.inputEnabled = true;
+        
+        healthButton.visible = true;
+        healthButton.inputEnabled = true;
+        slotButton.visible = true;
+        slotButton.inputEnabled = true;
+        stickerButton.visible = true;
+        stickerButton.inputEnabled = true;
+        
         showShop = true;
         showShopItems();
     }
@@ -230,6 +326,14 @@ var ShopManager = function (game){
         backButton.inputEnabled = false;
         nextButton.visible = false;
         nextButton.inputEnabled = false;
+        
+        healthButton.visible = false;
+        healthButton.inputEnabled = false;
+        slotButton.visible = false;
+        slotButton.inputEnabled = false;
+        stickerButton.visible = false;
+        stickerButton.inputEnabled = false;
+        
         showShop = false;
         removeShopItems();
     }
@@ -263,10 +367,10 @@ var ShopManager = function (game){
                     var temp = {};
                     var name;
                     var cost;
-                    temp = game.add.sprite(game.world.centerX - 300, 150 + 150*slots.length, stickers[i]);
-                    name = game.add.text(game.world.centerX, 150+ 150*slots.length, shopMenuItems.list[i].name);
+                    temp = game.add.sprite(game.world.centerX, 150 + 150*slots.length, stickers[i]);
+                    name = game.add.text(game.world.centerX + 250, 150+ 150*slots.length, shopMenuItems.list[i].name);
                     name.visible = false;
-                    cost = game.add.text(game.world.centerX + 200, 150 + 150*slots.length, shopMenuItems.list[i].cost);
+                    cost = game.add.text(game.world.centerX + 500, 150 + 150*slots.length, shopMenuItems.list[i].cost);
                     cost.visible = false;
                     temp.scale.set(.75, .75);
                     temp.anchor.set(.5,.5);

@@ -25,7 +25,7 @@ var Unit = function (parent, game){
     var focusedEnemyX;
     var focusedEnemyY;
     var bulletSpriteGroup;
-    var damage_from_enemy = 10; //damage from enemy;
+    var damage_from_enemy = 5; //damage from enemy;
 
 
     var collision_group;

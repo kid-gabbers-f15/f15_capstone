@@ -125,7 +125,7 @@ var EnemyManager = function (game){
                 }
                 else{ // All Bosses dead
                     if(waitingForWave == false){
-                        setTimeout(restartWave, 2000);
+                        setTimeout(restartWave, 5000);
                         waitingForWave = true;
                     }
                 }
@@ -225,7 +225,7 @@ var EnemyManager = function (game){
         else{ // non boss wave
             enemy_count_in_wave = enemy_count_in_wave + 1;
         
-            numNeedsToBeSpawned = enemy_count_in_wave * 3; //total number of enemies that will need to be spawned
+            numNeedsToBeSpawned = Math.floor(enemy_count_in_wave * 1.5); //total number of enemies that will need to be spawned
             
             if(enemy_count_in_wave>10){ //increase the number of enemies from each group
                 enemies_from_each_group = 10; //10 is the limit since each group only has 10 max. Memory limit.

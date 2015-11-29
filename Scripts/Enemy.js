@@ -10,7 +10,7 @@ var Enemy = function (parent, game){
     var initialHealth; // int, staring health, uneeded?
     var velocityX = 10; // int, default speed, uneeded?
     var isActive; // bool, is this enemy active and on screen
-    var dmgPerClick = 25; // int, how much damage is done to the enemy when clicked
+    var dmgPerClick = 10; // int, how much damage is done to the enemy when clicked
     var enemy_damage = 10; //int, how much damage is dont by the enemy to the unit
     var uGroup; // array, unit group
     var eGroup; // array, enemy group

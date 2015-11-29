@@ -20,7 +20,7 @@ var DefenseEngine = function (game){
     var globalHealthBar; // sprite, visual representation of globalHealth
     var friendBaseTarget = {};
     
-    var resume_sfx, pling_sfx;
+    var resume_sfx, pling_sfx, mclick_sfx;
     
     /*
     base - object, player's base
@@ -155,7 +155,7 @@ var DefenseEngine = function (game){
         
         resume_sfx = game.add.audio('rsound');
         pling_sfx = game.add.audio('pling');
-        
+        mclick_sfx = game.add.audio('button_click');
         
         //game.sound.setDecodedCallback([pause_sfx], start, this);
     }
@@ -278,6 +278,7 @@ var DefenseEngine = function (game){
         
         shopbutton.events.onInputDown.add(function(){
             if(shopManager.getShowShop() == false){
+                mclick_sfx.play();
                 shopManager.openShop();
             }
         });
@@ -301,10 +302,14 @@ var DefenseEngine = function (game){
             baseButton.fill = grd;
         }, this);
         baseButton.events.onInputDown.add(function(){
+            mclick_sfx.play();
             game.state.start("Customize");
         });
     }
     
+    function click_sound(){
+        mclick_sfx.play();
+    }
     
     that.setGlobalHealth = function(h){globalHealth = h;}
     that.addUnit = addUnit;
@@ -321,6 +326,7 @@ var DefenseEngine = function (game){
     that.canAfford = canAfford;
     that.damageGlobalHealth = damageGlobalHealth;
     that.friendBaseTarget = function(){return friendBaseTarget;}
+    that.click_sound = click_sound;
     
     return that;
 }

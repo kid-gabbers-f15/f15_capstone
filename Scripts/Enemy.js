@@ -36,6 +36,8 @@ var Enemy = function (parent, game){
     
     var text = ""; // string, text to be displayed on the enemy sprite
     
+    var click_sfx;
+    
     function Preload(){
         
     }
@@ -54,6 +56,8 @@ var Enemy = function (parent, game){
         position.y = y;
         can_attack = true; // upon creation enemies should be able to attack instantly
         attack_delay = 0;
+        
+        click_sfx = game.add.audio('click');
 
         if(isBoss){ //if the enemy is a boss
             enemySprite = game.add.sprite(position.x, position.y, 'EnemyBoss_1');
@@ -106,6 +110,7 @@ var Enemy = function (parent, game){
         
         enemySprite.inputEnabled = false;
         enemySprite.events.onInputDown.add(function(){
+            click_sfx.play();
             damage(dmgPerClick); //damage per click
         });
         uGroup = unitGroup; //the group that the enemies will attack

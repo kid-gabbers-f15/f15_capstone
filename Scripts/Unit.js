@@ -115,6 +115,7 @@ var Unit = function (parent, game){
         shotgunCostText.visible = false;
         
         pistolSprite.events.onInputDown.add(function(){
+            defEngine.click_sound();
             bulletType = 'pistol';
             cost = 5;
             pistolSprite.visible = false;
@@ -132,6 +133,7 @@ var Unit = function (parent, game){
         });
         
         shotgunSprite.events.onInputDown.add(function(){
+            defEngine.click_sound();
             bulletType = 'shotgun';
             cost = 20;
             pistolSprite.visible = false;
@@ -149,6 +151,7 @@ var Unit = function (parent, game){
         });
         
         rifleSprite.events.onInputDown.add(function(){
+            defEngine.click_sound();
             bulletType = 'rifle';
             cost = 10;
             pistolSprite.visible = false;
@@ -167,6 +170,7 @@ var Unit = function (parent, game){
         
     
         unitSprite.events.onInputDown.add(function(){
+            defEngine.click_sound();
             if(bulletType=='none')
             {
                 if(showWeapons == true)

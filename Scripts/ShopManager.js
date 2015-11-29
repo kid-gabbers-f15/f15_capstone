@@ -92,6 +92,7 @@ var ShopManager = function (game){
                 exitButton.fill = grd;
             }, this);
             exitButton.events.onInputDown.add(function(){
+                defEngine.click_sound();
                     closeShop();
             })
                 
@@ -117,6 +118,7 @@ var ShopManager = function (game){
                 nextButton.fill = grd;
             }, this);
             nextButton.events.onInputDown.add(function(){
+                defEngine.click_sound();
                     clickNext();
             })
                 
@@ -141,6 +143,7 @@ var ShopManager = function (game){
                 backButton.fill = grd;
             }, this);
             backButton.events.onInputDown.add(function(){
+                defEngine.click_sound();
                     clickBack();
             })
             

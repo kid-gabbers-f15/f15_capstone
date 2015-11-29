@@ -11,6 +11,7 @@ var Enemy = function (parent, game){
     var velocityX = 10; // int, default speed, uneeded?
     var isActive; // bool, is this enemy active and on screen
     var dmgPerClick = 25; // int, how much damage is done to the enemy when clicked
+    var enemy_damage = 10; //int, how much damage is dont by the enemy to the unit
     var uGroup; // array, unit group
     var eGroup; // array, enemy group
     var totalMissingHealth = 0.0; // float, missing health bar
@@ -214,7 +215,7 @@ var Enemy = function (parent, game){
                 game.physics.arcade.collide(enemySprite, unitpGroup[i].getUnitSprite(), 
                 function(){
                     if(can_attack == true && isActive == true){
-                         unitpGroup[i].dec_children();
+                         unitpGroup[i].damage_units(enemy_damage);
                          can_attack = false;
                          reset_attack_delay();
                     } 

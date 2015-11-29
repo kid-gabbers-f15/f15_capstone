@@ -6,6 +6,7 @@ var AssetLoader = function(game){
         game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
          //Units-----------------------------------------------------
+        game.load.image('unit_health', KCG_ASSET_PATH+'Unit_Pictures/UnitHealthBar.png');
         game.load.image('Unit1',KCG_ASSET_PATH+'Unit_Pictures/robot1.png');
         game.load.image('Unit2',KCG_ASSET_PATH+'Unit_Pictures/SuperBear.png');
         game.load.image('Unit3',KCG_ASSET_PATH+'Unit_Pictures/Unicorn1.png');

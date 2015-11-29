@@ -20,6 +20,8 @@ var DefenseEngine = function (game){
     var globalHealthBar; // sprite, visual representation of globalHealth
     var friendBaseTarget = {};
     
+    var resume_sfx, pling_sfx;
+    
     /*
     base - object, player's base
     */
@@ -118,6 +120,7 @@ var DefenseEngine = function (game){
             if(game.paused){
                     game.paused = false;
                     pausetext.destroy();
+                    resume_sfx.play();
             }
         }
         //text displaying the current amount of resource
@@ -149,6 +152,12 @@ var DefenseEngine = function (game){
         // Health bar for friends base
         globalHealthBar = game.add.sprite(75, 580, 'baseHealthBar');
         globalHealthBar.crop(new Phaser.Rectangle(0, 0, 1000, 20));
+        
+        resume_sfx = game.add.audio('rsound');
+        pling_sfx = game.add.audio('pling');
+        
+        
+        //game.sound.setDecodedCallback([pause_sfx], start, this);
     }
     
     function Update(){
@@ -229,7 +238,7 @@ var DefenseEngine = function (game){
         
         pausebutton.events.onInputDown.add(function(){
             pausebutton.fill = grd;
-            game.paused = true; 
+            pling_sfx.play();
             pausetext = game.add.text(game.world.centerX, game.world.centerY, "PAUSED");
             pausetext.anchor.setTo(0.5,0.5);
             pausetext.font = 'Revalia';
@@ -242,6 +251,10 @@ var DefenseEngine = function (game){
             pausetext.stroke = '#000000';
             pausetext.strokeThickness = 2;
             pausetext.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+            pling_sfx.onStop.add(function(){
+                game.paused = true;
+                }
+                );
         });
         //shop button creation
         shopbutton = game.add.text(50, 130, "Open Shop");

@@ -32,6 +32,8 @@ var Unit = function (parent, game){
     var thisIsBase; //bool to see if this unit is a base, or just a single unit
     var showWeapons = false;
 
+    var pew_sfx;
+
     function Preload(){
 
     }
@@ -185,7 +187,7 @@ var Unit = function (parent, game){
         });
         
         
-        
+        pew_sfx = game.add.audio('pew');
         
         
         unitGroup.add(unitSprite);
@@ -210,6 +212,7 @@ var Unit = function (parent, game){
         
         if(shoot==true && curr_children>0)
         {
+            
             focusedEnemyDistance = 1000;
             focusedEnemy = undefined;
             for(var i=0;i<enemyGroup.length;i++)
@@ -231,6 +234,7 @@ var Unit = function (parent, game){
             {
                 if(bulletType=='pistol')
                 {
+                    pew_sfx.play();
                     bulletSprite = game.add.sprite(position.x, position.y, 'bullet' );
                     game.physics.enable(bulletSprite, Phaser.Physics.ARCADE);
                     bulletSprite.checkWorldBounds = true;
@@ -246,6 +250,7 @@ var Unit = function (parent, game){
                 }
                 else if(bulletType=='shotgun')
                 {
+                    pew_sfx.play();
                     bulletSprite = game.add.sprite(position.x, position.y, 'bullet' );
                     bulletSprite2 = game.add.sprite(position.x, position.y, 'bullet' );
                     bulletSprite3 = game.add.sprite(position.x, position.y, 'bullet' );
@@ -286,6 +291,7 @@ var Unit = function (parent, game){
                 }
                 else if(bulletType=='rifle')
                 {
+                    pew_sfx.play();
                     bulletSprite = game.add.sprite(position.x, position.y, 'bullet' );
                     game.physics.enable(bulletSprite, Phaser.Physics.ARCADE);
                     bulletSprite.checkWorldBounds = true;

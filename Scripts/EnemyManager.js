@@ -107,7 +107,7 @@ var EnemyManager = function (game){
         if(waitingForStart == false)
         {
             if(ifBoss){ // Boss Wave
-                console.log(killCnter + " < " + boss_count_in_wave)
+                //console.log(killCnter + " < " + boss_count_in_wave)
                 if(killCnter < boss_count_in_wave){ // Bosses still alive
                     for(var i=0;i<boss_count_in_wave;i++){
                         if(bossGroup[i].getIsActive() == true){ // Boss is alive
@@ -131,7 +131,7 @@ var EnemyManager = function (game){
                 }
             }
             else{ // Normal wave
-                console.log(killCnter + " < " + enemy_count_in_wave*3);
+                //console.log(killCnter + " < " + enemy_count_in_wave*3);
                 var unitpGroup = defEngine.getPlayer().getUnitPGroup();
                 
                 //it is *3 because there are 3 groups of enemies. enemy_count_in_wave stands for enemies per group
@@ -149,7 +149,7 @@ var EnemyManager = function (game){
                                 else{
                                     enemyGroup1[i].setKilled(false);
                                 }
-                                console.log("killed e1");
+                                //console.log("killed e1");
                                 ++killCnter;
                             }
                         }
@@ -303,6 +303,9 @@ var EnemyManager = function (game){
     function startGame(){
         waitingForStart = false;
     }
+    function endGame(){
+        waitingForStart = true;
+    }
     
     that.Preload = Preload;
     that.Update = Update;
@@ -311,6 +314,7 @@ var EnemyManager = function (game){
     that.getEgroup = getEgroup;
     that.getEnemyText = getEnemyText;
     that.startGame = startGame;
+    that.endGame = endGame;
 
     return that;
 }

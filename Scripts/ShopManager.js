@@ -66,7 +66,7 @@ var ShopManager = function (game){
     
      function initializeShopMenu(){
             shopPage = 0;
-            
+    
             nextButton.font = 'Revalia';
             nextButton.fontSize = 25;
             grd = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);

@@ -89,7 +89,7 @@ var EnemyManager = function (game){
         }
         
         //create the text for the wave count
-        waveNumText = game.add.text(50, 260, "Wave: " + currentWave);
+        waveNumText = game.add.text(50, 180, "Wave: " + currentWave);
         waveNumText.font = waveNumTextFont;
         waveNumText.fontSize = 60;
         grd = waveNumText.context.createLinearGradient(0, 0, 0, waveNumText.canvas.height);

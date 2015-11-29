@@ -282,7 +282,7 @@ var DefenseEngine = function (game){
         });
         
         //base button creation
-        baseButton = game.add.text(50, 200, "Base");
+        baseButton = game.add.text(50, 120, "Base");
         baseButton.font = 'Revalia';
         baseButton.fontSize = 60;
         grd = baseButton.context.createLinearGradient(0, 0, 0, baseButton.canvas.height);

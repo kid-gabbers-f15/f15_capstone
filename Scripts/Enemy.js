@@ -15,6 +15,7 @@ var Enemy = function (parent, game){
     
     var isActive; // bool, is this enemy active and on screen
     var dmgPerClick = 10; // int, how much damage is done to the enemy when clicked
+    var enemy_damage = 10; //int, how much damage is dont by the enemy to the unit
     
     var uGroup; // array, unit group
     var eGroup; // array, enemy group
@@ -28,6 +29,7 @@ var Enemy = function (parent, game){
     var can_attack; // bool, can this unit attack or not, used for delay between attacks
     var attack_delay; // int, amount of time enemy has to wait between attacks
     var boss; // bool, is this enemy a boss or not
+    
     
     var type; // int, what type of enemy
     var speed = 100; // int, speed of the enemy
@@ -225,7 +227,7 @@ var Enemy = function (parent, game){
                 game.physics.arcade.collide(enemySprite, unitpGroup[i].getUnitSprite(), 
                 function(){
                     if(can_attack == true && isActive == true){
-                         unitpGroup[i].dec_children();
+                         unitpGroup[i].damage_units(enemy_damage);
                          can_attack = false;
                          reset_attack_delay();
                     } 

@@ -20,6 +20,8 @@ var DefenseEngine = function (game){
     var globalHealth = 100; // int, overall game health value, lose when zero
     var globalHealthBar; // sprite, visual representation of globalHealth
     var friendBaseTarget = {};
+    var gameOverText; // phaser text, displays when the game is over
+    var gameOver = false; // whether the game is over or not
     
     /*
     base - object, player's base
@@ -116,7 +118,7 @@ var DefenseEngine = function (game){
         //should the game be paused, listen for a click on the game to unpause
         game.input.onDown.add(unpause, self);
         function unpause(event){
-            if(game.paused){
+            if(game.paused && gameOver==false){
                     game.paused = false;
                     pausetext.destroy();
             }
@@ -204,7 +206,28 @@ var DefenseEngine = function (game){
     // damage - int, damage to deal to globalHealth
     function damageGlobalHealth(damage){
         globalHealth -= damage;
-        console.log(globalHealth);
+        
+        if(globalHealth <= 0){
+            globalHealth = 0;
+            gameOver = true;
+            //enemyManager.endGame();
+            
+            game.paused = true;
+            
+            //game over text
+            gameOverText = game.add.text(game.world.centerX, game.world.centerY, "Game Over");
+            gameOverText.font = 'Revalia';
+            gameOverText.fontSize = 100;
+            grd = gameOverText.context.createLinearGradient(0, 0, 0, gameOverText.canvas.height);
+            grd.addColorStop(0, '#8ED6FF');   
+            grd.addColorStop(1, '#004CB3');
+            gameOverText.fill = grd;
+            gameOverText.align = 'center';
+            gameOverText.stroke = '#000000';
+            gameOverText.strokeThickness = 2;
+            gameOverText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+            gameOverText.inputEnabled = false;
+        }
     }
     
     function createButtons(){
@@ -268,7 +291,7 @@ var DefenseEngine = function (game){
         baseButton.events.onInputDown.add(function(){
             game.state.start("Customize");
         });
-        
+                
         // Start button creation
         startButton = game.add.text(1300, 800, "Start");
         startButton.font = 'Revalia';
@@ -294,7 +317,6 @@ var DefenseEngine = function (game){
             startButton.visible = false;
         });
     }
-    
     
     that.setGlobalHealth = function(h){globalHealth = h;}
     that.addUnit = addUnit;

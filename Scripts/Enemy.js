@@ -4,9 +4,9 @@ var Enemy = function (parent, game){
     var enemySprite; // object, phaster sprite
     var healthBar; // object, phaser sprite?
     var position = {}; // object, used to keep enemy x and y position
-    var health = 100; // int, enemy health
-    var maxHealth = 100; // int, most health an enemy can have
-    var const_maxHealth = 100; // int, will be the definite health for enemy units
+    var health = 50; // int, enemy health
+    var maxHealth = 50; // int, most health an enemy can have
+    var const_maxHealth = 50; // int, will be the definite health for enemy units
     var initialHealth; // int, staring health, uneeded?
     var velocityX = 10; // int, default speed, uneeded?
     var isActive; // bool, is this enemy active and on screen

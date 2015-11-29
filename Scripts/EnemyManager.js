@@ -125,7 +125,7 @@ var EnemyManager = function (game){
                 }
                 else{ // All Bosses dead
                     if(waitingForWave == false){
-                        setTimeout(restartWave, 5000);
+                        setTimeout(restartWave, 3000);
                         waitingForWave = true;
                     }
                 }
@@ -191,7 +191,7 @@ var EnemyManager = function (game){
                 }
                 else{ // all enemies dead
                     if(waitingForWave == false){
-                        setTimeout(restartWave, 2000);
+                        setTimeout(restartWave, 3000);
                         waitingForWave = true;
                     }
                 }
@@ -225,8 +225,8 @@ var EnemyManager = function (game){
         else{ // non boss wave
             enemy_count_in_wave = enemy_count_in_wave + 1;
         
-            numNeedsToBeSpawned = Math.floor(enemy_count_in_wave * 1.5); //total number of enemies that will need to be spawned
-            
+            numNeedsToBeSpawned = Math.ceil(enemy_count_in_wave * 2); //total number of enemies that will need to be spawned
+            console.log(numNeedsToBeSpawned);
             if(enemy_count_in_wave>10){ //increase the number of enemies from each group
                 enemies_from_each_group = 10; //10 is the limit since each group only has 10 max. Memory limit.
             }
@@ -234,13 +234,18 @@ var EnemyManager = function (game){
                 enemies_from_each_group = enemy_count_in_wave;
             }
             
-            for(var j = 0; j < enemies_from_each_group; ++j){ //reset enemies to spawn again
-                enemyGroup1[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
-                numThatHasSpawned++;
-                enemyGroup2[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
-                numThatHasSpawned++;
-                enemyGroup3[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
-                numThatHasSpawned++;
+            for(var j = 0; j < enemies_from_each_group; ++j){
+                //reset enemies to spawn again
+                if(numThatHasSpawned <= numNeedsToBeSpawned){
+                    enemyGroup1[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
+                    numThatHasSpawned++;
+                }else if(numThatHasSpawned <= numNeedsToBeSpawned){
+                    enemyGroup2[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
+                    numThatHasSpawned++;
+                }else if(numThatHasSpawned <= numNeedsToBeSpawned){
+                    enemyGroup3[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
+                    numThatHasSpawned++;
+                }else break;
             }
         }
         waitingForWave = false;

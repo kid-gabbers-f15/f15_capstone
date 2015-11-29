@@ -98,6 +98,7 @@ var BaseToolbar = function(game, parent){
         }, this);
         
         backButton.events.onInputDown.add(function(){
+            defEngine.click_sound();
             clickBack();
         });
         
@@ -122,6 +123,7 @@ var BaseToolbar = function(game, parent){
         }, this);
         
         nextButton.events.onInputDown.add(function(){
+            defEngine.click_sound();
             clickNext();
         });
         
@@ -145,6 +147,7 @@ var BaseToolbar = function(game, parent){
             backgroundButton.fill = grd;
         }, this);
         backgroundButton.events.onInputDown.add(function(){
+            defEngine.click_sound();
             toolbar = 'backgrounds';
             updateToolbar();
         });
@@ -169,6 +172,7 @@ var BaseToolbar = function(game, parent){
             stickersButton.fill = grd;
         }, this);
         stickersButton.events.onInputDown.add(function(){
+            defEngine.click_sound();
             toolbar = 'stickers';
             updateToolbar();
         });

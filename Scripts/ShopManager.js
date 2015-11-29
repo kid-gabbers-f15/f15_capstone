@@ -66,7 +66,6 @@ var ShopManager = function (game){
     
      function initializeShopMenu(){
             shopPage = 0;
-            
             nextButton = game.add.text(game.world.centerX * (9/5), game.world.centerY - 100, "Next");
             nextButton.font = 'Revalia';
             nextButton.fontSize = 25;
@@ -86,6 +85,7 @@ var ShopManager = function (game){
                 nextButton.fill = grd;
             }, this);
             nextButton.events.onInputDown.add(function(){
+                defEngine.click_sound();
                     clickNext();
             })
                 
@@ -108,6 +108,7 @@ var ShopManager = function (game){
                 backButton.fill = grd;
             }, this);
             backButton.events.onInputDown.add(function(){
+                defEngine.click_sound();
                     clickBack();
             })
             

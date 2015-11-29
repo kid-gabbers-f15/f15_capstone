@@ -108,11 +108,23 @@ var Enemy = function (parent, game){
         eGroup = enemypGroup;
         
         // Text for enemy
+        var grd;
         var style = { font: "25px Arial", fill: "#fff", wordWrap: true, wordWrapWidth: enemySprite.width, align: "center" };
         var textList = defEngine.getEnemyManager().getEnemyText();
         var selectedText = textList[Math.floor((Math.random() * 4) + 0)];
         //console.log('selectedText: ' + selectedText);
-        text = game.add.text(0, 0, selectedText, style);
+        text = game.add.text(0, 0, selectedText);
+        text.font = 'Fontdiner Swanky';
+        text.fontSize = 25;
+        grd = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
+        grd.addColorStop(0, '#ff8e9e');   
+        grd.addColorStop(1, '#b30e00');
+        text.fill = grd;
+        text.align = 'center';
+        text.stroke = '#000000';
+        text.strokeThickness = 2;
+        text.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        
         text.anchor.set(0.5);
     }
     

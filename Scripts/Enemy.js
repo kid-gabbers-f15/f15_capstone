@@ -2,38 +2,27 @@ var Enemy = function (parent, game){
     var that = {};
     
     var enemySprite; // object, phaster sprite
-    
     var healthBar; // object, phaser sprite?
-    
     var position = {}; // object, used to keep enemy x and y position
     var health = 100; // int, enemy health
     var maxHealth = 100; // int, most health an enemy can have
     var const_maxHealth = 100; // int, will be the definite health for enemy units
-    
     var initialHealth; // int, staring health, uneeded?
     var velocityX = 10; // int, default speed, uneeded?
-    
     var isActive; // bool, is this enemy active and on screen
-    var dmgPerClick = 10; // int, how much damage is done to the enemy when clicked
-    
+    var dmgPerClick = 25; // int, how much damage is done to the enemy when clicked
     var uGroup; // array, unit group
     var eGroup; // array, enemy group
-    
     var totalMissingHealth = 0.0; // float, missing health bar
     var minusHealthIncr = 0.0; // float, how much health to take off the health bar
-    
     var initHealthBar = 0.0; // float, initial amount og healthbar
-    
     var target; // unit object, unit the enemy is atacking
     var can_attack; // bool, can this unit attack or not, used for delay between attacks
     var attack_delay; // int, amount of time enemy has to wait between attacks
     var boss; // bool, is this enemy a boss or not
-    
     var type; // int, what type of enemy
     var speed = 100; // int, speed of the enemy
-    
     var killed = false; // bool, has the enemy been killed this wave
-    
     var text = ""; // string, text to be displayed on the enemy sprite
     
     function Preload(){

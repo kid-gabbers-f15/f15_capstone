@@ -11,6 +11,7 @@ var DefenseEngine = function (game){
     var shopbutton; // phaser text, button to go to shop
     var pausebutton; // phaser text, button to pause the game
     var baseButton; // phaser text, button to go to the base builder
+    var startButton; // phaser text, button to start the game
     var friendBaseData; // JSON string, JSON representing the friend's base you are defending
     var pausetext; // phaser text, 'PAUSED' that pops up when the game is paused
     var grd; // phaser color gradient, used for a color gradient on text
@@ -256,6 +257,7 @@ var DefenseEngine = function (game){
                 }
                 );
         });
+        
         //shop button creation
         shopbutton = game.add.text(50, 130, "Open Shop");
         shopbutton.font = 'Revalia';
@@ -282,6 +284,7 @@ var DefenseEngine = function (game){
                 shopManager.openShop();
             }
         });
+        
         //base button creation
         baseButton = game.add.text(50, 200, "Base");
         baseButton.font = 'Revalia';
@@ -301,9 +304,35 @@ var DefenseEngine = function (game){
         baseButton.events.onInputOut.add(function(){
             baseButton.fill = grd;
         }, this);
+        
         baseButton.events.onInputDown.add(function(){
             mclick_sfx.play();
             game.state.start("Customize");
+        });
+        
+        // Start button creation
+        startButton = game.add.text(1300, 800, "Start");
+        startButton.font = 'Revalia';
+        startButton.fontSize = 60;
+        grd = startButton.context.createLinearGradient(0, 0, 0, startButton.canvas.height);
+        grd.addColorStop(0, '#8ED6FF');   
+        grd.addColorStop(1, '#004CB3');
+        startButton.fill = grd;
+        startButton.align = 'center';
+        startButton.stroke = '#000000';
+        startButton.strokeThickness = 2;
+        startButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        startButton.inputEnabled = true;
+        startButton.events.onInputOver.add(function(){
+            startButton.fill = '#ff00ff';
+        }, this);
+        startButton.events.onInputOut.add(function(){
+            startButton.fill = grd;
+        }, this);
+        
+        startButton.events.onInputDown.add(function(){
+            enemyManager.startGame();
+            startButton.visible = false;
         });
     }
     

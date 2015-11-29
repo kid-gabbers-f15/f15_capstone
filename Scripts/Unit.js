@@ -11,11 +11,22 @@ var Unit = function (parent, game){
     var bulletSprite;
     var bulletSprite2;
     var bulletSprite3;
+    
+    
+    var HealthBarSprite; //picture for the health bar of units
+    var initial_Health_Bar_Sprite_Width; //inital width of the health bar image (before crops)
+    var isHealthDisplayed = false;
+    var CurrentUnitHealth; //current health of the displayed Unit;
+    var initalUnitHealth;
+
+    
     var focusedEnemy;
     var focusedEnemyDistance = 1000;
     var focusedEnemyX;
     var focusedEnemyY;
     var bulletSpriteGroup;
+    var damage_from_enemy = 10; //damage from enemy;
+
 
     var collision_group;
     var text;
@@ -43,6 +54,7 @@ var Unit = function (parent, game){
         topBaseCollision = defEngine.getTopBaseCollision();
         position.x = x;
         position.y = y;
+        isHealthDisplayed = false;
         
         bulletSpriteGroup = game.add.group();
         
@@ -70,6 +82,15 @@ var Unit = function (parent, game){
         text.stroke = '#000000';
         text.strokeThickness = 2;
         text.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        
+        
+        //set up the health sprite for each unit.
+        HealthBarSprite = game.add.sprite(position.x - 50, position.y - 75, 'unit_health');
+        HealthBarSprite.visible = isHealthDisplayed;
+        HealthBarSprite.crop(new Phaser.Rectangle(0,0,HealthBarSprite.width, 20));
+        isHealthDisplayed = false;
+        CurrentUnitHealth = 50;
+        initial_Health_Bar_Sprite_Width = HealthBarSprite.width;
         
         pistolSprite = game.add.sprite(position.x-150, position.y, 'Unit3');
         pistolCostText = game.add.text(position.x-150, position.y, '5');
@@ -205,16 +226,17 @@ var Unit = function (parent, game){
     
     function Update(){
         update_text();
-        if(curr_children == 0)
+        if(curr_children == 0) //there are no units in this slot. 
             {
+                set_health_invisible();
                 unitSprite.loadTexture('unit0');
                 unitSprite.alpha=0;
                 bulletType = 'none';
-            }else unitSprite.alpha = 1;
+            }else unitSprite.alpha = 1; //display a unit
         
         var enemyGroup = defEngine.getEnemyManager().getEnemyGroup();
         
-        if(shoot==true && curr_children>0)
+        if(shoot==true && curr_children>0) //do damage to an enemy
         {
             
             focusedEnemyDistance = 1000;
@@ -341,12 +363,60 @@ var Unit = function (parent, game){
         
     }
     
+    function damage(healthRemoved){
+        
+        CurrentUnitHealth = CurrentUnitHealth - healthRemoved;
+        HealthBarSprite.crop(new Phaser.Rectangle(0,0, initial_Health_Bar_Sprite_Width * CurrentUnitHealth/initalUnitHealth, 20));
+        HealthBarSprite.updateCrop();
+        
+        if(CurrentUnitHealth <= 0){ //if a unit has been destroyed
+            curr_children = curr_children - 1;
+            
+            if(curr_children > 0){ //if there are more units underneath the one that has been defeated, renew the healthbar
+                CurrentUnitHealth = initalUnitHealth;
+                HealthBarSprite.crop(new Phaser.Rectangle(0,0, initial_Health_Bar_Sprite_Width, 20));
+                HealthBarSprite.updateCrop();
+            }
+            
+        }
+        
+        
+    }
+    
+    function damage_units(damage_from_enemy){
+        
+        damage(damage_from_enemy);
+        
+    }
+    
     function add_unit(num_unit){
+        
+            
             if(curr_children != max_size && defEngine.canAfford(cost)){
                curr_children = curr_children + num_unit;
                defEngine.spendGold(cost);
+               set_health_visible();
+               CurrentUnitHealth = 50;
+               initalUnitHealth = CurrentUnitHealth;
+               
+               
             }
         }
+        
+    function set_health_visible(){
+        isHealthDisplayed = true;
+        HealthBarSprite.visible = isHealthDisplayed;
+        HealthBarSprite.crop(new Phaser.Rectangle(0,0, 100, 20)); //crop it back to normal
+        HealthBarSprite.updateCrop();
+        
+    }
+    function set_health_invisible(){
+        isHealthDisplayed = false;
+        HealthBarSprite.visible = isHealthDisplayed;
+        
+    }
+        
+        
         
     function getUnitSprite(){
         return unitSprite;
@@ -356,9 +426,7 @@ var Unit = function (parent, game){
         return curr_children;
     }
     
-    function dec_children(){
-        curr_children = curr_children - 1;
-    }
+    
     function update_text(){
         text.setText(curr_children);
     }
@@ -423,7 +491,7 @@ var Unit = function (parent, game){
     that.OnCreate = OnCreate;
     that.getUnitSprite = getUnitSprite;
     that.get_children = get_children;
-    that.dec_children = dec_children;
+    that.damage_units = damage_units;
     that.isAttack = isAttack;
     return that;
 }

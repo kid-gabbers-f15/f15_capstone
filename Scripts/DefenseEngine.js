@@ -331,6 +331,7 @@ var DefenseEngine = function (game){
         }, this);
         
         startButton.events.onInputDown.add(function(){
+            defEngine.click_sound();
             enemyManager.startGame();
             startButton.visible = false;
         });

@@ -29,12 +29,12 @@ var DefenseEngine = function (game){
     base - object, player's base
     */
     function loadPlayerBase(base){
-        var bg = game.add.sprite(game.world.centerX, game.world.centerY/2, base.background);
+        var bg = game.add.sprite(game.world.centerX - 150, game.world.centerY/2, base.background);
         bg.anchor.setTo(.5, .5);
         bg.crop(new Phaser.Rectangle(0, 0, 800, 600));
         bg.scale.setTo(.75, .75);
         for(var i = 0; i < base.list.length; ++i){
-            var temp = game.add.sprite((base.list[i].position.x - 130)/2 + game.world.centerX/2,  (base.list[i].position.y + 110)/2, base.list[i].image);
+            var temp = game.add.sprite((base.list[i].position.x - 130)/2 + game.world.centerX/2 - 150,  (base.list[i].position.y + 110)/2, base.list[i].image);
             temp.anchor.setTo(0.5, 0.5);
             temp.scale.setTo(0.5, 0.5);
         }
@@ -279,33 +279,6 @@ var DefenseEngine = function (game){
                 game.paused = true;
                 }
                 );
-        });
-        
-        //shop button creation
-        shopbutton = game.add.text(50, 130, "Open Shop");
-        shopbutton.font = 'Revalia';
-        shopbutton.fontSize = 60;
-        grd = shopbutton.context.createLinearGradient(0, 0, 0, shopbutton.canvas.height);
-        grd.addColorStop(0, '#8ED6FF');   
-        grd.addColorStop(1, '#004CB3');
-        shopbutton.fill = grd;
-        shopbutton.align = 'center';
-        shopbutton.stroke = '#000000';
-        shopbutton.strokeThickness = 2;
-        shopbutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-        shopbutton.inputEnabled = true;
-        shopbutton.events.onInputOver.add(function(){
-            shopbutton.fill = '#ff00ff';
-        }, this);
-        shopbutton.events.onInputOut.add(function(){
-            shopbutton.fill = grd;
-        }, this);
-        
-        shopbutton.events.onInputDown.add(function(){
-            if(shopManager.getShowShop() == false){
-                mclick_sfx.play();
-                shopManager.openShop();
-            }
         });
         
         //base button creation

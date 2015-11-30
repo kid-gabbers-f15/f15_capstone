@@ -11,6 +11,9 @@ WebFontConfig = {
         }
 };
     
+/*
+cname - string, cookie name
+*/
 function getCookie(cname){
 	if(user_player_state != undefined){
 		return user_player_state;
@@ -26,8 +29,7 @@ function getCookie(cname){
     return "";
 }
 
-//global game variable
-var game = {};
+var game = {}; //global game variable
 var LoadingText;
 var gradientText;
 var defEngine;
@@ -78,7 +80,8 @@ var Boot = {
             playerState.base.totalSlots = 5;
             playerState.base.list = [];
             playerState.purchases = [];
-        }else{
+        }
+        else{
             playerState = JSON.parse(cookie);
         }
         
@@ -91,7 +94,6 @@ var Boot = {
     create : function(){
         game.state.start("Preload");        
     }
-    
 };
 
 //Loads all assets

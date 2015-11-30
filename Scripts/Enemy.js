@@ -237,7 +237,8 @@ var Enemy = function (parent, game){
                          reset_attack_delay();
                     } 
                 }, null, null, this);
-            }else{
+            }
+            else{
                 game.physics.arcade.collide(enemySprite, defEngine.friendBaseTarget().getUnitSprite(), 
                 function(){
                     defEngine.damageGlobalHealth(10);
@@ -365,9 +366,3 @@ var Enemy = function (parent, game){
     that.setKilled = setKilled;
     return that;
 }
-
-
-
-
-
-

@@ -224,7 +224,8 @@ var ShopManager = function (game){
                         slots[n].slot.visible = true;
                         slots[n].slot.inputEnabled = true;
                         ++n;
-                    }else{
+                    }
+                    else{
                         break;
                     }
                 ++i;
@@ -249,10 +250,11 @@ var ShopManager = function (game){
                         slots[n].cost.setText(shopMenuItems.list[i].cost);
                         addEventtoSlot(i, slots[n].slot);
                         ++n;
-                    }else{
+                    }
+                    else{
                         break;
                     }
-                ++i;
+                    ++i;
                 }
                 if(n < slots.length){
                     slots[n].slot.visible = false;
@@ -269,20 +271,15 @@ var ShopManager = function (game){
     */
     function clickSlot(slotClicked){
          for(var i = 0; i < slots.length; ++i){
-             owned = false;
-            if(slotClicked === slots[i].keyIndex)
-            {
-                for(var q = 0; q < playerState.purchases.length; q++)
-                {
-                    if(playerState.purchases[q] == slots[i].key)
-                    {
+            owned = false;
+            if(slotClicked === slots[i].keyIndex){
+                for(var q = 0; q < playerState.purchases.length; q++){
+                    if(playerState.purchases[q] == slots[i].key){
                         owned = true;
                     }
                 }
-                if(!owned) 
-                {
-                    if(defEngine.canAfford(slots[i].cost._text))
-                    {
+                if(!owned) {
+                    if(defEngine.canAfford(slots[i].cost._text)){
                         defEngine.spendGold(slots[i].cost._text);
                         slots[i].cost.setText("Owned");
                     }
@@ -365,30 +362,30 @@ var ShopManager = function (game){
     }
     
     function initializeShopItems(){
-                for(var i = 0; i < numOfSlots; ++i){
-                    var temp = {};
-                    var name;
-                    var cost;
-                    temp = game.add.sprite(game.world.centerX * (7/5) + 50, 100 + 50*slots.length, stickers[i]);
-                    name = game.add.text(game.world.centerX * (8/5), 100 + 50*slots.length, shopMenuItems.list[i].name);
-                    cost = game.add.text(game.world.centerX * (9/5), 100 + 50*slots.length, shopMenuItems.list[i].cost);
-                    temp.scale.set(.35, .35);
-                    slots.push({slot:temp, key:stickers[i], keyIndex:i, name:name, cost:cost});
-                }
+        for(var i = 0; i < numOfSlots; ++i){
+            var temp = {};
+            var name;
+            var cost;
+            temp = game.add.sprite(game.world.centerX * (7/5) + 50, 100 + 50*slots.length, stickers[i]);
+            name = game.add.text(game.world.centerX * (8/5), 100 + 50*slots.length, shopMenuItems.list[i].name);
+            cost = game.add.text(game.world.centerX * (9/5), 100 + 50*slots.length, shopMenuItems.list[i].cost);
+            temp.scale.set(.35, .35);
+            slots.push({slot:temp, key:stickers[i], keyIndex:i, name:name, cost:cost});
+        }
         updatePurchases();        
         showShopItems();
     }
     function updatePurchases(){
         for(var k = 0; k < playerState.purchases.length; k++)
+        {
+            for(var j = 0; j < shopMenuItems.list.length; j++)
+            {
+                if(shopMenuItems.list[j].key == playerState.purchases[k])
                 {
-                    for(var j = 0; j < shopMenuItems.list.length; j++)
-                    {
-                        if(shopMenuItems.list[j].key == playerState.purchases[k])
-                        {
-                            shopMenuItems.list[j].cost = "Owned";
-                        }
-                    }
+                    shopMenuItems.list[j].cost = "Owned";
                 }
+            }
+        }
     }
     
     function getShowShop(){

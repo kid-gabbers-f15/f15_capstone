@@ -22,8 +22,7 @@ var DefenseEngine = function (game){
     var friendBaseTarget = {};
     var gameOverText; // phaser text, displays when the game is over
     var gameOver = false; // whether the game is over or not
-    
-    var resume_sfx, pling_sfx, mclick_sfx;
+    var resume_sfx, pling_sfx, mclick_sfx; // sound effects
     
     /*
     base - object, player's base
@@ -277,8 +276,7 @@ var DefenseEngine = function (game){
             pausetext.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
             pling_sfx.onStop.add(function(){
                 game.paused = true;
-                }
-                );
+            });
         });
         
         //base button creation

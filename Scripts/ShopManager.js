@@ -378,7 +378,6 @@ var ShopManager = function (game){
         updatePurchases();        
         showShopItems();
     }
-<<<<<<< HEAD
     function updatePurchases(){
         for(var k = 0; k < playerState.purchases.length; k++)
                 {
@@ -391,8 +390,6 @@ var ShopManager = function (game){
                     }
                 }
     }
-=======
->>>>>>> master
     
     function getShowShop(){
         return showShop;

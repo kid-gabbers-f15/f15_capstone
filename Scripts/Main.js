@@ -1,6 +1,5 @@
 //Game Code
- WebFontConfig = {
-
+WebFontConfig = {
         //  'active' means all requested fonts have finished loading
         //  We set a 1 second delay before calling 'createText'.
         //  For some reason if we don't the browser cannot render the text the first time it's created.
@@ -10,10 +9,9 @@
         google: {
           families: ['Revalia', 'Fontdiner Swanky']
         }
-
-    };
+};
     
-function getCookie(cname) {
+function getCookie(cname){
 	if(user_player_state != undefined){
 		return user_player_state;
 	}
@@ -30,19 +28,14 @@ function getCookie(cname) {
 
 //global game variable
 var game = {};
-
-
 var LoadingText;
 var gradientText;
-
 var defEngine;
 var baseManager;
 var shopManager;
-//
 var _friendBaseJSONstring = "";
 var PlayerStateJSONString = "";
 var playerState = {};
-
 var maxWidth = 960;
 var maxHeight = 540;
 
@@ -69,7 +62,6 @@ var Boot = {
         game.scale.setMinMax(800, 450, maxWidth, maxHeight);
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
-
         loadingScreen();
         
         var assetLoader = AssetLoader(game);
@@ -82,15 +74,15 @@ var Boot = {
             playerState.points = 0;
             playerState.unitSlots = 3;
             playerState.base = {};
-                playerState.base.background = "BaseBackground1";
-                playerState.base.totalSlots = 5;
-                playerState.base.list = [];
+            playerState.base.background = "BaseBackground1";
+            playerState.base.totalSlots = 5;
+            playerState.base.list = [];
             playerState.purchases = [];
         }else{
             playerState = JSON.parse(cookie);
         }
         
-         //set the point of reference for the sprite
+        //set the point of reference for the sprite
         //loadingScreen();
 
         console.log("Boot");
@@ -126,7 +118,6 @@ var Preload = {
             game.state.start("Defense");
         }        
     }
-    
 };
 
 //Main gameplay
@@ -155,7 +146,6 @@ var Defense = {
     update : function (){
         defEngine.Update();
     }
-    
 };
 
 //customization of area
@@ -178,7 +168,6 @@ var Customize = {
     update : function(){
         baseManager.Update();
     }
-    
 };
 
 var Shop = {
@@ -194,7 +183,6 @@ var Shop = {
     create : function(){
 
     }
-    
 };
 
 //runs at start of game, begins game loop

@@ -16,15 +16,15 @@ var EnemyManager = function (game){
     var waveNumText; // text for wave count
     var waveNumTextFont = 'Revalia'; //wave text font
     var numThatHasSpawned = 0; //number of enemies that have spawned
-    var currentWave;
+    var currentWave; // int, current wave the player is on
     var waveNumber = 0; //Keeps count of wave number. notify boss wave
-    var boss_wave = 3;
+    var boss_wave = 3; // how often the boss wave happens
     var ifBoss = 0; //zero is no boss one is boss
     var uGroup; // Group of units
     var eGroup; // Group of enemies
     var waitingForWave = false; // whether the timer for the wave is counting down
-    var waitingForStart = true;
-    var eSpawn = {};
+    var waitingForStart = true; // whether the game is waiting for the start button to be clicked
+    var eSpawn = {}; // Coordinates for enemies to spawn around
     eSpawn.x = 1850;
     eSpawn.y = 800;
     var enemyTextList = []; // Empty list for text used on enemies
@@ -54,7 +54,6 @@ var EnemyManager = function (game){
         currentWave = 0;
         
         // OnCreate for each enemy and boss
-        
         for(var i = 0; i < enemyGroup.length; ++i){
             enemyGroup[i].OnCreate(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup, false, (Math.floor(i/10) + 1));
             enemyGroup[i].set_tisAttack(); //assert that the enemy is able to attack upon creation
@@ -81,8 +80,7 @@ var EnemyManager = function (game){
     }
     
     function Update(){
-        if(waitingForStart == false)
-        {
+        if(waitingForStart == false){
             if(ifBoss){ // Boss Wave
                 //console.log(killCnter + " < " + boss_count_in_wave)
                 if(killCnter < boss_count_in_wave){ // Bosses still alive
@@ -198,8 +196,7 @@ var EnemyManager = function (game){
     function getEnemyGroup(){
         var tempEnemyGroup=[];
         
-        for(var i=0;i<enemyGroup.length;i++)
-        {
+        for(var i=0;i<enemyGroup.length;i++){
             tempEnemyGroup.push(enemyGroup[i]);
         }
         

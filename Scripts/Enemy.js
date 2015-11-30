@@ -25,8 +25,7 @@ var Enemy = function (parent, game){
     var speed = 100; // int, speed of the enemy
     var killed = false; // bool, has the enemy been killed this wave
     var text = ""; // string, text to be displayed on the enemy sprite
-    
-    var click_sfx;
+    var click_sfx; // sound effect for clicking
     
     function Preload(){
         
@@ -209,7 +208,8 @@ var Enemy = function (parent, game){
             enemySprite,
             target.getUnitSprite().position.x,
             target.getUnitSprite().position.y,
-            speed);
+            speed
+        );
         
         /*if(health <= 0){ //if they have been defeated
             console.log("It's only a flesh wound.")

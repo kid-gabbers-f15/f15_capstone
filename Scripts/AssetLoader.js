@@ -2,7 +2,6 @@ var AssetLoader = function(game){
     var that = {};
     
     var Preload = function(){
-		
         game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
          //Units-----------------------------------------------------
@@ -116,7 +115,6 @@ var AssetLoader = function(game){
         game.load.image('BaseSticker63', KCG_ASSET_PATH+'BaseStickers/Person26.png');
         game.load.image('BaseSticker64', KCG_ASSET_PATH+'BaseStickers/Person27.png');
 
-
         //Base Health
         game.load.image('baseHealthBar', KCG_ASSET_PATH+'baseHealthBar.png');
        
@@ -153,7 +151,6 @@ var AssetLoader = function(game){
         game.load.audio('pew', KCG_ASSET_PATH+'audio/soundbible/Pew_Pew-DKnight556-1379997159.mp3');
         game.load.audio('click', KCG_ASSET_PATH+'audio/soundbible/Punch_HD-Mark_DiAngelo-1718986183.mp3');
         game.load.audio('button_click', KCG_ASSET_PATH+'audio/soundbible/Click-SoundBible.com-1387633738.mp3');
-        
     }
     
     that.Preload = Preload;

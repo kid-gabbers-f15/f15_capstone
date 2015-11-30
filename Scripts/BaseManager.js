@@ -2,21 +2,15 @@ var BaseManager = function(game){
     var that = {};
     
     var background; // object, the background of the base
-    
     var baseToolbar; // object, displays the stickers for the base
     var mainButton; // object, button back to main menu
     var grd; // object, gradient for font
-    
     var currentImage; // string, name of current image
-    
     var stickers; // array, list of stickers
     var maxStickers = 1; // int, max number of stickers player can place
-    
     var baseoffsetX = 130; // int, x screen offset for the base
     var baseoffsetY = 110; // int, y screen offset for the base
-    
     var backgroundSprite = ''; // string, name of the background image
-    
     var playerBaseData; // JSON string, data about the player base
     
     function Preload(){
@@ -95,7 +89,6 @@ var BaseManager = function(game){
             addEventtoSprite(temp);
             stickers.add(temp);
         }
-        
     }
     
     /*

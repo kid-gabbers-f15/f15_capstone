@@ -1,6 +1,7 @@
 var Player = function (game){
     //unit manager
     var that = {};
+    
     var unitpGroup = [];
     var unitSlotPositions = new Array(
         {x: 876, y: 795},
@@ -11,7 +12,7 @@ var Player = function (game){
         {x: 1070, y: 630},
         {x: 1195, y: 730},
         {x: 1280, y: 890}
-        );
+    );
     
     function Preload(){
         for(var i = 0; i < playerState.unitSlots; i++){
@@ -21,6 +22,10 @@ var Player = function (game){
         }
     }
     
+    /*
+    unitGroup - list of units
+    enemyGroup - list of enemies
+    */
     function OnCreate(unitGroup, enemypGroup){
         for(var i = 0; i < unitpGroup.length; i++)
         {

@@ -3,24 +3,20 @@ var ShopManager = function (game){
 
     var shopmenu;
     var topBaseBackground;
-    var exitButton;
+    var exitButton; // Button to exit the shop
     var showShop = false;
     var shopPage = 0;
-    var nextButton;
-    var backButton;
-    
-    var healthButton;
-    var slotButton;
-    var stickerButton;
-    
-    
-    var shopMenuItems;
-    var numOfSlots = 5;
-    var pageNum = 0;
-    var stickers = [];
-    var slots = [];
-    var grd;
-
+    var nextButton; // Button to go ahead in the list
+    var backButton; // Button to go back in the list
+    var healthButton; // Button to buy more health
+    var slotButton; // Button to buy more unit slots
+    var stickerButton; // Button to buy more sticker slots
+    var shopMenuItems; // Items in the shop
+    var numOfSlots = 5; // Slots to display per page
+    var pageNum = 0; // Page number the player is on in the shop
+    var stickers = []; // List of stickers
+    var slots = []; // List of shop slots
+    var grd; // Gradient for text
     var test_name;
 
     //Example Code for reference------
@@ -33,7 +29,11 @@ var ShopManager = function (game){
         }
     }
     */  
-  
+    
+    /*
+    index - int, position of slot
+    slot - object, slot object itself
+    */
     function addEventtoSlot(index, slot){
         slot.events.onInputDown.add(function(){
             clickSlot(index);
@@ -56,164 +56,170 @@ var ShopManager = function (game){
         //define the shop menu and the items that go within it
         initializeShopMenu();
         initializeShopItems();
-        
     }
     
     function Update(){
-        
        
     }
     
-     function initializeShopMenu(){
-            shopPage = 0;
-            nextButton = game.add.text(game.world.centerX * (9/5), game.world.centerY - 100, "Next");
-            nextButton.font = 'Revalia';
-            nextButton.fontSize = 25;
-            grd = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
-            grd.addColorStop(0, '#8ED6FF');   
-            grd.addColorStop(1, '#004CB3');
+    function initializeShopMenu(){
+        shopPage = 0;
+        
+        // Next Button
+        nextButton = game.add.text(game.world.centerX * (9/5), game.world.centerY - 100, "Next");
+        nextButton.font = 'Revalia';
+        nextButton.fontSize = 25;
+        grd = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
+        grd.addColorStop(0, '#8ED6FF');   
+        grd.addColorStop(1, '#004CB3');
+        nextButton.fill = grd;
+        nextButton.align = 'center';
+        nextButton.stroke = '#000000';
+        nextButton.strokeThickness = 2;
+        nextButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        nextButton.inputEnabled = true;
+        
+        nextButton.events.onInputOver.add(function(){
+            nextButton.fill = '#ff00ff';
+        }, this);
+        nextButton.events.onInputOut.add(function(){
             nextButton.fill = grd;
-            nextButton.align = 'center';
-            nextButton.stroke = '#000000';
-            nextButton.strokeThickness = 2;
-            nextButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-            nextButton.inputEnabled = true;
-            nextButton.events.onInputOver.add(function(){
-                nextButton.fill = '#ff00ff';
-            }, this);
-            nextButton.events.onInputOut.add(function(){
-                nextButton.fill = grd;
-            }, this);
-            nextButton.events.onInputDown.add(function(){
-                defEngine.click_sound();
-                    clickNext();
-            })
-                
-            backButton = game.add.text(game.world.centerX * (7/5) + 50, game.world.centerY - 100, "Back");
-            backButton.font = 'Revalia';
-            backButton.fontSize = 25;
-            grd = backButton.context.createLinearGradient(0, 0, 0, backButton.canvas.height);
-            grd.addColorStop(0, '#8ED6FF');   
-            grd.addColorStop(1, '#004CB3');
+        }, this);
+        nextButton.events.onInputDown.add(function(){
+            defEngine.click_sound();
+            clickNext();
+        });
+        
+        // Back Button
+        backButton = game.add.text(game.world.centerX * (7/5) + 50, game.world.centerY - 100, "Back");
+        backButton.font = 'Revalia';
+        backButton.fontSize = 25;
+        grd = backButton.context.createLinearGradient(0, 0, 0, backButton.canvas.height);
+        grd.addColorStop(0, '#8ED6FF');   
+        grd.addColorStop(1, '#004CB3');
+        backButton.fill = grd;
+        backButton.align = 'center';
+        backButton.stroke = '#000000';
+        backButton.strokeThickness = 2;
+        backButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        backButton.inputEnabled = true;
+        
+        backButton.events.onInputOver.add(function(){
+            backButton.fill = '#ff00ff';
+        }, this);
+        backButton.events.onInputOut.add(function(){
             backButton.fill = grd;
-            backButton.align = 'center';
-            backButton.stroke = '#000000';
-            backButton.strokeThickness = 2;
-            backButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-            backButton.inputEnabled = true;
-            backButton.events.onInputOver.add(function(){
-                backButton.fill = '#ff00ff';
-            }, this);
-            backButton.events.onInputOut.add(function(){
-                backButton.fill = grd;
-            }, this);
-            backButton.events.onInputDown.add(function(){
-                defEngine.click_sound();
-                    clickBack();
-            })
-            
-            healthButton = game.add.text(game.world.centerX * (6/5) - 50, 100, "Buy Health");
-            healthButton.font = 'Revalia';
-            healthButton.fontSize = 25;
-            grd = healthButton.context.createLinearGradient(0, 0, 0, healthButton.canvas.height);
-            grd.addColorStop(0, '#8ED6FF');   
-            grd.addColorStop(1, '#004CB3');
-            healthButton.fill = grd;
-            healthButton.align = 'center';
-            healthButton.stroke = '#000000';
-            healthButton.strokeThickness = 2;
-            healthButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-            healthButton.inputEnabled = true;
+        }, this);
+        backButton.events.onInputDown.add(function(){
+            defEngine.click_sound();
+            clickBack();
+        });
+        
+        // Health Button
+        healthButton = game.add.text(game.world.centerX * (6/5) - 50, 100, "Buy Health");
+        healthButton.font = 'Revalia';
+        healthButton.fontSize = 25;
+        grd = healthButton.context.createLinearGradient(0, 0, 0, healthButton.canvas.height);
+        grd.addColorStop(0, '#8ED6FF');   
+        grd.addColorStop(1, '#004CB3');
+        healthButton.fill = grd;
+        healthButton.align = 'center';
+        healthButton.stroke = '#000000';
+        healthButton.strokeThickness = 2;
+        healthButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        healthButton.inputEnabled = true;
 
-            healthButton.events.onInputOver.add(function(){
-                healthButton.fill = '#ff00ff';
-            }, this);
-            healthButton.events.onInputOut.add(function(){
-                healthButton.fill = grd;
-            }, this);
-            healthButton.events.onInputDown.add(function(){
-                   if(defEngine.globalHealth < 100 && playerState.gold >= ((100-defEngine.globalHealth) * 5)){
-                      playerState.gold -= (100 - defEngine.globalHealth) * 5;   //costs 5 gold for every global health healed.
-                      buyHealthPotion();
-                   }
-            })
-            
-            slotButton = game.add.text(game.world.centerX * (6/5) - 50, 150, "Buy Unit Slot");
-            slotButton.font = 'Revalia';
-            slotButton.fontSize = 25;
-            grd = slotButton.context.createLinearGradient(0, 0, 0, slotButton.canvas.height);
-            grd.addColorStop(0, '#8ED6FF');   
-            grd.addColorStop(1, '#004CB3');
+        healthButton.events.onInputOver.add(function(){
+            healthButton.fill = '#ff00ff';
+        }, this);
+        healthButton.events.onInputOut.add(function(){
+            healthButton.fill = grd;
+        }, this);
+        healthButton.events.onInputDown.add(function(){
+           if(defEngine.globalHealth < 100 && playerState.gold >= ((100-defEngine.globalHealth) * 5)){
+               playerState.gold -= (100 - defEngine.globalHealth) * 5;   //costs 5 gold for every global health healed.
+               buyHealthPotion();
+           }
+        });
+        
+        // Slot Button
+        slotButton = game.add.text(game.world.centerX * (6/5) - 50, 150, "Buy Unit Slot");
+        slotButton.font = 'Revalia';
+        slotButton.fontSize = 25;
+        grd = slotButton.context.createLinearGradient(0, 0, 0, slotButton.canvas.height);
+        grd.addColorStop(0, '#8ED6FF');   
+        grd.addColorStop(1, '#004CB3');
+        slotButton.fill = grd;
+        slotButton.align = 'center';
+        slotButton.stroke = '#000000';
+        slotButton.strokeThickness = 2;
+        slotButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        
+        slotButton.inputEnabled = true;
+        slotButton.events.onInputOver.add(function(){
+            slotButton.fill = '#ff00ff';
+        }, this);
+        slotButton.events.onInputOut.add(function(){
             slotButton.fill = grd;
-            slotButton.align = 'center';
-            slotButton.stroke = '#000000';
-            slotButton.strokeThickness = 2;
-            slotButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-            
-            slotButton.inputEnabled = true;
-            slotButton.events.onInputOver.add(function(){
-                slotButton.fill = '#ff00ff';
-            }, this);
-            slotButton.events.onInputOut.add(function(){
-                slotButton.fill = grd;
-            }, this);
-            slotButton.events.onInputDown.add(function(){
-                   if(playerState.unitSlots < 8 && playerState.gold >= 250){
-                       playerState.gold -= 250;
-                       buyUnitSlot();
-                   }
-            })
-            
-            stickerButton = game.add.text(game.world.centerX * (6/5) - 50, 200, "Buy Sticker Slot");
-            stickerButton.font = 'Revalia';
-            stickerButton.fontSize = 25;
-            grd = stickerButton.context.createLinearGradient(0, 0, 0, stickerButton.canvas.height);
-            grd.addColorStop(0, '#8ED6FF');   
-            grd.addColorStop(1, '#004CB3');
+        }, this);
+        slotButton.events.onInputDown.add(function(){
+           if(playerState.unitSlots < 8 && playerState.gold >= 250){
+               playerState.gold -= 250;
+               buyUnitSlot();
+           }
+        });
+        
+        // Sitcker Button
+        stickerButton = game.add.text(game.world.centerX * (6/5) - 50, 200, "Buy Sticker Slot");
+        stickerButton.font = 'Revalia';
+        stickerButton.fontSize = 25;
+        grd = stickerButton.context.createLinearGradient(0, 0, 0, stickerButton.canvas.height);
+        grd.addColorStop(0, '#8ED6FF');   
+        grd.addColorStop(1, '#004CB3');
+        stickerButton.fill = grd;
+        stickerButton.align = 'center';
+        stickerButton.stroke = '#000000';
+        stickerButton.strokeThickness = 2;
+        stickerButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        
+        stickerButton.inputEnabled = true;
+        stickerButton.events.onInputOver.add(function(){
+            stickerButton.fill = '#ff00ff';
+        }, this);
+        stickerButton.events.onInputOut.add(function(){
             stickerButton.fill = grd;
-            stickerButton.align = 'center';
-            stickerButton.stroke = '#000000';
-            stickerButton.strokeThickness = 2;
-            stickerButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-            
-            stickerButton.inputEnabled = true;
-            stickerButton.events.onInputOver.add(function(){
-                stickerButton.fill = '#ff00ff';
-            }, this);
-            stickerButton.events.onInputOut.add(function(){
-                stickerButton.fill = grd;
-            }, this);
-            stickerButton.events.onInputDown.add(function(){
-                   if(playerState.base.stickers < 30 && playerState.gold >= 100){
-                       playerState.gold -= 100;
-                       buyStickerSlot();
-                   }
-            })
+        }, this);
+        stickerButton.events.onInputDown.add(function(){
+           if(playerState.base.stickers < 30 && playerState.gold >= 100){
+               playerState.gold -= 100;
+               buyStickerSlot();
+           }
+        });
     }
     
     function clickBack(){
         if(pageNum > 0){
             pageNum -= 1;
             var i = pageNum * numOfSlots;
-                for(var n = 0; n < slots.length; ++n){
-                    while(i <= stickers.length){
-                        if(n < slots.length){
-                            slots[n].slot.loadTexture(stickers[i]);
-                            slots[n].keyIndex = i;
-                            slots[n].key = stickers[i];
-                            slots[n].slot.events.onInputDown.removeAll();
-                            slots[n].name.setText(shopMenuItems.list[i].name);
-                            slots[n].name.visible = true;
-                            slots[n].cost.setText(shopMenuItems.list[i].cost);
-                            slots[n].cost.visible = true;
-                            addEventtoSlot(i, slots[n].slot);
-                            slots[n].slot.visible = true;
-                            slots[n].slot.inputEnabled = true;
-                            ++n;
-                        }else{
-                            break;
-                        }
-                    ++i;
+            for(var n = 0; n < slots.length; ++n){
+                while(i <= stickers.length){
+                    if(n < slots.length){
+                        slots[n].slot.loadTexture(stickers[i]);
+                        slots[n].keyIndex = i;
+                        slots[n].key = stickers[i];
+                        slots[n].slot.events.onInputDown.removeAll();
+                        slots[n].name.setText(shopMenuItems.list[i].name);
+                        slots[n].name.visible = true;
+                        slots[n].cost.setText(shopMenuItems.list[i].cost);
+                        slots[n].cost.visible = true;
+                        addEventtoSlot(i, slots[n].slot);
+                        slots[n].slot.visible = true;
+                        slots[n].slot.inputEnabled = true;
+                        ++n;
+                    }else{
+                        break;
+                    }
+                ++i;
                 }
             }
         }
@@ -249,6 +255,9 @@ var ShopManager = function (game){
         }
     }
     
+    /*
+    clickSlot - int, number of slot clicked
+    */
     function clickSlot(slotClicked){
          for(var i = 0; i < slots.length; ++i){
             if(slotClicked === slots[i].keyIndex)
@@ -261,6 +270,7 @@ var ShopManager = function (game){
             }
         }
     }
+    
     function openShop(){
         shopmenu.visible = true;
         shopmenu.inputEnabled = true;
@@ -281,6 +291,7 @@ var ShopManager = function (game){
         showShop = true;
         showShopItems();
     }
+    
     function closeShop(){
         shopmenu.visible = false;
         shopmenu.inputEnabled = false;
@@ -301,6 +312,7 @@ var ShopManager = function (game){
         showShop = false;
         removeShopItems();
     }
+    
     function removeShopItems(){
         for(var i = 0; i < numOfSlots; ++i){
             slots[i].slot.visible = false;
@@ -310,6 +322,7 @@ var ShopManager = function (game){
             slots[i].slot.events.onInputDown.removeAll();
         }
     }
+    
     function showShopItems(){
         pageNum = 0;
         for(var i = 0; i < numOfSlots; i++){
@@ -326,6 +339,7 @@ var ShopManager = function (game){
             addEventtoSlot(i, slots[i].slot);
         }
     }
+    
     function initializeShopItems(){
                 for(var i = 0; i < numOfSlots; ++i){
                     var temp = {};
@@ -338,6 +352,7 @@ var ShopManager = function (game){
                     slots.push({slot:temp, key:stickers[i], keyIndex:i, name:name, cost:cost});
         }
     }
+    
     function getShowShop(){
         return showShop;
     }

@@ -25,8 +25,12 @@ var Enemy = function (parent, game){
     var speed = 100; // int, speed of the enemy
     var killed = false; // bool, has the enemy been killed this wave
     var text = ""; // string, text to be displayed on the enemy sprite
-    
+    var default_speed = speed; //default speeed of enemy when it spawns
     var click_sfx;
+    
+    var took_damage; //boolean that determines if this enemy took damage
+    var timeout_speed_active; //if there is an active timeout for the daamage taken. timeout object
+    var timer; //object that contains a timer. Destroyable.
     
     function Preload(){
         
@@ -46,6 +50,7 @@ var Enemy = function (parent, game){
         position.y = y;
         can_attack = true; // upon creation enemies should be able to attack instantly
         attack_delay = 0;
+        took_damage = false;
         
         click_sfx = game.add.audio('click');
 
@@ -95,6 +100,7 @@ var Enemy = function (parent, game){
             
             if(type == 2){
                 speed = 200;
+                default_speed = speed;
             }
         }
         
@@ -103,6 +109,7 @@ var Enemy = function (parent, game){
             click_sfx.play();
             damage(dmgPerClick); //damage per click
         });
+        
         uGroup = unitGroup; //the group that the enemies will attack
         enemypGroup.add(enemySprite);
         eGroup = enemypGroup;
@@ -135,6 +142,15 @@ var Enemy = function (parent, game){
     */
     function ResetEnemy(x, y, newTarget){
         //reset the enemies to their original status
+        
+        //if the  speed is going to potentially be altered, 
+        //clear the timeout and reset the speed already since the enemy is destroyed
+        if(timeout_speed_active){
+            clearTimeout(timer); 
+            speed = default_speed;
+        } 
+        
+        
         enemySprite.alpha = 1.0; ///reset the opacity to 100%
         if(boss){
             health = maxHealth*10;
@@ -191,12 +207,12 @@ var Enemy = function (parent, game){
         
         //if this enemy is a boss, then move the health accordingly
         if(boss){
-            healthBar.position.x = enemySprite.position.x - 110;
-            healthBar.position.y = enemySprite.position.y - 250;
+            //took damage so slow down the boss as it moves
+            move_boss_health();
         }
         else{
-            healthBar.position.x = enemySprite.position.x - 50;
-            healthBar.position.y = enemySprite.position.y - 70;
+            //took damage so slow down the enemy as it moves
+            move_reg_enemy_health(); 
         }
           
         var unitpGroup = defEngine.getPlayer().getUnitPGroup();
@@ -205,27 +221,27 @@ var Enemy = function (parent, game){
             retarget(unitpGroup);
         }
         
+        if(took_damage){
+            took_damage = false;
+            speed = 50;
+            
+            if(timeout_speed_active) clearTimeout(timer);
+            timer = setTimeout(resetSpeed, 500);
+            timeout_speed_active = true;
+        } 
+        
         game.physics.arcade.moveToXY(
             enemySprite,
             target.getUnitSprite().position.x,
             target.getUnitSprite().position.y,
             speed);
         
-        /*if(health <= 0){ //if they have been defeated
-            console.log("It's only a flesh wound.")
-            enemySprite.visible = false;
-            healthBar.visible = false;
-            enemySprite.inputEnabled = false;
-            isActive = false;
-            //text.visible = false;
-            console.log('text.visible: ' + text.visible);
-        }*/
-        
         position = enemySprite.position; //their new position
 
         //loop through units and enemies to check for collision
         //after a collision is detectd, pull the unit object and enemy object for interaction
         //var enemyGroup = defEngine.getEnemyManager().getEnemyGroup();
+        
         
         for(var i = 0; i < unitpGroup.length; i++){
             if(unitpGroup[i].get_children() > 0){
@@ -252,7 +268,7 @@ var Enemy = function (parent, game){
     */
     function damage(dmg, getGold){ //by default, get gold is undefined, so only need to check if explicitly false
         //dmg = 1000;
-    
+        took_damage = true;
         health = health - dmg;
         enemySprite.alpha = 1.0 - 1.0*(initialHealth-health)/initialHealth; //decrease the opacity depending on the ratio between currenthealth and initial health
         
@@ -270,6 +286,12 @@ var Enemy = function (parent, game){
         healthBar.updateCrop();
         
         if(health <= 0){ //if the enemy has been defeated
+            //if the  speed is going to potentially be altered, 
+            //clear the timeout and reset the speed already since the enemy is destroyed
+            if(timeout_speed_active){
+                clearTimeout(timer); 
+            } 
+            resetSpeed(); // reset the speed of the enemy since it died
             enemySprite.visible = false;
             healthBar.visible = false;
             enemySprite.inputEnabled = false;
@@ -344,6 +366,21 @@ var Enemy = function (parent, game){
     }
     function setKilled(bool){
         killed = bool;
+    }
+    
+    function move_boss_health(){ //move the boss towards the base 
+        healthBar.position.x = enemySprite.position.x - 110;
+        healthBar.position.y = enemySprite.position.y - 250;
+    }
+    
+    function move_reg_enemy_health(){ //move the enemy towrds the base
+        healthBar.position.x = enemySprite.position.x - 50;
+        healthBar.position.y = enemySprite.position.y - 70;
+    }
+    
+    function resetSpeed(){
+        speed = default_speed;
+        timeout_speed_active = false;
     }
     
     that.ResetEnemy = ResetEnemy;

@@ -1,32 +1,37 @@
 var BaseToolbar = function(game, parent){
     var that = {};
     
-    var backButton;
-    var nextButton;
-    var stickersButton;
-    var backgroundButton;
-    
-    var grd;
-    
-    var numOfSlots = 10;
-    var pageNum = 0;
-    var stickers = [];
-    var backgrounds = [];
-    var slots = [];
-    var backgroundSlots = [];
-    
+    var backButton; // Button to go back in the list
+    var nextButton; // Button to advace in the list
+    var stickersButton; // Button to show the list of stickers
+    var backgroundButton; // Button to show the list of backgrounds
+    var grd; // Gradient for buttons
+    var numOfSlots = 10; // Slots per page of the list
+    var pageNum = 0; // Page of the list you're on
+    var stickers = []; // List of stickers
+    var backgrounds = []; // List of backgrounds
+    var slots = []; // List of sticker slots
+    var backgroundSlots = []; // List of background slots
     var toolbar = '';
     
     function Preload(){
         
     }
     
+    /*
+    index - int, position in list
+    slot - object, slot object itself
+    */
     function addEventtoSlot(index, slot){
         slot.events.onInputDown.add(function(){
             clickSlot(index);
         });
     }
     
+    /*
+    index - int, position in list
+    slot - object, slot object itself
+    */
     function addEventtoBGSlot(index, slot){
         slot.events.onInputDown.add(function(){
             clickBackground(index);
@@ -77,6 +82,7 @@ var BaseToolbar = function(game, parent){
             slots[i].slot.inputEnabled = true;
         }
         
+        // Back Button
         backButton = game.add.text(50, 1000, "Back");
         backButton.font = 'Revalia';
         backButton.fontSize = 40;
@@ -96,12 +102,12 @@ var BaseToolbar = function(game, parent){
         backButton.events.onInputOut.add(function(){
             backButton.fill = grd;
         }, this);
-        
         backButton.events.onInputDown.add(function(){
             defEngine.click_sound();
             clickBack();
         });
         
+        // Next Button
         nextButton = game.add.text(1770, 1000, "Next");
         nextButton.font = 'Revalia';
         nextButton.fontSize = 40;
@@ -121,12 +127,12 @@ var BaseToolbar = function(game, parent){
         nextButton.events.onInputOut.add(function(){
             nextButton.fill = grd;
         }, this);
-        
         nextButton.events.onInputDown.add(function(){
             defEngine.click_sound();
             clickNext();
         });
         
+        // Background Button
         backgroundButton = game.add.text(300, 850, "Backgrounds");
         backgroundButton.font = 'Revalia';
         backgroundButton.fontSize = 30;
@@ -152,6 +158,7 @@ var BaseToolbar = function(game, parent){
             updateToolbar();
         });
         
+        // Sticker Button
         stickersButton = game.add.text(50, 850, "Stickers");
         stickersButton.font = 'Revalia';
         stickersButton.fontSize = 30;
@@ -310,6 +317,9 @@ var BaseToolbar = function(game, parent){
         }
     }
     
+    /*
+    slotClicked - int, number of slot clicked
+    */
     function clickSlot(slotClicked){
         console.log("Clicked slot #" + slotClicked);
         for(var i = 0; i < slots.length; ++i){
@@ -322,6 +332,9 @@ var BaseToolbar = function(game, parent){
         }
     }
     
+    /*
+    slotClicked - int, number of slot clicked
+    */
     function clickBackground(slotClicked){
         console.log("Clicked slot #" + slotClicked);
         for(var i = 0; i < backgroundSlots.length; ++i){

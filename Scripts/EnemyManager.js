@@ -2,55 +2,42 @@ var EnemyManager = function (game){
     var that = {};
 
     var x = 0;
+    var enemyGroup = []; // Group of all enemies
     var enemyGroup1 = []; // Group of enemy type 1
     var enemyGroup2 = []; // Group of enemy type 2
     var enemyGroup3 = []; // Group of enemy type 3
     var bossGroup = [];  // Group of bosses
-    var total_enemies = 10;
-    var enemy_count_in_wave = 0; //number of enemies from each group
-    var boss_count_in_wave = 1;
-    var killCnter = 0;
-    var enemies_from_each_group = 0;//number of enemies from each group
+    var total_enemies = 30; // Total number of enemies to create
+    var total_bosses = 10; // Total number of bosses to create
+    var enemy_count_in_wave = 0; // number of enemies from each group
+    var boss_count_in_wave = 1; // Bosses to start with in wave
+    var killCnter = 0; // Counter for kills per wave
     var grd; //gradient of the text for the wave number
     var waveNumText; // text for wave count
     var waveNumTextFont = 'Revalia'; //wave text font
     var numThatHasSpawned = 0; //number of enemies that have spawned
-    var numNeedsToBeSpawned = 0;
-    var currentWave;
+    var currentWave; // int, current wave the player is on
     var waveNumber = 0; //Keeps count of wave number. notify boss wave
-    var boss_wave = 3;
+    var boss_wave = 3; // how often the boss wave happens
     var ifBoss = 0; //zero is no boss one is boss
     var uGroup; // Group of units
     var eGroup; // Group of enemies
     var waitingForWave = false; // whether the timer for the wave is counting down
-    var waitingForStart = true;
-    var eSpawn = {};
+    var waitingForStart = true; // whether the game is waiting for the start button to be clicked
+    var eSpawn = {}; // Coordinates for enemies to spawn around
     eSpawn.x = 1850;
     eSpawn.y = 800;
     var enemyTextList = []; // Empty list for text used on enemies
     
     function Preload(){
-        for(var i = 0; i < total_enemies; ++i) //add each enemies to their respective arrays
-        {
-            var enemy1 = Enemy(that, game);
-            
-            enemy1.Preload();
-            enemyGroup1.push(enemy1);
+        for(var i = 0; i < total_enemies; ++i){ //add enemies to the array
+            var enemy = Enemy(that, game);
+            enemyGroup.push(enemy);
+        }
         
-            var enemy2 = Enemy(that, game);
-            
-            enemy2.Preload();
-            enemyGroup2.push(enemy2);
-       
-            var enemy3 = Enemy(that, game);
-            
-            enemy3.Preload();
-            enemyGroup3.push(enemy3);
-        
-            var enemyBoss = Enemy(that, game);
-            
-            enemyBoss.Preload();
-            bossGroup.push(enemyBoss);
+        for(var i = 0; i < total_bosses; i++){ // add bosses to the array
+            var boss = Enemy(that, game);
+            bossGroup.push(boss);
         }
         
         // Load text file for enemy sprite text
@@ -66,21 +53,10 @@ var EnemyManager = function (game){
         eGroup = enemypGroup;
         currentWave = 0;
         
-        //here we create the enemies. four different groups for four different types
-        
-        for(var i = 0; i < enemyGroup1.length; ++i){
-            enemyGroup1[i].OnCreate(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup, false, 1);
-            enemyGroup1[i].set_tisAttack(); //assert that the enemy is able to attack upon creation
-        }
-        
-        for(var i = 0; i < enemyGroup2.length; ++i){
-            enemyGroup2[i].OnCreate(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup, false, 2);
-            enemyGroup2[i].set_tisAttack(); //assert that the enemy is able to attack upon creation
-        }
-        
-        for(var i = 0; i < enemyGroup3.length; ++i){
-            enemyGroup3[i].OnCreate(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup, false, 3);
-            enemyGroup3[i].set_tisAttack(); //assert that the enemy is able to attack upon creation
+        // OnCreate for each enemy and boss
+        for(var i = 0; i < enemyGroup.length; ++i){
+            enemyGroup[i].OnCreate(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), unitGroup, enemypGroup, false, (Math.floor(i/10) + 1));
+            enemyGroup[i].set_tisAttack(); //assert that the enemy is able to attack upon creation
         }
         
         for(var i = 0; i < bossGroup.length; ++i){
@@ -104,8 +80,7 @@ var EnemyManager = function (game){
     }
     
     function Update(){
-        if(waitingForStart == false)
-        {
+        if(waitingForStart == false){
             if(ifBoss){ // Boss Wave
                 //console.log(killCnter + " < " + boss_count_in_wave)
                 if(killCnter < boss_count_in_wave){ // Bosses still alive
@@ -131,59 +106,24 @@ var EnemyManager = function (game){
                 }
             }
             else{ // Normal wave
-                //console.log(killCnter + " < " + enemy_count_in_wave*3);
+                //console.log(killCnter + " < " + enemy_count_in_wave);
                 var unitpGroup = defEngine.getPlayer().getUnitPGroup();
                 
-                //it is *3 because there are 3 groups of enemies. enemy_count_in_wave stands for enemies per group
-                if(killCnter < numNeedsToBeSpawned){ // Enemies still alive
-                    for(var i = 0; i < enemyGroup1.length; ++i){
-                        if(enemyGroup1[i].getIsActive() == true){ // enemy alive
-                            enemyGroup1[i].Update();
+                if(killCnter < enemy_count_in_wave){ // Enemies still alive
+                    for(var i = 0; i < enemyGroup.length; ++i){
+                        if(enemyGroup[i].getIsActive() == true){ // enemy alive
+                            enemyGroup[i].Update();
                         }
                         else{ // enemy dead
-                            if(enemyGroup1[i].getIsActive() == false && enemyGroup1[i].getKilled() == true){
-                                if(numThatHasSpawned < numNeedsToBeSpawned){
-                                    enemyGroup1[i].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
+                            if(enemyGroup[i].getIsActive() == false && enemyGroup[i].getKilled() == true){
+                                if(numThatHasSpawned < enemy_count_in_wave){
+                                    enemyGroup[i].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
                                     numThatHasSpawned++;
                                 }
                                 else{
-                                    enemyGroup1[i].setKilled(false);
+                                    enemyGroup[i].setKilled(false);
                                 }
-                                //console.log("killed e1");
-                                ++killCnter;
-                            }
-                        }
-                    }
-                    for(var i = 0; i < enemyGroup2.length; ++i){
-                        if(enemyGroup2[i].getIsActive() == true){ // enemy alive
-                            enemyGroup2[i].Update();
-                        }
-                        else{ // enemy dead
-                            if(enemyGroup2[i].getIsActive() == false && enemyGroup2[i].getKilled() == true){
-                                if(numThatHasSpawned < numNeedsToBeSpawned){
-                                   enemyGroup2[i].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
-                                   numThatHasSpawned++;
-                                }
-                                else{
-                                    enemyGroup2[i].setKilled(false);
-                                }
-                                ++killCnter;
-                            }
-                        }
-                    }
-                    for(var i = 0; i < enemyGroup3.length; ++i){
-                        if(enemyGroup3[i].getIsActive() == true){ // enemy alive
-                            enemyGroup3[i].Update();
-                        }
-                        else{ // enemy dead
-                            if(enemyGroup3[i].getIsActive() == false && enemyGroup3[i].getKilled() == true){
-                                if(numThatHasSpawned < numNeedsToBeSpawned){
-                                    enemyGroup3[i].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
-                                    numThatHasSpawned++;
-                                }
-                                else{
-                                    enemyGroup3[i].setKilled(false);
-                                }
+                                
                                 ++killCnter;
                             }
                         }
@@ -200,7 +140,6 @@ var EnemyManager = function (game){
     }
     
     function restartWave(){
-        numNeedsToBeSpawned = 0;
         numThatHasSpawned = 0;
         playerState.points = waveNumber; //keep track of high score for player
         killCnter = 0;
@@ -223,29 +162,19 @@ var EnemyManager = function (game){
             }
         }
         else{ // non boss wave
-            enemy_count_in_wave = enemy_count_in_wave + 1;
-        
-            numNeedsToBeSpawned = Math.ceil(enemy_count_in_wave * 2); //total number of enemies that will need to be spawned
-            console.log(numNeedsToBeSpawned);
-            if(enemy_count_in_wave>10){ //increase the number of enemies from each group
-                enemies_from_each_group = 10; //10 is the limit since each group only has 10 max. Memory limit.
-            }
-            else{
-                enemies_from_each_group = enemy_count_in_wave;
+            enemy_count_in_wave = enemy_count_in_wave + 2;
+            // Increase this ^ to increase count per wave
+            
+            if(enemy_count_in_wave > 30){ //increase the number of enemies from each group
+                enemy_count_in_wave = 30; //10 is the limit since each group only has 10 max. Memory limit.
             }
             
-            for(var j = 0; j < enemies_from_each_group; ++j){
+            for(var j = 0; j < enemy_count_in_wave; ++j){
                 //reset enemies to spawn again
-                if(numThatHasSpawned <= numNeedsToBeSpawned){
-                    enemyGroup1[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
+                if(numThatHasSpawned <= enemy_count_in_wave){
+                    enemyGroup[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
                     numThatHasSpawned++;
-                }else if(numThatHasSpawned <= numNeedsToBeSpawned){
-                    enemyGroup2[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
-                    numThatHasSpawned++;
-                }else if(numThatHasSpawned <= numNeedsToBeSpawned){
-                    enemyGroup3[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
-                    numThatHasSpawned++;
-                }else break;
+                }
             }
         }
         waitingForWave = false;
@@ -265,36 +194,17 @@ var EnemyManager = function (game){
     
     // Getters & Setters
     function getEnemyGroup(){
-        var enemyGroup = [];
-        for(var i=0; i<enemyGroup1.length; i++)
-        {
-            if(enemyGroup1[i].getIsActive() == true)
-            {
-                enemyGroup.push(enemyGroup1[i]);
-            }
+        var tempEnemyGroup=[];
+        
+        for(var i=0;i<enemyGroup.length;i++){
+            tempEnemyGroup.push(enemyGroup[i]);
         }
-        for(var i=0; i<enemyGroup2.length; i++)
-        {
-            if(enemyGroup2[i].getIsActive() == true)
-            {
-                enemyGroup.push(enemyGroup2[i]);
-            }
+        
+        for(var i=0;i<bossGroup.length;i++){
+            tempEnemyGroup.push(bossGroup[i]);
         }
-        for(var i=0; i<enemyGroup3.length; i++)
-        {
-            if(enemyGroup3[i].getIsActive() == true)
-            {
-                enemyGroup.push(enemyGroup3[i]);
-            }
-        }
-        for(var i=0; i<bossGroup.length; i++)
-        {
-            if(bossGroup[i].getIsActive() == true)
-            {
-                enemyGroup.push(bossGroup[i]);
-            }
-        }
-        return enemyGroup;
+        
+        return tempEnemyGroup;
     }
     function getEgroup(){
         return eGroup;

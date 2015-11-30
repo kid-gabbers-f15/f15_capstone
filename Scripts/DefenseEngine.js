@@ -22,8 +22,7 @@ var DefenseEngine = function (game){
     var friendBaseTarget = {};
     var gameOverText; // phaser text, displays when the game is over
     var gameOver = false; // whether the game is over or not
-    
-    var resume_sfx, pling_sfx, mclick_sfx;
+    var resume_sfx, pling_sfx, mclick_sfx; // sound effects
     
     /*
     base - object, player's base
@@ -161,9 +160,15 @@ var DefenseEngine = function (game){
         mclick_sfx = game.add.audio('button_click');
         
         //game.sound.setDecodedCallback([pause_sfx], start, this);
+        
+        toolTips = game.add.text(game.input.mousePointer.x, game.input.mousePointer.y, "");
+        toolTips.visible = false;
     }
     
     function Update(){
+        toolTips.position.x = game.input.mousePointer.x;
+        toolTips.position.y = game.input.mousePointer.y;
+        
         //check for collision with enemies with base window
         var enemyGroup = getEnemyManager().getEgroup();
         game.physics.arcade.collide(topBaseCollision, enemyGroup);
@@ -277,8 +282,7 @@ var DefenseEngine = function (game){
             pausetext.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
             pling_sfx.onStop.add(function(){
                 game.paused = true;
-                }
-                );
+            });
         });
         
         //base button creation
@@ -338,6 +342,7 @@ var DefenseEngine = function (game){
     }
 
     that.setGlobalHealth = function(h){globalHealth = h;}
+    that.globalHealth = function(){return globalHealth}
     that.addUnit = addUnit;
     that.Preload = Preload;
     that.Update = Update;

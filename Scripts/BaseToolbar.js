@@ -193,7 +193,8 @@ var BaseToolbar = function(game, parent){
                 slots[i].slot.visible = true;
                 slots[i].slot.inputEnabled = true;
             }
-        }else if(toolbar === 'backgrounds'){
+        }
+        else if(toolbar === 'backgrounds'){
              for(var i = 0; i < numOfSlots; ++i){
                 backgroundSlots[i].slot.visible = true;
                 backgroundSlots[i].slot.inputEnabled = true;

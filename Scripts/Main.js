@@ -11,6 +11,9 @@ WebFontConfig = {
         }
 };
     
+/*
+cname - string, cookie name
+*/
 function getCookie(cname){
 	if(user_player_state != undefined){
 		return user_player_state;
@@ -26,8 +29,7 @@ function getCookie(cname){
     return "";
 }
 
-//global game variable
-var game = {};
+var game = {}; //global game variable
 var LoadingText;
 var gradientText;
 var defEngine;
@@ -38,6 +40,8 @@ var PlayerStateJSONString = "";
 var playerState = {};
 var maxWidth = 960;
 var maxHeight = 540;
+
+var toolTips;
 
 var loadingScreen = function(){
     LoadingText = game.add.text(game.world.width/2, game.world.height/2, "Loading...");
@@ -73,12 +77,14 @@ var Boot = {
             playerState.gold = 500;
             playerState.points = 0;
             playerState.unitSlots = 3;
+            playerState.clickDamage = 10;
             playerState.base = {};
             playerState.base.background = "BaseBackground1";
             playerState.base.totalSlots = 5;
             playerState.base.list = [];
             playerState.purchases = [];
-        }else{
+        }
+        else{
             playerState = JSON.parse(cookie);
         }
         
@@ -91,7 +97,6 @@ var Boot = {
     create : function(){
         game.state.start("Preload");        
     }
-    
 };
 
 //Loads all assets

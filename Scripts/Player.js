@@ -47,10 +47,9 @@ var Player = function (game){
     
     function addSlot(unitGroup){
         var unit = Unit(that, game);
-            unit.Preload();
-            unit.OnCreate(unitSlotPositions[playerState.unitSlots-1].x, unitSlotPositions[playerState.unitSlots-1].y, unitGroup);
-            unitpGroup.push(unit);
-        
+        unit.Preload();
+        unit.OnCreate(unitSlotPositions[playerState.unitSlots-1].x, unitSlotPositions[playerState.unitSlots-1].y, unitGroup);
+        unitpGroup.push(unit);
     }
     
     that.addSlot = addSlot;

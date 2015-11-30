@@ -51,14 +51,14 @@ var ShopManager = function (game){
         shopMenuItems = JSON.parse(game.cache.getText('JSONshopMenuItems'));
         
         for(var i = 0; i < game.cache.getKeys().length; ++i){
-            if(game.cache.getKeys()[i].indexOf('Item') >= 0){
-                stickers.push(game.cache.getKeys()[i]);
-            }
            /* if(game.cache.getKeys()[i].indexOf('BaseBackground') >= 0){
                 stickers.push(game.cache.getKeys()[i]);
             }
             */
             if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
+                stickers.push(game.cache.getKeys()[i]);
+            }
+            if(game.cache.getKeys()[i].indexOf('Item') >= 0){
                 stickers.push(game.cache.getKeys()[i]);
             }
         }
@@ -68,7 +68,6 @@ var ShopManager = function (game){
     }
     
     function Update(){
-       
     }
     
     function initializeShopMenu(){
@@ -324,14 +323,14 @@ var ShopManager = function (game){
                     if(defEngine.canAfford(slots[i].cost._text)){
                         defEngine.spendGold(slots[i].cost._text);
                         slots[i].cost.setText("Owned");
+                        playerState.purchases.push(slots[i].key);
                     }
-                    playerState.purchases.push(slots[i].key);
-                    updatePurchases();
                 }
                 console.log(playerState.purchases);
                 console.log(slots[i].cost._text);
             }
         }
+        updatePurchases();
     }
     
     function openShop(){

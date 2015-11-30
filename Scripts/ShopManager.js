@@ -22,6 +22,7 @@ var ShopManager = function (game){
     var grd;
 
     var test_name;
+    var owned;
 
     //Example Code for reference------
     /*
@@ -52,6 +53,13 @@ var ShopManager = function (game){
             if(game.cache.getKeys()[i].indexOf('Item') >= 0){
                 stickers.push(game.cache.getKeys()[i]);
             }
+           /* if(game.cache.getKeys()[i].indexOf('BaseBackground') >= 0){
+                stickers.push(game.cache.getKeys()[i]);
+            }
+            */
+            if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
+                stickers.push(game.cache.getKeys()[i]);
+            }
         }
         //define the shop menu and the items that go within it
         initializeShopMenu();
@@ -60,7 +68,6 @@ var ShopManager = function (game){
     }
     
     function Update(){
-        
        
     }
     
@@ -232,6 +239,7 @@ var ShopManager = function (game){
                         slots[n].slot.events.onInputDown.removeAll();
                         slots[n].name.setText(shopMenuItems.list[i].name);
                         slots[n].cost.setText(shopMenuItems.list[i].cost);
+                        slots[n].cost.setText(shopMenuItems.list[i].cost);
                         addEventtoSlot(i, slots[n].slot);
                         ++n;
                     }else{
@@ -251,12 +259,27 @@ var ShopManager = function (game){
     
     function clickSlot(slotClicked){
          for(var i = 0; i < slots.length; ++i){
+             owned = false;
             if(slotClicked === slots[i].keyIndex)
             {
-                if(defEngine.canAfford(slots[i].cost._text))
+                for(var q = 0; q < playerState.purchases.length; q++)
                 {
-                    defEngine.spendGold(slots[i].cost._text);
+                    if(playerState.purchases[q] == slots[i].key)
+                    {
+                        owned = true;
+                    }
                 }
+                if(!owned) 
+                {
+                    if(defEngine.canAfford(slots[i].cost._text))
+                    {
+                        defEngine.spendGold(slots[i].cost._text);
+                        slots[i].cost.setText("Owned");
+                    }
+                    playerState.purchases.push(slots[i].key);
+                    updatePurchases();
+                }
+                console.log(playerState.purchases);
                 console.log(slots[i].cost._text);
             }
         }
@@ -336,8 +359,23 @@ var ShopManager = function (game){
                     cost = game.add.text(game.world.centerX * (9/5), 100 + 50*slots.length, shopMenuItems.list[i].cost);
                     temp.scale.set(.35, .35);
                     slots.push({slot:temp, key:stickers[i], keyIndex:i, name:name, cost:cost});
-        }
+                }
+        updatePurchases();        
+        showShopItems();
     }
+    function updatePurchases(){
+        for(var k = 0; k < playerState.purchases.length; k++)
+                {
+                    for(var j = 0; j < shopMenuItems.list.length; j++)
+                    {
+                        if(shopMenuItems.list[j].key == playerState.purchases[k])
+                        {
+                            shopMenuItems.list[j].cost = "Owned";
+                        }
+                    }
+                }
+    }
+    
     function getShowShop(){
         return showShop;
     }

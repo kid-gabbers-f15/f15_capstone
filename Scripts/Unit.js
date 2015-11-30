@@ -1,5 +1,6 @@
 var Unit = function (parent, game){
     var that = {};
+    
     var position = {};
     var unitSprite;
     var max_size = 10;
@@ -12,13 +13,11 @@ var Unit = function (parent, game){
     var bulletSprite2;
     var bulletSprite3;
     
-    
     var HealthBarSprite; //picture for the health bar of units
     var initial_Health_Bar_Sprite_Width; //inital width of the health bar image (before crops)
     var isHealthDisplayed = false;
     var CurrentUnitHealth; //current health of the displayed Unit;
     var initalUnitHealth;
-
     
     var focusedEnemy;
     var focusedEnemyDistance = 1000;
@@ -26,7 +25,6 @@ var Unit = function (parent, game){
     var focusedEnemyY;
     var bulletSpriteGroup;
     var damage_from_enemy = 5; //damage from enemy;
-
 
     var collision_group;
     var text;
@@ -42,8 +40,7 @@ var Unit = function (parent, game){
     var rifleCostText;
     var thisIsBase; //bool to see if this unit is a base, or just a single unit
     var showWeapons = false;
-
-    var pew_sfx;
+    var pew_sfx; // Sound effect for shooting
 
     function Preload(){
 
@@ -82,7 +79,6 @@ var Unit = function (parent, game){
         text.stroke = '#000000';
         text.strokeThickness = 2;
         text.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-        
         
         //set up the health sprite for each unit.
         HealthBarSprite = game.add.sprite(position.x - 50, position.y - 75, 'unit_health');
@@ -189,31 +185,24 @@ var Unit = function (parent, game){
             unitSprite.loadTexture('Unit2');
         });
         
-    
         unitSprite.events.onInputDown.add(function(){
             defEngine.click_sound();
-            if(bulletType=='none')
-            {
-                if(showWeapons == true)
-                {
+            if(bulletType=='none'){
+                if(showWeapons == true){
                     showWeapons = false;
                 }
-                else 
-                {
+                else {
                     showWeapons = true;
                 }
                 weaponSelection();
             }
-            else
-            {
+            else{
                 add_unit(1);
                 update_text();
             }
         });
         
-        
         pew_sfx = game.add.audio('pew');
-        
         
         unitGroup.add(unitSprite);
         collision_group = unitGroup;
@@ -226,29 +215,25 @@ var Unit = function (parent, game){
     
     function Update(){
         update_text();
-        if(curr_children == 0) //there are no units in this slot. 
-            {
-                set_health_invisible();
-                unitSprite.loadTexture('unit0');
-                unitSprite.alpha=0;
-                bulletType = 'none';
-            }else unitSprite.alpha = 1; //display a unit
+        if(curr_children == 0){ //there are no units in this slot. 
+            set_health_invisible();
+            unitSprite.loadTexture('unit0');
+            unitSprite.alpha=0;
+            bulletType = 'none';
+        }
+        else unitSprite.alpha = 1; //display a unit
         
         var enemyGroup = defEngine.getEnemyManager().getEnemyGroup();
         
-        if(shoot==true && curr_children>0) //do damage to an enemy
-        {
-            
+        if(shoot==true && curr_children>0){ //do damage to an enemy
             focusedEnemyDistance = 1000;
             focusedEnemy = undefined;
-            for(var i=0;i<enemyGroup.length;i++)
-            {
+            for(var i=0;i<enemyGroup.length;i++){
                 var enemyPos = enemyGroup[i].getPos();
                 var xd = enemyPos.x - position.x;
                 var yd = enemyPos.y - position.y;
                 var distance = Math.sqrt((xd*xd)+(yd*yd));
-                if(distance<=1000 && enemyGroup[i].getIsActive()==true && curr_children>0 && distance<focusedEnemyDistance && enemyGroup[i].getHealth()>0)
-                {
+                if(distance<=1000 && enemyGroup[i].getIsActive()==true && curr_children>0 && distance<focusedEnemyDistance && enemyGroup[i].getHealth()>0){
                     focusedEnemy = enemyGroup[i];
                     focusedEnemyDistance = distance;
                     focusedEnemyX = enemyPos.x;
@@ -256,12 +241,11 @@ var Unit = function (parent, game){
                 }
             }
             
-            if(focusedEnemy!=undefined)
-            {
-                if(bulletType=='pistol')
-                {
+            if(focusedEnemy!=undefined){
+                if(bulletType=='pistol'){
                     pew_sfx.play();
                     bulletSprite = game.add.sprite(position.x, position.y, 'bullet' );
+                    bulletSprite.scale.setTo(2,2);
                     game.physics.enable(bulletSprite, Phaser.Physics.ARCADE);
                     bulletSprite.checkWorldBounds = true;
                     bulletSprite.outOfBoundsKill = true;
@@ -269,18 +253,21 @@ var Unit = function (parent, game){
                         bulletSprite,
                         focusedEnemyX,
                         focusedEnemyY,
-                        1000);
+                        1000
+                    );
                     shoot=false;
                     setTimeout(resetShoot, 1000-(curr_children*50));
                     bulletSpriteGroup.add(bulletSprite);
                 }
-                else if(bulletType=='shotgun')
-                {
+                else if(bulletType=='shotgun'){
                     pew_sfx.play();
                     bulletSprite = game.add.sprite(position.x, position.y, 'bullet' );
                     bulletSprite2 = game.add.sprite(position.x, position.y, 'bullet' );
                     bulletSprite3 = game.add.sprite(position.x, position.y, 'bullet' );
-                    
+                    bulletSprite.scale.setTo(2,2);
+                    bulletSprite2.scale.setTo(2,2);
+                    bulletSprite3.scale.setTo(2,2);
+
                     game.physics.enable(bulletSprite, Phaser.Physics.ARCADE);
                     game.physics.enable(bulletSprite2, Phaser.Physics.ARCADE);
                     game.physics.enable(bulletSprite3, Phaser.Physics.ARCADE);
@@ -297,17 +284,20 @@ var Unit = function (parent, game){
                         bulletSprite,
                         focusedEnemyX + 20,
                         focusedEnemyY + 20,
-                        500);
+                        500
+                    );
                     game.physics.arcade.moveToXY(
                         bulletSprite2,
                         focusedEnemyX - 50,
                         focusedEnemyY - 50,
-                        500);
+                        500
+                    );
                     game.physics.arcade.moveToXY(
                         bulletSprite3,
                         focusedEnemyX - 20,
                         focusedEnemyY - 20,
-                        500);
+                        500
+                    );
                         
                     shoot=false;
                     setTimeout(resetShoot, 2000-(curr_children*50));
@@ -315,10 +305,10 @@ var Unit = function (parent, game){
                     bulletSpriteGroup.add(bulletSprite2);
                     bulletSpriteGroup.add(bulletSprite3);
                 }
-                else if(bulletType=='rifle')
-                {
+                else if(bulletType=='rifle'){
                     pew_sfx.play();
                     bulletSprite = game.add.sprite(position.x, position.y, 'bullet' );
+                    bulletSprite.scale.setTo(2,2);
                     game.physics.enable(bulletSprite, Phaser.Physics.ARCADE);
                     bulletSprite.checkWorldBounds = true;
                     bulletSprite.outOfBoundsKill = true;
@@ -334,37 +324,34 @@ var Unit = function (parent, game){
             }
         }
         
-        if(focusedEnemy!=undefined)
-        {
-            for(var i = 0; i<enemyGroup.length; i++)
-            {
-                if(enemyGroup[i]!=undefined && enemyGroup[i].getIsActive()==true)
-                {
+        if(focusedEnemy!=undefined){
+            for(var i = 0; i<enemyGroup.length; i++){
+                if(enemyGroup[i]!=undefined && enemyGroup[i].getIsActive()==true){
                     var currentBullet;
                     var hitEnemy;
-                    var derp = game.physics.arcade.overlap(enemyGroup[i].getEnemySprite(), bulletSpriteGroup, function(obj1, obj2){
+                    var overlap = game.physics.arcade.overlap(enemyGroup[i].getEnemySprite(), bulletSpriteGroup, function(obj1, obj2){
                         hitEnemy = obj1;
                         currentBullet = obj2;
                     }, null, null, this);
-                    if(derp == true)
+                    if(overlap == true)
                     {
                         removeBullet(currentBullet, enemyGroup[i]);
                     }
                 }
             }
-        } 
-        var herp = game.physics.arcade.overlap(topBaseCollision, bulletSpriteGroup, function(obj1, obj2){
-                        currentBullet = obj2;
-                }, null, null, this);
-                    if(herp == true)
-                    {
-                        removeBulletOnly(currentBullet);
-                    }
+        }
         
+        var overlap = game.physics.arcade.overlap(topBaseCollision, bulletSpriteGroup, function(obj1, obj2){
+            currentBullet = obj2;
+        }, null, null, this);
+        
+        if(overlap == true)
+        {
+            removeBulletOnly(currentBullet);
+        }
     }
     
     function damage(healthRemoved){
-        
         CurrentUnitHealth = CurrentUnitHealth - healthRemoved;
         HealthBarSprite.crop(new Phaser.Rectangle(0,0, initial_Health_Bar_Sprite_Width * CurrentUnitHealth/initalUnitHealth, 20));
         HealthBarSprite.updateCrop();
@@ -377,46 +364,34 @@ var Unit = function (parent, game){
                 HealthBarSprite.crop(new Phaser.Rectangle(0,0, initial_Health_Bar_Sprite_Width, 20));
                 HealthBarSprite.updateCrop();
             }
-            
         }
-        
-        
     }
     
     function damage_units(damage_from_enemy){
-        
         damage(damage_from_enemy);
-        
     }
     
     function add_unit(num_unit){
-        
-            
-            if(curr_children != max_size && defEngine.canAfford(cost)){
-               curr_children = curr_children + num_unit;
-               defEngine.spendGold(cost);
-               set_health_visible();
-               CurrentUnitHealth = 50;
-               initalUnitHealth = CurrentUnitHealth;
-               
-               
-            }
+        if(curr_children != max_size && defEngine.canAfford(cost)){
+           curr_children = curr_children + num_unit;
+           defEngine.spendGold(cost);
+           set_health_visible();
+           CurrentUnitHealth = 50;
+           initalUnitHealth = CurrentUnitHealth;
         }
+    }
         
     function set_health_visible(){
         isHealthDisplayed = true;
         HealthBarSprite.visible = isHealthDisplayed;
         HealthBarSprite.crop(new Phaser.Rectangle(0,0, 100, 20)); //crop it back to normal
         HealthBarSprite.updateCrop();
-        
     }
+    
     function set_health_invisible(){
         isHealthDisplayed = false;
         HealthBarSprite.visible = isHealthDisplayed;
-        
     }
-        
-        
         
     function getUnitSprite(){
         return unitSprite;
@@ -425,7 +400,6 @@ var Unit = function (parent, game){
     function get_children(){
         return curr_children;
     }
-    
     
     function update_text(){
         text.setText(curr_children);
@@ -447,17 +421,17 @@ var Unit = function (parent, game){
             enemy.damage(25);
         }
     }
+    
     function removeBulletOnly(bSprite){
         bSprite.destroy();
     }
+    
     function isAttack(){
         return can_attack;
     }
     
     function weaponSelection(){
-        
-        if(showWeapons == true)
-        {
+        if(showWeapons == true){
             pistolSprite.visible = true;
             shotgunSprite.visible = true;
             rifleSprite.visible = true;
@@ -468,8 +442,7 @@ var Unit = function (parent, game){
             pistolCostText.visible = true;
             shotgunCostText.visible = true;
         }
-        else
-        {
+        else{
             pistolSprite.visible = false;
             shotgunSprite.visible = false;
             rifleSprite.visible = false;

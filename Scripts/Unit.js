@@ -208,8 +208,7 @@ var Unit = function (parent, game){
         collision_group = unitGroup;
     }
     
-    function resetShoot()
-    {
+    function resetShoot(){
         shoot = true;
     }
     

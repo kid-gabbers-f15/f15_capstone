@@ -41,6 +41,8 @@ var playerState = {};
 var maxWidth = 960;
 var maxHeight = 540;
 
+var toolTips;
+
 var loadingScreen = function(){
     LoadingText = game.add.text(game.world.width/2, game.world.height/2, "Loading...");
     LoadingText.font = 'Revalia';
@@ -75,6 +77,7 @@ var Boot = {
             playerState.gold = 500;
             playerState.points = 0;
             playerState.unitSlots = 3;
+            playerState.clickDamage = 10;
             playerState.base = {};
             playerState.base.background = "BaseBackground1";
             playerState.base.totalSlots = 5;

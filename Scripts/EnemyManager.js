@@ -200,6 +200,10 @@ var EnemyManager = function (game){
             tempEnemyGroup.push(enemyGroup[i]);
         }
         
+        for(var i=0;i<bossGroup.length;i++){
+            tempEnemyGroup.push(bossGroup[i]);
+        }
+        
         return tempEnemyGroup;
     }
     function getEgroup(){

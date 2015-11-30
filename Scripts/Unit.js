@@ -324,11 +324,11 @@ var Unit = function (parent, game){
                 if(enemyGroup[i]!=undefined && enemyGroup[i].getIsActive()==true){
                     var currentBullet;
                     var hitEnemy;
-                    var derp = game.physics.arcade.overlap(enemyGroup[i].getEnemySprite(), bulletSpriteGroup, function(obj1, obj2){
+                    var overlap = game.physics.arcade.overlap(enemyGroup[i].getEnemySprite(), bulletSpriteGroup, function(obj1, obj2){
                         hitEnemy = obj1;
                         currentBullet = obj2;
                     }, null, null, this);
-                    if(derp == true)
+                    if(overlap == true)
                     {
                         removeBullet(currentBullet, enemyGroup[i]);
                     }
@@ -336,11 +336,11 @@ var Unit = function (parent, game){
             }
         }
         
-        var herp = game.physics.arcade.overlap(topBaseCollision, bulletSpriteGroup, function(obj1, obj2){
+        var overlap = game.physics.arcade.overlap(topBaseCollision, bulletSpriteGroup, function(obj1, obj2){
             currentBullet = obj2;
         }, null, null, this);
         
-        if(herp == true)
+        if(overlap == true)
         {
             removeBulletOnly(currentBullet);
         }

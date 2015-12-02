@@ -17,9 +17,10 @@ var ShopManager = function (game){
     var pageNum = 0; // Page number the player is on in the shop
     var stickers = []; // List of stickers
     var slots = []; // List of shop slots
-    var grd; // Gradient for text
+    var grd, grd2, grd3; // Gradient for text
     var test_name;
     var owned;
+    var label1, label2, label3;
 
     //Example Code for reference------
     /*
@@ -65,6 +66,12 @@ var ShopManager = function (game){
         //define the shop menu and the items that go within it
         initializeShopMenu();
         initializeShopItems();
+        
+        label1 = game.add.text(game.world.centerX * (8/5) + 50, 50, "Buy");
+        //label2 = game.add.text(game.world.centerX * (8/5), 50, "Description");
+        label3 = game.add.text(game.world.centerX * (9/5), 50, "Cost");
+        
+        
     }
     
     function Update(){
@@ -80,6 +87,9 @@ var ShopManager = function (game){
         grd = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
         grd.addColorStop(0, '#8ED6FF');   
         grd.addColorStop(1, '#004CB3');
+        grd3 = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
+        grd3.addColorStop(0, '#5cff42');   
+        grd3.addColorStop(1, '#4db300');
         nextButton.fill = grd;
         nextButton.align = 'center';
         nextButton.stroke = '#000000';
@@ -99,7 +109,7 @@ var ShopManager = function (game){
         });
         
         // Back Button
-        backButton = game.add.text(game.world.centerX * (7/5) + 50, game.world.centerY - 100, "Back");
+        backButton = game.add.text(game.world.centerX * (8/5) + 50, game.world.centerY - 100, "Back");
         backButton.font = 'Revalia';
         backButton.fontSize = 25;
         grd = backButton.context.createLinearGradient(0, 0, 0, backButton.canvas.height);
@@ -257,8 +267,8 @@ var ShopManager = function (game){
                         slots[n].keyIndex = i;
                         slots[n].key = stickers[i];
                         slots[n].slot.events.onInputDown.removeAll();
-                        slots[n].name.setText(shopMenuItems.list[i].name);
-                        slots[n].name.visible = true;
+                        //slots[n].name.setText(shopMenuItems.list[i].name);
+                        //slots[n].name.visible = true;
                         slots[n].cost.setText(shopMenuItems.list[i].cost);
                         slots[n].cost.visible = true;
                         addEventtoSlot(i, slots[n].slot);
@@ -273,6 +283,7 @@ var ShopManager = function (game){
                 }
             }
         }
+    updateCostText();
     }
     
     function clickNext(){
@@ -286,8 +297,7 @@ var ShopManager = function (game){
                         slots[n].keyIndex = i;
                         slots[n].key = stickers[i];
                         slots[n].slot.events.onInputDown.removeAll();
-                        slots[n].name.setText(shopMenuItems.list[i].name);
-                        slots[n].cost.setText(shopMenuItems.list[i].cost);
+                        //slots[n].name.setText(shopMenuItems.list[i].name);
                         slots[n].cost.setText(shopMenuItems.list[i].cost);
                         addEventtoSlot(i, slots[n].slot);
                         ++n;
@@ -305,6 +315,7 @@ var ShopManager = function (game){
                 }
             }
         }
+        updateCostText();
     }
     
     /*
@@ -323,6 +334,7 @@ var ShopManager = function (game){
                     if(defEngine.canAfford(slots[i].cost._text)){
                         defEngine.spendGold(slots[i].cost._text);
                         slots[i].cost.setText("Owned");
+                        slots[i].cost.fill = grd3;
                         playerState.purchases.push(slots[i].key);
                     }
                 }
@@ -333,73 +345,22 @@ var ShopManager = function (game){
         updatePurchases();
     }
     
-    function openShop(){
-        shopmenu.visible = true;
-        shopmenu.inputEnabled = true;
-        exitButton.visible = true;
-        exitButton.inputEnabled = true;
-        backButton.visible = true;
-        backButton.inputEnabled = true;
-        nextButton.visible = true;
-        nextButton.inputEnabled = true;
-        
-        healthButton.visible = true;
-        healthButton.inputEnabled = true;
-        slotButton.visible = true;
-        slotButton.inputEnabled = true;
-        stickerButton.visible = true;
-        stickerButton.inputEnabled = true;
-        
-        showShop = true;
-        showShopItems();
-    }
-    
-    function closeShop(){
-        shopmenu.visible = false;
-        shopmenu.inputEnabled = false;
-        exitButton.visible = false;
-        exitButton.inputEnabled = false;
-        backButton.visible = false;
-        backButton.inputEnabled = false;
-        nextButton.visible = false;
-        nextButton.inputEnabled = false;
-        
-        healthButton.visible = false;
-        healthButton.inputEnabled = false;
-        slotButton.visible = false;
-        slotButton.inputEnabled = false;
-        stickerButton.visible = false;
-        stickerButton.inputEnabled = false;
-        
-        showShop = false;
-        removeShopItems();
-    }
-    
-    function removeShopItems(){
-        for(var i = 0; i < numOfSlots; ++i){
-            slots[i].slot.visible = false;
-            slots[i].slot.inputEnabled = false;
-            slots[i].name.visible = false;
-            slots[i].cost.visible = false;
-            slots[i].slot.events.onInputDown.removeAll();
-        }
-    }
-    
     function showShopItems(){
         pageNum = 0;
         for(var i = 0; i < numOfSlots; i++){
             slots[i].slot.visible = true;
             slots[i].slot.inputEnabled = true;
-            slots[i].name.visible = true;
+            //slots[i].name.visible = true;
             slots[i].cost.visible = true;
             
             slots[i].slot.loadTexture(stickers[i]);
             slots[i].keyIndex = i;
             slots[i].key = stickers[i];
-            slots[i].name.setText(shopMenuItems.list[i].name);
+            //slots[i].name.setText(shopMenuItems.list[i].name);
             slots[i].cost.setText(shopMenuItems.list[i].cost);
             addEventtoSlot(i, slots[i].slot);
         }
+        updateCostText();
     }
     
     function initializeShopItems(){
@@ -407,11 +368,25 @@ var ShopManager = function (game){
             var temp = {};
             var name;
             var cost;
-            temp = game.add.sprite(game.world.centerX * (7/5) + 50, 100 + 50*slots.length, stickers[i]);
-            name = game.add.text(game.world.centerX * (8/5), 100 + 50*slots.length, shopMenuItems.list[i].name);
+            
+            temp = game.add.sprite(game.world.centerX * (8/5) + 50, 100 + 50*slots.length, stickers[i]);
+            //name = game.add.text(game.world.centerX * (8/5), 100 + 50*slots.length, shopMenuItems.list[i].name);
             cost = game.add.text(game.world.centerX * (9/5), 100 + 50*slots.length, shopMenuItems.list[i].cost);
+            cost.font = 'Revalia';
+            cost.fontSize = 25;
+            grd2 = cost.context.createLinearGradient(0, 0, 0, cost.canvas.height);
+            grd2.addColorStop(0, '#fff08e');   
+            grd2.addColorStop(1, '#a6b300');
+            cost.fill = grd2;
+            cost.align = 'center';
+            cost.stroke = '#000000';
+            cost.strokeThickness = 2;
+            cost.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+            cost.inputEnabled = false;
+            
             temp.scale.set(.35, .35);
-            slots.push({slot:temp, key:stickers[i], keyIndex:i, name:name, cost:cost});
+            //slots.push({slot:temp, key:stickers[i], keyIndex:i, name:name, cost:cost});
+            slots.push({slot:temp, key:stickers[i], keyIndex:i, cost:cost});
         }
         updatePurchases();        
         showShopItems();
@@ -426,6 +401,18 @@ var ShopManager = function (game){
                     shopMenuItems.list[j].cost = "Owned";
                 }
             }
+        }
+        updateCostText();
+    }
+    
+    function updateCostText(){
+        for(var q = 0; q < numOfSlots; q++)
+        {
+            if(slots[q].cost._text == "Owned")
+            {
+                slots[q].cost.fill = grd3;
+            }
+            else slots[q].cost.fill = grd2;
         }
     }
     
@@ -460,10 +447,7 @@ var ShopManager = function (game){
     that.clickBack = clickBack;
     that.clickNext = clickNext;
     that.clickSlot = clickSlot;
-    that.removeShopItems = removeShopItems;
-    that.closeShop = closeShop;
     that.showShopItems = showShopItems;
-    that.openShop = openShop;
     that.getShowShop = getShowShop;
 
     return that;

@@ -182,6 +182,7 @@ var UnitToolbar = function(game, parent){
             if(slotClicked === slots[i].keyIndex){
                 console.log(slots[i].key);
                 //set unit slot to = this
+                defEngine.setUnitSprite(slots[i].key);
             }
         }
     }

@@ -25,6 +25,8 @@ var DefenseEngine = function (game){
     var resume_sfx, pling_sfx, mclick_sfx; // sound effects
     var toolbar;
     
+    var unitSprite;
+    
     /*
     base - object, player's base
     */
@@ -349,8 +351,10 @@ var DefenseEngine = function (game){
         mclick_sfx.play();
     }
 
+    that.setUnitSprite = function setUnitSprite(spriteName){unitSprite = spriteName;}
+    that.getUnitSprite = function getUnitSprite(){return unitSprite;}
     that.setGlobalHealth = function(h){globalHealth = h;}
-    that.globalHealth = function(){return globalHealth}
+    that.globalHealth = function(){return globalHealth;}
     that.addUnit = addUnit;
     that.Preload = Preload;
     that.Update = Update;

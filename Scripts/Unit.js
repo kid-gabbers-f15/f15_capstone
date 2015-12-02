@@ -87,8 +87,7 @@ var Unit = function (parent, game){
         CurrentUnitHealth = 50;
         initial_Health_Bar_Sprite_Width = HealthBarSprite.width;
         
-        setUnit('BaseSticker1');
-        
+
         /*pistolSprite = game.add.sprite(position.x-150, position.y, 'Unit3');
         pistolCostText = game.add.text(position.x-150, position.y, '5');
         pistolCostText.anchor.set(0.25);
@@ -189,13 +188,8 @@ var Unit = function (parent, game){
         unitSprite.events.onInputDown.add(function(){
             defEngine.click_sound();
             if(bulletType=='none'){
-                /*if(showWeapons == true){
-                    showWeapons = false;
-                }
-                else {
-                    showWeapons = true;
-                }
-                weaponSelection();*/
+                console.log(defEngine.getUnitSprite());
+                setUnit(defEngine.getUnitSprite());
             }
             else{
                 add_unit(1);
@@ -447,10 +441,8 @@ var Unit = function (parent, game){
     
     function setUnit(spriteName){
         unitSprite.loadTexture(spriteName);
-        //console.log(shopMenuItems);
         for(var i = 0; i < shopMenuItems.list.length; ++i){
-            //console.log(shopMenuItems[i].key + " = " + spriteName);
-            if(shopMenuItems.list[i].key == spriteName){
+            if(shopMenuItems.list[i].key === spriteName){
                 bulletType = shopMenuItems.list[i].type;
                 dmgAmount = shopMenuItems.list[i].cost/10;
                 break;
@@ -458,7 +450,7 @@ var Unit = function (parent, game){
         }
         console.log(bulletType);
         unitSprite.alpha=1;
-        curr_children=1;
+        add_unit(1);
     }
     
     that.setUnitSprite = function(newSprite){ unitSprite = newSprite;}

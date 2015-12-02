@@ -3,6 +3,7 @@ var Unit = function (parent, game){
     
     var position = {};
     var unitSprite;
+    
     var max_size = 10;
     var curr_children = 0; //number of units within the unit slot
     var old_curr_children = 0;
@@ -32,14 +33,14 @@ var Unit = function (parent, game){
     
     var bulletType = 'none';
     var cost;
-    var pistolSprite;
-    var shotgunSprite;
-    var rifleSprite;
-    var pistolCostText;
-    var shotgunCostText;
-    var rifleCostText;
+    //var pistolSprite;
+    //var shotgunSprite;
+    //var rifleSprite;
+    //var pistolCostText;
+    //var shotgunCostText;
+    //var rifleCostText;
     var thisIsBase; //bool to see if this unit is a base, or just a single unit
-    var showWeapons = false;
+    //var showWeapons = false;
     var pew_sfx; // Sound effect for shooting
 
     function Preload(){
@@ -217,7 +218,9 @@ var Unit = function (parent, game){
             unitSprite.alpha=0;
             bulletType = 'none';
         }
-        else unitSprite.alpha = 1; //display a unit
+        else{
+            unitSprite.alpha = 1; //display a unit
+        }
         
         var enemyGroup = defEngine.getEnemyManager().getEnemyGroup();
         

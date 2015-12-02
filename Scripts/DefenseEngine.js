@@ -160,9 +160,15 @@ var DefenseEngine = function (game){
         mclick_sfx = game.add.audio('button_click');
         
         //game.sound.setDecodedCallback([pause_sfx], start, this);
+        
+        toolTips = game.add.text(game.input.mousePointer.x, game.input.mousePointer.y, "");
+        toolTips.visible = false;
     }
     
     function Update(){
+        toolTips.position.x = game.input.mousePointer.x;
+        toolTips.position.y = game.input.mousePointer.y;
+        
         //check for collision with enemies with base window
         var enemyGroup = getEnemyManager().getEgroup();
         game.physics.arcade.collide(topBaseCollision, enemyGroup);
@@ -336,6 +342,7 @@ var DefenseEngine = function (game){
     }
 
     that.setGlobalHealth = function(h){globalHealth = h;}
+    that.globalHealth = function(){return globalHealth}
     that.addUnit = addUnit;
     that.Preload = Preload;
     that.Update = Update;

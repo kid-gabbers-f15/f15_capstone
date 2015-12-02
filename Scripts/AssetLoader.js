@@ -11,7 +11,7 @@ var AssetLoader = function(game){
         game.load.image('Unit3',KCG_ASSET_PATH+'Unit_Pictures/Unicorn1.png');
 
         game.load.image('unit0', KCG_ASSET_PATH+'Unit_Pictures/unit0.png');
-        game.load.image('bullet', KCG_ASSET_PATH+'bullet.png');
+        game.load.image('bullet', KCG_ASSET_PATH+'bulletSprite.png');
         game.load.image('pistolSprite', KCG_ASSET_PATH+'Bullet_Type_Pictures/pistol.png');
         game.load.image('shotgunSprite', KCG_ASSET_PATH+'Bullet_Type_Pictures/shotgun.png');
         game.load.image('rifleSprite', KCG_ASSET_PATH+'Bullet_Type_Pictures/rifle.png');

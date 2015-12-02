@@ -11,6 +11,7 @@ var ShopManager = function (game){
     var healthButton; // Button to buy more health
     var slotButton; // Button to buy more unit slots
     var stickerButton; // Button to buy more sticker slots
+    var upgradeClickButton; // Button to increase strength of click
     var shopMenuItems; // Items in the shop
     var numOfSlots = 5; // Slots to display per page
     var pageNum = 0; // Page number the player is on in the shop
@@ -18,6 +19,7 @@ var ShopManager = function (game){
     var slots = []; // List of shop slots
     var grd; // Gradient for text
     var test_name;
+    var owned;
 
     //Example Code for reference------
     /*
@@ -49,6 +51,13 @@ var ShopManager = function (game){
         shopMenuItems = JSON.parse(game.cache.getText('JSONshopMenuItems'));
         
         for(var i = 0; i < game.cache.getKeys().length; ++i){
+           /* if(game.cache.getKeys()[i].indexOf('BaseBackground') >= 0){
+                stickers.push(game.cache.getKeys()[i]);
+            }
+            */
+            if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
+                stickers.push(game.cache.getKeys()[i]);
+            }
             if(game.cache.getKeys()[i].indexOf('Item') >= 0){
                 stickers.push(game.cache.getKeys()[i]);
             }
@@ -59,7 +68,6 @@ var ShopManager = function (game){
     }
     
     function Update(){
-       
     }
     
     function initializeShopMenu(){
@@ -131,13 +139,17 @@ var ShopManager = function (game){
 
         healthButton.events.onInputOver.add(function(){
             healthButton.fill = '#ff00ff';
+            toolTips.text = "Cost: " + ((100 - defEngine.globalHealth()) * 5);
+            toolTips.visible = true;
+            game.world.bringToTop(toolTips);
         }, this);
         healthButton.events.onInputOut.add(function(){
             healthButton.fill = grd;
+            toolTips.visible = false;
         }, this);
         healthButton.events.onInputDown.add(function(){
-           if(defEngine.globalHealth < 100 && playerState.gold >= ((100-defEngine.globalHealth) * 5)){
-               playerState.gold -= (100 - defEngine.globalHealth) * 5;   //costs 5 gold for every global health healed.
+           if(defEngine.globalHealth < 100 && playerState.gold >= ((100-defEngine.globalHealth()) * 5)){
+               playerState.gold -= (100 - defEngine.globalHealth()) * 5;   //costs 5 gold for every global health healed.
                buyHealthPotion();
            }
         });
@@ -158,13 +170,16 @@ var ShopManager = function (game){
         slotButton.inputEnabled = true;
         slotButton.events.onInputOver.add(function(){
             slotButton.fill = '#ff00ff';
+            toolTips.text = "Cost: " + (250 * (playerState.unitSlots - 2));
+            toolTips.visible = true;
         }, this);
         slotButton.events.onInputOut.add(function(){
             slotButton.fill = grd;
+            toolTips.visible = false;
         }, this);
         slotButton.events.onInputDown.add(function(){
-           if(playerState.unitSlots < 8 && playerState.gold >= 250){
-               playerState.gold -= 250;
+           if(playerState.unitSlots < 8 && playerState.gold >= (250 * (playerState.unitSlots - 2))){
+               playerState.gold -= (250 * (playerState.unitSlots - 2));
                buyUnitSlot();
            }
         });
@@ -185,14 +200,48 @@ var ShopManager = function (game){
         stickerButton.inputEnabled = true;
         stickerButton.events.onInputOver.add(function(){
             stickerButton.fill = '#ff00ff';
+            toolTips.text = "Cost: " + 100;
+            toolTips.visible = true;
+            game.world.bringToTop(toolTips);
         }, this);
         stickerButton.events.onInputOut.add(function(){
             stickerButton.fill = grd;
+            toolTips.visible = false;
         }, this);
         stickerButton.events.onInputDown.add(function(){
            if(playerState.base.stickers < 30 && playerState.gold >= 100){
                playerState.gold -= 100;
                buyStickerSlot();
+           }
+        });
+        
+        upgradeClickButton = game.add.text(game.world.centerX * (6/5) - 50, 250, "Buy Strength Potion");
+        upgradeClickButton.font = 'Revalia';
+        upgradeClickButton.fontSize = 25;
+        grd = upgradeClickButton.context.createLinearGradient(0, 0, 0, upgradeClickButton.canvas.height);
+        grd.addColorStop(0, '#8ED6FF');   
+        grd.addColorStop(1, '#004CB3');
+        upgradeClickButton.fill = grd;
+        upgradeClickButton.align = 'center';
+        upgradeClickButton.stroke = '#000000';
+        upgradeClickButton.strokeThickness = 2;
+        upgradeClickButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        
+        upgradeClickButton.inputEnabled = true;
+        upgradeClickButton.events.onInputOver.add(function(){
+            upgradeClickButton.fill = '#ff00ff';
+            toolTips.text = "Cost: " + (playerState.clickDamage * 50);
+            toolTips.visible = true;
+            game.world.bringToTop(toolTips);
+        }, this);
+        upgradeClickButton.events.onInputOut.add(function(){
+            upgradeClickButton.fill = grd;
+            toolTips.visible = false;
+        }, this);
+        upgradeClickButton.events.onInputDown.add(function(){
+           if(playerState.clickDamage < 100 && playerState.gold >= (playerState.clickDamage * 50)){
+               playerState.gold -= playerState.clickDamage * 50;
+               buyStrongerClick();
            }
         });
     }
@@ -216,7 +265,8 @@ var ShopManager = function (game){
                         slots[n].slot.visible = true;
                         slots[n].slot.inputEnabled = true;
                         ++n;
-                    }else{
+                    }
+                    else{
                         break;
                     }
                 ++i;
@@ -238,12 +288,14 @@ var ShopManager = function (game){
                         slots[n].slot.events.onInputDown.removeAll();
                         slots[n].name.setText(shopMenuItems.list[i].name);
                         slots[n].cost.setText(shopMenuItems.list[i].cost);
+                        slots[n].cost.setText(shopMenuItems.list[i].cost);
                         addEventtoSlot(i, slots[n].slot);
                         ++n;
-                    }else{
+                    }
+                    else{
                         break;
                     }
-                ++i;
+                    ++i;
                 }
                 if(n < slots.length){
                     slots[n].slot.visible = false;
@@ -260,15 +312,25 @@ var ShopManager = function (game){
     */
     function clickSlot(slotClicked){
          for(var i = 0; i < slots.length; ++i){
-            if(slotClicked === slots[i].keyIndex)
-            {
-                if(defEngine.canAfford(slots[i].cost._text))
-                {
-                    defEngine.spendGold(slots[i].cost._text);
+            owned = false;
+            if(slotClicked === slots[i].keyIndex){
+                for(var q = 0; q < playerState.purchases.length; q++){
+                    if(playerState.purchases[q] == slots[i].key){
+                        owned = true;
+                    }
                 }
+                if(!owned) {
+                    if(defEngine.canAfford(slots[i].cost._text)){
+                        defEngine.spendGold(slots[i].cost._text);
+                        slots[i].cost.setText("Owned");
+                        playerState.purchases.push(slots[i].key);
+                    }
+                }
+                console.log(playerState.purchases);
                 console.log(slots[i].cost._text);
             }
         }
+        updatePurchases();
     }
     
     function openShop(){
@@ -341,15 +403,29 @@ var ShopManager = function (game){
     }
     
     function initializeShopItems(){
-                for(var i = 0; i < numOfSlots; ++i){
-                    var temp = {};
-                    var name;
-                    var cost;
-                    temp = game.add.sprite(game.world.centerX * (7/5) + 50, 100 + 50*slots.length, stickers[i]);
-                    name = game.add.text(game.world.centerX * (8/5), 100 + 50*slots.length, shopMenuItems.list[i].name);
-                    cost = game.add.text(game.world.centerX * (9/5), 100 + 50*slots.length, shopMenuItems.list[i].cost);
-                    temp.scale.set(.35, .35);
-                    slots.push({slot:temp, key:stickers[i], keyIndex:i, name:name, cost:cost});
+        for(var i = 0; i < numOfSlots; ++i){
+            var temp = {};
+            var name;
+            var cost;
+            temp = game.add.sprite(game.world.centerX * (7/5) + 50, 100 + 50*slots.length, stickers[i]);
+            name = game.add.text(game.world.centerX * (8/5), 100 + 50*slots.length, shopMenuItems.list[i].name);
+            cost = game.add.text(game.world.centerX * (9/5), 100 + 50*slots.length, shopMenuItems.list[i].cost);
+            temp.scale.set(.35, .35);
+            slots.push({slot:temp, key:stickers[i], keyIndex:i, name:name, cost:cost});
+        }
+        updatePurchases();        
+        showShopItems();
+    }
+    function updatePurchases(){
+        for(var k = 0; k < playerState.purchases.length; k++)
+        {
+            for(var j = 0; j < shopMenuItems.list.length; j++)
+            {
+                if(shopMenuItems.list[j].key == playerState.purchases[k])
+                {
+                    shopMenuItems.list[j].cost = "Owned";
+                }
+            }
         }
     }
     
@@ -372,6 +448,10 @@ var ShopManager = function (game){
     //replenish global health
     function buyHealthPotion(){
         defEngine.setGlobalHealth(100);
+    }
+    
+    function buyStrongerClick(){
+        playerState.clickDamage += 10;
     }
     
     that.Preload = Preload;

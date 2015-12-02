@@ -208,8 +208,7 @@ var Unit = function (parent, game){
         collision_group = unitGroup;
     }
     
-    function resetShoot()
-    {
+    function resetShoot(){
         shoot = true;
     }
     
@@ -245,6 +244,7 @@ var Unit = function (parent, game){
                 if(bulletType=='pistol'){
                     pew_sfx.play();
                     bulletSprite = game.add.sprite(position.x, position.y, 'bullet' );
+                    bulletSprite.scale.setTo(2,2);
                     game.physics.enable(bulletSprite, Phaser.Physics.ARCADE);
                     bulletSprite.checkWorldBounds = true;
                     bulletSprite.outOfBoundsKill = true;
@@ -263,7 +263,10 @@ var Unit = function (parent, game){
                     bulletSprite = game.add.sprite(position.x, position.y, 'bullet' );
                     bulletSprite2 = game.add.sprite(position.x, position.y, 'bullet' );
                     bulletSprite3 = game.add.sprite(position.x, position.y, 'bullet' );
-                    
+                    bulletSprite.scale.setTo(2,2);
+                    bulletSprite2.scale.setTo(2,2);
+                    bulletSprite3.scale.setTo(2,2);
+
                     game.physics.enable(bulletSprite, Phaser.Physics.ARCADE);
                     game.physics.enable(bulletSprite2, Phaser.Physics.ARCADE);
                     game.physics.enable(bulletSprite3, Phaser.Physics.ARCADE);
@@ -304,6 +307,7 @@ var Unit = function (parent, game){
                 else if(bulletType=='rifle'){
                     pew_sfx.play();
                     bulletSprite = game.add.sprite(position.x, position.y, 'bullet' );
+                    bulletSprite.scale.setTo(2,2);
                     game.physics.enable(bulletSprite, Phaser.Physics.ARCADE);
                     bulletSprite.checkWorldBounds = true;
                     bulletSprite.outOfBoundsKill = true;
@@ -324,11 +328,11 @@ var Unit = function (parent, game){
                 if(enemyGroup[i]!=undefined && enemyGroup[i].getIsActive()==true){
                     var currentBullet;
                     var hitEnemy;
-                    var derp = game.physics.arcade.overlap(enemyGroup[i].getEnemySprite(), bulletSpriteGroup, function(obj1, obj2){
+                    var overlap = game.physics.arcade.overlap(enemyGroup[i].getEnemySprite(), bulletSpriteGroup, function(obj1, obj2){
                         hitEnemy = obj1;
                         currentBullet = obj2;
                     }, null, null, this);
-                    if(derp == true)
+                    if(overlap == true)
                     {
                         removeBullet(currentBullet, enemyGroup[i]);
                     }
@@ -336,11 +340,11 @@ var Unit = function (parent, game){
             }
         }
         
-        var herp = game.physics.arcade.overlap(topBaseCollision, bulletSpriteGroup, function(obj1, obj2){
+        var overlap = game.physics.arcade.overlap(topBaseCollision, bulletSpriteGroup, function(obj1, obj2){
             currentBullet = obj2;
         }, null, null, this);
         
-        if(herp == true)
+        if(overlap == true)
         {
             removeBulletOnly(currentBullet);
         }

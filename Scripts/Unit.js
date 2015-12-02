@@ -31,7 +31,7 @@ var Unit = function (parent, game){
     var topBaseCollision;
     
     var bulletType = 'none';
-    var cost;
+    var cost = 5;
     var pistolSprite;
     var shotgunSprite;
     var rifleSprite;
@@ -447,15 +447,18 @@ var Unit = function (parent, game){
     
     function setUnit(spriteName){
         unitSprite.loadTexture(spriteName);
-        for(var i = 0; i < shopMenuItems.length; ++i){
-            if(shopMenuItems[i].key === spriteName){
-                bulletType = shopMenuItems[i].type;
-                dmgAmount = shopMenuItems[i].cost/10;
+        //console.log(shopMenuItems);
+        for(var i = 0; i < shopMenuItems.list.length; ++i){
+            //console.log(shopMenuItems[i].key + " = " + spriteName);
+            if(shopMenuItems.list[i].key == spriteName){
+                bulletType = shopMenuItems.list[i].type;
+                dmgAmount = shopMenuItems.list[i].cost/10;
                 break;
             }
         }
         console.log(bulletType);
         unitSprite.alpha=1;
+        curr_children=1;
     }
     
     that.setUnitSprite = function(newSprite){ unitSprite = newSprite;}

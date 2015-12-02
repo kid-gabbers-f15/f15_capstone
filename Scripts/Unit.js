@@ -454,10 +454,14 @@ var Unit = function (parent, game){
         }
     }*/
     
-    function setUnit(spriteName, newType){
+    function setUnit(spriteName){
         unitSprite.loadTexture(spriteName);
-        bulletType = newType;
-        unitSprite.alpha=1;
+        for(var i = 0; i < shopMenuItems.length; ++i){
+            if(shopMenuItems[i].key === spriteName){
+                bulletType = shopMenuItems[i].type;
+                unitSprite.alpha=1;
+            }
+        }
     }
     
     that.setUnitSprite = function(newSprite){ unitSprite = newSprite;}

@@ -40,9 +40,14 @@ var BaseToolbar = function(game, parent){
 
     function OnCreate(){
         toolbar = 'stickers';
-        for(var i = 0; i < game.cache.getKeys().length; ++i){
-            if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
-                stickers.push(game.cache.getKeys()[i]);
+        for(var j = 0; j < playerState.purchases.length; ++j){
+            for(var i = 0; i < game.cache.getKeys().length; ++i){
+                if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
+                    if(playerState.purchases[j] === game.cache.getKeys()[i]){
+                        stickers.push(game.cache.getKeys()[i]);
+                        break;
+                    }
+                }
             }
         }
         
@@ -57,9 +62,14 @@ var BaseToolbar = function(game, parent){
             slots.push({slot:temp, key:stickers[i], keyIndex:i});
         }
         
-        for(var i = 0; i < game.cache.getKeys().length; ++i){
-            if(game.cache.getKeys()[i].indexOf('BaseBackground') >= 0){
-                backgrounds.push(game.cache.getKeys()[i]);
+        for(var i = 0; i < playerState.purchases.length; ++i){
+            for(var j = 0; j < game.cache.getKeys().length; ++j){
+                if(game.cache.getKeys()[j].indexOf('BaseBackground') >= 0){
+                    if(playerState.purchases[i] === game.cache.getKeys()[j]){
+                        backgrounds.push(game.cache.getKeys()[j]);
+                        break;
+                    }
+                }
             }
         }
         

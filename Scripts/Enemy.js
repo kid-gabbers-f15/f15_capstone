@@ -97,6 +97,7 @@ var Enemy = function (parent, game){
         
         init_sprite(); //initialize sprite
         
+        
         default_speed = speed;
         
         enemySprite.inputEnabled = false;
@@ -138,9 +139,7 @@ var Enemy = function (parent, game){
     function ResetEnemy(x, y, newTarget){
         //reset the enemies to their original status
         
-        //if the  speed is going to potentially be altered, 
-        //clear the timeout and reset the speed already since the enemy is destroyed
-        
+        //if the  speed is going to potentially be altered, clear the timeout and reset the speed already since the enemy is destroyed
         took_damage = false; //since were resetting the enemy, they should not be taking damage anymore
         
         if(timeout_speed_active){ //clear any time outs
@@ -148,48 +147,27 @@ var Enemy = function (parent, game){
             timeout_speed_active = false; //since cleared, make it false
         } 
         
-        speed = default_speed; //assign the speed back to normal
-        
-        
         enemySprite.alpha = 1.0; ///reset the opacity to 100%
         if(boss){
             health = maxHealth*10;
             initialHealth = health;
             healthBar.crop(new Phaser.Rectangle(0,0,enemySprite.width, 20));
             
-            enemySprite.visible = true;
-            healthBar.visible = true;
-            enemySprite.inputEnabled = true;
-            enemySprite.isActive = true;
-            isActive = true;
-            enemySprite.position = {x, y};
-            target = newTarget;
-            attack_delay = 0; 
-            can_attack = true;
             boss = true;
-            killed = false;
-            text.visible = true;
         }
         else{
             maxHealth = const_maxHealth;
             health = maxHealth;
             initialHealth = maxHealth;
             healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
-            healthBar.updateCrop();
             
-            enemySprite.visible = true;
-            healthBar.visible = true;
-            enemySprite.inputEnabled = true;
-            enemySprite.isActive = true;
-            isActive = true;
-            enemySprite.position = {x, y};
-            target = newTarget;
-            can_attack = true;
-            attack_delay = 0;
             boss = false;
-            killed = false;
-            text.visible = true;
         }
+        
+        enemySprite.position = {x, y};
+        
+        healthBar.updateCrop();
+        activate_enemy_sprite(newTarget);
     }
     
     function Update(){ //udpate the enemies
@@ -325,6 +303,22 @@ var Enemy = function (parent, game){
                 target = defEngine.friendBaseTarget();
             }
         }
+    }
+    
+    function activate_enemy_sprite(enemy_target){ //initialize the sprite on the screen
+    
+        speed = default_speed; //assign the speed back to normal
+        enemySprite.visible = true;
+        healthBar.visible = true;
+        enemySprite.inputEnabled = true;
+        enemySprite.isActive = true;
+        isActive = true;
+        target = enemy_target;
+        attack_delay = 0;
+        can_attack = true;
+    
+        killed = false;
+        text.visible = true;
     }
     
     function init_sprite(){

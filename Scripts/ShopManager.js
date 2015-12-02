@@ -12,7 +12,6 @@ var ShopManager = function (game){
     var slotButton; // Button to buy more unit slots
     var stickerButton; // Button to buy more sticker slots
     var upgradeClickButton; // Button to increase strength of click
-    var shopMenuItems; // Items in the shop
     var numOfSlots = 5; // Slots to display per page
     var pageNum = 0; // Page number the player is on in the shop
     var stickers = []; // List of stickers

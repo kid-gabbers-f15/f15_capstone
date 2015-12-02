@@ -59,11 +59,8 @@ var Unit = function (parent, game){
         unitSprite.alpha=0;
         game.physics.enable(unitSprite, Phaser.Physics.ARCADE);
         unitSprite.body.collideWorldBounds = true;
-
         unitSprite.anchor.setTo(0.5, 0.5);
-
         unitSprite.body.immovable = true;
-        
         unitSprite.inputEnabled = true;
         unitSprite.input.useHandCursor = true;
         
@@ -88,7 +85,7 @@ var Unit = function (parent, game){
         CurrentUnitHealth = 50;
         initial_Health_Bar_Sprite_Width = HealthBarSprite.width;
         
-        pistolSprite = game.add.sprite(position.x-150, position.y, 'Unit3');
+        /*pistolSprite = game.add.sprite(position.x-150, position.y, 'Unit3');
         pistolCostText = game.add.text(position.x-150, position.y, '5');
         pistolCostText.anchor.set(0.25);
         pistolCostText.font = 'Revalia';
@@ -129,9 +126,9 @@ var Unit = function (parent, game){
         rifleSprite.visible = false;
         rifleCostText.visible = false;
         pistolCostText.visible = false;
-        shotgunCostText.visible = false;
+        shotgunCostText.visible = false;*/
         
-        pistolSprite.events.onInputDown.add(function(){
+        /*pistolSprite.events.onInputDown.add(function(){
             defEngine.click_sound();
             bulletType = 'pistol';
             cost = 5;
@@ -183,18 +180,18 @@ var Unit = function (parent, game){
             showWeapons = false;
             add_unit(1);
             unitSprite.loadTexture('Unit2');
-        });
+        });*/
         
         unitSprite.events.onInputDown.add(function(){
             defEngine.click_sound();
             if(bulletType=='none'){
-                if(showWeapons == true){
+                /*if(showWeapons == true){
                     showWeapons = false;
                 }
                 else {
                     showWeapons = true;
                 }
-                weaponSelection();
+                weaponSelection();*/
             }
             else{
                 add_unit(1);
@@ -429,7 +426,7 @@ var Unit = function (parent, game){
         return can_attack;
     }
     
-    function weaponSelection(){
+    /*function weaponSelection(){
         if(showWeapons == true){
             pistolSprite.visible = true;
             shotgunSprite.visible = true;
@@ -452,6 +449,12 @@ var Unit = function (parent, game){
             pistolCostText.visible = false;
             shotgunCostText.visible = false;
         }
+    }*/
+    
+    function setUnit(spriteName, newType){
+        unitSprite.loadTexture(spriteName);
+        bulletType = newType;
+        unitSprite.alpha=1;
     }
     
     that.setUnitSprite = function(newSprite){ unitSprite = newSprite;}

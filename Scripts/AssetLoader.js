@@ -3,6 +3,7 @@ var AssetLoader = function(game){
     
     var Preload = function(){
         game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
+        game.load.text('JSONshopMenuItems', KCG_SCRIPT_PATH+'shopItems.txt');
 
          //Units-----------------------------------------------------
         game.load.image('unit_health', KCG_ASSET_PATH+'Unit_Pictures/UnitHealthBar.png');

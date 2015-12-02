@@ -42,12 +42,10 @@ var ShopManager = function (game){
     }
     
     function Preload(){
-        game.load.text('JSONshopMenuItems', KCG_SCRIPT_PATH+'shopItems.txt');
     }
     
     
     function OnCreate(){
-        shopMenuItems = JSON.parse(game.cache.getText('JSONshopMenuItems'));
         
         for(var i = 0; i < game.cache.getKeys().length; ++i){
            /* if(game.cache.getKeys()[i].indexOf('BaseBackground') >= 0){

@@ -90,6 +90,8 @@ var DefenseEngine = function (game){
     }
     
     function OnCreate(){
+        shopMenuItems = JSON.parse(game.cache.getText('JSONshopMenuItems'));
+
         //drawing background
         background = game.add.sprite(game.world.centerX, game.world.centerY, 'background');
         background.anchor.setTo(0.5, 0.5);
@@ -155,6 +157,7 @@ var DefenseEngine = function (game){
         //player base building
         loadPlayerBase(playerState.base);
         
+
         // Health bar for friends base
         globalHealthBar = game.add.sprite(75, 580, 'baseHealthBar');
         globalHealthBar.crop(new Phaser.Rectangle(0, 0, 1000, 20));

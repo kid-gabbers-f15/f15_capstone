@@ -1,36 +1,42 @@
 var Enemy = function (parent, game){
     var that = {};
     
+    //-----------identification stuff-------------------
     var enemySprite; // object, phaster sprite
-    var healthBar; // object, phaser sprite?
-    var position = {}; // object, used to keep enemy x and y position
-    var health = 50; // int, enemy health
-    var maxHealth = 50; // int, most health an enemy can have
-    var const_maxHealth = 50; // int, will be the definite health for enemy units
-    var initialHealth; // int, staring health, uneeded?
-    var velocityX = 10; // int, default speed, uneeded?
-    var isActive; // bool, is this enemy active and on screen
-    var enemy_damage = 10; //int, how much damage is dont by the enemy to the unit
+    var boss; // bool, is this enemy a boss or not
+    var type; // int, what type of enemy 
     var uGroup; // array, unit group
     var eGroup; // array, enemy group
-    var totalMissingHealth = 0.0; // float, missing health bar
-    var minusHealthIncr = 0.0; // float, how much health to take off the health bar
+    var killed = false; // bool, has the enemy been killed this wave
+    
+    
+    //-----------health related stuff for enemy----------
+    var healthBar; // object, phaser sprite?
+    var health = 50; // int, enemy health
+    var maxHealth = 50; // int, most health an enemy can have
+    var const_maxHealth = 50; // int, initial health of an enemy if the health ever
+    var initialHealth; // int, staring health, uneeded?
     var initHealthBar = 0.0; // float, initial amount og healthbar
+    
+    //-----------position related stuff for enemy--------
+    var position = {}; // object, used to keep enemy x and y position
+    var speed; // int, speed of the enemy
+    var default_speed = speed; //default speeed of enemy when it spawns
+    var timeout_speed_active; //if there is an active timeout for the daamage taken. timeout object
+    var timer; //object that contains a timer. Destroyable.
+    
+    //-----------damage related stuff------------------
+    var isActive; // bool, is this enemy active and on screen
+    var enemy_damage = 10; //int, how much damage is dont by the enemy to the unit
     var target; // unit object, unit the enemy is atacking
     var can_attack; // bool, can this unit attack or not, used for delay between attacks
     var attack_delay; // int, amount of time enemy has to wait between attacks
-    var boss; // bool, is this enemy a boss or not
-    var type; // int, what type of enemy
-    var speed = 100; // int, speed of the enemy
-    var killed = false; // bool, has the enemy been killed this wave
-    var text = ""; // string, text to be displayed on the enemy sprite
+    var took_damage; //boolean that determines if this enemy took damage
     
-    var default_speed = speed; //default speeed of enemy when it spawns
+    //-----------aesthics-----------------------------
+    var text = ""; // string, text to be displayed on the enemy sprite
     var click_sfx;
     
-    var took_damage; //boolean that determines if this enemy took damage
-    var timeout_speed_active; //if there is an active timeout for the daamage taken. timeout object
-    var timer; //object that contains a timer. Destroyable.
     
     function Preload(){
         
@@ -69,21 +75,12 @@ var Enemy = function (parent, game){
             healthBar.updateCrop();
             initHealthBar = healthBar.width;
             
-            enemySprite.visible = false;
-            healthBar.visible = false;
-            enemySprite.inputEnabled = false;
-            enemySprite.isActive = false;
-            isActive = false;
+            
             boss = true;
         }
         else{ // This is a regular enemy
             enemySprite = game.add.sprite(position.x, position.y, 'enemy' + Math.ceil(Math.random()*3) );
-            game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
-            enemySprite.body.collideWorldBounds = true;
-            enemySprite.body.friction = 10;
-            enemySprite.body.drag = 100;
-    
-            enemySprite.anchor.setTo(0.5, 0.5);
+            
     
             health = maxHealth;
             initialHealth = health;
@@ -91,18 +88,16 @@ var Enemy = function (parent, game){
             healthBar.crop(new Phaser.Rectangle(0,0,enemySprite.width, 20));
             
             initHealthBar = healthBar.width;
-            enemySprite.visible = false;
-            healthBar.visible = false;
-            enemySprite.inputEnabled = false;
-            enemySprite.isActive = false;
-            isActive = false;
+            
             boss = false;
             
-            if(type == 2){
-                speed = 200;
-                default_speed = speed;
-            }
+            if(type == 2) speed = 200;
+            else speed = 100;
         }
+        
+        init_sprite(); //initialize sprite
+        
+        default_speed = speed;
         
         enemySprite.inputEnabled = false;
         enemySprite.events.onInputDown.add(function(){
@@ -145,10 +140,15 @@ var Enemy = function (parent, game){
         
         //if the  speed is going to potentially be altered, 
         //clear the timeout and reset the speed already since the enemy is destroyed
-        if(timeout_speed_active){
+        
+        took_damage = false; //since were resetting the enemy, they should not be taking damage anymore
+        
+        if(timeout_speed_active){ //clear any time outs
             clearTimeout(timer); 
-            speed = default_speed;
+            timeout_speed_active = false; //since cleared, make it false
         } 
+        
+        speed = default_speed; //assign the speed back to normal
         
         
         enemySprite.alpha = 1.0; ///reset the opacity to 100%
@@ -194,6 +194,9 @@ var Enemy = function (parent, game){
     
     function Update(){ //udpate the enemies
         // Update Text
+        
+        //console.log(" SPEED: " + speed);
+        
         text.x = Math.floor(enemySprite.x);
         text.y = Math.floor(enemySprite.y + 12);
         
@@ -269,7 +272,8 @@ var Enemy = function (parent, game){
     dmg - int, amount of damage to do to the enemy
     */
     function damage(dmg, getGold){ //by default, get gold is undefined, so only need to check if explicitly false
-        //dmg = 1000;
+    
+    
         took_damage = true;
         health = health - dmg;
         enemySprite.alpha = 1.0 - 1.0*(initialHealth-health)/initialHealth; //decrease the opacity depending on the ratio between currenthealth and initial health
@@ -334,6 +338,20 @@ var Enemy = function (parent, game){
                 target = defEngine.friendBaseTarget();
             }
         }
+    }
+    
+    function init_sprite(){
+        game.physics.enable(enemySprite, Phaser.Physics.ARCADE);
+        enemySprite.body.collideWorldBounds = true;
+        enemySprite.body.friction = 10;
+        enemySprite.body.drag = 100;
+        enemySprite.anchor.setTo(0.5, 0.5);
+        
+        enemySprite.visible = false;
+        healthBar.visible = false;
+        enemySprite.inputEnabled = false;
+        enemySprite.isActive = false;
+        isActive = false;
     }
     
     function getPos(){

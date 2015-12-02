@@ -65,10 +65,8 @@ var BaseToolbar = function(game, parent){
         for(var i = 0; i < playerState.purchases.length; ++i){
             for(var j = 0; j < game.cache.getKeys().length; ++j){
                 if(game.cache.getKeys()[j].indexOf('BaseBackground') >= 0){
-                    if(playerState.purchases[i] === game.cache.getKeys()[j]){
-                        backgrounds.push(game.cache.getKeys()[j]);
-                        break;
-                    }
+                    backgrounds.push(game.cache.getKeys()[j]);
+                    break;
                 }
             }
         }

@@ -82,18 +82,7 @@ var Boot = {
             playerState.base.background = "BaseBackground1";
             playerState.base.totalSlots = 5;
             playerState.base.list = [];
-            playerState.purchases = [
-                'BaseBackground1',
-                'BaseBackground2',
-                'BaseBackground3',
-                'BaseBackground4',
-                'BaseBackground5',
-                'BaseBackground6',
-                'BaseBackground7',
-                'BaseBackground8',
-                'BaseBackground9',
-                'BaseBackground10',
-                'BaseBackground11',
+            playerState.purchases = [   //initial stickers and backgrounds for base.
                 'BaseSticker1',
                 'BaseSticker2',
                 'BaseSticker3',

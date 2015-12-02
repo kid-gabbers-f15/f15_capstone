@@ -193,42 +193,29 @@ var Enemy = function (parent, game){
     }
     
     function Update(){ //udpate the enemies
+        
         // Update Text
-        
-        //console.log(" SPEED: " + speed);
-        
         text.x = Math.floor(enemySprite.x);
         text.y = Math.floor(enemySprite.y + 12);
         
-        //if they can attack the units again or not
-        if(attack_delay == 0){
-            can_attack = true;
-        }
-        if(attack_delay > 0){
-            attack_delay = attack_delay - 1;
-        }
+        //if they can attack the units again or not. 
+        if(attack_delay == 0) can_attack = true;
+        if(attack_delay > 0) attack_delay = attack_delay - 1;
         
-        //if this enemy is a boss, then move the health accordingly
-        if(boss){
-            //took damage so slow down the boss as it moves
-            move_boss_health();
-        }
-        else{
-            //took damage so slow down the enemy as it moves
-            move_reg_enemy_health(); 
-        }
+        //move the health accordingly
+        if(boss) move_boss_health();
+        else move_reg_enemy_health(); 
           
         var unitpGroup = defEngine.getPlayer().getUnitPGroup();
         
-        if(target.get_children() == 0){
-            retarget(unitpGroup);
-        }
+        if(target.get_children() == 0) retarget(unitpGroup);
         
         if(took_damage){
             took_damage = false;
             speed = 50;
             
             if(timeout_speed_active) clearTimeout(timer);
+            
             timer = setTimeout(resetSpeed, 500);
             timeout_speed_active = true;
         } 

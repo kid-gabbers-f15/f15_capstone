@@ -23,6 +23,7 @@ var DefenseEngine = function (game){
     var gameOverText; // phaser text, displays when the game is over
     var gameOver = false; // whether the game is over or not
     var resume_sfx, pling_sfx, mclick_sfx; // sound effects
+    var toolbar;
     
     /*
     base - object, player's base
@@ -78,6 +79,9 @@ var DefenseEngine = function (game){
         
         player = Player(game);
         player.Preload();
+        
+        toolbar = UnitToolbar(game, this);
+        toolbar.Preload();
         
         game.load.text('JSONfriendBaseData', KCG_SCRIPT_PATH+'json2.txt');
         //game.load.text('JSONplayerBaseData', 'Scripts/json.txt');
@@ -163,6 +167,7 @@ var DefenseEngine = function (game){
         
         toolTips = game.add.text(game.input.mousePointer.x, game.input.mousePointer.y, "");
         toolTips.visible = false;
+        toolbar.OnCreate();
     }
     
     function Update(){

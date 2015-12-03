@@ -38,6 +38,7 @@ var ShopManager = function (game){
     function addEventtoSlot(index, slot){
         slot.events.onInputDown.add(function(){
             clickSlot(index);
+            defEngine.updateUnitToolbar();
         });
     }
     

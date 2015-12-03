@@ -355,6 +355,11 @@ var DefenseEngine = function (game){
     that.getUnitSprite = function getUnitSprite(){return unitSprite;}
     that.setGlobalHealth = function(h){globalHealth = h;}
     that.globalHealth = function(){return globalHealth;}
+    
+    that.updateUnitToolbar = function updateUnitToolbar(){
+        toolbar.updateToolbar();
+    }
+    
     that.addUnit = addUnit;
     that.Preload = Preload;
     that.Update = Update;

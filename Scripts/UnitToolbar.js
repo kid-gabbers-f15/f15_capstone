@@ -6,12 +6,11 @@ var UnitToolbar = function(game, parent){
     var stickersButton; // Button to show the list of stickers
     var backgroundButton; // Button to show the list of backgrounds
     var grd; // Gradient for buttons
-    var numOfSlots = 10; // Slots per page of the list
+    var numOfSlots = 5; // Slots per page of the list
     var pageNum = 0; // Page of the list you're on
     var stickers = []; // List of stickers
     var slots = []; // List of sticker slots
-    var toolbar = '';
-    
+
     function Preload(){
         
     }
@@ -26,9 +25,7 @@ var UnitToolbar = function(game, parent){
         });
     }
     
-
     function OnCreate(){
-        toolbar = 'stickers';
         for(var j = 0; j < playerState.purchases.length; ++j){
             for(var i = 0; i < game.cache.getKeys().length; ++i){
                 if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
@@ -42,7 +39,7 @@ var UnitToolbar = function(game, parent){
         
         for(var i = 0; i < numOfSlots; ++i){
             var temp = {};
-            temp = game.add.sprite(150 + 175*slots.length, 950, stickers[i]);
+            temp = game.add.sprite(600 + 75*slots.length, 950, stickers[i]);
             console.log(stickers[i]);
             temp.scale.set(.5, .5);
             temp.anchor.set(.5,.5);
@@ -109,9 +106,43 @@ var UnitToolbar = function(game, parent){
     }
     
     function updateToolbar(){
+        stickers = [];
+        
+        for(var j = 0; j < playerState.purchases.length; ++j){
+            for(var i = 0; i < game.cache.getKeys().length; ++i){
+                if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
+                    if(playerState.purchases[j] === game.cache.getKeys()[i]){
+                        stickers.push(game.cache.getKeys()[i]);
+                        break;
+                    }
+                }
+            }
+        }
+        
+        for(var n = 0; n < slots.length; ++n){
+            while(i <= stickers.length){
+                if(n < slots.length){
+                    console.log(stickers[i]);
+                    slots[n].slot.loadTexture(stickers[i]);
+                    slots[n].keyIndex = i;
+                    slots[n].key = stickers[i];
+                    slots[n].slot.events.onInputDown.removeAll();
+                    addEventtoSlot(i, slots[n].slot);
+                    slots[n].slot.visible = true;
+                    slots[n].slot.inputEnabled = true;
+                    ++n;
+                }
+                else{
+                    break;
+                }
+            ++i;
+            }
+        }
+        
+        
         for(var i = 0; i < numOfSlots; ++i){
-            slots[i].slot.visible = false;
-            slots[i].slot.inputEnabled = false;
+            slots[i].slot.visible = true;
+            slots[i].slot.inputEnabled = true;
         }
     }
     
@@ -197,6 +228,6 @@ var UnitToolbar = function(game, parent){
     that.clickBack = clickBack;
     that.clickNext = clickNext;
     that.clickSlot = clickSlot;
-    
+    that.updateToolbar = updateToolbar;
     return that;    
 }

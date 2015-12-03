@@ -440,17 +440,19 @@ var Unit = function (parent, game){
     }*/
     
     function setUnit(spriteName){
-        unitSprite.loadTexture(spriteName);
-        for(var i = 0; i < shopMenuItems.list.length; ++i){
-            if(shopMenuItems.list[i].key === spriteName){
-                bulletType = shopMenuItems.list[i].type;
-                dmgAmount = shopMenuItems.list[i].cost/10;
-                break;
+        if(spriteName != undefined){
+            unitSprite.loadTexture(spriteName);
+            for(var i = 0; i < shopMenuItems.list.length; ++i){
+                if(shopMenuItems.list[i].key === spriteName){
+                    bulletType = shopMenuItems.list[i].type;
+                    dmgAmount = shopMenuItems.list[i].cost/10;
+                    break;
+                }
             }
+            console.log(bulletType);
+            unitSprite.alpha=1;
+            add_unit(1);
         }
-        console.log(bulletType);
-        unitSprite.alpha=1;
-        add_unit(1);
     }
     
     that.setUnitSprite = function(newSprite){ unitSprite = newSprite;}

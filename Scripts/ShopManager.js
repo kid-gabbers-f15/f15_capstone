@@ -57,9 +57,7 @@ var ShopManager = function (game){
             if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
                 stickers.push(game.cache.getKeys()[i]);
             }
-            if(game.cache.getKeys()[i].indexOf('Item') >= 0){
-                stickers.push(game.cache.getKeys()[i]);
-            }
+            
         }
         //define the shop menu and the items that go within it
         initializeShopMenu();
@@ -132,7 +130,7 @@ var ShopManager = function (game){
         });
         
         // Health Button
-        healthButton = game.add.text(game.world.centerX * (6/5) - 50, 100, "Buy Health");
+        healthButton = game.add.text(game.world.centerX * (7/5) - 50, 100, "Buy Health");
         healthButton.font = 'Revalia';
         healthButton.fontSize = 25;
         grd = healthButton.context.createLinearGradient(0, 0, 0, healthButton.canvas.height);
@@ -163,7 +161,7 @@ var ShopManager = function (game){
         });
         
         // Slot Button
-        slotButton = game.add.text(game.world.centerX * (6/5) - 50, 150, "Buy Unit Slot");
+        slotButton = game.add.text(game.world.centerX * (7/5) - 50, 150, "Buy Unit Slot");
         slotButton.font = 'Revalia';
         slotButton.fontSize = 25;
         grd = slotButton.context.createLinearGradient(0, 0, 0, slotButton.canvas.height);
@@ -193,7 +191,7 @@ var ShopManager = function (game){
         });
         
         // Sitcker Button
-        stickerButton = game.add.text(game.world.centerX * (6/5) - 50, 200, "Buy Sticker Slot");
+        stickerButton = game.add.text(game.world.centerX * (7/5) - 50, 200, "Buy Sticker Slot");
         stickerButton.font = 'Revalia';
         stickerButton.fontSize = 25;
         grd = stickerButton.context.createLinearGradient(0, 0, 0, stickerButton.canvas.height);
@@ -223,7 +221,7 @@ var ShopManager = function (game){
            }
         });
         
-        upgradeClickButton = game.add.text(game.world.centerX * (6/5) - 50, 250, "Buy Strength Potion");
+        upgradeClickButton = game.add.text(game.world.centerX * (7/5) - 50, 250, "Buy Strength Potion");
         upgradeClickButton.font = 'Revalia';
         upgradeClickButton.fontSize = 25;
         grd = upgradeClickButton.context.createLinearGradient(0, 0, 0, upgradeClickButton.canvas.height);

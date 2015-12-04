@@ -171,7 +171,6 @@ var Enemy = function (parent, game){
     }
     
     function Update(){ //udpate the enemies
-        console.log(health);
         // Update Text
         text.x = Math.floor(enemySprite.x);
         text.y = Math.floor(enemySprite.y + 12);
@@ -236,8 +235,6 @@ var Enemy = function (parent, game){
     dmg - int, amount of damage to do to the enemy
     */
     function damage(dmg, getGold){ //by default, get gold is undefined, so only need to check if explicitly false
-        console.log("I took damage!!!");
-        //console.log(health);
         took_damage = true;
         health = health - dmg;
         enemySprite.alpha = 1.0 - 1.0*(initialHealth-health)/initialHealth; //decrease the opacity depending on the ratio between currenthealth and initial health
@@ -256,7 +253,6 @@ var Enemy = function (parent, game){
         healthBar.updateCrop();
         
         if(health <= 0){ //if the enemy has been defeated
-            console.log("I'm dead!!!");
             //if the  speed is going to potentially be altered, 
             //clear the timeout and reset the speed already since the enemy is destroyed
             if(timeout_speed_active){

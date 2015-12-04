@@ -10,7 +10,9 @@ var UnitToolbar = function(game, parent){
     var pageNum = 0; // Page of the list you're on
     var stickers = []; // List of stickers
     var slots = []; // List of sticker slots
-
+    
+    var currentUnit;
+    
     function Preload(){
         
     }
@@ -213,15 +215,41 @@ var UnitToolbar = function(game, parent){
             if(slotClicked === slots[i].keyIndex){
                 console.log(slots[i].key);
                 //set unit slot to = this
-                defEngine.setUnitSprite(slots[i].key);
+                currentUnit.setUnit(slots[i].key);
             }
         }
+    }
+    
+    function hideToolbar(){
+        for(var i = 0; i < slots.length; ++i){
+            slots[i].slot.visible = false;
+            slots[i].slot.inputEnabled = false;
+        }
+    }
+    
+    function showToolbar(unit){
+        console.log(unit);
+        for(var n = 0; n < slots.length; ++n){
+            slots[n].slot.position.x = unit.getPosition().x + 150 + n * 75;
+            slots[n].slot.position.y = unit.getPosition().y;
+            slots[n].slot.visible = true;
+            slots[n].slot.inputEnabled = true;
+            currentUnit = unit;
+        }
+        nextButton.position.x =  unit.getPosition().x + 450;
+        nextButton.position.y =  unit.getPosition().y;
+        backButton.position.x =  unit.getPosition().x + 50;
+        backButton.position.y =  unit.getPosition().y;
+
+
     }
     
     function Update(){
         
     }
     
+    that.showToolbar = showToolbar;
+    that.hideToolbar = hideToolbar;
     that.Preload = Preload;
     that.OnCreate = OnCreate;
     that.Update = Update;

@@ -189,7 +189,7 @@ var Unit = function (parent, game){
             defEngine.click_sound();
             if(bulletType=='none'){
                 console.log(defEngine.getUnitSprite());
-                setUnit(defEngine.getUnitSprite());
+                defEngine.showToolbar(that);
             }
             else{
                 add_unit(1);
@@ -459,6 +459,8 @@ var Unit = function (parent, game){
     that.setText = function(newText){ text = newText;}
     that.setAsBase = function(){thisIsBase = true;}
     that.thisIsBase = function(){return thisIsBase;}
+    that.getPosition = function(){return position;}
+    that.setUnit = setUnit;
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;

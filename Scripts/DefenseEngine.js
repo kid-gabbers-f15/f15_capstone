@@ -98,6 +98,10 @@ var DefenseEngine = function (game){
         background = game.add.sprite(game.world.centerX, game.world.centerY, 'background');
         background.anchor.setTo(0.5, 0.5);
         background.crop(new Phaser.Rectangle(0, 540, 1920, 1080));
+        background.inputEnabled = true;
+        background.events.onInputDown.add(function(){
+            toolbar.hideToolbar();
+        })
         
         var whiteBox1 = game.add.sprite(game.world.centerX, game.world.centerY + game.world.centerY/2, 'whiteBox');
         whiteBox1.anchor.setTo(0.5, 0.5);
@@ -173,6 +177,7 @@ var DefenseEngine = function (game){
         toolTips = game.add.text(game.input.mousePointer.x, game.input.mousePointer.y, "");
         toolTips.visible = false;
         toolbar.OnCreate();
+        toolbar.hideToolbar();
     }
     
     function Update(){
@@ -359,7 +364,12 @@ var DefenseEngine = function (game){
     that.updateUnitToolbar = function updateUnitToolbar(){
         toolbar.updateToolbar();
     }
-    
+    that.showToolbar = function showToolbar(unit){
+        toolbar.showToolbar(unit);
+    }
+    that.hideToolbar = function hideToolbar(){
+        toolbar.hideToolbar();
+    }
     that.addUnit = addUnit;
     that.Preload = Preload;
     that.Update = Update;

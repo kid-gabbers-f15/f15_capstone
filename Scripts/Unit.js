@@ -31,7 +31,7 @@ var Unit = function (parent, game){
     var topBaseCollision;
     
     var bulletType = 'none';
-    var cost;
+    var cost = 5;
     var pistolSprite;
     var shotgunSprite;
     var rifleSprite;
@@ -42,6 +42,8 @@ var Unit = function (parent, game){
     var showWeapons = false;
     var pew_sfx; // Sound effect for shooting
     var grd2;
+
+    var dmgAmount;
 
     function Preload(){
 
@@ -62,11 +64,8 @@ var Unit = function (parent, game){
         unitSprite.alpha=0;
         game.physics.enable(unitSprite, Phaser.Physics.ARCADE);
         unitSprite.body.collideWorldBounds = true;
-
         unitSprite.anchor.setTo(0.5, 0.5);
-
         unitSprite.body.immovable = true;
-        
         unitSprite.inputEnabled = true;
         unitSprite.input.useHandCursor = true;
         
@@ -94,7 +93,8 @@ var Unit = function (parent, game){
         CurrentUnitHealth = 50;
         initial_Health_Bar_Sprite_Width = HealthBarSprite.width;
         
-        pistolSprite = game.add.sprite(position.x-150, position.y, 'Unit3');
+
+        /*pistolSprite = game.add.sprite(position.x-150, position.y, 'Unit3');
         pistolCostText = game.add.text(position.x-150, position.y, '5');
         pistolCostText.anchor.set(0.25);
         pistolCostText.font = 'Revalia';
@@ -135,9 +135,9 @@ var Unit = function (parent, game){
         rifleSprite.visible = false;
         rifleCostText.visible = false;
         pistolCostText.visible = false;
-        shotgunCostText.visible = false;
+        shotgunCostText.visible = false;*/
         
-        pistolSprite.events.onInputDown.add(function(){
+        /*pistolSprite.events.onInputDown.add(function(){
             defEngine.click_sound();
             bulletType = 'pistol';
             cost = 5;
@@ -189,18 +189,13 @@ var Unit = function (parent, game){
             showWeapons = false;
             add_unit(1);
             unitSprite.loadTexture('Unit2');
-        });
+        });*/
         
         unitSprite.events.onInputDown.add(function(){
             defEngine.click_sound();
             if(bulletType=='none'){
-                if(showWeapons == true){
-                    showWeapons = false;
-                }
-                else {
-                    showWeapons = true;
-                }
-                weaponSelection();
+                console.log(defEngine.getUnitSprite());
+                defEngine.showToolbar(that);
             }
             else{
                 add_unit(1);
@@ -413,18 +408,8 @@ var Unit = function (parent, game){
     function removeBullet(bSprite, enemy){
         bSprite.destroy();
         
-        if(bulletType=='pistol')
-        {
-            enemy.damage(10);
-        }
-        else if(bulletType=='shotgun')
-        {
-            enemy.damage(5);
-        }
-        else if(bulletType=='rifle')
-        {
-            enemy.damage(25);
-        }
+        enemy.damage(dmgAmount);
+
     }
     
     function removeBulletOnly(bSprite){
@@ -435,7 +420,7 @@ var Unit = function (parent, game){
         return can_attack;
     }
     
-    function weaponSelection(){
+    /*function weaponSelection(){
         if(showWeapons == true){
             pistolSprite.visible = true;
             shotgunSprite.visible = true;
@@ -458,12 +443,30 @@ var Unit = function (parent, game){
             pistolCostText.visible = false;
             shotgunCostText.visible = false;
         }
+    }*/
+    
+    function setUnit(spriteName){
+        if(spriteName != undefined){
+            unitSprite.loadTexture(spriteName);
+            for(var i = 0; i < shopMenuItems.list.length; ++i){
+                if(shopMenuItems.list[i].key === spriteName){
+                    bulletType = shopMenuItems.list[i].type;
+                    dmgAmount = shopMenuItems.list[i].cost/10;
+                    break;
+                }
+            }
+            console.log(bulletType);
+            unitSprite.alpha=1;
+            add_unit(1);
+        }
     }
     
     that.setUnitSprite = function(newSprite){ unitSprite = newSprite;}
     that.setText = function(newText){ text = newText;}
     that.setAsBase = function(){thisIsBase = true;}
     that.thisIsBase = function(){return thisIsBase;}
+    that.getPosition = function(){return position;}
+    that.setUnit = setUnit;
     that.Preload = Preload;
     that.Update = Update;
     that.OnCreate = OnCreate;

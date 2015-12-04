@@ -23,6 +23,9 @@ var DefenseEngine = function (game){
     var gameOverText; // phaser text, displays when the game is over
     var gameOver = false; // whether the game is over or not
     var resume_sfx, pling_sfx, mclick_sfx; // sound effects
+    var toolbar;
+    
+    var unitSprite;
     
     /*
     base - object, player's base
@@ -79,6 +82,9 @@ var DefenseEngine = function (game){
         player = Player(game);
         player.Preload();
         
+        toolbar = UnitToolbar(game, this);
+        toolbar.Preload();
+        
         game.load.text('JSONfriendBaseData', KCG_SCRIPT_PATH+'json2.txt');
         //game.load.text('JSONplayerBaseData', 'Scripts/json.txt');
         
@@ -86,10 +92,16 @@ var DefenseEngine = function (game){
     }
     
     function OnCreate(){
+        shopMenuItems = JSON.parse(game.cache.getText('JSONshopMenuItems'));
+
         //drawing background
         background = game.add.sprite(game.world.centerX, game.world.centerY, 'background');
         background.anchor.setTo(0.5, 0.5);
         background.crop(new Phaser.Rectangle(0, 540, 1920, 1080));
+        background.inputEnabled = true;
+        background.events.onInputDown.add(function(){
+            toolbar.hideToolbar();
+        })
         
         var whiteBox1 = game.add.sprite(game.world.centerX, game.world.centerY + game.world.centerY/2, 'whiteBox');
         whiteBox1.anchor.setTo(0.5, 0.5);
@@ -151,6 +163,7 @@ var DefenseEngine = function (game){
         //player base building
         loadPlayerBase(playerState.base);
         
+
         // Health bar for friends base
         globalHealthBar = game.add.sprite(75, 580, 'baseHealthBar');
         globalHealthBar.crop(new Phaser.Rectangle(0, 0, 1000, 20));
@@ -163,6 +176,8 @@ var DefenseEngine = function (game){
         
         toolTips = game.add.text(game.input.mousePointer.x, game.input.mousePointer.y, "");
         toolTips.visible = false;
+        toolbar.OnCreate();
+        toolbar.hideToolbar();
     }
     
     function Update(){
@@ -341,8 +356,20 @@ var DefenseEngine = function (game){
         mclick_sfx.play();
     }
 
+    that.setUnitSprite = function setUnitSprite(spriteName){unitSprite = spriteName;}
+    that.getUnitSprite = function getUnitSprite(){return unitSprite;}
     that.setGlobalHealth = function(h){globalHealth = h;}
-    that.globalHealth = function(){return globalHealth}
+    that.globalHealth = function(){return globalHealth;}
+    
+    that.updateUnitToolbar = function updateUnitToolbar(){
+        toolbar.updateToolbar();
+    }
+    that.showToolbar = function showToolbar(unit){
+        toolbar.showToolbar(unit);
+    }
+    that.hideToolbar = function hideToolbar(){
+        toolbar.hideToolbar();
+    }
     that.addUnit = addUnit;
     that.Preload = Preload;
     that.Update = Update;

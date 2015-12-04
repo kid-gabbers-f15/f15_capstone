@@ -3,6 +3,7 @@ var AssetLoader = function(game){
     
     var Preload = function(){
         game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
+        game.load.text('JSONshopMenuItems', KCG_SCRIPT_PATH+'shopItems.txt');
 
          //Units-----------------------------------------------------
         game.load.image('unit_health', KCG_ASSET_PATH+'Unit_Pictures/UnitHealthBar.png');
@@ -114,7 +115,9 @@ var AssetLoader = function(game){
         game.load.image('BaseSticker62', KCG_ASSET_PATH+'BaseStickers/Person25.png');
         game.load.image('BaseSticker63', KCG_ASSET_PATH+'BaseStickers/Person26.png');
         game.load.image('BaseSticker64', KCG_ASSET_PATH+'BaseStickers/Person27.png');
-
+        game.load.image('BaseSticker65',KCG_ASSET_PATH+'Unit_Pictures/robot1.png');
+        game.load.image('BaseSticker66',KCG_ASSET_PATH+'Unit_Pictures/SuperBear.png');
+        game.load.image('BaseSticker67',KCG_ASSET_PATH+'Unit_Pictures/Unicorn1.png');
         //Base Health
         game.load.image('baseHealthBar', KCG_ASSET_PATH+'baseHealthBar.png');
        

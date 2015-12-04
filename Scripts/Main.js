@@ -40,6 +40,7 @@ var PlayerStateJSONString = "";
 var playerState = {};
 var maxWidth = 960;
 var maxHeight = 540;
+var shopMenuItems; // Items in the shop
 
 var toolTips;
 
@@ -82,7 +83,19 @@ var Boot = {
             playerState.base.background = "BaseBackground1";
             playerState.base.totalSlots = 5;
             playerState.base.list = [];
-            playerState.purchases = [];
+            playerState.purchases = [   //initial stickers and backgrounds for base.
+                'BaseSticker1',
+                'BaseSticker2',
+                'BaseSticker3',
+                'BaseSticker4',
+                'BaseSticker5',
+                'BaseSticker6',
+                'BaseSticker7',
+                'BaseSticker8',
+                'BaseSticker9',
+                'BaseSticker10',
+                'BaseSticker11',
+                ];
         }
         else{
             playerState = JSON.parse(cookie);

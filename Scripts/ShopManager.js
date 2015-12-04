@@ -12,7 +12,6 @@ var ShopManager = function (game){
     var slotButton; // Button to buy more unit slots
     var stickerButton; // Button to buy more sticker slots
     var upgradeClickButton; // Button to increase strength of click
-    var shopMenuItems; // Items in the shop
     var numOfSlots = 5; // Slots to display per page
     var pageNum = 0; // Page number the player is on in the shop
     var stickers = []; // List of stickers
@@ -40,16 +39,15 @@ var ShopManager = function (game){
     function addEventtoSlot(index, slot){
         slot.events.onInputDown.add(function(){
             clickSlot(index);
+            defEngine.updateUnitToolbar();
         });
     }
     
     function Preload(){
-        game.load.text('JSONshopMenuItems', KCG_SCRIPT_PATH+'shopItems.txt');
     }
     
     
     function OnCreate(){
-        shopMenuItems = JSON.parse(game.cache.getText('JSONshopMenuItems'));
         
         for(var i = 0; i < game.cache.getKeys().length; ++i){
            /* if(game.cache.getKeys()[i].indexOf('BaseBackground') >= 0){

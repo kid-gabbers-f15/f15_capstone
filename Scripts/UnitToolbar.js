@@ -42,7 +42,7 @@ var UnitToolbar = function(game, parent){
         for(var i = 0; i < numOfSlots; ++i){
             var temp = {};
             temp = game.add.sprite(600 + 75*slots.length, 950, stickers[i]);
-            console.log(stickers[i]);
+            //console.log(stickers[i]);
             temp.scale.set(.5, .5);
             temp.anchor.set(.5,.5);
             temp.inputEnabled = true;
@@ -208,12 +208,12 @@ var UnitToolbar = function(game, parent){
     slotClicked - int, number of slot clicked
     */
     function clickSlot(slotClicked){
-        console.log("Clicked slot #" + slotClicked);
+        //console.log("Clicked slot #" + slotClicked);
         for(var i = 0; i < slots.length; ++i){
-            console.log(slots[i].key);
-            console.log(slots[i].keyIndex);
+            //console.log(slots[i].key);
+            //console.log(slots[i].keyIndex);
             if(slotClicked === slots[i].keyIndex){
-                console.log(slots[i].key);
+                //console.log(slots[i].key);
                 //set unit slot to = this
                 currentUnit.setUnit(slots[i].key);
             }
@@ -230,7 +230,7 @@ var UnitToolbar = function(game, parent){
     }
     
     function showToolbar(unit){
-        console.log(unit);
+        //console.log(unit);
         for(var n = 0; n < slots.length; ++n){
             slots[n].slot.position.x = unit.getPosition().x + 150 + n * 75;
             slots[n].slot.position.y = unit.getPosition().y;

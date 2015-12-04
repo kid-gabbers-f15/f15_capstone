@@ -171,7 +171,6 @@ var Enemy = function (parent, game){
     }
     
     function Update(){ //udpate the enemies
-        
         // Update Text
         text.x = Math.floor(enemySprite.x);
         text.y = Math.floor(enemySprite.y + 12);
@@ -211,7 +210,6 @@ var Enemy = function (parent, game){
         //after a collision is detectd, pull the unit object and enemy object for interaction
         //var enemyGroup = defEngine.getEnemyManager().getEnemyGroup();
         
-        
         for(var i = 0; i < unitpGroup.length; i++){
             if(unitpGroup[i].get_children() > 0){
                 game.physics.arcade.collide(enemySprite, unitpGroup[i].getUnitSprite(), 
@@ -237,8 +235,6 @@ var Enemy = function (parent, game){
     dmg - int, amount of damage to do to the enemy
     */
     function damage(dmg, getGold){ //by default, get gold is undefined, so only need to check if explicitly false
-    
-    
         took_damage = true;
         health = health - dmg;
         enemySprite.alpha = 1.0 - 1.0*(initialHealth-health)/initialHealth; //decrease the opacity depending on the ratio between currenthealth and initial health

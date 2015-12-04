@@ -130,8 +130,6 @@ var UnitToolbar = function(game, parent){
                     slots[n].key = stickers[i];
                     slots[n].slot.events.onInputDown.removeAll();
                     addEventtoSlot(i, slots[n].slot);
-                    slots[n].slot.visible = true;
-                    slots[n].slot.inputEnabled = true;
                     ++n;
                 }
                 else{

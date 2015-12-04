@@ -225,6 +225,8 @@ var UnitToolbar = function(game, parent){
             slots[i].slot.visible = false;
             slots[i].slot.inputEnabled = false;
         }
+        backButton.visible = false;
+        nextButton.visible = false;
     }
     
     function showToolbar(unit){
@@ -236,12 +238,12 @@ var UnitToolbar = function(game, parent){
             slots[n].slot.inputEnabled = true;
             currentUnit = unit;
         }
+        nextButton.visible = true;
         nextButton.position.x =  unit.getPosition().x + 450;
         nextButton.position.y =  unit.getPosition().y;
+        backButton.visible = true;
         backButton.position.x =  unit.getPosition().x + 50;
         backButton.position.y =  unit.getPosition().y;
-
-
     }
     
     function Update(){

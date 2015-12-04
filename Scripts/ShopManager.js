@@ -329,8 +329,8 @@ var ShopManager = function (game){
                     }
                 }
                 if(!owned) {
-                    if(defEngine.canAfford(slots[i].cost._text)){
-                        defEngine.spendGold(slots[i].cost._text);
+                    if(defEngine.canAfford(slots[i].cost)){
+                        defEngine.spendGold(slots[i].cost);
                         slots[i].text.setText("Owned");
                         console.log(slots[i].text);
                         slots[i].text.fill = grd3;
@@ -400,7 +400,6 @@ var ShopManager = function (game){
                 {
                     shopMenuItems.list[j].text = "Owned";
                 }
-                else shopMenuItems.list[j].text = shopMenuItems.list[j].cost;
             }
         }
         updateCostText();

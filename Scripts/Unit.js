@@ -41,6 +41,7 @@ var Unit = function (parent, game){
     var thisIsBase; //bool to see if this unit is a base, or just a single unit
     var showWeapons = false;
     var pew_sfx; // Sound effect for shooting
+    var grd2;
 
     var dmgAmount;
 
@@ -49,6 +50,8 @@ var Unit = function (parent, game){
     }
     
     function OnCreate(x, y, unitGroup, enemypGroup){
+
+        
         thisIsBase = false;
         topBaseCollision = defEngine.getTopBaseCollision();
         position.x = x;
@@ -73,6 +76,9 @@ var Unit = function (parent, game){
         grd = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
         grd.addColorStop(0, '#8ED6FF');   
         grd.addColorStop(1, '#004CB3');
+        grd2 = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
+        grd2.addColorStop(0, '#fff08e');   
+        grd2.addColorStop(1, '#a6b300');
         text.fill = grd;
         text.align = 'center';
         text.stroke = '#000000';
@@ -93,7 +99,7 @@ var Unit = function (parent, game){
         pistolCostText.anchor.set(0.25);
         pistolCostText.font = 'Revalia';
         pistolCostText.fontSize = 30;
-        pistolCostText.fill = grd;
+        pistolCostText.fill = grd2;
         pistolCostText.align = 'center';
         pistolCostText.stroke = '#000000';
         pistolCostText.strokeThickness = 2;
@@ -104,7 +110,7 @@ var Unit = function (parent, game){
         shotgunCostText.anchor.set(0.25);
         shotgunCostText.font = 'Revalia';
         shotgunCostText.fontSize = 30;
-        shotgunCostText.fill = grd;
+        shotgunCostText.fill = grd2;
         shotgunCostText.align = 'center';
         shotgunCostText.stroke = '#000000';
         shotgunCostText.strokeThickness = 2;
@@ -115,7 +121,7 @@ var Unit = function (parent, game){
         rifleCostText.anchor.set(0.25);
         rifleCostText.font = 'Revalia';
         rifleCostText.fontSize = 30;
-        rifleCostText.fill = grd;
+        rifleCostText.fill = grd2;
         rifleCostText.align = 'center';
         rifleCostText.stroke = '#000000';
         rifleCostText.strokeThickness = 2;

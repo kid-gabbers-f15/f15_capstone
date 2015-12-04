@@ -194,7 +194,7 @@ var Unit = function (parent, game){
         unitSprite.events.onInputDown.add(function(){
             defEngine.click_sound();
             if(bulletType=='none'){
-                console.log(defEngine.getUnitSprite());
+                //console.log(defEngine.getUnitSprite());
                 defEngine.showToolbar(that);
             }
             else{
@@ -341,14 +341,14 @@ var Unit = function (parent, game){
             }
         }
         
-        var overlap = game.physics.arcade.overlap(topBaseCollision, bulletSpriteGroup, function(obj1, obj2){
+        /*var overlap = game.physics.arcade.overlap(topBaseCollision, bulletSpriteGroup, function(obj1, obj2){
             currentBullet = obj2;
         }, null, null, this);
         
         if(overlap == true)
         {
             removeBulletOnly(currentBullet);
-        }
+        }*/
     }
     
     function damage(healthRemoved){
@@ -407,14 +407,12 @@ var Unit = function (parent, game){
 
     function removeBullet(bSprite, enemy){
         bSprite.destroy();
-        
         enemy.damage(dmgAmount);
-
     }
     
-    function removeBulletOnly(bSprite){
+    /*function removeBulletOnly(bSprite){
         bSprite.destroy();
-    }
+    }*/
     
     function isAttack(){
         return can_attack;
@@ -451,11 +449,13 @@ var Unit = function (parent, game){
             for(var i = 0; i < shopMenuItems.list.length; ++i){
                 if(shopMenuItems.list[i].key === spriteName){
                     bulletType = shopMenuItems.list[i].type;
-                    dmgAmount = shopMenuItems.list[i].cost/10;
+                    //dmgAmount = Math.floor(shopMenuItems.list[i].cost/10);
+                    //console.log("shopMenuItems.list[i].cost: " + shopMenuItems.list[i].cost);
+                    dmgAmount = 10;
                     break;
                 }
             }
-            console.log(bulletType);
+            //console.log(bulletType);
             unitSprite.alpha=1;
             add_unit(1);
         }

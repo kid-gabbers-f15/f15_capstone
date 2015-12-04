@@ -330,7 +330,6 @@ var ShopManager = function (game){
                     if(defEngine.canAfford(slots[i].cost)){
                         defEngine.spendGold(slots[i].cost);
                         slots[i].text.setText("Owned");
-                        console.log(slots[i].text);
                         slots[i].text.fill = grd3;
                         playerState.purchases.push(slots[i].key);
                     }
@@ -370,7 +369,7 @@ var ShopManager = function (game){
             cost = shopMenuItems.list[i].cost;
             temp = game.add.sprite(game.world.centerX * (8/5) + 50, 100 + 50*slots.length, stickers[i]);
             //name = game.add.text(game.world.centerX * (8/5), 100 + 50*slots.length, shopMenuItems.list[i].name);
-            text = game.add.text(game.world.centerX * (9/5), 100 + 50*slots.length, shopMenuItems.list[i].cost);
+            text = game.add.text(game.world.centerX * (9/5), 100 + 50*slots.length, shopMenuItems.list[i].text);
             text.font = 'Revalia';
             text.fontSize = 25;
             grd2 = text.context.createLinearGradient(0, 0, 0, text.canvas.height);

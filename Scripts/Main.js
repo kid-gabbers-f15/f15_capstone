@@ -76,6 +76,7 @@ var Boot = {
         tempState.current_wave = 0;
         tempState.boss_indicator = 0;
         tempState.came_from_base = 0; 
+        tempState.current_score = 0;
         
         var assetLoader = AssetLoader(game);
         assetLoader.Preload();

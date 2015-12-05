@@ -97,6 +97,7 @@ var DefenseEngine = function (game){
     
     function OnCreate(){
         maxGlobalHealth = 100;
+        score = tempState.current_score;
         shopMenuItems = JSON.parse(game.cache.getText('JSONshopMenuItems'));
 
         //drawing background
@@ -244,7 +245,7 @@ var DefenseEngine = function (game){
         enemyManager.Update();
         updateResource();
 
-        
+        tempState.current_score = score;
         globalHealthBar.crop(new Phaser.Rectangle(0, 0, 500 * globalHealth/100, 20));
     }
     

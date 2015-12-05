@@ -216,6 +216,7 @@ var UnitToolbar = function(game, parent){
                 currentUnit.setUnit(slots[i].key);
             }
         }
+        hideToolbar();
     }
     
     function hideToolbar(){

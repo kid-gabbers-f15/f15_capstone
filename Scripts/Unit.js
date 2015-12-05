@@ -449,9 +449,9 @@ var Unit = function (parent, game){
             for(var i = 0; i < shopMenuItems.list.length; ++i){
                 if(shopMenuItems.list[i].key === spriteName){
                     bulletType = shopMenuItems.list[i].type;
-                    //dmgAmount = Math.floor(shopMenuItems.list[i].cost/10);
+                    dmgAmount = Math.floor(shopMenuItems.list[i].cost/10);
                     //console.log("shopMenuItems.list[i].cost: " + shopMenuItems.list[i].cost);
-                    dmgAmount = 10;
+                    //dmgAmount = 10;
                     break;
                 }
             }

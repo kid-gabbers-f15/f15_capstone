@@ -50,7 +50,7 @@ var ShopManager = function (game){
     function OnCreate(){
         
         for(var i = 0; i < game.cache.getKeys().length; ++i){
-           /* if(game.cache.getKeys()[i].indexOf('BaseBackground') >= 0){
+            /*if(game.cache.getKeys()[i].indexOf('Unit') >= 0){
                 stickers.push(game.cache.getKeys()[i]);
             }
             */
@@ -263,8 +263,6 @@ var ShopManager = function (game){
                         slots[n].keyIndex = i;
                         slots[n].key = stickers[i];
                         slots[n].slot.events.onInputDown.removeAll();
-                        //slots[n].name.setText(shopMenuItems.list[i].name);
-                        //slots[n].name.visible = true;
                         slots[n].text.setText(shopMenuItems.list[i].text);
                         slots[n].text.visible = true;
                         addEventtoSlot(i, slots[n].slot);
@@ -293,7 +291,6 @@ var ShopManager = function (game){
                         slots[n].keyIndex = i;
                         slots[n].key = stickers[i];
                         slots[n].slot.events.onInputDown.removeAll();
-                        //slots[n].name.setText(shopMenuItems.list[i].name);
                         slots[n].text.setText(shopMenuItems.list[i].text);
                         addEventtoSlot(i, slots[n].slot);
                         ++n;
@@ -306,7 +303,6 @@ var ShopManager = function (game){
                 if(n < slots.length){
                     slots[n].slot.visible = false;
                     slots[n].slot.inputEnabled = false;
-                    slots[n].name.visible = false;
                     slots[n].text.visible = false;
                 }
             }
@@ -346,13 +342,10 @@ var ShopManager = function (game){
         for(var i = 0; i < numOfSlots; i++){
             slots[i].slot.visible = true;
             slots[i].slot.inputEnabled = true;
-            //slots[i].name.visible = true;
             slots[i].text.visible = true;
-            
             slots[i].slot.loadTexture(stickers[i]);
             slots[i].keyIndex = i;
             slots[i].key = stickers[i];
-            //slots[i].name.setText(shopMenuItems.list[i].name);
             slots[i].text.setText(shopMenuItems.list[i].text);
             addEventtoSlot(i, slots[i].slot);
         }
@@ -362,13 +355,11 @@ var ShopManager = function (game){
     function initializeShopItems(){
         for(var i = 0; i < numOfSlots; ++i){
             var temp = {};
-            var name;
             var cost;
             var text;
             
             cost = shopMenuItems.list[i].cost;
             temp = game.add.sprite(game.world.centerX * (8/5) + 50, 100 + 50*slots.length, stickers[i]);
-            //name = game.add.text(game.world.centerX * (8/5), 100 + 50*slots.length, shopMenuItems.list[i].name);
             text = game.add.text(game.world.centerX * (9/5), 100 + 50*slots.length, shopMenuItems.list[i].text);
             text.font = 'Revalia';
             text.fontSize = 25;
@@ -382,7 +373,6 @@ var ShopManager = function (game){
             text.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
             text.inputEnabled = false;
             temp.scale.set(.35, .35);
-            //slots.push({slot:temp, key:stickers[i], keyIndex:i, name:name, cost:cost});
             slots.push({slot:temp, key:stickers[i], keyIndex:i, cost:cost, text:text});
         }
         updatePurchases();

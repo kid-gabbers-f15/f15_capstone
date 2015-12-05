@@ -389,8 +389,10 @@ var ShopManager = function (game){
             var text;
             
             cost = shopMenuItems.list[i].cost;
+
             temp = game.add.sprite(game.world.centerX * (8/5) + 50, 150 + 50*slots.length, stickers[i]);
             text = game.add.text(game.world.centerX * (9/5), 150 + 50*slots.length, shopMenuItems.list[i].text);
+
             text.font = 'Revalia';
             text.fontSize = 25;
             grd2 = text.context.createLinearGradient(0, 0, 0, text.canvas.height);

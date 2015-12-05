@@ -14,7 +14,7 @@ var DefenseEngine = function (game){
     var startButton; // phaser text, button to start the game
     var friendBaseData; // JSON string, JSON representing the friend's base you are defending
     var pausetext; // phaser text, 'PAUSED' that pops up when the game is paused
-    var grd, grd2, grd3, grd5, grd6; // phaser color gradient, used for a color gradient on text
+    var grd, grd2, grd3, grd5, grd6, grdr; // phaser color gradient, used for a color gradient on text
     var playerBaseData; // JSON string, JSON representing the player's base
     var unitSlots; // phaser sprite, changes based on how many unit slots player has unlocked.
     var globalHealth = 100; // int, overall game health value, lose when zero
@@ -141,16 +141,19 @@ var DefenseEngine = function (game){
             }
         }
         //text displaying the current amount of resource
-        resourceText = game.add.text(60, 15, "Gold: " + playerState.gold);
+        resourceText = game.add.text(60, 15, "Cash: " + playerState.gold);
         resourceText.font = 'Revalia';
         resourceText.fontSize = 60;
         grd = resourceText.context.createLinearGradient(0, 0, 0, resourceText.canvas.height);
-        grd.addColorStop(0, '#8ED6FF');   
-        grd.addColorStop(1, '#004CB3');
+        grd.addColorStop(0, '#016dff');   
+        grd.addColorStop(1, '#016dff');
+        grdr = resourceText.context.createLinearGradient(0, 0, 0, resourceText.canvas.height);
+        grdr.addColorStop(0, '#fff08e');   
+        grdr.addColorStop(1, '#f0d431');
         grd2 = resourceText.context.createLinearGradient(0, 0, 0, resourceText.canvas.height);
         grd2.addColorStop(0, '#fff08e');   
         grd2.addColorStop(1, '#a6b300');
-        resourceText.fill = grd;
+        resourceText.fill = grdr;
         resourceText.align = 'center';
         resourceText.stroke = '#000000';
         resourceText.strokeThickness = 4;
@@ -227,7 +230,7 @@ var DefenseEngine = function (game){
         return topBaseCollision;
     }
     function updateResource(){
-        resourceText.setText("Gold: " + playerState.gold);
+        resourceText.setText("Cash: " + playerState.gold);
     }
     function addGold(amount){
         playerState.gold = playerState.gold + amount;
@@ -266,8 +269,8 @@ var DefenseEngine = function (game){
             gameOverText.font = 'Revalia';
             gameOverText.fontSize = 100;
             grd = gameOverText.context.createLinearGradient(0, 0, 0, gameOverText.canvas.height);
-            grd.addColorStop(0, '#8ED6FF');   
-            grd.addColorStop(1, '#004CB3');
+            grd.addColorStop(0, '#016dff');   
+            grd.addColorStop(1, '#016dff');
             gameOverText.fill = grd;
             gameOverText.align = 'center';
             gameOverText.stroke = '#000000';
@@ -294,12 +297,12 @@ var DefenseEngine = function (game){
     
     function createButtons(){
         //pause button creation
-        pausebutton = game.add.text(60, 75, "Pause");
+        pausebutton = game.add.text(60, 200, "Pause");
         pausebutton.font = 'Revalia';
         pausebutton.fontSize = 60;
         grd = pausebutton.context.createLinearGradient(0, 0, 0, pausebutton.canvas.height);
-        grd.addColorStop(0, '#8ED6FF');   
-        grd.addColorStop(1, '#004CB3');
+        grd.addColorStop(0, '#016dff');   
+        grd.addColorStop(1, '#016dff');
         pausebutton.fill = grd;
         pausebutton.align = 'center';
         pausebutton.stroke = '#000000';
@@ -307,7 +310,7 @@ var DefenseEngine = function (game){
         pausebutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         pausebutton.inputEnabled = true;
         pausebutton.events.onInputOver.add(function(){
-            pausebutton.fill = '#1a8dff';
+            pausebutton.fill = '#ffb44e';
         }, this);
         pausebutton.events.onInputOut.add(function(){
             pausebutton.fill = grd;
@@ -339,8 +342,8 @@ var DefenseEngine = function (game){
         baseButton.font = 'Revalia';
         baseButton.fontSize = 60;
         grd = baseButton.context.createLinearGradient(0, 0, 0, baseButton.canvas.height);
-        grd.addColorStop(0, '#8ED6FF');   
-        grd.addColorStop(1, '#004CB3');
+        grd.addColorStop(0, '#016dff');   
+        grd.addColorStop(1, '#016dff');
         baseButton.fill = grd;
         baseButton.align = 'center';
         baseButton.stroke = '#000000';
@@ -348,7 +351,7 @@ var DefenseEngine = function (game){
         baseButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         baseButton.inputEnabled = true;
         baseButton.events.onInputOver.add(function(){
-            baseButton.fill = '#1a8dff';
+            baseButton.fill = '#ffb44e';
         }, this);
         baseButton.events.onInputOut.add(function(){
             baseButton.fill = grd;

@@ -74,8 +74,8 @@ var Unit = function (parent, game){
         text.font = 'Revalia';
         text.fontSize = 45;
         grd = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
-        grd.addColorStop(0, '#8ED6FF');   
-        grd.addColorStop(1, '#004CB3');
+        grd.addColorStop(0, '#016dff');   
+        grd.addColorStop(1, '#016dff');
         grd2 = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
         grd2.addColorStop(0, '#fff08e');   
         grd2.addColorStop(1, '#a6b300');

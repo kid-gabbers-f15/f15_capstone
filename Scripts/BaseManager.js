@@ -60,21 +60,6 @@ var BaseManager = function(game){
     
         baseToolbar.OnCreate();
         
-        resourceText = game.add.text(50, 100, "Cash: " + playerState.gold);
-        resourceText.font = 'Revalia';
-        resourceText.fontSize = 45;
-        grd = resourceText.context.createLinearGradient(0, 0, 0, resourceText.canvas.height);
-        grd.addColorStop(0, '#016dff');   
-        grd.addColorStop(1, '#016dff');
-        grdr = resourceText.context.createLinearGradient(0, 0, 0, resourceText.canvas.height);
-        grdr.addColorStop(0, '#fff08e');   
-        grdr.addColorStop(1, '#f0d431');
-        resourceText.fill = grdr;
-        resourceText.align = 'center';
-        resourceText.stroke = '#000000';
-        resourceText.strokeThickness = 4;
-        resourceText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-        
         mainButton = game.add.text(50, 40, "Main Menu");
         mainButton.font = 'Revalia';
         mainButton.fontSize = 50;
@@ -111,7 +96,7 @@ var BaseManager = function(game){
             stickers.add(temp);
         }
         
-        shop = BaseShopManager(game);
+        shop = BaseShopManager(game, that);
         shop.OnCreate();
     }
     
@@ -161,6 +146,7 @@ var BaseManager = function(game){
         backgroundSprite = newBG;
     }
     
+    that.updateToolbar = function(){baseToolbar.updateToolbar();}
     that.Preload = Preload;
     that.OnCreate = OnCreate;
     that.Update = Update;

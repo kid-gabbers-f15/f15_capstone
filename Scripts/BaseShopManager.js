@@ -1,4 +1,4 @@
-var BaseShopManager = function (game){
+var BaseShopManager = function (game, parent){
     var that = {};
 
     var shopmenu;
@@ -21,7 +21,8 @@ var BaseShopManager = function (game){
     var owned;
     var label1, label2, label3;
     var shopLabel;
-
+    var resourceText
+    var grdr;
     //Example Code for reference------
     /*
     function loadShopItems(items){
@@ -40,7 +41,7 @@ var BaseShopManager = function (game){
     function addEventtoSlot(index, slot){
         slot.events.onInputDown.add(function(){
             clickSlot(index);
-            defEngine.updateUnitToolbar();
+            parent.updateToolbar();
         });
     }
     
@@ -156,7 +157,7 @@ var BaseShopManager = function (game){
         });
         
         // Sitcker Button
-        stickerButton = game.add.text(50, 220, "+1 Sticker Slot");
+        stickerButton = game.add.text(50, 220, "+1 Sticker Slot [" + playerState.base.totalSlots + "/" + 30 + "]");
         stickerButton.font = 'Revalia';
         stickerButton.fontSize = 35;
         stickerButton.fill = grd;
@@ -188,6 +189,22 @@ var BaseShopManager = function (game){
                buyStickerSlot();
            }
         });
+        
+        resourceText = game.add.text(50, 100, "Cash: " + playerState.gold);
+        resourceText.font = 'Revalia';
+        resourceText.fontSize = 45;
+        grd = resourceText.context.createLinearGradient(0, 0, 0, resourceText.canvas.height);
+        grd.addColorStop(0, '#016dff');   
+        grd.addColorStop(1, '#016dff');
+        grdr = resourceText.context.createLinearGradient(0, 0, 0, resourceText.canvas.height);
+        grdr.addColorStop(0, '#fff08e');   
+        grdr.addColorStop(1, '#f0d431');
+        resourceText.fill = grdr;
+        resourceText.align = 'center';
+        resourceText.stroke = '#000000';
+        resourceText.strokeThickness = 4;
+        resourceText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        
         
     }
     
@@ -267,6 +284,7 @@ var BaseShopManager = function (game){
                         slots[i].text.setText("Owned");
                         slots[i].text.fill = grd3;
                         playerState.purchases.push(slots[i].key);
+                        resourceText.text =  "Cash: " + playerState.gold;
                     }
                 }
                 console.log(playerState.purchases);
@@ -348,25 +366,10 @@ var BaseShopManager = function (game){
         return showShop;
     }
     
-    //add unit slot to player state (max of 8)
-    function buyUnitSlot(){
-        playerState.unitSlots += 1;
-        defEngine.addUnit();
-    }
-    
     //add stickerslot to playerstate
     function buyStickerSlot(){
         playerState.base.totalSlots += 1;
-        
-    }
-    
-    //replenish global health
-    function buyHealthPotion(){
-        defEngine.setGlobalHealth(100);
-    }
-    
-    function buyStrongerClick(){
-        playerState.clickDamage += 10;
+        stickerButton.text = "+1 Sticker Slot [" + playerState.base.totalSlots + "/" + 30 + "]"
     }
     
     that.Preload = Preload;

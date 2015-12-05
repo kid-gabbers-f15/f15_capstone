@@ -211,6 +211,39 @@ var BaseToolbar = function(game, parent){
         }
     }
     
+    function updatePurchases(){
+        stickers = [];
+        for(var j = 0; j < playerState.purchases.length; ++j){
+            for(var i = 0; i < game.cache.getKeys().length; ++i){
+                if(game.cache.getKeys()[i].indexOf('BaseSticker') >= 0){
+                    if(playerState.purchases[j] === game.cache.getKeys()[i]){
+                        stickers.push(game.cache.getKeys()[i]);
+                        break;
+                    }
+                }
+            }
+        }
+        
+         for(var n = 0; n < slots.length; ++n){
+            while(i <= stickers.length){
+                if(n < slots.length){
+                    console.log(stickers[i]);
+                    slots[n].slot.loadTexture(stickers[i]);
+                    slots[n].keyIndex = i;
+                    slots[n].key = stickers[i];
+                    slots[n].slot.events.onInputDown.removeAll();
+                    addEventtoSlot(i, slots[n].slot);
+                    slots[n].slot.visible = false;
+                    ++n;
+                }
+                else{
+                    break;
+                }
+            ++i;
+            }
+        }
+    }
+    
     function clickBack(){
         if(toolbar === 'stickers'){
             if(pageNum > 0){
@@ -359,6 +392,7 @@ var BaseToolbar = function(game, parent){
         
     }
     
+    that.updateToolbar = updatePurchases;
     that.Preload = Preload;
     that.OnCreate = OnCreate;
     that.Update = Update;

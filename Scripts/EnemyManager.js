@@ -65,7 +65,7 @@ var EnemyManager = function (game){
         }
         
         //create the text for the wave count
-        waveNumText = game.add.text(50, 180, "Wave: " + currentWave);
+        waveNumText = game.add.text(60, 200, "Wave: " + currentWave);
         waveNumText.font = waveNumTextFont;
         waveNumText.fontSize = 60;
         grd = waveNumText.context.createLinearGradient(0, 0, 0, waveNumText.canvas.height);
@@ -74,7 +74,7 @@ var EnemyManager = function (game){
         waveNumText.fill = grd;
         waveNumText.align = 'center';
         waveNumText.stroke = '#000000';
-        waveNumText.strokeThickness = 2;
+        waveNumText.strokeThickness = 4;
         waveNumText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         waveNumText.anchor.setTo(0.0,0.0); //set the point of reference for the sprite
     }

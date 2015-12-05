@@ -66,12 +66,12 @@ var UnitToolbar = function(game, parent){
         backButton.fill = grd;
         backButton.align = 'center';
         backButton.stroke = '#000000';
-        backButton.strokeThickness = 2;
+        backButton.strokeThickness = 4;
         backButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         backButton.inputEnabled = true;
  
         backButton.events.onInputOver.add(function(){
-            backButton.fill = '#ff00ff';
+            backButton.fill = '#1a8dff';
         }, this);
         backButton.events.onInputOut.add(function(){
             backButton.fill = grd;
@@ -91,12 +91,12 @@ var UnitToolbar = function(game, parent){
         nextButton.fill = grd;
         nextButton.align = 'center';
         nextButton.stroke = '#000000';
-        nextButton.strokeThickness = 2;
+        nextButton.strokeThickness = 4;
         nextButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         nextButton.inputEnabled = true;
         
         nextButton.events.onInputOver.add(function(){
-            nextButton.fill = '#ff00ff';
+            nextButton.fill = '#1a8dff';
         }, this);
         nextButton.events.onInputOut.add(function(){
             nextButton.fill = grd;

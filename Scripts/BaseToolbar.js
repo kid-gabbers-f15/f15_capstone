@@ -100,12 +100,12 @@ var BaseToolbar = function(game, parent){
         backButton.fill = grd;
         backButton.align = 'center';
         backButton.stroke = '#000000';
-        backButton.strokeThickness = 2;
+        backButton.strokeThickness = 4;
         backButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         backButton.inputEnabled = true;
  
         backButton.events.onInputOver.add(function(){
-            backButton.fill = '#ff00ff';
+            backButton.fill = '#1a8dff';
         }, this);
         backButton.events.onInputOut.add(function(){
             backButton.fill = grd;
@@ -125,12 +125,12 @@ var BaseToolbar = function(game, parent){
         nextButton.fill = grd;
         nextButton.align = 'center';
         nextButton.stroke = '#000000';
-        nextButton.strokeThickness = 2;
+        nextButton.strokeThickness = 4;
         nextButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         nextButton.inputEnabled = true;
         
         nextButton.events.onInputOver.add(function(){
-            nextButton.fill = '#ff00ff';
+            nextButton.fill = '#1a8dff';
         }, this);
         nextButton.events.onInputOut.add(function(){
             nextButton.fill = grd;
@@ -150,12 +150,12 @@ var BaseToolbar = function(game, parent){
         backgroundButton.fill = grd;
         backgroundButton.align = 'center';
         backgroundButton.stroke = '#000000';
-        backgroundButton.strokeThickness = 2;
+        backgroundButton.strokeThickness = 4;
         backgroundButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         backgroundButton.inputEnabled = true;
         
         backgroundButton.events.onInputOver.add(function(){
-            backgroundButton.fill = '#ff00ff';
+            backgroundButton.fill = '#1a8dff';
         }, this);
         backgroundButton.events.onInputOut.add(function(){
             backgroundButton.fill = grd;
@@ -176,12 +176,12 @@ var BaseToolbar = function(game, parent){
         stickersButton.fill = grd;
         stickersButton.align = 'center';
         stickersButton.stroke = '#000000';
-        stickersButton.strokeThickness = 2;
+        stickersButton.strokeThickness = 4;
         stickersButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         stickersButton.inputEnabled = true;
         
         stickersButton.events.onInputOver.add(function(){
-            stickersButton.fill = '#ff00ff';
+            stickersButton.fill = '#1a8dff';
         }, this);
         stickersButton.events.onInputOut.add(function(){
             stickersButton.fill = grd;

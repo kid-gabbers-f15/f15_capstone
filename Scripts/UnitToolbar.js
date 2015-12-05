@@ -25,6 +25,9 @@ var UnitToolbar = function(game, parent){
         slot.events.onInputDown.add(function(){
             clickSlot(index);
         });
+        slot.events.onInputOver.add(function(){
+            
+        })
     }
     
     function OnCreate(){

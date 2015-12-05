@@ -12,6 +12,9 @@ var BaseManager = function(game){
     var baseoffsetY = 110; // int, y screen offset for the base
     var backgroundSprite = ''; // string, name of the background image
     var playerBaseData; // JSON string, data about the player base
+    var shop;
+    var resourceText
+    var grdr;
     
     function Preload(){
         baseToolbar = BaseToolbar(game, this);
@@ -57,9 +60,24 @@ var BaseManager = function(game){
     
         baseToolbar.OnCreate();
         
-        mainButton = game.add.text(0, 0, "Main Menu");
+        resourceText = game.add.text(50, 100, "Cash: " + playerState.gold);
+        resourceText.font = 'Revalia';
+        resourceText.fontSize = 45;
+        grd = resourceText.context.createLinearGradient(0, 0, 0, resourceText.canvas.height);
+        grd.addColorStop(0, '#016dff');   
+        grd.addColorStop(1, '#016dff');
+        grdr = resourceText.context.createLinearGradient(0, 0, 0, resourceText.canvas.height);
+        grdr.addColorStop(0, '#fff08e');   
+        grdr.addColorStop(1, '#f0d431');
+        resourceText.fill = grdr;
+        resourceText.align = 'center';
+        resourceText.stroke = '#000000';
+        resourceText.strokeThickness = 4;
+        resourceText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        
+        mainButton = game.add.text(50, 40, "Main Menu");
         mainButton.font = 'Revalia';
-        mainButton.fontSize = 60;
+        mainButton.fontSize = 50;
         grd = mainButton.context.createLinearGradient(0, 0, 0, mainButton.canvas.height);
         grd.addColorStop(0, '#016dff');   
         grd.addColorStop(1, '#016dff');
@@ -92,6 +110,9 @@ var BaseManager = function(game){
             addEventtoSprite(temp);
             stickers.add(temp);
         }
+        
+        shop = BaseShopManager(game);
+        shop.OnCreate();
     }
     
     /*

@@ -376,7 +376,7 @@ var Unit = function (parent, game){
            curr_children = curr_children + num_unit;
            defEngine.spendGold(cost);
            set_health_visible();
-           CurrentUnitHealth = 50;
+           CurrentUnitHealth = 10 * cost;
            initalUnitHealth = CurrentUnitHealth;
         }
     }
@@ -449,7 +449,8 @@ var Unit = function (parent, game){
             for(var i = 0; i < shopMenuItems.list.length; ++i){
                 if(shopMenuItems.list[i].key === spriteName){
                     bulletType = shopMenuItems.list[i].type;
-                    dmgAmount = Math.floor(shopMenuItems.list[i].cost/10);
+                    cost = shopMenuItems.list[i].cost/20;
+                    dmgAmount = Math.floor(cost/10);
                     //console.log("shopMenuItems.list[i].cost: " + shopMenuItems.list[i].cost);
                     //dmgAmount = 10;
                     break;

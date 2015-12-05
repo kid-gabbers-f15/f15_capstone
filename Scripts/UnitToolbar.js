@@ -130,6 +130,7 @@ var UnitToolbar = function(game, parent){
                     slots[n].key = stickers[i];
                     slots[n].slot.events.onInputDown.removeAll();
                     addEventtoSlot(i, slots[n].slot);
+                    slots[n].slot.visible = false;
                     ++n;
                 }
                 else{
@@ -139,11 +140,6 @@ var UnitToolbar = function(game, parent){
             }
         }
         
-        
-        for(var i = 0; i < numOfSlots; ++i){
-            slots[i].slot.visible = true;
-            slots[i].slot.inputEnabled = true;
-        }
     }
     
     function clickBack(){

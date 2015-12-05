@@ -16,13 +16,13 @@ var BaseShopManager = function (game, parent){
     var pageNum = 0; // Page number the player is on in the shop
     var stickers = []; // List of stickers
     var slots = []; // List of shop slots
-    var grd, grd2, grd3, grd4, grdred; // Gradient for text
+    var grd, grd2, grd3, grd4, grdred, grdp; // Gradient for text
     var test_name;
     var owned;
     var label1, label2, label3;
     var shopLabel;
     var resourceText
-    var grdr;
+    var grdr, line;
     //Example Code for reference------
     /*
     function loadShopItems(items){
@@ -65,28 +65,37 @@ var BaseShopManager = function (game, parent){
         initializeShopMenu();
         initializeShopItems();
         
+        line = game.add.text(50, 190, "_____");
+        line.font = 'Revalia';
+        line.fontSize = 35;
+        grd4 = line.context.createLinearGradient(0, 0, 0, line.canvas.height);
+        grd4.addColorStop(0, '#fef5ff');   
+        grd4.addColorStop(1, '#fef5ff');
+        line.fill = grd4;
+        line.align = 'center';
+        line.stroke = '#000000';
+        line.strokeThickness = 4;
+        line.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        
         shopLabel = game.add.text(50, 160, "Shop");
         shopLabel.font = 'Revalia';
-        shopLabel.fontSize = 50;
-        shopLabel.fill = grd;
+        shopLabel.fontSize = 45;
+        shopLabel.fill = grd4;
         shopLabel.align = 'center';
         shopLabel.stroke = '#000000';
         shopLabel.strokeThickness = 4;
         shopLabel.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         
-        label1 = game.add.text(50, 270, "Buy");
+        label1 = game.add.text(50, 280, "Buy");
         label1.font = 'Revalia';
         label1.fontSize = 40;
-        grd4 = label1.context.createLinearGradient(0, 0, 0, label1.canvas.height);
-        grd4.addColorStop(0, '#fef5ff');   
-        grd4.addColorStop(1, '#fef5ff');
         label1.fill = grd4;
         label1.align = 'center';
         label1.stroke = '#000000';
         label1.strokeThickness = 4;
         label1.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         //label2 = game.add.text(game.world.centerX * (8/5), 50, "Description");
-        label3 = game.add.text(300, 270, "Cost");
+        label3 = game.add.text(300, 280, "Cost");
         label3.font = 'Revalia';
         label3.fontSize = 40;
         label3.fill = grd4;
@@ -110,13 +119,13 @@ var BaseShopManager = function (game, parent){
         nextButton = game.add.text(300, game.world.centerY + 150, "Next");
         nextButton.font = 'Revalia';
         nextButton.fontSize = 35;
-        grd = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
-        grd.addColorStop(0, '#e544ff');   
-        grd.addColorStop(1, '#a800c3');
+        grdp = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
+        grdp.addColorStop(0, '#e544ff');   
+        grdp.addColorStop(1, '#e544ff');
         grd3 = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
         grd3.addColorStop(0, '#5cff42');   
         grd3.addColorStop(1, '#4db300');
-        nextButton.fill = grd;
+        nextButton.fill = grdp;
         nextButton.align = 'center';
         nextButton.stroke = '#000000';
         nextButton.strokeThickness = 4;
@@ -124,10 +133,10 @@ var BaseShopManager = function (game, parent){
         nextButton.inputEnabled = true;
         
         nextButton.events.onInputOver.add(function(){
-            nextButton.fill = '#ff00ff';
+            nextButton.fill = '#44ffe5';
         }, this);
         nextButton.events.onInputOut.add(function(){
-            nextButton.fill = grd;
+            nextButton.fill = grdp;
         }, this);
         nextButton.events.onInputDown.add(function(){
             defEngine.click_sound();
@@ -138,7 +147,7 @@ var BaseShopManager = function (game, parent){
         backButton = game.add.text(50, game.world.centerY + 150, "Back");
         backButton.font = 'Revalia';
         backButton.fontSize = 35;
-        backButton.fill = grd;
+        backButton.fill = grdp;
         backButton.align = 'center';
         backButton.stroke = '#000000';
         backButton.strokeThickness = 4;
@@ -146,10 +155,10 @@ var BaseShopManager = function (game, parent){
         backButton.inputEnabled = true;
         
         backButton.events.onInputOver.add(function(){
-            backButton.fill = '#ff00ff';
+            backButton.fill = '#44ffe5';
         }, this);
         backButton.events.onInputOut.add(function(){
-            backButton.fill = grd;
+            backButton.fill = grdp;
         }, this);
         backButton.events.onInputDown.add(function(){
             defEngine.click_sound();
@@ -157,10 +166,10 @@ var BaseShopManager = function (game, parent){
         });
         
         // Sitcker Button
-        stickerButton = game.add.text(50, 220, "+1 Sticker Slot [" + playerState.base.totalSlots + "/" + 30 + "]");
+        stickerButton = game.add.text(50, 240, "+1 Sticker Slot");
         stickerButton.font = 'Revalia';
         stickerButton.fontSize = 35;
-        stickerButton.fill = grd;
+        stickerButton.fill = grdp;
         stickerButton.align = 'center';
         stickerButton.stroke = '#000000';
         stickerButton.strokeThickness = 4;
@@ -172,13 +181,13 @@ var BaseShopManager = function (game, parent){
                toolTips.fill = grdred;
             }
             else toolTips.fill = grd2;
-            stickerButton.fill = '#ff00ff';
-            toolTips.text = "Cost: " + 100 + "[" + playerState.base.totalSlots + "/" + 30 + "]";
+            stickerButton.fill = '#44ffe5';
+            toolTips.text = "Cost: " + 100 + " [" + playerState.base.totalSlots + "/" + 30 + "]";
             toolTips.visible = true;
             game.world.bringToTop(toolTips);
         }, this);
         stickerButton.events.onInputOut.add(function(){
-            stickerButton.fill = grd;
+            stickerButton.fill = grdp;
             toolTips.visible = false;
         }, this);
         
@@ -220,6 +229,7 @@ var BaseShopManager = function (game, parent){
                         slots[n].key = stickers[i];
                         slots[n].slot.events.onInputDown.removeAll();
                         slots[n].text.setText(shopMenuItems.list[i].text);
+                        slots[n].cost = shopMenuItems.list[i].cost;
                         slots[n].text.visible = true;
                         addEventtoSlot(i, slots[n].slot);
                         slots[n].slot.visible = true;
@@ -248,6 +258,7 @@ var BaseShopManager = function (game, parent){
                         slots[n].key = stickers[i];
                         slots[n].slot.events.onInputDown.removeAll();
                         slots[n].text.setText(shopMenuItems.list[i].text);
+                        slots[n].cost = shopMenuItems.list[i].cost;
                         addEventtoSlot(i, slots[n].slot);
                         ++n;
                     }
@@ -317,11 +328,11 @@ var BaseShopManager = function (game, parent){
             
             cost = shopMenuItems.list[i].cost;
 
-            temp = game.add.sprite(100, 350 + 60*slots.length, stickers[i]);
-            text = game.add.text(300, 350 + 60*slots.length, shopMenuItems.list[i].text);
+            temp = game.add.sprite(100, 340 + 70*slots.length, stickers[i]);
+            text = game.add.text(300, 350 + 70*slots.length, shopMenuItems.list[i].text);
 
             text.font = 'Revalia';
-            text.fontSize = 25;
+            text.fontSize = 30;
             grd2 = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
             grd2.addColorStop(0, '#fff08e');   
             grd2.addColorStop(1, '#a6b300');
@@ -331,7 +342,7 @@ var BaseShopManager = function (game, parent){
             text.strokeThickness = 4;
             text.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
             text.inputEnabled = false;
-            temp.scale.set(.35, .35);
+            temp.scale.set(.4, .4);
             slots.push({slot:temp, key:stickers[i], keyIndex:i, cost:cost, text:text});
         }
         updatePurchases();

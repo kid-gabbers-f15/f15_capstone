@@ -4,7 +4,7 @@ var BaseManager = function(game){
     var background; // object, the background of the base
     var baseToolbar; // object, displays the stickers for the base
     var mainButton; // object, button back to main menu
-    var grd; // object, gradient for font
+    var grd, grd2; // object, gradient for font
     var currentImage; // string, name of current image
     var stickers; // array, list of stickers
     var maxStickers = 1; // int, max number of stickers player can place
@@ -57,7 +57,20 @@ var BaseManager = function(game){
                 }
             }
         });
-    
+        
+        toolTips = game.add.text(game.input.mousePointer.x + 25, game.input.mousePointer.y - 25, "");
+        toolTips.font = 'Revalia';
+        toolTips.fontSize = 30;
+        grd2 = toolTips.context.createLinearGradient(0, 0, 0, toolTips.canvas.height);
+        grd2.addColorStop(0, '#fff08e');   
+        grd2.addColorStop(1, '#a6b300');
+        toolTips.fill = grd2;
+        toolTips.align = 'center';
+        toolTips.stroke = '#000000';
+        toolTips.strokeThickness = 4;
+        toolTips.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        toolTips.visible = false;
+        
         baseToolbar.OnCreate();
         
         mainButton = game.add.text(50, 40, "Main Menu");
@@ -110,7 +123,8 @@ var BaseManager = function(game){
     }
     
     function Update(){
-        
+        toolTips.position.x = game.input.mousePointer.x + 25;
+        toolTips.position.y = game.input.mousePointer.y - 25;
     }
     
     function SaveBase(){

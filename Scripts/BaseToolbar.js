@@ -118,9 +118,6 @@ var BaseToolbar = function(game, parent){
         nextButton = game.add.text(1770, 1000, "Next");
         nextButton.font = 'Revalia';
         nextButton.fontSize = 40;
-        grd = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
-        grd.addColorStop(0, '#016dff');   
-        grd.addColorStop(1, '#016dff');
         nextButton.fill = grd;
         nextButton.align = 'center';
         nextButton.stroke = '#000000';
@@ -143,9 +140,6 @@ var BaseToolbar = function(game, parent){
         backgroundButton = game.add.text(300, 850, "Backgrounds");
         backgroundButton.font = 'Revalia';
         backgroundButton.fontSize = 30;
-        grd = backgroundButton.context.createLinearGradient(0, 0, 0, backgroundButton.canvas.height);
-        grd.addColorStop(0, '#016dff');   
-        grd.addColorStop(1, '#016dff');
         backgroundButton.fill = grd;
         backgroundButton.align = 'center';
         backgroundButton.stroke = '#000000';
@@ -169,9 +163,6 @@ var BaseToolbar = function(game, parent){
         stickersButton = game.add.text(50, 850, "Stickers");
         stickersButton.font = 'Revalia';
         stickersButton.fontSize = 30;
-        grd = stickersButton.context.createLinearGradient(0, 0, 0, stickersButton.canvas.height);
-        grd.addColorStop(0, '#016dff');   
-        grd.addColorStop(1, '#016dff');
         stickersButton.fill = grd;
         stickersButton.align = 'center';
         stickersButton.stroke = '#000000';

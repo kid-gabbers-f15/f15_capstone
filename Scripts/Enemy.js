@@ -235,7 +235,7 @@ var Enemy = function (parent, game){
     dmg - int, amount of damage to do to the enemy
     */
     function damage(dmg, getGold){ //by default, get gold is undefined, so only need to check if explicitly false
-        dmg = 1000;
+        //dmg = 1000;
         
         took_damage = true;
         health = health - dmg;

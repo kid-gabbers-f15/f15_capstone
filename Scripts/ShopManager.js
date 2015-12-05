@@ -235,7 +235,7 @@ var ShopManager = function (game){
             }
             else toolTips.fill = grd2;
             stickerButton.fill = '#ff00ff';
-            toolTips.text = "Cost: " + 100;
+            toolTips.text = "Cost: " + 100 + "[" + playerState.base.totalSlots + "/" + 30 + "]";
             toolTips.visible = true;
             game.world.bringToTop(toolTips);
         }, this);
@@ -243,8 +243,10 @@ var ShopManager = function (game){
             stickerButton.fill = grd;
             toolTips.visible = false;
         }, this);
+        
         stickerButton.events.onInputDown.add(function(){
-           if(playerState.base.stickers < 30 && playerState.gold >= 100){
+           if(playerState.base.totalSlots < 30 && playerState.gold >= 100){
+               console.log("buy stickers")
                playerState.gold -= 100;
                buyStickerSlot();
            }

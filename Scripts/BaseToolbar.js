@@ -66,7 +66,6 @@ var BaseToolbar = function(game, parent){
             for(var j = 0; j < game.cache.getKeys().length; ++j){
                 if(game.cache.getKeys()[j].indexOf('BaseBackground') >= 0){
                     backgrounds.push(game.cache.getKeys()[j]);
-                    break;
                 }
             }
         }

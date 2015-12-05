@@ -170,13 +170,14 @@ var EnemyManager = function (game){
             }
         }
         else{ // non boss wave
-            enemy_count_in_wave = enemy_count_in_wave + 2;
+            enemy_count_in_wave = currentWave* 2;
             // Increase this ^ to increase count per wave
             
+            /*
             if(enemy_count_in_wave > 30){ //increase the number of enemies from each group
                 enemy_count_in_wave = 30; //10 is the limit since each group only has 10 max. Memory limit.
             }
-            
+            */
             for(var j = 0; j < enemy_count_in_wave; ++j){
                 //reset enemies to spawn again
                 if(numThatHasSpawned <= enemy_count_in_wave){
@@ -186,6 +187,7 @@ var EnemyManager = function (game){
             }
         }
         //set values for the state of the current game
+        
         tempState.current_wave = currentWave;
         tempState.boss_indicator = waveNumber;
         waitingForWave = false;

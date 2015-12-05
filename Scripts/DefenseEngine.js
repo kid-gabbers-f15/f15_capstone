@@ -404,6 +404,7 @@ var DefenseEngine = function (game){
         
         baseButton.events.onInputDown.add(function(){
             mclick_sfx.play();
+            tempState.came_from_base = true;
             game.state.start("Customize");
         });
                 

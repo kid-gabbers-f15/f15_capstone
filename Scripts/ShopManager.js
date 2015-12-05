@@ -16,10 +16,11 @@ var ShopManager = function (game){
     var pageNum = 0; // Page number the player is on in the shop
     var stickers = []; // List of stickers
     var slots = []; // List of shop slots
-    var grd, grd2, grd3, grd4; // Gradient for text
+    var grd, grd2, grd3, grd4, grdred; // Gradient for text
     var test_name;
     var owned;
     var label1, label2, label3;
+    var shopLabel;
 
     //Example Code for reference------
     /*
@@ -63,7 +64,16 @@ var ShopManager = function (game){
         initializeShopMenu();
         initializeShopItems();
         
-        label1 = game.add.text(game.world.centerX + 600, 30, "Buy");
+        shopLabel = game.add.text(game.world.centerX + 250, 20, "Shop");
+        shopLabel.font = 'Revalia';
+        shopLabel.fontSize = 60;
+        shopLabel.fill = grd;
+        shopLabel.align = 'center';
+        shopLabel.stroke = '#000000';
+        shopLabel.strokeThickness = 4;
+        shopLabel.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        
+        label1 = game.add.text(game.world.centerX + 600, 80, "Buy");
         label1.font = 'Revalia';
         label1.fontSize = 40;
         grd4 = label1.context.createLinearGradient(0, 0, 0, label1.canvas.height);
@@ -75,7 +85,7 @@ var ShopManager = function (game){
         label1.strokeThickness = 4;
         label1.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         //label2 = game.add.text(game.world.centerX * (8/5), 50, "Description");
-        label3 = game.add.text(game.world.centerX + 760, 30, "Cost");
+        label3 = game.add.text(game.world.centerX + 760, 80, "Cost");
         label3.font = 'Revalia';
         label3.fontSize = 40;
         label3.fill = grd4;
@@ -83,7 +93,9 @@ var ShopManager = function (game){
         label3.stroke = '#000000';
         label3.strokeThickness = 4;
         label3.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-        
+        grdred = label1.context.createLinearGradient(0, 0, 0, label1.canvas.height);
+        grdred.addColorStop(0, '#ff1a1a');   
+        grdred.addColorStop(1, '#ff1a1a');
         
     }
     
@@ -144,7 +156,7 @@ var ShopManager = function (game){
         });
         
         // Health Button
-        healthButton = game.add.text(game.world.centerX * (6.2/5) - 50, 100, "Buy Health");
+        healthButton = game.add.text(game.world.centerX * (6.2/5) - 50, 100, "Heal");
         healthButton.font = 'Revalia';
         healthButton.fontSize = 35;
         healthButton.fill = grd;
@@ -155,6 +167,10 @@ var ShopManager = function (game){
         healthButton.inputEnabled = true;
 
         healthButton.events.onInputOver.add(function(){
+            if(defEngine.getGlobalHealth() == defEngine.getMaxGlobalHealth()){
+               toolTips.fill = grdred;
+            }
+            else toolTips.fill = grd2;
             healthButton.fill = '#ff00ff';
             toolTips.text = "Cost: " + ((100 - defEngine.globalHealth()) * 5);
             toolTips.visible = true;
@@ -172,7 +188,7 @@ var ShopManager = function (game){
         });
         
         // Slot Button
-        slotButton = game.add.text(game.world.centerX * (6.2/5) - 50, 150, "Buy Unit Slot");
+        slotButton = game.add.text(game.world.centerX * (6.2/5) - 50, 150, "+1 Unit Slot");
         slotButton.font = 'Revalia';
         slotButton.fontSize = 35;
         slotButton.fill = grd;
@@ -183,8 +199,12 @@ var ShopManager = function (game){
         
         slotButton.inputEnabled = true;
         slotButton.events.onInputOver.add(function(){
+           if(playerState.unitSlots == 8 || playerState.gold < (250 * (playerState.unitSlots - 2))){
+               toolTips.fill = grdred;
+            }
+            else toolTips.fill = grd2;
             slotButton.fill = '#ff00ff';
-            toolTips.text = "Cost: " + (250 * (playerState.unitSlots - 2));
+            toolTips.text = "Cost: " + (250 * (playerState.unitSlots - 2) + " [" + playerState.unitSlots + "/" + 8 + "]");
             toolTips.visible = true;
         }, this);
         slotButton.events.onInputOut.add(function(){
@@ -199,7 +219,7 @@ var ShopManager = function (game){
         });
         
         // Sitcker Button
-        stickerButton = game.add.text(game.world.centerX * (6.2/5) - 50, 200, "Buy Sticker Slot");
+        stickerButton = game.add.text(game.world.centerX * (6.2/5) - 50, 200, "+1 Sticker Slot");
         stickerButton.font = 'Revalia';
         stickerButton.fontSize = 35;
         stickerButton.fill = grd;
@@ -210,6 +230,10 @@ var ShopManager = function (game){
         
         stickerButton.inputEnabled = true;
         stickerButton.events.onInputOver.add(function(){
+            if(playerState.base.stickers >= 30 || playerState.gold < 100){
+               toolTips.fill = grdred;
+            }
+            else toolTips.fill = grd2;
             stickerButton.fill = '#ff00ff';
             toolTips.text = "Cost: " + 100;
             toolTips.visible = true;
@@ -226,7 +250,7 @@ var ShopManager = function (game){
            }
         });
         
-        upgradeClickButton = game.add.text(game.world.centerX * (6.2/5) - 50, 250, "Buy Strength Potion");
+        upgradeClickButton = game.add.text(game.world.centerX * (6.2/5) - 50, 250, "+1 Strength Potion");
         upgradeClickButton.font = 'Revalia';
         upgradeClickButton.fontSize = 35;
         upgradeClickButton.fill = grd;
@@ -237,6 +261,10 @@ var ShopManager = function (game){
         
         upgradeClickButton.inputEnabled = true;
         upgradeClickButton.events.onInputOver.add(function(){
+            if(playerState.clickDamage >= 100 || playerState.gold < (playerState.clickDamage * 50)){
+               toolTips.fill = grdred;
+            }
+            else toolTips.fill = grd2;
             upgradeClickButton.fill = '#ff00ff';
             toolTips.text = "Cost: " + (playerState.clickDamage * 50);
             toolTips.visible = true;
@@ -361,8 +389,10 @@ var ShopManager = function (game){
             var text;
             
             cost = shopMenuItems.list[i].cost;
-            temp = game.add.sprite(game.world.centerX * (8/5) + 50, 100 + 70*slots.length, stickers[i]);
-            text = game.add.text(game.world.centerX * (9/5), 100 + 70*slots.length, shopMenuItems.list[i].text);
+
+            temp = game.add.sprite(game.world.centerX * (8/5) + 50, 150 + 50*slots.length, stickers[i]);
+            text = game.add.text(game.world.centerX * (9/5), 150 + 50*slots.length, shopMenuItems.list[i].text);
+
             text.font = 'Revalia';
             text.fontSize = 25;
             grd2 = text.context.createLinearGradient(0, 0, 0, text.canvas.height);

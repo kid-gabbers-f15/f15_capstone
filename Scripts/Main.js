@@ -29,7 +29,11 @@ function getCookie(cname){
     return "";
 }
 
+
+
 var game = {}; //global game variable
+
+var tempState = {};
 var LoadingText;
 var gradientText;
 var defEngine;
@@ -68,6 +72,10 @@ var Boot = {
         game.scale.pageAlignHorizontally = true;
         game.scale.pageAlignVertically = true;
         loadingScreen();
+        
+        tempState.current_wave = 0;
+        tempState.boss_indicator = 0;
+        tempState.came_from_base = 0; 
         
         var assetLoader = AssetLoader(game);
         assetLoader.Preload();

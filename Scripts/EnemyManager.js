@@ -51,7 +51,8 @@ var EnemyManager = function (game){
         
         uGroup = unitGroup;
         eGroup = enemypGroup;
-        currentWave = 0;
+        currentWave = tempState.current_wave;
+        waveNumber = tempState.boss_indicator;
         
         // OnCreate for each enemy and boss
         for(var i = 0; i < enemyGroup.length; ++i){
@@ -143,8 +144,15 @@ var EnemyManager = function (game){
         numThatHasSpawned = 0;
         playerState.points = waveNumber; //keep track of high score for player
         killCnter = 0;
-        ++waveNumber;
-        ++currentWave;
+        
+        
+        if(tempState.came_from_base){
+            tempState.came_from_base = false;
+        }
+        else{
+            ++waveNumber;
+            ++currentWave;
+        }
         
         update_Wave_Text(); //increment the wave count text
         
@@ -162,13 +170,14 @@ var EnemyManager = function (game){
             }
         }
         else{ // non boss wave
-            enemy_count_in_wave = enemy_count_in_wave + 2;
+            enemy_count_in_wave = currentWave* 2;
             // Increase this ^ to increase count per wave
             
+            /*
             if(enemy_count_in_wave > 30){ //increase the number of enemies from each group
                 enemy_count_in_wave = 30; //10 is the limit since each group only has 10 max. Memory limit.
             }
-            
+            */
             for(var j = 0; j < enemy_count_in_wave; ++j){
                 //reset enemies to spawn again
                 if(numThatHasSpawned <= enemy_count_in_wave){
@@ -177,6 +186,10 @@ var EnemyManager = function (game){
                 }
             }
         }
+        //set values for the state of the current game
+        
+        tempState.current_wave = currentWave;
+        tempState.boss_indicator = waveNumber;
         waitingForWave = false;
     }
     

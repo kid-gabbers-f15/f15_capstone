@@ -79,6 +79,9 @@ var BaseManager = function(game){
         mainButton.events.onInputDown.add(function(){
             SaveBase();
             defEngine.click_sound();
+            
+            tempState.came_from_base = true;
+            
             game.state.start("Preload");
         });
         

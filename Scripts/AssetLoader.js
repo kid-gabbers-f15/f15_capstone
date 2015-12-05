@@ -126,18 +126,6 @@ var AssetLoader = function(game){
         game.load.image('topBaseCollision', KCG_ASSET_PATH+'TopBaseImage.png');
         game.load.image('topBaseBackground', KCG_ASSET_PATH+'TopBaseImage.png');
         
-        //shop stuff-------------------------------------------------
-        game.load.image('shopMenu', KCG_ASSET_PATH+'Placeholder3.png');
-        game.load.image('Item1', KCG_ASSET_PATH+'BaseStickers/Animal1.png');
-        game.load.image('Item2', KCG_ASSET_PATH+'BaseStickers/Animal2.png');
-        game.load.image('Item3', KCG_ASSET_PATH+'BaseStickers/Animal3.png');
-        game.load.image('Item4', KCG_ASSET_PATH+'BaseStickers/Animal4.png');
-        game.load.image('Item5', KCG_ASSET_PATH+'BaseStickers/Animal5.png');
-        game.load.image('Item6', KCG_ASSET_PATH+'BaseStickers/Animal6.png');
-        game.load.image('Item7', KCG_ASSET_PATH+'BaseStickers/Animal7.png');
-        game.load.image('Item8', KCG_ASSET_PATH+'BaseStickers/Animal8.png');
-        game.load.image('Item9', KCG_ASSET_PATH+'BaseStickers/Animal9.png');
-        
         //unit slots----------------------------------------------
         game.load.image('unitSlot1', KCG_ASSET_PATH+'shelves1.png');
         game.load.image('unitSlot2', KCG_ASSET_PATH+'shelves2.png');

@@ -61,17 +61,17 @@ var UnitToolbar = function(game, parent){
         backButton.font = 'Revalia';
         backButton.fontSize = 40;
         grd = backButton.context.createLinearGradient(0, 0, 0, backButton.canvas.height);
-        grd.addColorStop(0, '#8ED6FF');   
-        grd.addColorStop(1, '#004CB3');
+        grd.addColorStop(0, '#016dff');   
+        grd.addColorStop(1, '#016dff');
         backButton.fill = grd;
         backButton.align = 'center';
         backButton.stroke = '#000000';
-        backButton.strokeThickness = 2;
+        backButton.strokeThickness = 4;
         backButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         backButton.inputEnabled = true;
  
         backButton.events.onInputOver.add(function(){
-            backButton.fill = '#ff00ff';
+            backButton.fill = '#ffb44e';
         }, this);
         backButton.events.onInputOut.add(function(){
             backButton.fill = grd;
@@ -86,17 +86,17 @@ var UnitToolbar = function(game, parent){
         nextButton.font = 'Revalia';
         nextButton.fontSize = 40;
         grd = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
-        grd.addColorStop(0, '#8ED6FF');   
-        grd.addColorStop(1, '#004CB3');
+        grd.addColorStop(0, '#016dff');   
+        grd.addColorStop(1, '#016dff');
         nextButton.fill = grd;
         nextButton.align = 'center';
         nextButton.stroke = '#000000';
-        nextButton.strokeThickness = 2;
+        nextButton.strokeThickness = 4;
         nextButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         nextButton.inputEnabled = true;
         
         nextButton.events.onInputOver.add(function(){
-            nextButton.fill = '#ff00ff';
+            nextButton.fill = '#ffb44e';
         }, this);
         nextButton.events.onInputOut.add(function(){
             nextButton.fill = grd;
@@ -216,6 +216,7 @@ var UnitToolbar = function(game, parent){
                 currentUnit.setUnit(slots[i].key);
             }
         }
+        hideToolbar();
     }
     
     function hideToolbar(){

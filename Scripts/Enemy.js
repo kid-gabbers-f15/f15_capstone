@@ -268,9 +268,11 @@ var Enemy = function (parent, game){
             if(getGold != false){
                 if(boss){
                     defEngine.addGold(100);
+                    defEngine.updateScore(100);
                 }
                 else{
                     defEngine.addGold(10);
+                    defEngine.updateScore(10);
                 }
             }
         }

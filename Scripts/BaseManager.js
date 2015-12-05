@@ -61,16 +61,16 @@ var BaseManager = function(game){
         mainButton.font = 'Revalia';
         mainButton.fontSize = 60;
         grd = mainButton.context.createLinearGradient(0, 0, 0, mainButton.canvas.height);
-        grd.addColorStop(0, '#8ED6FF');   
-        grd.addColorStop(1, '#004CB3');
+        grd.addColorStop(0, '#016dff');   
+        grd.addColorStop(1, '#016dff');
         mainButton.fill = grd;
         mainButton.align = 'center';
         mainButton.stroke = '#000000';
-        mainButton.strokeThickness = 2;
+        mainButton.strokeThickness = 4;
         mainButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         mainButton.inputEnabled = true;
         mainButton.events.onInputOver.add(function(){
-            mainButton.fill = '#ff00ff';
+            mainButton.fill = '#ffb44e';
         }, this);
         mainButton.events.onInputOut.add(function(){
             mainButton.fill = grd;

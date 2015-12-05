@@ -95,17 +95,17 @@ var BaseToolbar = function(game, parent){
         backButton.font = 'Revalia';
         backButton.fontSize = 40;
         grd = backButton.context.createLinearGradient(0, 0, 0, backButton.canvas.height);
-        grd.addColorStop(0, '#8ED6FF');   
-        grd.addColorStop(1, '#004CB3');
+        grd.addColorStop(0, '#016dff');   
+        grd.addColorStop(1, '#016dff');
         backButton.fill = grd;
         backButton.align = 'center';
         backButton.stroke = '#000000';
-        backButton.strokeThickness = 2;
+        backButton.strokeThickness = 4;
         backButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         backButton.inputEnabled = true;
  
         backButton.events.onInputOver.add(function(){
-            backButton.fill = '#ff00ff';
+            backButton.fill = '#ffb44e';
         }, this);
         backButton.events.onInputOut.add(function(){
             backButton.fill = grd;
@@ -120,17 +120,17 @@ var BaseToolbar = function(game, parent){
         nextButton.font = 'Revalia';
         nextButton.fontSize = 40;
         grd = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
-        grd.addColorStop(0, '#8ED6FF');   
-        grd.addColorStop(1, '#004CB3');
+        grd.addColorStop(0, '#016dff');   
+        grd.addColorStop(1, '#016dff');
         nextButton.fill = grd;
         nextButton.align = 'center';
         nextButton.stroke = '#000000';
-        nextButton.strokeThickness = 2;
+        nextButton.strokeThickness = 4;
         nextButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         nextButton.inputEnabled = true;
         
         nextButton.events.onInputOver.add(function(){
-            nextButton.fill = '#ff00ff';
+            nextButton.fill = '#ffb44e';
         }, this);
         nextButton.events.onInputOut.add(function(){
             nextButton.fill = grd;
@@ -145,17 +145,17 @@ var BaseToolbar = function(game, parent){
         backgroundButton.font = 'Revalia';
         backgroundButton.fontSize = 30;
         grd = backgroundButton.context.createLinearGradient(0, 0, 0, backgroundButton.canvas.height);
-        grd.addColorStop(0, '#8ED6FF');   
-        grd.addColorStop(1, '#004CB3');
+        grd.addColorStop(0, '#016dff');   
+        grd.addColorStop(1, '#016dff');
         backgroundButton.fill = grd;
         backgroundButton.align = 'center';
         backgroundButton.stroke = '#000000';
-        backgroundButton.strokeThickness = 2;
+        backgroundButton.strokeThickness = 4;
         backgroundButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         backgroundButton.inputEnabled = true;
         
         backgroundButton.events.onInputOver.add(function(){
-            backgroundButton.fill = '#ff00ff';
+            backgroundButton.fill = '#ffb44e';
         }, this);
         backgroundButton.events.onInputOut.add(function(){
             backgroundButton.fill = grd;
@@ -171,17 +171,17 @@ var BaseToolbar = function(game, parent){
         stickersButton.font = 'Revalia';
         stickersButton.fontSize = 30;
         grd = stickersButton.context.createLinearGradient(0, 0, 0, stickersButton.canvas.height);
-        grd.addColorStop(0, '#8ED6FF');   
-        grd.addColorStop(1, '#004CB3');
+        grd.addColorStop(0, '#016dff');   
+        grd.addColorStop(1, '#016dff');
         stickersButton.fill = grd;
         stickersButton.align = 'center';
         stickersButton.stroke = '#000000';
-        stickersButton.strokeThickness = 2;
+        stickersButton.strokeThickness = 4;
         stickersButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         stickersButton.inputEnabled = true;
         
         stickersButton.events.onInputOver.add(function(){
-            stickersButton.fill = '#ff00ff';
+            stickersButton.fill = '#ffb44e';
         }, this);
         stickersButton.events.onInputOut.add(function(){
             stickersButton.fill = grd;

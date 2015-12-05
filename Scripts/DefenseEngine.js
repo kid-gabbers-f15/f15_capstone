@@ -14,7 +14,7 @@ var DefenseEngine = function (game){
     var startButton; // phaser text, button to start the game
     var friendBaseData; // JSON string, JSON representing the friend's base you are defending
     var pausetext; // phaser text, 'PAUSED' that pops up when the game is paused
-    var grd, grd2, grd3, grd5, grd6, grdr; // phaser color gradient, used for a color gradient on text
+    var grd, grd2, grd3, grd5, grd6, grdr, grds; // phaser color gradient, used for a color gradient on text
     var playerBaseData; // JSON string, JSON representing the player's base
     var unitSlots; // phaser sprite, changes based on how many unit slots player has unlocked.
     var globalHealth = 100; // int, overall game health value, lose when zero
@@ -26,6 +26,8 @@ var DefenseEngine = function (game){
     var toolbar;
     var baseHealthText;
     var maxGlobalHealth;
+    var stats, line, scoreText;
+    var score = 0;
     
     var unitSprite;
     
@@ -78,11 +80,11 @@ var DefenseEngine = function (game){
         game.load.image('topBaseBackground', KCG_ASSET_PATH+'TopBaseImage.png');
         game.load.image('whiteBox', KCG_ASSET_PATH+'whiteBox.png');
         
-        enemyManager = EnemyManager(game);
-        enemyManager.Preload();
-        
         player = Player(game);
         player.Preload();
+        
+        enemyManager = EnemyManager(game);
+        enemyManager.Preload();
         
         toolbar = UnitToolbar(game, this);
         toolbar.Preload();
@@ -141,9 +143,9 @@ var DefenseEngine = function (game){
             }
         }
         //text displaying the current amount of resource
-        resourceText = game.add.text(60, 15, "Cash: " + playerState.gold);
+        resourceText = game.add.text(60, 335, "Cash: " + playerState.gold);
         resourceText.font = 'Revalia';
-        resourceText.fontSize = 60;
+        resourceText.fontSize = 45;
         grd = resourceText.context.createLinearGradient(0, 0, 0, resourceText.canvas.height);
         grd.addColorStop(0, '#016dff');   
         grd.addColorStop(1, '#016dff');
@@ -158,6 +160,36 @@ var DefenseEngine = function (game){
         resourceText.stroke = '#000000';
         resourceText.strokeThickness = 4;
         resourceText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        
+        stats = game.add.text(60, 255, "Stats");
+        stats.font = 'Revalia';
+        stats.fontSize = 55;
+        stats.fill = grd;
+        stats.align = 'center';
+        stats.stroke = '#000000';
+        stats.strokeThickness = 4;
+        stats.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        
+        line = game.add.text(60, 275, "_____");
+        line.font = 'Revalia';
+        line.fontSize = 50;
+        line.fill = grd;
+        line.align = 'center';
+        line.stroke = '#000000';
+        line.strokeThickness = 4;
+        line.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        
+        scoreText = game.add.text(60, 435, "Score: " + score);
+        scoreText.font = 'Revalia';
+        scoreText.fontSize = 45;
+        grds = scoreText.context.createLinearGradient(0, 0, 0, scoreText.canvas.height);
+        grds.addColorStop(0, '#e544ff');   
+        grds.addColorStop(1, '#a800c3');
+        scoreText.fill = grds;
+        scoreText.align = 'center';
+        scoreText.stroke = '#000000';
+        scoreText.strokeThickness = 4;
+        scoreText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         
         unitGroup = game.add.group();
         enemypGroup = game.add.group();
@@ -208,9 +240,10 @@ var DefenseEngine = function (game){
         var enemyGroup = getEnemyManager().getEgroup();
         game.physics.arcade.collide(topBaseCollision, enemyGroup);
 
-        enemyManager.Update();
         player.Update();
+        enemyManager.Update();
         updateResource();
+
         
         globalHealthBar.crop(new Phaser.Rectangle(0, 0, 500 * globalHealth/100, 20));
     }
@@ -251,7 +284,19 @@ var DefenseEngine = function (game){
         else
             return false;
     }
-    
+    function updateScore(points)
+    {
+        score = score + points;
+        scoreText.setText("Score: " + score);
+    }
+    function getGlobalHealth()
+    {
+        return globalHealth;
+    }
+    function getMaxGlobalHealth()
+    {
+        return maxGlobalHealth;
+    }
     // damage - int, damage to deal to globalHealth
     function damageGlobalHealth(damage){
         globalHealth -= damage;
@@ -297,7 +342,7 @@ var DefenseEngine = function (game){
     
     function createButtons(){
         //pause button creation
-        pausebutton = game.add.text(60, 200, "Pause");
+        pausebutton = game.add.text(60, 75, "Pause");
         pausebutton.font = 'Revalia';
         pausebutton.fontSize = 60;
         grd = pausebutton.context.createLinearGradient(0, 0, 0, pausebutton.canvas.height);
@@ -338,7 +383,7 @@ var DefenseEngine = function (game){
         });
         
         //base button creation
-        baseButton = game.add.text(60, 135, "Base");
+        baseButton = game.add.text(60, 15, "Edit Base");
         baseButton.font = 'Revalia';
         baseButton.fontSize = 60;
         grd = baseButton.context.createLinearGradient(0, 0, 0, baseButton.canvas.height);
@@ -410,6 +455,7 @@ var DefenseEngine = function (game){
     that.hideToolbar = function hideToolbar(){
         toolbar.hideToolbar();
     }
+    
     that.addUnit = addUnit;
     that.Preload = Preload;
     that.Update = Update;
@@ -425,6 +471,9 @@ var DefenseEngine = function (game){
     that.damageGlobalHealth = damageGlobalHealth;
     that.friendBaseTarget = function(){return friendBaseTarget;}
     that.click_sound = click_sound;
+    that.updateScore = updateScore;
+    that.getGlobalHealth = getGlobalHealth;
+    that.getMaxGlobalHealth = getMaxGlobalHealth;
     
     return that;
 }

@@ -14,7 +14,7 @@ var DefenseEngine = function (game){
     var startButton; // phaser text, button to start the game
     var friendBaseData; // JSON string, JSON representing the friend's base you are defending
     var pausetext; // phaser text, 'PAUSED' that pops up when the game is paused
-    var grd; // phaser color gradient, used for a color gradient on text
+    var grd, grd2, grd3, grd5, grd6; // phaser color gradient, used for a color gradient on text
     var playerBaseData; // JSON string, JSON representing the player's base
     var unitSlots; // phaser sprite, changes based on how many unit slots player has unlocked.
     var globalHealth = 100; // int, overall game health value, lose when zero
@@ -24,6 +24,8 @@ var DefenseEngine = function (game){
     var gameOver = false; // whether the game is over or not
     var resume_sfx, pling_sfx, mclick_sfx; // sound effects
     var toolbar;
+    var baseHealthText;
+    var maxGlobalHealth;
     
     var unitSprite;
     
@@ -46,7 +48,7 @@ var DefenseEngine = function (game){
     base - object, friend's base
     */
     function loadFriendBase(base){
-        var bg = game.add.sprite(game.world.centerX/2 - 150, game.world.centerY + game.world.centerY/2, base.background);
+        var bg = game.add.sprite(game.world.centerX/2 - 150, game.world.centerY + game.world.centerY/2 + 25, base.background);
         bg.anchor.setTo(.5, .5);
         bg.crop(new Phaser.Rectangle(0, 0, 800, 600));
         bg.scale.setTo(.75, .75);
@@ -92,6 +94,7 @@ var DefenseEngine = function (game){
     }
     
     function OnCreate(){
+        maxGlobalHealth = 100;
         shopMenuItems = JSON.parse(game.cache.getText('JSONshopMenuItems'));
 
         //drawing background
@@ -138,16 +141,19 @@ var DefenseEngine = function (game){
             }
         }
         //text displaying the current amount of resource
-        resourceText = game.add.text(50, 10, "Gold: " + playerState.gold);
+        resourceText = game.add.text(60, 15, "Gold: " + playerState.gold);
         resourceText.font = 'Revalia';
         resourceText.fontSize = 60;
         grd = resourceText.context.createLinearGradient(0, 0, 0, resourceText.canvas.height);
         grd.addColorStop(0, '#8ED6FF');   
         grd.addColorStop(1, '#004CB3');
+        grd2 = resourceText.context.createLinearGradient(0, 0, 0, resourceText.canvas.height);
+        grd2.addColorStop(0, '#fff08e');   
+        grd2.addColorStop(1, '#a6b300');
         resourceText.fill = grd;
         resourceText.align = 'center';
         resourceText.stroke = '#000000';
-        resourceText.strokeThickness = 2;
+        resourceText.strokeThickness = 4;
         resourceText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         
         unitGroup = game.add.group();
@@ -164,9 +170,13 @@ var DefenseEngine = function (game){
         loadPlayerBase(playerState.base);
         
 
-        // Health bar for friends base
-        globalHealthBar = game.add.sprite(75, 580, 'baseHealthBar');
+        // Health for friends base
+        globalHealthBar = game.add.sprite(75, 605, 'baseHealthBar');
         globalHealthBar.crop(new Phaser.Rectangle(0, 0, 1000, 20));
+        baseHealthText = game.add.text(275, 567, globalHealth + " / " + maxGlobalHealth);
+        baseHealthText.fill = '#10de14';
+        baseHealthText.stroke = '#000000';
+        baseHealthText.strokeThickness = 10;
         
         resume_sfx = game.add.audio('rsound');
         pling_sfx = game.add.audio('pling');
@@ -174,15 +184,22 @@ var DefenseEngine = function (game){
         
         //game.sound.setDecodedCallback([pause_sfx], start, this);
         
-        toolTips = game.add.text(game.input.mousePointer.x, game.input.mousePointer.y, "");
+        toolTips = game.add.text(game.input.mousePointer.x + 25, game.input.mousePointer.y - 25, "");
+        toolTips.font = 'Revalia';
+        toolTips.fontSize = 30;
+        toolTips.fill = grd2;
+        toolTips.align = 'center';
+        toolTips.stroke = '#000000';
+        toolTips.strokeThickness = 4;
+        toolTips.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         toolTips.visible = false;
         toolbar.OnCreate();
         toolbar.hideToolbar();
     }
     
     function Update(){
-        toolTips.position.x = game.input.mousePointer.x;
-        toolTips.position.y = game.input.mousePointer.y;
+        toolTips.position.x = game.input.mousePointer.x + 25;
+        toolTips.position.y = game.input.mousePointer.y - 25;
         
         //check for collision with enemies with base window
         var enemyGroup = getEnemyManager().getEgroup();
@@ -235,6 +252,7 @@ var DefenseEngine = function (game){
     // damage - int, damage to deal to globalHealth
     function damageGlobalHealth(damage){
         globalHealth -= damage;
+        baseHealthText.setText(globalHealth + " / " + maxGlobalHealth);
         
         if(globalHealth <= 0){
             globalHealth = 0;
@@ -253,15 +271,30 @@ var DefenseEngine = function (game){
             gameOverText.fill = grd;
             gameOverText.align = 'center';
             gameOverText.stroke = '#000000';
-            gameOverText.strokeThickness = 2;
+            gameOverText.strokeThickness = 4;
             gameOverText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
             gameOverText.inputEnabled = false;
+        }
+        else
+        {
+            if(globalHealth < (3/4) * maxGlobalHealth && globalHealth > (1/2) * maxGlobalHealth)
+            {
+                baseHealthText.fill = '#dade10';
+            }
+            else if(globalHealth < (1/2) * maxGlobalHealth && globalHealth > (1/4) * maxGlobalHealth)
+            {
+                baseHealthText.fill = '#de7b10';
+            }
+            else if(globalHealth < (1/4) * maxGlobalHealth)
+            {
+                baseHealthText.fill = '#de1410';
+            }
         }
     }
     
     function createButtons(){
         //pause button creation
-        pausebutton = game.add.text(50, 65, "Pause");
+        pausebutton = game.add.text(60, 75, "Pause");
         pausebutton.font = 'Revalia';
         pausebutton.fontSize = 60;
         grd = pausebutton.context.createLinearGradient(0, 0, 0, pausebutton.canvas.height);
@@ -270,11 +303,11 @@ var DefenseEngine = function (game){
         pausebutton.fill = grd;
         pausebutton.align = 'center';
         pausebutton.stroke = '#000000';
-        pausebutton.strokeThickness = 2;
+        pausebutton.strokeThickness = 4;
         pausebutton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         pausebutton.inputEnabled = true;
         pausebutton.events.onInputOver.add(function(){
-            pausebutton.fill = '#ff00ff';
+            pausebutton.fill = '#1a8dff';
         }, this);
         pausebutton.events.onInputOut.add(function(){
             pausebutton.fill = grd;
@@ -283,25 +316,26 @@ var DefenseEngine = function (game){
         pausebutton.events.onInputDown.add(function(){
             pausebutton.fill = grd;
             pling_sfx.play();
-            pausetext = game.add.text(game.world.centerX, game.world.centerY, "PAUSED");
+            pausetext = game.add.text(game.world.centerX, game.world.centerY, "GAME PAUSED!");
             pausetext.anchor.setTo(0.5,0.5);
             pausetext.font = 'Revalia';
             pausetext.fontSize = 60;
-            grd = pausetext.context.createLinearGradient(0, 0, 0, pausetext.canvas.height);
-            grd.addColorStop(0, '#8ED6FF');   
-            grd.addColorStop(1, '#004CB3');
-            pausetext.fill = grd;
+            grd6 = pausetext.context.createLinearGradient(0, 0, 0, pausetext.canvas.height);
+            grd6.addColorStop(0, '#000000');   
+            grd6.addColorStop(1, '#ffffff');
+            pausetext.fill = grd6;
             pausetext.align = 'center';
             pausetext.stroke = '#000000';
-            pausetext.strokeThickness = 2;
+            pausetext.strokeThickness = 4;
             pausetext.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
             pling_sfx.onStop.add(function(){
                 game.paused = true;
+                pausebutton.fill = grd;
             });
         });
         
         //base button creation
-        baseButton = game.add.text(50, 120, "Base");
+        baseButton = game.add.text(60, 135, "Base");
         baseButton.font = 'Revalia';
         baseButton.fontSize = 60;
         grd = baseButton.context.createLinearGradient(0, 0, 0, baseButton.canvas.height);
@@ -310,11 +344,11 @@ var DefenseEngine = function (game){
         baseButton.fill = grd;
         baseButton.align = 'center';
         baseButton.stroke = '#000000';
-        baseButton.strokeThickness = 2;
+        baseButton.strokeThickness = 4;
         baseButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         baseButton.inputEnabled = true;
         baseButton.events.onInputOver.add(function(){
-            baseButton.fill = '#ff00ff';
+            baseButton.fill = '#1a8dff';
         }, this);
         baseButton.events.onInputOut.add(function(){
             baseButton.fill = grd;
@@ -326,23 +360,26 @@ var DefenseEngine = function (game){
         });
                 
         // Start button creation
-        startButton = game.add.text(1300, 800, "Start");
-        startButton.font = 'Revalia';
+        startButton = game.add.text(1300, 800, "Start!");
+        startButton.font = 'Fontdiner Swanky';
         startButton.fontSize = 60;
-        grd = startButton.context.createLinearGradient(0, 0, 0, startButton.canvas.height);
-        grd.addColorStop(0, '#8ED6FF');   
-        grd.addColorStop(1, '#004CB3');
-        startButton.fill = grd;
+        grd3 = startButton.context.createLinearGradient(0, 0, 1, startButton.canvas.height);
+        grd3.addColorStop(0, '#cd0000');   
+        grd3.addColorStop(1, '#ff1a1a');
+        grd5 = startButton.context.createLinearGradient(0, 0, 1, startButton.canvas.height);
+        grd5.addColorStop(0, '#008100');
+        grd5.addColorStop(1, '#1aff1a');
+        startButton.fill = grd3;
         startButton.align = 'center';
         startButton.stroke = '#000000';
-        startButton.strokeThickness = 2;
+        startButton.strokeThickness = 4;
         startButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         startButton.inputEnabled = true;
         startButton.events.onInputOver.add(function(){
-            startButton.fill = '#ff00ff';
+            startButton.fill = grd5;
         }, this);
         startButton.events.onInputOut.add(function(){
-            startButton.fill = grd;
+            startButton.fill = grd3;
         }, this);
         
         startButton.events.onInputDown.add(function(){

@@ -16,7 +16,7 @@ var ShopManager = function (game){
     var pageNum = 0; // Page number the player is on in the shop
     var stickers = []; // List of stickers
     var slots = []; // List of shop slots
-    var grd, grd2, grd3; // Gradient for text
+    var grd, grd2, grd3, grd4; // Gradient for text
     var test_name;
     var owned;
     var label1, label2, label3;
@@ -63,9 +63,26 @@ var ShopManager = function (game){
         initializeShopMenu();
         initializeShopItems();
         
-        label1 = game.add.text(game.world.centerX * (8/5) + 50, 50, "Buy");
+        label1 = game.add.text(game.world.centerX + 600, 30, "Buy");
+        label1.font = 'Revalia';
+        label1.fontSize = 40;
+        grd4 = label1.context.createLinearGradient(0, 0, 0, label1.canvas.height);
+        grd4.addColorStop(0, '#fef5ff');   
+        grd4.addColorStop(1, '#fef5ff');
+        label1.fill = grd4;
+        label1.align = 'center';
+        label1.stroke = '#000000';
+        label1.strokeThickness = 4;
+        label1.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         //label2 = game.add.text(game.world.centerX * (8/5), 50, "Description");
-        label3 = game.add.text(game.world.centerX * (9/5), 50, "Cost");
+        label3 = game.add.text(game.world.centerX + 760, 30, "Cost");
+        label3.font = 'Revalia';
+        label3.fontSize = 40;
+        label3.fill = grd4;
+        label3.align = 'center';
+        label3.stroke = '#000000';
+        label3.strokeThickness = 4;
+        label3.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         
         
     }
@@ -77,19 +94,19 @@ var ShopManager = function (game){
         shopPage = 0;
         
         // Next Button
-        nextButton = game.add.text(game.world.centerX * (9/5), game.world.centerY - 100, "Next");
+        nextButton = game.add.text(game.world.centerX + 760, game.world.centerY - 100, "Next");
         nextButton.font = 'Revalia';
-        nextButton.fontSize = 25;
+        nextButton.fontSize = 35;
         grd = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
-        grd.addColorStop(0, '#8ED6FF');   
-        grd.addColorStop(1, '#004CB3');
+        grd.addColorStop(0, '#e544ff');   
+        grd.addColorStop(1, '#a800c3');
         grd3 = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
         grd3.addColorStop(0, '#5cff42');   
         grd3.addColorStop(1, '#4db300');
         nextButton.fill = grd;
         nextButton.align = 'center';
         nextButton.stroke = '#000000';
-        nextButton.strokeThickness = 2;
+        nextButton.strokeThickness = 4;
         nextButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         nextButton.inputEnabled = true;
         
@@ -105,16 +122,13 @@ var ShopManager = function (game){
         });
         
         // Back Button
-        backButton = game.add.text(game.world.centerX * (8/5) + 50, game.world.centerY - 100, "Back");
+        backButton = game.add.text(game.world.centerX + 600, game.world.centerY - 100, "Back");
         backButton.font = 'Revalia';
-        backButton.fontSize = 25;
-        grd = backButton.context.createLinearGradient(0, 0, 0, backButton.canvas.height);
-        grd.addColorStop(0, '#8ED6FF');   
-        grd.addColorStop(1, '#004CB3');
+        backButton.fontSize = 35;
         backButton.fill = grd;
         backButton.align = 'center';
         backButton.stroke = '#000000';
-        backButton.strokeThickness = 2;
+        backButton.strokeThickness = 4;
         backButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         backButton.inputEnabled = true;
         
@@ -130,16 +144,13 @@ var ShopManager = function (game){
         });
         
         // Health Button
-        healthButton = game.add.text(game.world.centerX * (7/5) - 50, 100, "Buy Health");
+        healthButton = game.add.text(game.world.centerX * (6.2/5) - 50, 100, "Buy Health");
         healthButton.font = 'Revalia';
-        healthButton.fontSize = 25;
-        grd = healthButton.context.createLinearGradient(0, 0, 0, healthButton.canvas.height);
-        grd.addColorStop(0, '#8ED6FF');   
-        grd.addColorStop(1, '#004CB3');
+        healthButton.fontSize = 35;
         healthButton.fill = grd;
         healthButton.align = 'center';
         healthButton.stroke = '#000000';
-        healthButton.strokeThickness = 2;
+        healthButton.strokeThickness = 4;
         healthButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         healthButton.inputEnabled = true;
 
@@ -161,16 +172,13 @@ var ShopManager = function (game){
         });
         
         // Slot Button
-        slotButton = game.add.text(game.world.centerX * (7/5) - 50, 150, "Buy Unit Slot");
+        slotButton = game.add.text(game.world.centerX * (6.2/5) - 50, 150, "Buy Unit Slot");
         slotButton.font = 'Revalia';
-        slotButton.fontSize = 25;
-        grd = slotButton.context.createLinearGradient(0, 0, 0, slotButton.canvas.height);
-        grd.addColorStop(0, '#8ED6FF');   
-        grd.addColorStop(1, '#004CB3');
+        slotButton.fontSize = 35;
         slotButton.fill = grd;
         slotButton.align = 'center';
         slotButton.stroke = '#000000';
-        slotButton.strokeThickness = 2;
+        slotButton.strokeThickness = 4;
         slotButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         
         slotButton.inputEnabled = true;
@@ -191,16 +199,13 @@ var ShopManager = function (game){
         });
         
         // Sitcker Button
-        stickerButton = game.add.text(game.world.centerX * (7/5) - 50, 200, "Buy Sticker Slot");
+        stickerButton = game.add.text(game.world.centerX * (6.2/5) - 50, 200, "Buy Sticker Slot");
         stickerButton.font = 'Revalia';
-        stickerButton.fontSize = 25;
-        grd = stickerButton.context.createLinearGradient(0, 0, 0, stickerButton.canvas.height);
-        grd.addColorStop(0, '#8ED6FF');   
-        grd.addColorStop(1, '#004CB3');
+        stickerButton.fontSize = 35;
         stickerButton.fill = grd;
         stickerButton.align = 'center';
         stickerButton.stroke = '#000000';
-        stickerButton.strokeThickness = 2;
+        stickerButton.strokeThickness = 4;
         stickerButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         
         stickerButton.inputEnabled = true;
@@ -221,16 +226,13 @@ var ShopManager = function (game){
            }
         });
         
-        upgradeClickButton = game.add.text(game.world.centerX * (7/5) - 50, 250, "Buy Strength Potion");
+        upgradeClickButton = game.add.text(game.world.centerX * (6.2/5) - 50, 250, "Buy Strength Potion");
         upgradeClickButton.font = 'Revalia';
-        upgradeClickButton.fontSize = 25;
-        grd = upgradeClickButton.context.createLinearGradient(0, 0, 0, upgradeClickButton.canvas.height);
-        grd.addColorStop(0, '#8ED6FF');   
-        grd.addColorStop(1, '#004CB3');
+        upgradeClickButton.fontSize = 35;
         upgradeClickButton.fill = grd;
         upgradeClickButton.align = 'center';
         upgradeClickButton.stroke = '#000000';
-        upgradeClickButton.strokeThickness = 2;
+        upgradeClickButton.strokeThickness = 4;
         upgradeClickButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         
         upgradeClickButton.inputEnabled = true;
@@ -369,7 +371,7 @@ var ShopManager = function (game){
             text.fill = grd2;
             text.align = 'center';
             text.stroke = '#000000';
-            text.strokeThickness = 2;
+            text.strokeThickness = 4;
             text.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
             text.inputEnabled = false;
             temp.scale.set(.35, .35);

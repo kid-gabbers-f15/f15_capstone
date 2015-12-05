@@ -66,11 +66,11 @@ var BaseManager = function(game){
         mainButton.fill = grd;
         mainButton.align = 'center';
         mainButton.stroke = '#000000';
-        mainButton.strokeThickness = 2;
+        mainButton.strokeThickness = 4;
         mainButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         mainButton.inputEnabled = true;
         mainButton.events.onInputOver.add(function(){
-            mainButton.fill = '#ff00ff';
+            mainButton.fill = '#1a8dff';
         }, this);
         mainButton.events.onInputOut.add(function(){
             mainButton.fill = grd;

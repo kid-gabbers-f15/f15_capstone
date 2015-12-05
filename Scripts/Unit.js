@@ -82,7 +82,7 @@ var Unit = function (parent, game){
         text.fill = grd;
         text.align = 'center';
         text.stroke = '#000000';
-        text.strokeThickness = 2;
+        text.strokeThickness = 4;
         text.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         
         //set up the health sprite for each unit.
@@ -102,7 +102,7 @@ var Unit = function (parent, game){
         pistolCostText.fill = grd2;
         pistolCostText.align = 'center';
         pistolCostText.stroke = '#000000';
-        pistolCostText.strokeThickness = 2;
+        pistolCostText.strokeThickness = 4;
         pistolCostText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         
         shotgunSprite = game.add.sprite(position.x-250, position.y, 'Unit1');
@@ -113,7 +113,7 @@ var Unit = function (parent, game){
         shotgunCostText.fill = grd2;
         shotgunCostText.align = 'center';
         shotgunCostText.stroke = '#000000';
-        shotgunCostText.strokeThickness = 2;
+        shotgunCostText.strokeThickness = 4;
         shotgunCostText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         
         rifleSprite = game.add.sprite(position.x-150, position.y-100, 'Unit2');
@@ -124,7 +124,7 @@ var Unit = function (parent, game){
         rifleCostText.fill = grd2;
         rifleCostText.align = 'center';
         rifleCostText.stroke = '#000000';
-        rifleCostText.strokeThickness = 2;
+        rifleCostText.strokeThickness = 4;
         rifleCostText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         
         pistolSprite.inputEnabled = false;

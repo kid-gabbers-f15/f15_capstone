@@ -165,7 +165,10 @@ var DefenseEngine = function (game){
         stats = game.add.text(60, 255, "Stats");
         stats.font = 'Revalia';
         stats.fontSize = 55;
-        stats.fill = grd;
+        grdw = stats.context.createLinearGradient(0, 0, 0, stats.canvas.height);
+        grdw.addColorStop(0, '#fef5ff');   
+        grdw.addColorStop(1, '#fef5ff');
+        stats.fill = grdw;
         stats.align = 'center';
         stats.stroke = '#000000';
         stats.strokeThickness = 4;
@@ -174,7 +177,7 @@ var DefenseEngine = function (game){
         line = game.add.text(60, 275, "_____");
         line.font = 'Revalia';
         line.fontSize = 50;
-        line.fill = grd;
+        line.fill = grdw;
         line.align = 'center';
         line.stroke = '#000000';
         line.strokeThickness = 4;

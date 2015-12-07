@@ -69,7 +69,7 @@ var Unit = function (parent, game){
         unitSprite.inputEnabled = true;
         unitSprite.input.useHandCursor = true;
         
-        text = game.add.text(position.x + 15, position.y + 5, curr_children);
+        text = game.add.text(position.x + 55, position.y + 15, curr_children);
         text.anchor.set(0.25);
         text.font = 'Revalia';
         text.fontSize = 45;

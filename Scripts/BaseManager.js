@@ -47,7 +47,7 @@ var BaseManager = function(game){
         background.events.onInputDown.add(function(){
             if(currentImage !== undefined && currentImage !== null){
                 if(stickers.length < playerState.base.totalSlots){
-                    var temp = game.add.sprite(game.input.mousePointer.x, game.input.mousePointer.y, currentImage);
+                    var temp = game.add.sprite(game.input.activePointer.x, game.input.activePointer.y, currentImage);
                     temp.anchor.setTo(0.5, 0.5);
                     temp.inputEnabled = true;
                     temp.events.onInputDown.add(function(){

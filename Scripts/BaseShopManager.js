@@ -223,6 +223,7 @@ var BaseShopManager = function (game, parent){
                         slots[n].text.visible = true;
                         addEventtoSlot(i, slots[n].slot);
                         slots[n].slot.visible = true;
+                        slots[n].cost = shopMenuItems.list[i].cost;
                         slots[n].slot.inputEnabled = true;
                         ++n;
                     }
@@ -248,6 +249,7 @@ var BaseShopManager = function (game, parent){
                         slots[n].key = stickers[i];
                         slots[n].slot.events.onInputDown.removeAll();
                         slots[n].text.setText(shopMenuItems.list[i].text);
+                        slots[n].cost = shopMenuItems.list[i].cost;
                         addEventtoSlot(i, slots[n].slot);
                         ++n;
                     }

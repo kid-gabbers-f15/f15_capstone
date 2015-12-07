@@ -296,6 +296,7 @@ var ShopManager = function (game){
                         slots[n].key = stickers[i];
                         slots[n].slot.events.onInputDown.removeAll();
                         slots[n].text.setText(shopMenuItems.list[i].text);
+                        slots[n].cost = shopMenuItems.list[i].cost;
                         slots[n].text.visible = true;
                         addEventtoSlot(i, slots[n].slot);
                         slots[n].slot.visible = true;
@@ -324,6 +325,7 @@ var ShopManager = function (game){
                         slots[n].key = stickers[i];
                         slots[n].slot.events.onInputDown.removeAll();
                         slots[n].text.setText(shopMenuItems.list[i].text);
+                        slots[n].cost = shopMenuItems.list[i].cost;
                         addEventtoSlot(i, slots[n].slot);
                         ++n;
                     }
@@ -376,6 +378,7 @@ var ShopManager = function (game){
             slots[i].slot.inputEnabled = true;
             slots[i].text.visible = true;
             slots[i].slot.loadTexture(stickers[i]);
+            slots[i].cost = shopMenuItems.list[i].cost;
             slots[i].keyIndex = i;
             slots[i].key = stickers[i];
             slots[i].text.setText(shopMenuItems.list[i].text);

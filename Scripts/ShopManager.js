@@ -192,7 +192,7 @@ var ShopManager = function (game){
             toolTips.visible = false;
         }, this);
         healthButton.events.onInputDown.add(function(){
-           if(defEngine.globalHealth < 100 && playerState.gold >= ((100-defEngine.globalHealth()) * 5)){
+            if(defEngine.globalHealth() < 100 && playerState.gold >= ((100-defEngine.globalHealth()) * 5)){
                playerState.gold -= (100 - defEngine.globalHealth()) * 5;   //costs 5 gold for every global health healed.
                buyHealthPotion();
            }
@@ -471,6 +471,7 @@ var ShopManager = function (game){
     //replenish global health
     function buyHealthPotion(){
         defEngine.setGlobalHealth(100);
+        console.log("healing");
     }
     
     function buyStrongerClick(){

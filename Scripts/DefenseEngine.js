@@ -448,7 +448,10 @@ var DefenseEngine = function (game){
 
     that.setUnitSprite = function setUnitSprite(spriteName){unitSprite = spriteName;}
     that.getUnitSprite = function getUnitSprite(){return unitSprite;}
-    that.setGlobalHealth = function(h){globalHealth = h;}
+    that.setGlobalHealth = function(h){
+        damageGlobalHealth(globalHealth - h);
+        
+    }
     that.globalHealth = function(){return globalHealth;}
     
     that.updateUnitToolbar = function updateUnitToolbar(){

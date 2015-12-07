@@ -20,7 +20,7 @@ var ShopManager = function (game){
     var test_name;
     var owned;
     var label1, label2, label3;
-    var shopLabel;
+    var shopLabel, line;
 
     //Example Code for reference------
     /*
@@ -64,28 +64,39 @@ var ShopManager = function (game){
         initializeShopMenu();
         initializeShopItems();
         
+        
+        line = game.add.text(game.world.centerX + 250, 55, "_____");
+        line.font = 'Revalia';
+        line.fontSize = 50;
+        grd4 = line.context.createLinearGradient(0, 0, 0, line.canvas.height);
+        grd4.addColorStop(0, '#fef5ff');   
+        grd4.addColorStop(1, '#fef5ff');
+        line.fill = grd4;
+        line.align = 'center';
+        line.stroke = '#000000';
+        line.strokeThickness = 4;
+        line.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        
         shopLabel = game.add.text(game.world.centerX + 250, 20, "Shop");
         shopLabel.font = 'Revalia';
         shopLabel.fontSize = 60;
-        shopLabel.fill = grd;
+        shopLabel.fill = grd4;
         shopLabel.align = 'center';
         shopLabel.stroke = '#000000';
         shopLabel.strokeThickness = 4;
         shopLabel.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+
         
-        label1 = game.add.text(game.world.centerX + 600, 80, "Buy");
+        label1 = game.add.text(game.world.centerX + 600, 30, "Buy");
         label1.font = 'Revalia';
         label1.fontSize = 40;
-        grd4 = label1.context.createLinearGradient(0, 0, 0, label1.canvas.height);
-        grd4.addColorStop(0, '#fef5ff');   
-        grd4.addColorStop(1, '#fef5ff');
         label1.fill = grd4;
         label1.align = 'center';
         label1.stroke = '#000000';
         label1.strokeThickness = 4;
         label1.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         //label2 = game.add.text(game.world.centerX * (8/5), 50, "Description");
-        label3 = game.add.text(game.world.centerX + 760, 80, "Cost");
+        label3 = game.add.text(game.world.centerX + 760, 30, "Cost");
         label3.font = 'Revalia';
         label3.fontSize = 40;
         label3.fill = grd4;
@@ -106,12 +117,12 @@ var ShopManager = function (game){
         shopPage = 0;
         
         // Next Button
-        nextButton = game.add.text(game.world.centerX + 760, game.world.centerY - 100, "Next");
+        nextButton = game.add.text(game.world.centerX + 760, game.world.centerY - 90, "Next");
         nextButton.font = 'Revalia';
         nextButton.fontSize = 35;
         grd = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
         grd.addColorStop(0, '#e544ff');   
-        grd.addColorStop(1, '#a800c3');
+        grd.addColorStop(1, '#e544ff');
         grd3 = nextButton.context.createLinearGradient(0, 0, 0, nextButton.canvas.height);
         grd3.addColorStop(0, '#5cff42');   
         grd3.addColorStop(1, '#4db300');
@@ -123,7 +134,7 @@ var ShopManager = function (game){
         nextButton.inputEnabled = true;
         
         nextButton.events.onInputOver.add(function(){
-            nextButton.fill = '#ff00ff';
+            nextButton.fill = '#44ffe5';
         }, this);
         nextButton.events.onInputOut.add(function(){
             nextButton.fill = grd;
@@ -134,7 +145,7 @@ var ShopManager = function (game){
         });
         
         // Back Button
-        backButton = game.add.text(game.world.centerX + 600, game.world.centerY - 100, "Back");
+        backButton = game.add.text(game.world.centerX + 600, game.world.centerY - 90, "Back");
         backButton.font = 'Revalia';
         backButton.fontSize = 35;
         backButton.fill = grd;
@@ -145,7 +156,7 @@ var ShopManager = function (game){
         backButton.inputEnabled = true;
         
         backButton.events.onInputOver.add(function(){
-            backButton.fill = '#ff00ff';
+            backButton.fill = '#44ffe5';
         }, this);
         backButton.events.onInputOut.add(function(){
             backButton.fill = grd;
@@ -156,7 +167,7 @@ var ShopManager = function (game){
         });
         
         // Health Button
-        healthButton = game.add.text(game.world.centerX * (6.2/5) - 50, 100, "Heal");
+        healthButton = game.add.text(game.world.centerX * (6.2/5) - 50, 120, "Heal");
         healthButton.font = 'Revalia';
         healthButton.fontSize = 35;
         healthButton.fill = grd;
@@ -171,7 +182,7 @@ var ShopManager = function (game){
                toolTips.fill = grdred;
             }
             else toolTips.fill = grd2;
-            healthButton.fill = '#ff00ff';
+            healthButton.fill = '#44ffe5';
             toolTips.text = "Cost: " + ((100 - defEngine.globalHealth()) * 5);
             toolTips.visible = true;
             game.world.bringToTop(toolTips);
@@ -188,7 +199,7 @@ var ShopManager = function (game){
         });
         
         // Slot Button
-        slotButton = game.add.text(game.world.centerX * (6.2/5) - 50, 150, "+1 Unit Slot");
+        slotButton = game.add.text(game.world.centerX * (6.2/5) - 50, 170, "+1 Unit Slot");
         slotButton.font = 'Revalia';
         slotButton.fontSize = 35;
         slotButton.fill = grd;
@@ -203,7 +214,7 @@ var ShopManager = function (game){
                toolTips.fill = grdred;
             }
             else toolTips.fill = grd2;
-            slotButton.fill = '#ff00ff';
+            slotButton.fill = '#44ffe5';
             toolTips.text = "Cost: " + (250 * (playerState.unitSlots - 2) + " [" + playerState.unitSlots + "/" + 8 + "]");
             toolTips.visible = true;
         }, this);
@@ -219,7 +230,7 @@ var ShopManager = function (game){
         });
         
         // Sitcker Button
-        stickerButton = game.add.text(game.world.centerX * (6.2/5) - 50, 200, "+1 Sticker Slot");
+        stickerButton = game.add.text(game.world.centerX * (6.2/5) - 50, 220, "+1 Sticker Slot");
         stickerButton.font = 'Revalia';
         stickerButton.fontSize = 35;
         stickerButton.fill = grd;
@@ -234,8 +245,8 @@ var ShopManager = function (game){
                toolTips.fill = grdred;
             }
             else toolTips.fill = grd2;
-            stickerButton.fill = '#ff00ff';
-            toolTips.text = "Cost: " + 100 + "[" + playerState.base.totalSlots + "/" + 30 + "]";
+            stickerButton.fill = '#44ffe5';
+            toolTips.text = "Cost: " + 100 + " [" + playerState.base.totalSlots + "/" + 30 + "]";
             toolTips.visible = true;
             game.world.bringToTop(toolTips);
         }, this);
@@ -252,7 +263,7 @@ var ShopManager = function (game){
            }
         });
         
-        upgradeClickButton = game.add.text(game.world.centerX * (6.2/5) - 50, 250, "+1 Strength Potion");
+        upgradeClickButton = game.add.text(game.world.centerX * (6.2/5) - 50, 270, "+1 Strength Potion");
         upgradeClickButton.font = 'Revalia';
         upgradeClickButton.fontSize = 35;
         upgradeClickButton.fill = grd;
@@ -267,7 +278,7 @@ var ShopManager = function (game){
                toolTips.fill = grdred;
             }
             else toolTips.fill = grd2;
-            upgradeClickButton.fill = '#ff00ff';
+            upgradeClickButton.fill = '#44ffe5';
             toolTips.text = "Cost: " + (playerState.clickDamage * 50);
             toolTips.visible = true;
             game.world.bringToTop(toolTips);
@@ -298,6 +309,7 @@ var ShopManager = function (game){
                         slots[n].text.setText(shopMenuItems.list[i].text);
                         slots[n].cost = shopMenuItems.list[i].cost;
                         slots[n].text.visible = true;
+                        slots[n].cost = shopMenuItems.list[i].cost;
                         addEventtoSlot(i, slots[n].slot);
                         slots[n].slot.visible = true;
                         slots[n].slot.inputEnabled = true;
@@ -395,11 +407,11 @@ var ShopManager = function (game){
             
             cost = shopMenuItems.list[i].cost;
 
-            temp = game.add.sprite(game.world.centerX * (8/5) + 50, 150 + 50*slots.length, stickers[i]);
-            text = game.add.text(game.world.centerX * (9/5), 150 + 50*slots.length, shopMenuItems.list[i].text);
+            temp = game.add.sprite(game.world.centerX * (8/5) + 50, 90 + 70*slots.length, stickers[i]);
+            text = game.add.text(game.world.centerX * (9/5), 100 + 70*slots.length, shopMenuItems.list[i].text);
 
             text.font = 'Revalia';
-            text.fontSize = 25;
+            text.fontSize = 30;
             grd2 = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
             grd2.addColorStop(0, '#fff08e');   
             grd2.addColorStop(1, '#a6b300');
@@ -409,7 +421,7 @@ var ShopManager = function (game){
             text.strokeThickness = 4;
             text.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
             text.inputEnabled = false;
-            temp.scale.set(.35, .35);
+            temp.scale.set(.45, .45);
             slots.push({slot:temp, key:stickers[i], keyIndex:i, cost:cost, text:text});
         }
         updatePurchases();

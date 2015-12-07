@@ -9,6 +9,8 @@ var EnemyManager = function (game){
     var bossGroup = [];  // Group of bosses
     var total_enemies = 30; // Total number of enemies to create
     var total_bosses = 10; // Total number of bosses to create
+    
+    var initial_spawn_from_group;
     var enemy_count_in_wave = 0; // number of enemies from each group
     var boss_count_in_wave = 1; // Bosses to start with in wave
     var killCnter = 0; // Counter for kills per wave
@@ -83,7 +85,7 @@ var EnemyManager = function (game){
     function Update(){
         if(waitingForStart == false){
             if(ifBoss){ // Boss Wave
-                //console.log(killCnter + " < " + boss_count_in_wave)
+                console.log("Boss: " + killCnter + " < " + boss_count_in_wave)
                 if(killCnter < boss_count_in_wave){ // Bosses still alive
                     for(var i=0;i<boss_count_in_wave;i++){
                         if(bossGroup[i].getIsActive() == true){ // Boss is alive
@@ -107,7 +109,7 @@ var EnemyManager = function (game){
                 }
             }
             else{ // Normal wave
-                //console.log(killCnter + " < " + enemy_count_in_wave);
+                console.log("Boss: " + killCnter + " < " + enemy_count_in_wave);
                 var unitpGroup = defEngine.getPlayer().getUnitPGroup();
                 
                 if(killCnter < enemy_count_in_wave){ // Enemies still alive
@@ -142,6 +144,7 @@ var EnemyManager = function (game){
     
     function restartWave(){
         numThatHasSpawned = 0;
+        initial_spawn_from_group = 0;
         playerState.points = waveNumber; //keep track of high score for player
         killCnter = 0;
         
@@ -173,12 +176,14 @@ var EnemyManager = function (game){
             enemy_count_in_wave = currentWave* 2;
             // Increase this ^ to increase count per wave
             
-            /*
+            
             if(enemy_count_in_wave > 30){ //increase the number of enemies from each group
-                enemy_count_in_wave = 30; //10 is the limit since each group only has 10 max. Memory limit.
+                initial_spawn_from_group = 30; //30 is the limit for initial spawn of the enemies since there are only 30 in memory, will spawn more later.
             }
-            */
-            for(var j = 0; j < enemy_count_in_wave; ++j){
+            else{
+                initial_spawn_from_group = enemy_count_in_wave;
+            }
+            for(var j = 0; j < initial_spawn_from_group; ++j){
                 //reset enemies to spawn again
                 if(numThatHasSpawned <= enemy_count_in_wave){
                     enemyGroup[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));

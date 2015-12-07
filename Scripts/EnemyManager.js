@@ -30,6 +30,8 @@ var EnemyManager = function (game){
     eSpawn.x = 1850;
     eSpawn.y = 800;
     var enemyTextList = []; // Empty list for text used on enemies
+    var dmgBuff = 1;
+    var healthBuff = 1;
     
     function Preload(){
         for(var i = 0; i < total_enemies; ++i){ //add enemies to the array
@@ -120,7 +122,7 @@ var EnemyManager = function (game){
                         else{ // enemy dead
                             if(enemyGroup[i].getIsActive() == false && enemyGroup[i].getKilled() == true){
                                 if(numThatHasSpawned < enemy_count_in_wave){
-                                    enemyGroup[i].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
+                                    enemyGroup[i].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup), dmgBuff, healthBuff);
                                     numThatHasSpawned++;
                                 }
                                 else{
@@ -148,13 +150,20 @@ var EnemyManager = function (game){
         playerState.points = waveNumber; //keep track of high score for player
         killCnter = 0;
         
-        
         if(tempState.came_from_base){
             tempState.came_from_base = false;
         }
         else{
             ++waveNumber;
             ++currentWave;
+        }
+        //determine if buffs should be increased
+        if(currentWave > 1 && currentWave%4 == 0){
+            //console.log("after boss wave!");
+            healthBuff = (healthBuff + 1) * (healthBuff + 1);
+            dmgBuff = (dmgBuff + 1) * (dmgBuff + 1);
+            console.log("Dmg Buff: " + dmgBuff);
+            console.log("Health Buff: " + healthBuff);
         }
         
         update_Wave_Text(); //increment the wave count text
@@ -169,7 +178,7 @@ var EnemyManager = function (game){
             ifBoss = 1; //active boss level
             waveNumber = 0;
             for(var i = 0; i < boss_count_in_wave; i++){
-                bossGroup[i].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
+                bossGroup[i].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup), dmgBuff, healthBuff);
             }
         }
         else{ // non boss wave
@@ -186,7 +195,7 @@ var EnemyManager = function (game){
             for(var j = 0; j < initial_spawn_from_group; ++j){
                 //reset enemies to spawn again
                 if(numThatHasSpawned <= enemy_count_in_wave){
-                    enemyGroup[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup));
+                    enemyGroup[j].ResetEnemy(eSpawn.x - (Math.floor(Math.random() * 100)), eSpawn.y + (Math.floor(Math.random() * 200)), findUnit(unitpGroup), dmgBuff, healthBuff);
                     numThatHasSpawned++;
                 }
             }

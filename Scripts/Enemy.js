@@ -13,9 +13,8 @@ var Enemy = function (parent, game){
     //-----------health related stuff for enemy----------
     var healthBar; // object, phaser sprite?
     var health = 50; // int, enemy health
-    var maxHealth = 50; // int, most health an enemy can have
-    var const_maxHealth = 50; // int, initial health of an enemy if the health ever
-    var initialHealth; // int, staring health, uneeded?
+    var baseHealth = 50; // int, most health an enemy can have
+    var initialHealth; // int, starting health, uneeded?
     var initHealthBar = 0.0; // float, initial amount og healthbar
     
     //-----------position related stuff for enemy--------
@@ -27,7 +26,7 @@ var Enemy = function (parent, game){
     
     //-----------damage related stuff------------------
     var isActive; // bool, is this enemy active and on screen
-    var enemy_damage = 10; //int, how much damage is dont by the enemy to the unit
+    var enemy_damage = 10; //int, how much damage is done by the enemy to the unit
     var target; // unit object, unit the enemy is atacking
     var can_attack; // bool, can this unit attack or not, used for delay between attacks
     var attack_delay; // int, amount of time enemy has to wait between attacks
@@ -68,7 +67,7 @@ var Enemy = function (parent, game){
             enemySprite.body.drag = 100;
             enemySprite.anchor.setTo(0.5, 0.5);
     
-            health = maxHealth*10;// boss health
+            health = baseHealth*10;// boss health
             initialHealth = health;
             healthBar = game.add.sprite(position.x - 100, position.y - 200, 'Boss_1_Health');
             healthBar.crop(new Phaser.Rectangle(0,0,enemySprite.width, 20));
@@ -82,7 +81,7 @@ var Enemy = function (parent, game){
             enemySprite = game.add.sprite(position.x, position.y, 'enemy' + Math.ceil(Math.random()*3) );
             
     
-            health = maxHealth;
+            health = baseHealth;
             initialHealth = health;
             healthBar = game.add.sprite(position.x - 50, position.y - 70, 'healthBar');
             healthBar.crop(new Phaser.Rectangle(0,0,enemySprite.width, 20));
@@ -136,9 +135,8 @@ var Enemy = function (parent, game){
     y - int, enemy y position
     newTarget - object, unit for enemy to target
     */
-    function ResetEnemy(x, y, newTarget){
+    function ResetEnemy(x, y, newTarget, dmgBuff, healthBuff){
         //reset the enemies to their original status
-        
         //if the  speed is going to potentially be altered, clear the timeout and reset the speed already since the enemy is destroyed
         took_damage = false; //since were resetting the enemy, they should not be taking damage anymore
         
@@ -149,23 +147,24 @@ var Enemy = function (parent, game){
         
         enemySprite.alpha = 1.0; ///reset the opacity to 100%
         if(boss){
-            health = maxHealth*10;
+            health = baseHealth*10 + healthBuff;
             initialHealth = health;
             healthBar.crop(new Phaser.Rectangle(0,0,enemySprite.width, 20));
             
             boss = true;
         }
         else{
-            maxHealth = const_maxHealth;
-            health = maxHealth;
-            initialHealth = maxHealth;
+            health = baseHealth + healthBuff;
+            initialHealth = health;
             healthBar.crop(new Phaser.Rectangle(0,0,100, 20));
             
             boss = false;
         }
-        
+
         enemySprite.position = {x, y};
-        
+        enemy_damage = enemy_damage + dmgBuff;
+        console.log("Dmg: " + enemy_damage);
+        console.log("Health: " + health);
         healthBar.updateCrop();
         activate_enemy_sprite(newTarget);
     }

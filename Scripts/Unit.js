@@ -450,7 +450,8 @@ var Unit = function (parent, game){
                 if(shopMenuItems.list[i].key === spriteName){
                     bulletType = shopMenuItems.list[i].type;
                     cost = shopMenuItems.list[i].cost/20;
-                    dmgAmount = Math.floor(cost/10);
+                    dmgAmount = Math.floor(shopMenuItems.list[i].cost/10);
+                    //console.log("cost: " + cost);
                     //console.log("shopMenuItems.list[i].cost: " + shopMenuItems.list[i].cost);
                     //dmgAmount = 10;
                     break;

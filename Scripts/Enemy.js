@@ -137,7 +137,6 @@ var Enemy = function (parent, game){
     newTarget - object, unit for enemy to target
     */
     function ResetEnemy(x, y, newTarget){
-        console.log("RESET");
         //reset the enemies to their original status
         
         //if the  speed is going to potentially be altered, clear the timeout and reset the speed already since the enemy is destroyed
@@ -204,9 +203,6 @@ var Enemy = function (parent, game){
             target.getUnitSprite().position.y,
             speed
         );
-        
-        console.log("ex: " + position.x);
-        //console.log("ey: " + position.y);
         
         position = enemySprite.position; //their new position
 

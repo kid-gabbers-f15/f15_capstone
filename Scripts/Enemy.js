@@ -237,7 +237,7 @@ var Enemy = function (parent, game){
     function damage(dmg, getGold){ //by default, get gold is undefined, so only need to check if explicitly false
         //dmg = 34;
         //console.log(dmg);
-        dmg = 1000;
+        //dmg = 1000;
         took_damage = true;
         health = health - dmg;
         enemySprite.alpha = 1.0 - 1.0*(initialHealth-health)/initialHealth; //decrease the opacity depending on the ratio between currenthealth and initial health

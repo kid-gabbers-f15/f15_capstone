@@ -72,8 +72,8 @@ var Unit = function (parent, game){
         unitSprite.body.immovable = true;
         unitSprite.inputEnabled = true;
         unitSprite.input.useHandCursor = true;
-        
         /*
+        
         if(tempState.init_sprites){ //came back from base editing, need to initialize the units slots to how they were before
              setUnit(tempState.unit_slotSprite); //set the sprite
              for(var unitCount = 0; unitCount < tempState.unit_slot_count[identity]; ++unitcount){
@@ -86,8 +86,8 @@ var Unit = function (parent, game){
         }
         else{
             
-        }
-        */
+        }   */
+        
         
         
         text = game.add.text(position.x + 15, position.y + 5, curr_children);

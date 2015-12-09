@@ -76,7 +76,11 @@ var Boot = {
         tempState.current_wave = 0;
         tempState.boss_indicator = 0;
         tempState.came_from_base = 0; 
+        tempState.init_sprites = 0; //when coming back from the base, need to initialize the unitslots back to how they were
         tempState.current_score = 0;
+        tempState.unit_slot_count = []; //keep count of units and each unit Slot
+        tempState.unit_slotSprite = []; //the unit sprite that belongs in this slot
+        
         
         var assetLoader = AssetLoader(game);
         assetLoader.Preload();
@@ -108,6 +112,12 @@ var Boot = {
         }
         else{
             playerState = JSON.parse(cookie);
+        }
+        
+        for(var slotIndex = 0; slotIndex < playerState.unitSlots; ++ slotIndex){ //initailzie all of them to zero sicne in the beginning of the game there are no units in the slots
+            
+            tempState.unit_slot_count.push(0);
+            
         }
         
         //set the point of reference for the sprite

@@ -63,6 +63,8 @@ var DefenseEngine = function (game){
         game.physics.enable(bg, Phaser.Physics.ARCADE);
         bg.body.immovable = true;
         
+        
+        
         friendBaseTarget = Unit(null, game);
         friendBaseTarget.setUnitSprite(bg);
         friendBaseTarget.setAsBase();
@@ -409,6 +411,12 @@ var DefenseEngine = function (game){
         baseButton.events.onInputDown.add(function(){
             mclick_sfx.play();
             tempState.came_from_base = true;
+             tempState.init_sprites = true;
+            for(var i = 0; i < tempState.unit_slot_count.length; ++i){
+                console.log("Index: " + i + " -> " + tempState.unit_slot_count[i]);
+                
+            }
+            
             game.state.start("Customize");
         });
                 

@@ -1,6 +1,7 @@
 var Player = function (game){
     //unit manager
     var that = {};
+    var unitSlots = 0;
     
     var unitpGroup = [];
     var unitSlotPositions = new Array(
@@ -27,10 +28,14 @@ var Player = function (game){
     enemyGroup - list of enemies
     */
     function OnCreate(unitGroup, enemypGroup){
+        
+        
         for(var i = 0; i < unitpGroup.length; i++)
         {
-            unitpGroup[i].OnCreate(unitSlotPositions[i].x, unitSlotPositions[i].y, unitGroup);
+            unitpGroup[i].OnCreate(unitSlotPositions[i].x, unitSlotPositions[i].y, unitGroup, unitSlots);
+            ++unitSlots;
         }
+        
     }
     
     function Update(){
@@ -48,8 +53,11 @@ var Player = function (game){
     function addSlot(unitGroup){
         var unit = Unit(that, game);
         unit.Preload();
-        unit.OnCreate(unitSlotPositions[playerState.unitSlots-1].x, unitSlotPositions[playerState.unitSlots-1].y, unitGroup);
+        unit.OnCreate(unitSlotPositions[playerState.unitSlots-1].x, unitSlotPositions[playerState.unitSlots-1].y, unitGroup, unitSlots);
         unitpGroup.push(unit);
+        
+        tempState.slot_count.push(0); //new slot, initialzie it to zero since there are no units in the slot at first
+        ++unitSlots;
     }
     
     that.addSlot = addSlot;

@@ -97,7 +97,7 @@ var BaseManager = function(game){
             defEngine.click_sound();
             
             tempState.came_from_base = true;
-            
+             tempState.init_sprites = true;
             game.state.start("Preload");
         });
         

@@ -8,6 +8,7 @@ var Unit = function (parent, game){
     var old_curr_children = 0;
     var clicks = 0;
     var shoot = true;
+    var identity; //identity of the slot. (slot index)
 
     var bulletSprite;
     var bulletSprite2;
@@ -49,8 +50,8 @@ var Unit = function (parent, game){
 
     }
     
-    function OnCreate(x, y, unitGroup, enemypGroup){
-
+    function OnCreate(x, y, unitGroup, id){
+        identity = id;
         
         thisIsBase = false;
         topBaseCollision = defEngine.getTopBaseCollision();
@@ -68,6 +69,23 @@ var Unit = function (parent, game){
         unitSprite.body.immovable = true;
         unitSprite.inputEnabled = true;
         unitSprite.input.useHandCursor = true;
+        
+        /*
+        if(tempState.init_sprites){ //came back from base editing, need to initialize the units slots to how they were before
+             setUnit(tempState.unit_slotSprite); //set the sprite
+             for(var unitCount = 0; unitCount < tempState.unit_slot_count[identity]; ++unitcount){
+                 add_unit(1);
+             }
+            
+            
+             tempState.init_sprites = 1;
+            
+        }
+        else{
+            
+        }
+        */
+        
         
         text = game.add.text(position.x + 15, position.y + 5, curr_children);
         text.anchor.set(0.25);
@@ -198,6 +216,7 @@ var Unit = function (parent, game){
                 defEngine.showToolbar(that);
             }
             else{
+                
                 add_unit(1);
                 update_text();
             }
@@ -379,6 +398,8 @@ var Unit = function (parent, game){
            CurrentUnitHealth = 10 * cost;
            initalUnitHealth = CurrentUnitHealth;
         }
+        
+        tempState.unit_slot_count[identity]++; //increase the slot count
     }
         
     function set_health_visible(){
@@ -458,6 +479,8 @@ var Unit = function (parent, game){
                 }
             }
             //console.log(bulletType);
+            
+            
             unitSprite.alpha=1;
             add_unit(1);
         }

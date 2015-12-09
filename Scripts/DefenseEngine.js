@@ -187,8 +187,8 @@ var DefenseEngine = function (game){
         scoreText.font = 'Revalia';
         scoreText.fontSize = 45;
         grds = scoreText.context.createLinearGradient(0, 0, 0, scoreText.canvas.height);
-        grds.addColorStop(0, '#e544ff');   
-        grds.addColorStop(1, '#a800c3');
+        grds.addColorStop(0, '#7CFC00');   
+        grds.addColorStop(1, '#66CD00');
         scoreText.fill = grds;
         scoreText.align = 'center';
         scoreText.stroke = '#000000';

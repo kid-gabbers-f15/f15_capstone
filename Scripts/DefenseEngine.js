@@ -14,7 +14,7 @@ var DefenseEngine = function (game){
     var startButton; // phaser text, button to start the game
     var friendBaseData; // JSON string, JSON representing the friend's base you are defending
     var pausetext; // phaser text, 'PAUSED' that pops up when the game is paused
-    var grd, grd2, grd3, grd5, grd6, grdr, grds; // phaser color gradient, used for a color gradient on text
+    var grd, grd2, grd3, grd5, grd6, grdr, grds, grdw; // phaser color gradient, used for a color gradient on text
     var playerBaseData; // JSON string, JSON representing the player's base
     var unitSlots; // phaser sprite, changes based on how many unit slots player has unlocked.
     var globalHealth = 100; // int, overall game health value, lose when zero
@@ -28,6 +28,7 @@ var DefenseEngine = function (game){
     var maxGlobalHealth;
     var stats, line, scoreText;
     var score = 0;
+    var baseLabel1, baseLabel2;
     
     var unitSprite;
     
@@ -234,6 +235,27 @@ var DefenseEngine = function (game){
         toolTips.visible = false;
         toolbar.OnCreate();
         toolbar.hideToolbar();
+        
+        baseLabel1 = game.add.text(game.world.centerX - 20, game.world.centerY - 90, 'My Base');
+        baseLabel1.font = 'Revalia';
+        baseLabel1.fontSize = 25;
+        grdw = baseLabel1.context.createLinearGradient(0, 0, 0, baseLabel1.canvas.height);
+        grdw.addColorStop(0, '#fef5ff');   
+        grdw.addColorStop(1, '#fef5ff');
+        baseLabel1.fill = grdw;
+        baseLabel1.align = 'center';
+        baseLabel1.stroke = '#000000';
+        baseLabel1.strokeThickness = 4;
+        baseLabel1.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        
+        baseLabel2 = game.add.text(380, game.world.centerY + 475, 'Friend\'s Base');
+        baseLabel2.font = 'Revalia';
+        baseLabel2.fontSize = 25;
+        baseLabel2.fill = grdw;
+        baseLabel2.align = 'center';
+        baseLabel2.stroke = '#000000';
+        baseLabel2.strokeThickness = 4;
+        baseLabel2.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
     }
     
     function Update(){

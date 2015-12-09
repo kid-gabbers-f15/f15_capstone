@@ -124,7 +124,7 @@ var AssetLoader = function(game){
         //Main view stuff
         game.load.image('background', KCG_ASSET_PATH+'BackgroundKidGabTemplate.png');
         game.load.image('topBaseCollision', KCG_ASSET_PATH+'TopBaseImage.png');
-        game.load.image('topBaseBackground', KCG_ASSET_PATH+'TopBaseImage.png');
+        //game.load.image('topBaseBackground', KCG_ASSET_PATH+'TopBaseImage.png');
         
         //unit slots----------------------------------------------
         game.load.image('unitSlot1', KCG_ASSET_PATH+'shelves1.png');

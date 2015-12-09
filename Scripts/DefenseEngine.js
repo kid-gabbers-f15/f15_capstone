@@ -79,7 +79,7 @@ var DefenseEngine = function (game){
         console.log("Preload for defense engine");
         game.load.image('background', KCG_ASSET_PATH+'MainPageBG.png');
         game.load.image('topBaseCollision', KCG_ASSET_PATH+'TopBaseImage.png');
-        game.load.image('topBaseBackground', KCG_ASSET_PATH+'TopBaseImage.png');
+        //game.load.image('topBaseBackground', KCG_ASSET_PATH+'TopBaseImage.png');
         game.load.image('whiteBox', KCG_ASSET_PATH+'whiteBox.png');
         
         player = Player(game);
@@ -189,8 +189,8 @@ var DefenseEngine = function (game){
         scoreText.font = 'Revalia';
         scoreText.fontSize = 45;
         grds = scoreText.context.createLinearGradient(0, 0, 0, scoreText.canvas.height);
-        grds.addColorStop(0, '#e544ff');   
-        grds.addColorStop(1, '#a800c3');
+        grds.addColorStop(0, '#7CFC00');   
+        grds.addColorStop(1, '#66CD00');
         scoreText.fill = grds;
         scoreText.align = 'center';
         scoreText.stroke = '#000000';

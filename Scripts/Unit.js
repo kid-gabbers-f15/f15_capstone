@@ -18,7 +18,7 @@ var Unit = function (parent, game){
     var initial_Health_Bar_Sprite_Width; //inital width of the health bar image (before crops)
     var isHealthDisplayed = false;
     var CurrentUnitHealth; //current health of the displayed Unit;
-    var initalUnitHealth;
+    var initialunithealth;
     
     var focusedEnemy;
     var focusedEnemyDistance = 1000;
@@ -42,7 +42,7 @@ var Unit = function (parent, game){
     var thisIsBase; //bool to see if this unit is a base, or just a single unit
     var showWeapons = false;
     var pew_sfx; // Sound effect for shooting
-    var grd2;
+    var grd2, grdw;
 
     var dmgAmount;
 
@@ -94,13 +94,13 @@ var Unit = function (parent, game){
         text.anchor.set(0.25);
         text.font = 'Revalia';
         text.fontSize = 45;
-        grd = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
-        grd.addColorStop(0, '#016dff');   
-        grd.addColorStop(1, '#016dff');
+        grdw = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
+        grdw.addColorStop(0, '#fef5ff');   
+        grdw.addColorStop(1, '#fef5ff');
         grd2 = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
         grd2.addColorStop(0, '#fff08e');   
         grd2.addColorStop(1, '#a6b300');
-        text.fill = grd;
+        text.fill = grdw;
         text.align = 'center';
         text.stroke = '#000000';
         text.strokeThickness = 4;
@@ -269,14 +269,14 @@ var Unit = function (parent, game){
     
     function damage(healthRemoved){
         CurrentUnitHealth = CurrentUnitHealth - healthRemoved;
-        HealthBarSprite.crop(new Phaser.Rectangle(0,0, initial_Health_Bar_Sprite_Width * CurrentUnitHealth/initalUnitHealth, 20));
+        HealthBarSprite.crop(new Phaser.Rectangle(0,0, initial_Health_Bar_Sprite_Width * CurrentUnitHealth/initialunithealth, 20));
         HealthBarSprite.updateCrop();
         
         if(CurrentUnitHealth <= 0){ //if a unit has been destroyed
             curr_children = curr_children - 1;
             
             if(curr_children > 0){ //if there are more units underneath the one that has been defeated, renew the healthbar
-                CurrentUnitHealth = initalUnitHealth;
+                CurrentUnitHealth = initialunithealth;
                 HealthBarSprite.crop(new Phaser.Rectangle(0,0, initial_Health_Bar_Sprite_Width, 20));
                 HealthBarSprite.updateCrop();
             }
@@ -293,7 +293,7 @@ var Unit = function (parent, game){
            defEngine.spendGold(cost);
            set_health_visible();
            CurrentUnitHealth = 10 * cost;
-           initalUnitHealth = CurrentUnitHealth;
+           initialunithealth = CurrentUnitHealth;
         }
         
         tempState.unit_slot_count[identity]++; //increase the slot count
@@ -340,6 +340,7 @@ var Unit = function (parent, game){
                     bulletType = shopMenuItems.list[i].type;
                     cost = shopMenuItems.list[i].cost/20;
                     dmgAmount = Math.floor(shopMenuItems.list[i].cost/10);
+                    initialunithealth = Math.ceil(shopMenuItems.list[i].cost*.75);
                     //console.log("cost: " + cost);
                     //console.log("shopMenuItems.list[i].cost: " + shopMenuItems.list[i].cost);
                     //dmgAmount = 10;

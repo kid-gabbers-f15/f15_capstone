@@ -199,7 +199,7 @@ var ShopManager = function (game){
         });
         
         // Slot Button
-        slotButton = game.add.text(game.world.centerX * (6.2/5) - 50, 170, "+1 Unit Slot");
+        slotButton = game.add.text(game.world.centerX * (6.2/5) - 50, 170, "+1 Warrior Slot");
         slotButton.font = 'Revalia';
         slotButton.fontSize = 35;
         slotButton.fill = grd;

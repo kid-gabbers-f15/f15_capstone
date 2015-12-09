@@ -248,9 +248,10 @@ var DefenseEngine = function (game){
         baseLabel1.strokeThickness = 4;
         baseLabel1.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
         
-        baseLabel2 = game.add.text(380, game.world.centerY + 475, 'Friend\'s Base');
+        baseLabel2 = game.add.text(580, game.world.centerY + 475, 'Princess Admin\'s Base');
         baseLabel2.font = 'Revalia';
         baseLabel2.fontSize = 25;
+        baseLabel2.anchor.setTo(1, .5);
         baseLabel2.fill = grdw;
         baseLabel2.align = 'center';
         baseLabel2.stroke = '#000000';

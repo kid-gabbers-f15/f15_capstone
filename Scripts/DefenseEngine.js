@@ -77,7 +77,7 @@ var DefenseEngine = function (game){
         console.log("Preload for defense engine");
         game.load.image('background', KCG_ASSET_PATH+'MainPageBG.png');
         game.load.image('topBaseCollision', KCG_ASSET_PATH+'TopBaseImage.png');
-        game.load.image('topBaseBackground', KCG_ASSET_PATH+'TopBaseImage.png');
+        //game.load.image('topBaseBackground', KCG_ASSET_PATH+'TopBaseImage.png');
         game.load.image('whiteBox', KCG_ASSET_PATH+'whiteBox.png');
         
         player = Player(game);

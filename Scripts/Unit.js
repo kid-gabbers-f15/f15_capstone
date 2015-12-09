@@ -53,6 +53,9 @@ var Unit = function (parent, game){
     function OnCreate(x, y, unitGroup, id){
         identity = id;
         
+//======= old
+  //  function OnCreate(x, y, unitGroup, enemypGroup){
+//>>>>>>> master
         thisIsBase = false;
         topBaseCollision = defEngine.getTopBaseCollision();
         position.x = x;
@@ -111,108 +114,9 @@ var Unit = function (parent, game){
         CurrentUnitHealth = 50;
         initial_Health_Bar_Sprite_Width = HealthBarSprite.width;
         
-
-        /*pistolSprite = game.add.sprite(position.x-150, position.y, 'Unit3');
-        pistolCostText = game.add.text(position.x-150, position.y, '5');
-        pistolCostText.anchor.set(0.25);
-        pistolCostText.font = 'Revalia';
-        pistolCostText.fontSize = 30;
-        pistolCostText.fill = grd2;
-        pistolCostText.align = 'center';
-        pistolCostText.stroke = '#000000';
-        pistolCostText.strokeThickness = 4;
-        pistolCostText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-        
-        shotgunSprite = game.add.sprite(position.x-250, position.y, 'Unit1');
-        shotgunCostText = game.add.text(position.x-250, position.y, '20');
-        shotgunCostText.anchor.set(0.25);
-        shotgunCostText.font = 'Revalia';
-        shotgunCostText.fontSize = 30;
-        shotgunCostText.fill = grd2;
-        shotgunCostText.align = 'center';
-        shotgunCostText.stroke = '#000000';
-        shotgunCostText.strokeThickness = 4;
-        shotgunCostText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-        
-        rifleSprite = game.add.sprite(position.x-150, position.y-100, 'Unit2');
-        rifleCostText = game.add.text(position.x-150, position.y-100, '10');
-        rifleCostText.anchor.set(0.25);
-        rifleCostText.font = 'Revalia';
-        rifleCostText.fontSize = 30;
-        rifleCostText.fill = grd2;
-        rifleCostText.align = 'center';
-        rifleCostText.stroke = '#000000';
-        rifleCostText.strokeThickness = 4;
-        rifleCostText.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
-        
-        pistolSprite.inputEnabled = false;
-        shotgunSprite.inputEnabled = false;
-        rifleSprite.inputEnabled = false;
-        pistolSprite.visible = false;
-        shotgunSprite.visible = false;
-        rifleSprite.visible = false;
-        rifleCostText.visible = false;
-        pistolCostText.visible = false;
-        shotgunCostText.visible = false;*/
-        
-        /*pistolSprite.events.onInputDown.add(function(){
-            defEngine.click_sound();
-            bulletType = 'pistol';
-            cost = 5;
-            pistolSprite.visible = false;
-            shotgunSprite.visible = false;
-            rifleSprite.visible = false;
-            rifleCostText.visible = false;
-            pistolCostText.visible = false;
-            shotgunCostText.visible = false;
-            pistolSprite.inputEnabled = false;
-            shotgunSprite.inputEnabled = false;
-            rifleSprite.inputEnabled = false;
-            showWeapons = false;
-            add_unit(1);
-            unitSprite.loadTexture('Unit3');
-        });
-        
-        shotgunSprite.events.onInputDown.add(function(){
-            defEngine.click_sound();
-            bulletType = 'shotgun';
-            cost = 20;
-            pistolSprite.visible = false;
-            shotgunSprite.visible = false;
-            rifleSprite.visible = false;
-            rifleCostText.visible = false;
-            pistolCostText.visible = false;
-            shotgunCostText.visible = false;
-            pistolSprite.inputEnabled = false;
-            shotgunSprite.inputEnabled = false;
-            rifleSprite.inputEnabled = false;
-            showWeapons = false;
-            add_unit(1);
-            unitSprite.loadTexture('Unit1');
-        });
-        
-        rifleSprite.events.onInputDown.add(function(){
-            defEngine.click_sound();
-            bulletType = 'rifle';
-            cost = 10;
-            pistolSprite.visible = false;
-            shotgunSprite.visible = false;
-            rifleSprite.visible = false;
-            rifleCostText.visible = false;
-            pistolCostText.visible = false;
-            shotgunCostText.visible = false;
-            pistolSprite.inputEnabled = false;
-            shotgunSprite.inputEnabled = false;
-            rifleSprite.inputEnabled = false;
-            showWeapons = false;
-            add_unit(1);
-            unitSprite.loadTexture('Unit2');
-        });*/
-        
         unitSprite.events.onInputDown.add(function(){
             defEngine.click_sound();
             if(bulletType=='none'){
-                //console.log(defEngine.getUnitSprite());
                 defEngine.showToolbar(that);
             }
             else{
@@ -257,6 +161,8 @@ var Unit = function (parent, game){
                     focusedEnemyDistance = distance;
                     focusedEnemyX = enemyPos.x;
                     focusedEnemyY = enemyPos.y;
+                    //console.log("x: " + focusedEnemyX);
+                    //console.log("y: " + focusedEnemyY);
                 }
             }
             
@@ -359,15 +265,6 @@ var Unit = function (parent, game){
                 }
             }
         }
-        
-        /*var overlap = game.physics.arcade.overlap(topBaseCollision, bulletSpriteGroup, function(obj1, obj2){
-            currentBullet = obj2;
-        }, null, null, this);
-        
-        if(overlap == true)
-        {
-            removeBulletOnly(currentBullet);
-        }*/
     }
     
     function damage(healthRemoved){
@@ -431,38 +328,9 @@ var Unit = function (parent, game){
         enemy.damage(dmgAmount);
     }
     
-    /*function removeBulletOnly(bSprite){
-        bSprite.destroy();
-    }*/
-    
     function isAttack(){
         return can_attack;
     }
-    
-    /*function weaponSelection(){
-        if(showWeapons == true){
-            pistolSprite.visible = true;
-            shotgunSprite.visible = true;
-            rifleSprite.visible = true;
-            pistolSprite.inputEnabled = true;
-            shotgunSprite.inputEnabled = true;
-            rifleSprite.inputEnabled = true;
-            rifleCostText.visible = true;
-            pistolCostText.visible = true;
-            shotgunCostText.visible = true;
-        }
-        else{
-            pistolSprite.visible = false;
-            shotgunSprite.visible = false;
-            rifleSprite.visible = false;
-            pistolSprite.inputEnabled = false;
-            shotgunSprite.inputEnabled = false;
-            rifleSprite.inputEnabled = false;
-            rifleCostText.visible = false;
-            pistolCostText.visible = false;
-            shotgunCostText.visible = false;
-        }
-    }*/
     
     function setUnit(spriteName){
         if(spriteName != undefined){

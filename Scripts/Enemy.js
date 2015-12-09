@@ -266,6 +266,7 @@ var Enemy = function (parent, game){
             enemySprite.inputEnabled = false;
             isActive = false;
             killed = true;
+            enemySprite.body.velocity.setTo(0,0);
             text.visible = false;
             if(getGold != false){
                 if(boss){

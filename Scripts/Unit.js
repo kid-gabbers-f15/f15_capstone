@@ -348,10 +348,20 @@ var Unit = function (parent, game){
             }
             //console.log(bulletType);
             
-            
+            getUnitSpritekey();
             unitSprite.alpha=1;
             add_unit(1);
         }
+    }
+    
+    function getUnitSpritekey(){
+        
+        
+        console.log("this is the key: " + unitSprite.key);
+        
+        tempState.unit_slotSprite[identity] = unitSprite.key; //store the sprite
+        
+        
     }
     
     that.setUnitSprite = function(newSprite){ unitSprite = newSprite;}

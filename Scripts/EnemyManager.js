@@ -160,8 +160,10 @@ var EnemyManager = function (game){
         //determine if buffs should be increased
         if(currentWave > 1 && currentWave%4 == 0){
             //console.log("after boss wave!");
-            healthBuff = (healthBuff + 1) * (healthBuff + 1);
-            dmgBuff = (dmgBuff + 1) * (dmgBuff + 1);
+            //healthBuff = (healthBuff + 1) * (healthBuff + 1);
+            healthBuff = healthBuff + 10;
+            //dmgBuff = (dmgBuff + 1) * (dmgBuff + 1);
+            dmgBuff = dmgBuff + 1;
             console.log("Dmg Buff: " + dmgBuff);
             console.log("Health Buff: " + healthBuff);
         }

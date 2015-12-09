@@ -85,7 +85,7 @@ var EnemyManager = function (game){
     function Update(){
         if(waitingForStart == false){
             if(ifBoss){ // Boss Wave
-                console.log("Boss: " + killCnter + " < " + boss_count_in_wave)
+                //console.log("Boss: " + killCnter + " < " + boss_count_in_wave)
                 if(killCnter < boss_count_in_wave){ // Bosses still alive
                     for(var i=0;i<boss_count_in_wave;i++){
                         if(bossGroup[i].getIsActive() == true){ // Boss is alive
@@ -109,7 +109,7 @@ var EnemyManager = function (game){
                 }
             }
             else{ // Normal wave
-                console.log("Boss: " + killCnter + " < " + enemy_count_in_wave);
+                //console.log("Enemies: " + killCnter + " < " + enemy_count_in_wave);
                 var unitpGroup = defEngine.getPlayer().getUnitPGroup();
                 
                 if(killCnter < enemy_count_in_wave){ // Enemies still alive

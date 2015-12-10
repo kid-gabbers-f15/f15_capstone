@@ -45,7 +45,7 @@ var playerState = {};
 var maxWidth = 960;
 var maxHeight = 540;
 var shopMenuItems; // Items in the shop
-var ambientSound;
+var sound;
 
 var toolTips;
 
@@ -78,10 +78,12 @@ var Boot = {
         tempState.boss_indicator = 0;
         tempState.came_from_base = 0; 
         tempState.current_score = 0;
+        tempState.music = 0;
+        tempState.mute = 0;
+        tempState.ambientSound;
         
         var assetLoader = AssetLoader(game);
         assetLoader.Preload();
-        
         var cookie = getCookie("PlayerState");
         if(cookie === ""){
             playerState = {};

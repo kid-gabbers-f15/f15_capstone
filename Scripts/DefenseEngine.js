@@ -30,7 +30,7 @@ var DefenseEngine = function (game){
     var score = 0;
     var baseLabel1, baseLabel2;
     var unitSprite;
-    var muteButton;
+    var muteButton, volumeUp, volumeDown;
 
     /*
     base - object, player's base
@@ -92,7 +92,8 @@ var DefenseEngine = function (game){
         
         game.load.text('JSONfriendBaseData', KCG_SCRIPT_PATH+'json2.txt');
         if(tempState.ambientSound == null){
-            tempState.ambientSound = game.add.audio('ambient');    
+            tempState.ambientSound = game.add.audio('ambient');
+            tempState.ambientSound.volume = 1;
         }
         //game.load.text('JSONplayerBaseData', 'Scripts/json.txt');
         //shopManager.Preload();
@@ -225,7 +226,7 @@ var DefenseEngine = function (game){
         mclick_sfx = game.add.audio('button_click');
         if(tempState.mute == 0 && tempState.music == 0){
             tempState.music = 1;
-            tempState.ambientSound.loopFull(0.6);
+            tempState.ambientSound.loopFull(tempState.ambientSound.volume);
             
             console.log("Start condition");
         }
@@ -498,13 +499,56 @@ var DefenseEngine = function (game){
             else if(tempState.mute == 1 && tempState.music == 0){
                 tempState.mute = 0;
                 tempState.music = 1;
-                tempState.ambientSound.loopFull(0.6);
+                tempState.ambientSound.loopFull(tempState.ambientSound.volume);
                 console.log("Play!");
             }
             else{
                 console.log("ELSE!");
                 tempState.music = 0;
                 tempState.mute = 0;
+            }
+        });
+        
+        //Volume up and down buttons
+        volumeUp = game.add.text(375, 120, "+");
+        volumeUp.font = 'Revalia';
+        volumeUp.fontSize = 50;
+        volumeUp.fill = grd;
+        volumeUp.align = 'center';
+        volumeUp.stroke = '#000000';
+        volumeUp.strokeThickness = 4;
+        volumeUp.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        volumeUp.inputEnabled = true;
+        volumeUp.events.onInputOver.add(function(){
+            volumeUp.fill = '#ffb44e';
+        }, this);
+        volumeUp.events.onInputOut.add(function(){
+            volumeUp.fill = grd;
+        }, this);
+        
+        volumeUp.events.onInputDown.add(function(){
+            tempState.ambientSound.volume += 1;
+        });
+        
+        volumeDown = game.add.text(377, 155, "-");
+        volumeDown.font = 'Revalia';
+        volumeDown.fontSize = 50;
+        volumeDown.fill = grd;
+        volumeDown.align = 'center';
+        volumeDown.stroke = '#000000';
+        volumeDown.strokeThickness = 4;
+        volumeDown.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        volumeDown.inputEnabled = true;
+        volumeDown.events.onInputOver.add(function(){
+            volumeDown.fill = '#ffb44e';
+        }, this);
+        volumeDown.events.onInputOut.add(function(){
+            volumeDown.fill = grd;
+        }, this);
+        
+        volumeDown.events.onInputDown.add(function(){
+            if(tempState.ambientSound.volume >= 1){
+                tempState.ambientSound.volume -= 1;
             }
         });
     }

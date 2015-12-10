@@ -59,6 +59,7 @@ var Unit = function (parent, game){
         bulletSpriteGroup = game.add.group();
         
         unitSprite = game.add.sprite(position.x, position.y, 'unit0' );
+        unitSprite.scale.setTo(0.75, 0.75);
         unitSprite.alpha=0;
         game.physics.enable(unitSprite, Phaser.Physics.ARCADE);
         unitSprite.body.collideWorldBounds = true;

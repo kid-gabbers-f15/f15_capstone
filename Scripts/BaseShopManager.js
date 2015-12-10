@@ -381,7 +381,6 @@ var BaseShopManager = function (game, parent){
     //add stickerslot to playerstate
     function buyStickerSlot(){
         playerState.base.totalSlots += 1;
-        stickerButton.text = "+1 Sticker Slot [" + playerState.base.totalSlots + "/" + 30 + "]"
     }
     
     that.Preload = Preload;

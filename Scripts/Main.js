@@ -45,6 +45,7 @@ var playerState = {};
 var maxWidth = 960;
 var maxHeight = 540;
 var shopMenuItems; // Items in the shop
+var ambientSound;
 
 var toolTips;
 

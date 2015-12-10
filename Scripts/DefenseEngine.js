@@ -29,9 +29,9 @@ var DefenseEngine = function (game){
     var stats, line, scoreText;
     var score = 0;
     var baseLabel1, baseLabel2;
-    
     var unitSprite;
-    
+    var muteButton;
+
     /*
     base - object, player's base
     */
@@ -72,7 +72,7 @@ var DefenseEngine = function (game){
         friendBaseTarget.setText(txt);
         player.getUnitPGroup().push(friendBaseTarget);
     }
-    
+
     function Preload(){
         //loading background image
         console.log("Preload for defense engine");
@@ -91,8 +91,10 @@ var DefenseEngine = function (game){
         toolbar.Preload();
         
         game.load.text('JSONfriendBaseData', KCG_SCRIPT_PATH+'json2.txt');
+        if(tempState.ambientSound == null){
+            tempState.ambientSound = game.add.audio('ambient');    
+        }
         //game.load.text('JSONplayerBaseData', 'Scripts/json.txt');
-        
         //shopManager.Preload();
     }
     
@@ -221,7 +223,12 @@ var DefenseEngine = function (game){
         resume_sfx = game.add.audio('rsound');
         pling_sfx = game.add.audio('pling');
         mclick_sfx = game.add.audio('button_click');
-        
+        if(tempState.mute == 0 && tempState.music == 0){
+            tempState.music = 1;
+            tempState.ambientSound.loopFull(0.6);
+            
+            console.log("Start condition");
+        }
         //game.sound.setDecodedCallback([pause_sfx], start, this);
         
         toolTips = game.add.text(game.input.mousePointer.x + 25, game.input.mousePointer.y - 25, "");
@@ -462,6 +469,43 @@ var DefenseEngine = function (game){
             defEngine.click_sound();
             enemyManager.startGame();
             startButton.visible = false;
+        });
+        
+        // Mute button creation
+        muteButton = game.add.text(60, 145, "Toggle Music");
+        muteButton.font = 'Revalia';
+        muteButton.fontSize = 35;
+        muteButton.fill = grd;
+        muteButton.align = 'center';
+        muteButton.stroke = '#000000';
+        muteButton.strokeThickness = 4;
+        muteButton.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
+        muteButton.inputEnabled = true;
+        muteButton.events.onInputOver.add(function(){
+            muteButton.fill = '#ffb44e';
+        }, this);
+        muteButton.events.onInputOut.add(function(){
+            muteButton.fill = grd;
+        }, this);
+        
+        muteButton.events.onInputDown.add(function(){
+            if(tempState.mute == 0 && tempState.music == 1){
+                tempState.mute = 1;
+                tempState.music = 0;
+                tempState.ambientSound.stop();
+                console.log("Mute!");
+            }
+            else if(tempState.mute == 1 && tempState.music == 0){
+                tempState.mute = 0;
+                tempState.music = 1;
+                tempState.ambientSound.loopFull(0.6);
+                console.log("Play!");
+            }
+            else{
+                console.log("ELSE!");
+                tempState.music = 0;
+                tempState.mute = 0;
+            }
         });
     }
     

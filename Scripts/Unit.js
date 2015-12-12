@@ -123,7 +123,6 @@ var Unit = function (parent, game){
         collision_group = unitGroup;
         
         
-        
         if(tempState.unit_slot_count[identity] > 0){ //came back from base editing, need to initialize the units slots to how they were before
             
             console.log(tempState.unit_slot_count[identity]);
@@ -363,7 +362,7 @@ var Unit = function (parent, game){
     function initialize_old_slots(){ //starting function to add the units back to the slot after returning back from base edits
     
         init_setUnit(tempState.unit_slotSprite[identity]); //set the sprite
-        for(var unitCount = 0; unitCount < tempState.unit_slot_count[identity]; ++unitCount){ //starts at one because setUnit sets up one already
+        for(var unitCount = 1; unitCount < tempState.unit_slot_count[identity]; ++unitCount){ //starts at one because setUnit sets up one already
         
             console.log("another: " + unitCount);
             init_add_unit(1); //add unit wthout cost since coming back from edit base
@@ -383,6 +382,7 @@ var Unit = function (parent, game){
                     break;
                 }
             }
+            init_add_unit(1);
             unitSprite.alpha=1;
         }
     }

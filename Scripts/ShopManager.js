@@ -223,6 +223,7 @@ var ShopManager = function (game){
             toolTips.visible = false;
         }, this);
         slotButton.events.onInputDown.add(function(){
+           tempState.unit_slot_count.push(0); //new slot was added, keep count of the units in it
            if(playerState.unitSlots < 8 && playerState.gold >= (250 * (playerState.unitSlots - 2))){
                playerState.gold -= (250 * (playerState.unitSlots - 2));
                buyUnitSlot();

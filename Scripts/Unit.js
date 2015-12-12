@@ -72,21 +72,8 @@ var Unit = function (parent, game){
         unitSprite.body.immovable = true;
         unitSprite.inputEnabled = true;
         unitSprite.input.useHandCursor = true;
-        /*
         
-        if(tempState.init_sprites){ //came back from base editing, need to initialize the units slots to how they were before
-             setUnit(tempState.unit_slotSprite); //set the sprite
-             for(var unitCount = 0; unitCount < tempState.unit_slot_count[identity]; ++unitcount){
-                 add_unit(1);
-             }
-            
-            
-             tempState.init_sprites = 1;
-            
-        }
-        else{
-            
-        }   */
+        
         
         
         
@@ -118,10 +105,13 @@ var Unit = function (parent, game){
             defEngine.click_sound();
             if(bulletType=='none'){
                 defEngine.showToolbar(that);
+                tempState.unit_slot_count[identity]++; //increase the slot count
             }
             else{
                 
                 add_unit(1);
+            
+                tempState.unit_slot_count[identity]++; //increase the slot count
                 update_text();
             }
         });
@@ -130,6 +120,17 @@ var Unit = function (parent, game){
         
         unitGroup.add(unitSprite);
         collision_group = unitGroup;
+        
+        
+        
+        if(tempState.unit_slot_count[identity] > 0){ //came back from base editing, need to initialize the units slots to how they were before
+            
+            console.log(tempState.unit_slot_count[identity]);
+            
+            initialize_old_slots(); //after comign back from editing the base, put the units back into the slots.
+            
+            
+        }
     }
     
     function resetShoot(){
@@ -274,7 +275,7 @@ var Unit = function (parent, game){
         
         if(CurrentUnitHealth <= 0){ //if a unit has been destroyed
             curr_children = curr_children - 1;
-            
+            tempState.unit_slot_count[identity] = curr_children; //save the decrement amount;
             if(curr_children > 0){ //if there are more units underneath the one that has been defeated, renew the healthbar
                 CurrentUnitHealth = initialunithealth;
                 HealthBarSprite.crop(new Phaser.Rectangle(0,0, initial_Health_Bar_Sprite_Width, 20));
@@ -290,13 +291,13 @@ var Unit = function (parent, game){
     function add_unit(num_unit){
         if(curr_children != max_size && defEngine.canAfford(cost)){
            curr_children = curr_children + num_unit;
+           console.log("Current Children 1 : " + curr_children);
            defEngine.spendGold(cost);
            set_health_visible();
            CurrentUnitHealth = 10 * cost;
            initialunithealth = CurrentUnitHealth;
         }
         
-        tempState.unit_slot_count[identity]++; //increase the slot count
     }
         
     function set_health_visible(){
@@ -333,6 +334,7 @@ var Unit = function (parent, game){
     }
     
     function setUnit(spriteName){
+        console.log("SETTING UNIT");
         if(spriteName != undefined){
             unitSprite.loadTexture(spriteName);
             for(var i = 0; i < shopMenuItems.list.length; ++i){
@@ -348,21 +350,49 @@ var Unit = function (parent, game){
                 }
             }
             //console.log(bulletType);
-            
-            getUnitSpritekey();
+            console.log("getting the key");
+            tempState.unit_slotSprite[identity] = unitSprite.key;
+            console.log("This is the key: " + unitSprite.key + tempState.unit_slotSprite[identity]);
             unitSprite.alpha=1;
             add_unit(1);
         }
+        
     }
     
-    function getUnitSpritekey(){
+    function initialize_old_slots(){ //starting function to add the units back to the slot after returning back from base edits
+    
+        init_setUnit(tempState.unit_slotSprite[identity]); //set the sprite
+        for(var unitCount = 0; unitCount < tempState.unit_slot_count[identity]; ++unitCount){ //starts at one because setUnit sets up one already
         
+            console.log("another: " + unitCount);
+            init_add_unit(1); //add unit wthout cost since coming back from edit base
+        }
         
-        console.log("this is the key: " + unitSprite.key);
+    }
+    
+    function init_setUnit(spriteName){ //this functin will initialize the unit when the game comes back from base edits
         
-        tempState.unit_slotSprite[identity] = unitSprite.key; //store the sprite
-        
-        
+        if(spriteName != undefined){
+            unitSprite.loadTexture(spriteName);
+            for(var i = 0; i < shopMenuItems.list.length; ++i){
+                if(shopMenuItems.list[i].key === spriteName){
+                    bulletType = shopMenuItems.list[i].type;
+                    dmgAmount = Math.floor(shopMenuItems.list[i].cost/10);
+                    initialunithealth = Math.ceil(shopMenuItems.list[i].cost*.75);
+                    break;
+                }
+            }
+            unitSprite.alpha=1;
+        }
+    }
+    
+    function init_add_unit(num_unit){ //this function will be to add the units back to the slot after returning from base edits.
+         if(curr_children != max_size && defEngine.canAfford(cost)){
+           curr_children = curr_children + num_unit; //increase the tracker for 
+           set_health_visible();
+           CurrentUnitHealth = 10 * cost;
+           initialunithealth = CurrentUnitHealth;
+        }
     }
     
     that.setUnitSprite = function(newSprite){ unitSprite = newSprite;}

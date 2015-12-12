@@ -137,11 +137,14 @@ var AssetLoader = function(game){
         game.load.image('unitSlot8', KCG_ASSET_PATH+'shelves8.png');
 
         //game audio files----------------------------------------
+        //some audio files are from soundbible.com and credit is due to their respective authors
+        //other audio files are from freesound.org and credit is due to their respective authors
         game.load.audio('rsound', KCG_ASSET_PATH+'audio/pause.mp3')
         game.load.audio('pling', KCG_ASSET_PATH+'audio/soundbible/Pling-KevanGC-1485374730_edit.mp3')
         game.load.audio('pew', KCG_ASSET_PATH+'audio/soundbible/Pew_Pew-DKnight556-1379997159.mp3');
         game.load.audio('click', KCG_ASSET_PATH+'audio/soundbible/Punch_HD-Mark_DiAngelo-1718986183.mp3');
         game.load.audio('button_click', KCG_ASSET_PATH+'audio/soundbible/Click-SoundBible.com-1387633738.mp3');
+        game.load.audio('ambient', KCG_ASSET_PATH+ 'audio/Jay_Jay.mp3'); //audio obtained from the youtube audio library
     }
     
     that.Preload = Preload;

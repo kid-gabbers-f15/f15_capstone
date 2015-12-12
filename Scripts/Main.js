@@ -45,6 +45,7 @@ var playerState = {};
 var maxWidth = 960;
 var maxHeight = 540;
 var shopMenuItems; // Items in the shop
+var sound;
 
 var toolTips;
 
@@ -77,14 +78,19 @@ var Boot = {
         tempState.boss_indicator = 0;
         tempState.came_from_base = 0; 
         tempState.current_score = 0;
+<<<<<<< HEAD
         tempState.init_sprites = 0; //when coming back from the base, need to initialize the unitslots back to how they were (boolean)
         tempState.unit_slot_count = []; //keep count of units and each unit Slot
         tempState.unit_slotSprite = []; //the unit sprite that belongs in this slot
         tempState.init_sprites = 0; //when coming back from the base, need to initialize the unitslots back to how they were (boolean)
+=======
+        tempState.music = 0;
+        tempState.mute = 0;
+        tempState.ambientSound;
+>>>>>>> master
         
         var assetLoader = AssetLoader(game);
         assetLoader.Preload();
-        
         var cookie = getCookie("PlayerState");
         if(cookie === ""){
             playerState = {};
